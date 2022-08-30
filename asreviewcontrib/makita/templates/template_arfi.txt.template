@@ -1,0 +1,52 @@
+---
+name: ARFI
+name_long: All Relevant, Fixed Irrelevant
+
+scripts:
+  - get_plot.py
+  - merge_descriptives.py
+  - merge_metrics.py
+
+docs:
+  - README.md
+
+---
+
+{# This is a template for the ARFI method #}
+
+# version {{ version }}
+
+# Create folder structure. By default, the folder 'output' is used to store output.
+mkdir {{ output_folder }}
+mkdir {{ output_folder }}/simulation
+{% for dataset in datasets %}
+
+##################################
+### DATASET: {{ dataset.input_file_stem }}
+##################################
+# Create output folder
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/
+
+# Collect descriptives about the dataset
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
+asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
+
+# Generate wordcloud visualizations of all datasets
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
+
+# Simulate runs, collect metrics and create plots
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
+{% for prior in dataset.priors %}
+asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior_record_id {{ " ".join(prior) }} --seed {{ dataset.model_seed }}
+asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics_sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.json
+{% endfor %}
+
+# Generate plot for dataset
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/plot_recall_sim_{{ dataset.input_file_stem }}.png
+{% endfor %}
+
+# Merge descriptives and metrics
+python {{ scripts_folder }}/merge_descriptives.py
+python {{ scripts_folder }}/merge_metrics.py

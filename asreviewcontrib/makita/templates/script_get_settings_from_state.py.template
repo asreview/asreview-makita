@@ -1,0 +1,61 @@
+"""Script to extract settings from state.
+
+Usage:
+
+python get_settings_from_state.py my_sim_run.json my_sim_settings.json
+
+authors: De Bruin, J
+"""
+
+import argparse
+import json
+from pathlib import Path
+
+from asreview import open_state
+
+# version {{ version }} 
+
+def get_settings_from_state(state):
+    """Extract settings from state file.
+
+    Arguments
+    ---------
+
+    state: asreview.state
+        An ASReview state file.
+
+    Returns
+    -------
+
+    dict
+        Dict with model settings.
+
+    """
+
+    return state.settings.to_dict()
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Convert ASReview state file to CSV'
+    )
+    parser.add_argument(
+        's',
+        type=str,
+        help='State file location')
+    parser.add_argument(
+        'o',
+        type=str,
+        help='Export file location (json)')
+    args = parser.parse_args()
+
+    with open_state(args.s) as state:
+
+        result = get_settings_from_state(state)
+
+    # store result in output folder
+    Path(args.o).parent.mkdir(parents=True, exist_ok=True)
+
+    with open(Path(args.o), "w") as f:
+        json.dump(result, f)

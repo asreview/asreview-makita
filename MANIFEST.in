@@ -1,0 +1,5 @@
+include versioneer.py
+include asreviewcontrib/makita/_version.py
+
+include asreviewcontrib/makita/templates/*
+

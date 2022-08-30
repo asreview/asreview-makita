@@ -1,0 +1,103 @@
+"""Split data with multiple labels
+
+Split data into multiple datasets
+
+Example
+-------
+
+2 label columns:
+
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening --suffix final tiab
+
+3 label columns:
+
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening label3 --suffix final tiab label3
+
+1 label column (renames the label only):
+
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included --suffix final
+
+
+
+authors: Ferdinands, G and De Bruin, J
+"""
+
+# version {{ version }}
+
+import argparse
+from pathlib import Path
+
+import pandas as pd
+
+
+def rename_label(df, keep):
+    """Function to rename label col.
+    """
+
+    return df[["title", "abstract", keep]].rename({keep: "label"}, axis=1)
+
+
+def etl(fp_source, fp_export, split=None, suffix=None):
+    """Read, transform and save datasets.
+    """
+
+    # get the dataset name
+    dataset_name = Path(args.s).stem
+
+    # read file
+    df = pd.read_csv(fp_source, sep=None, engine="python")
+
+    # # remove records with missing abstracts
+    # df = df.dropna(subset=['abstract'])
+
+    # errors
+    if not split or not isinstance(split, list):
+        raise ValueError("Specify at least one column to split on.")
+
+    if isinstance(suffix, list) and len(split) != len(suffix):
+        raise ValueError("Suffix values should be of same length as split.")
+
+    if suffix is None:
+        suffix = split
+
+    for i, split_var in enumerate(split):
+
+        # split dataset
+        df_split = rename_label(df, split_var)
+
+        # export
+        Path(fp_export).mkdir(parents=True, exist_ok=True)
+        df_split.to_csv(
+            Path(fp_export, f"{dataset_name}_{suffix[i]}.csv"),
+            index=False
+        )
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='Stage data'
+    )
+    parser.add_argument(
+        's',
+        type=str,
+        help='Dataset location')
+    parser.add_argument(
+        'o',
+        type=str,
+        help='Dataset export folder')
+    parser.add_argument(
+        '--split',
+        nargs="*",
+        default=None,
+        type=str,
+        help='Split dataset on these columns.')
+    parser.add_argument(
+        '--suffix',
+        nargs="*",
+        default=None,
+        type=str,
+        help='Suffix for the new datasets.')
+    args = parser.parse_args()
+
+    etl(args.s, args.o, split=args.split, suffix=args.suffix)

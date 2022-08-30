@@ -1,0 +1,59 @@
+---
+name: multiple_models
+name_long: Basic simulation for every possible combination of selected models
+
+scripts:
+  - get_plot.py
+  - merge_descriptives.py
+  - merge_metrics.py
+
+docs:
+  - README.md
+---
+
+{# This is a template for the multiple_models method #}
+# version {{ version }}
+
+# Create folder structure. By default, the folder 'output' is used to store output.
+mkdir {{ output_folder }}
+mkdir {{ output_folder }}/simulation
+{% for dataset in datasets %}
+
+##################################
+### DATASET: {{ dataset.input_file_stem }}
+##################################
+
+# Create output folder
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/
+
+# Collect descriptives about the dataset {{ dataset.input_file_stem }}
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
+asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
+
+# Generate wordcloud visualizations of all datasets
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
+asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
+
+# Simulate runs
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
+{% for classifier in all_classifiers %}
+{% for feature_extraction in all_feature_extractions %}
+{% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
+{% if temp in impossible_models %}
+# Skipped {{ classifier }} + {{ feature_extraction }} model{% else %}
+# Classifier = {{ classifier }}, Feature extraction = {{ feature_extraction }} , Query strategy = max
+asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed }} --seed {{ dataset.model_seed }}
+asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.json{% endif %}
+
+{% endfor %}
+{% endfor %}
+
+# Generate plot for dataset
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/plot_recall_sim_{{ dataset.input_file_stem }}.png
+{% endfor %}
+
+# Merge descriptives and metrics
+python {{ scripts_folder }}/merge_descriptives.py
+python {{ scripts_folder }}/merge_metrics.py
+
