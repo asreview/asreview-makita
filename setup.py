@@ -1,7 +1,3 @@
-# based on https://github.com/pypa/sampleproject
-# MIT License
-
-# Always prefer setuptools over distutils
 from setuptools import setup, find_namespace_packages
 from os import path
 from io import open
@@ -18,25 +14,19 @@ setup(
     name='asreview-makita',
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    description='makita tools for the ASReview project',
+    description='Makita workflow tool for the ASReview project',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/asreview/asreview-makita',
-    author='Utrecht University',
+    author='ASReview LAB developers',
     author_email='asreview@uu.nl',
     classifiers=[
-        # How mature is this project? Common values are
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
-
-        # Pick your license as you wish
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
-
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     keywords='asreview makita',
     packages=find_namespace_packages(include=['asreviewcontrib.*']),
