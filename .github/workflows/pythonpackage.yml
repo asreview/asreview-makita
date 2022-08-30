@@ -57,7 +57,6 @@ jobs:
         asset_name: asreview-makita-${{ steps.get_version.outputs.VERSION }}.tar.gz
         asset_content_type: application/zip
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@master
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        user: __token__
-        password: ${{ secrets.pypi_password }}
+        password: ${{ secrets.PYPI_MSDSLAB_API_TOKEN }}
