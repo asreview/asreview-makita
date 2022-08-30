@@ -10,9 +10,9 @@ measured by performance metrics, such as the Work Saved over Sampling, recall at
 Using Makita templates, different study structures can be generated to fit the needs of your very own study. If your study requires a unique template, you can create a new one and use it
 instead.
 
-In [ASReview LAB](https://github.com/asreview/asreview), a [simulation]( https://asreview.readthedocs.io/en/latest/simulation_overview.html#overview) can be run in the [web
+With [ASReview LAB](https://github.com/asreview/asreview), you can [simulate]( https://asreview.readthedocs.io/en/latest/simulation_overview.html#overview) with the [web
 interface](https://asreview.readthedocs.io/en/latest/simulation_overview.html#simulating-with-asreview-lab), the [Python API](https://asreview.readthedocs.io/en/latest/simulation_api_example.html), or
-the [Command Line Interface]( https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita can be used only via the CLI.
+the [Command Line Interface (CLI)]( https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita makes use of the CLI.
 
 What Makita does:
 
