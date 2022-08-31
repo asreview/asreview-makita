@@ -1,6 +1,6 @@
 # ASReview Makita
 
-[ASReviews](https://github.com/asreview/asreview)' `MAKe IT Automatic (Makita)` is a workflow generator for simulation studies using the command line interface of [ASReview
+[ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT** **A**utomatic) is a workflow generator for simulation studies using the command line interface of [ASReview
 LAB](https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita can be used to effortlessly generate the framework and code for your simulation study.
 
 A simulation involves mimicking the screening process for a systematic review of a human in interaction with an Active learning model (i.e., a combination of a feature extractor, classifier,
