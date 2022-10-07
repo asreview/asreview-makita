@@ -127,6 +127,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 output_folder=Path(args.o),
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
+                query_strategy=args.query_strategy,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
                 job_file=args.f,
@@ -139,6 +140,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 output_folder=Path(args.o),
                 n_priors=args.n_priors,
                 init_seed=args.init_seed,
+                query_strategy=args.query_strategy,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
                 job_file=args.f,
@@ -150,6 +152,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 init_seed=args.init_seed,
+                query_strategy=args.query_strategy,
                 model_seed=args.model_seed,
                 all_classifiers=args.classifiers,
                 all_feature_extractions=args.feature_extractions,
@@ -164,6 +167,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 init_seed=args.init_seed,
+                query_strategy=args.query_strategy,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
                 job_file=args.f,
@@ -207,8 +211,6 @@ def _parse_arguments_program(version="Unknown", add_help=False):
 
 
 def _parse_arguments_template(version):
-
-    # parser = _parse_arguments_program(version)
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
     parser.add_argument("-f", type=_valid_job_file, default="jobs.sh",
@@ -220,6 +222,12 @@ def _parse_arguments_template(version):
         type=int,
         default=535,
         help="Seed of the priors. Seed is set by default!",
+    )
+    parser.add_argument(
+        "--query_strategy",
+        type=str,
+        default="max",
+        help="Query strategy to use for the simulation. Default is set to 'max'.",
     )
     parser.add_argument(
         "--model_seed",

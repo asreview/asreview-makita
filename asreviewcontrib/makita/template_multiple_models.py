@@ -15,6 +15,7 @@ def render_jobs_multiple_models(
     output_folder="output",
     scripts_folder="scripts",
     init_seed=535,
+    query_strategy="max",
     model_seed=165,
     all_classifiers=["logistic", "nb", "rf", "svm"],
     all_feature_extractions=["doc2vec", "sbert", "tfidf"],
@@ -64,6 +65,7 @@ def render_jobs_multiple_models(
     return template.render(
         {
             "datasets": params,
+            "query_strategy": query_strategy,
             "output_folder": output_folder,
             "scripts_folder": scripts_folder,
             "version": __version__,

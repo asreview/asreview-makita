@@ -98,6 +98,7 @@ optional arguments:
   -s DATA_FOLDER                                   Dataset folder
   -o OUTPUT_FOLDER                                 Output folder
   --init_seed INIT_SEED                            Seed of the priors. Seed is set by default!
+  --query_strategy                                 Query strategy to use for the simulation. Default is set to 'max'.
   --model_seed MODEL_SEED                          Seed of the models. Seed is set by default!
   --template TEMPLATE                              Overwrite template with template file path.
   --n_runs N_RUNS                                  Number of runs
@@ -117,6 +118,7 @@ optional arguments:
   -s DATA_FOLDER                                   Dataset folder
   -o OUTPUT_FOLDER                                 Output folder
   --init_seed INIT_SEED                            Seed of the priors. Seed is set by default!
+  --query_strategy                                 Query strategy to use for the simulation. Default is set to 'max'.
   --model_seed MODEL_SEED                          Seed of the models. Seed is set by default!
   --template TEMPLATE                              Overwrite template with template file path.
   --n_priors N_PRIORS                              Number of priors
@@ -136,6 +138,7 @@ optional arguments:
   -s DATA_FOLDER                                   Dataset folder
   -o OUTPUT_FOLDER                                 Output folder
   --init_seed INIT_SEED                            Seed of the priors. Seed is set by default!
+  --query_strategy                                 Query strategy to use for the simulation. Default is set to 'max'.
   --model_seed MODEL_SEED                          Seed of the models. Seed is set by default!
   --template TEMPLATE                              Overwrite template with template file path.
   --classifiers CLASSIFIERS [CLASSIFIERS ...]                           Classifiers to use

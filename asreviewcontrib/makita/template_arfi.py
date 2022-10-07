@@ -43,6 +43,7 @@ def render_jobs_arfi(
     scripts_folder="scripts",
     n_priors=10,
     init_seed=535,
+    query_strategy="max",
     model_seed=165,
     fp_template=None,
     job_file='jobs.sh',
@@ -91,6 +92,7 @@ def render_jobs_arfi(
         {
             "datasets": params,
             "init_seed": init_seed,
+            "query_strategy": query_strategy,
             "output_folder": output_folder,
             "scripts_folder": scripts_folder,
             "version": __version__,

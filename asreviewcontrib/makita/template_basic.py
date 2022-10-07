@@ -16,6 +16,7 @@ def render_jobs_basic(
     scripts_folder="scripts",
     n_runs=1,
     init_seed=535,
+    query_strategy="max",
     model_seed=165,
     fp_template=None,
     job_file=None,
@@ -63,6 +64,7 @@ def render_jobs_basic(
     return template.render(
         {
             "datasets": params,
+            "query_strategy": query_strategy,
             "output_folder": output_folder,
             "scripts_folder": scripts_folder,
             "version": __version__,
