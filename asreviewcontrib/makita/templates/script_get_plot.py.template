@@ -36,7 +36,7 @@ def get_plot_from_states(state_path, filename, legend):
             ax.lines[i*2].set_label(state_file.stem)
 
     if legend:
-        ax.legend()
+        ax.legend(loc=4, prop={'size': 8})
 
     fig.savefig(str(filename))
 
