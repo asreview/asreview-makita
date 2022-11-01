@@ -151,6 +151,11 @@ feature_extractions   ["doc2vec", "sbert", "tfidf"]
 impossible_models     [["nb", "doc2vec"], ["nb", "sbert"]]
 ```
 
+A command could look like this:
+```console
+asreview makita template multiple_models -f jobs.bat --classifiers "logistic", "nb" --feature_extractions "tfidf"
+```
+
 ## Advanced usage
 
 ### Create and use custom templates
