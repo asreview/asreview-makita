@@ -25,17 +25,20 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def get_plot_from_states(state_path, filename):
+def get_plot_from_states(state_path, filename, legend):
     """Generate an ASReview plot from state files."""
 
     fig, ax = plt.subplots()
 
-    for state_file in Path(state_path).glob("*.asreview"):
+    for i, state_file in enumerate(Path(state_path).glob("*.asreview")):
         with open_state(state_file) as state:
             plot_recall(ax, state)
+            ax.lines[i*2].set_label(state_file.stem)
+
+    if legend:
+        ax.legend()
 
     fig.savefig(str(filename))
-
 
 if __name__ == "__main__":
 
@@ -50,6 +53,10 @@ if __name__ == "__main__":
         "-o",
         type=str,
         help="Output location")
+    parser.add_argument(
+        "-l",
+        action='store_true',
+        help="Add a legend to the plot")
     args = parser.parse_args()
 
     # generate plot and save results
