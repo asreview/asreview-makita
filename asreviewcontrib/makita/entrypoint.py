@@ -229,7 +229,7 @@ def _parse_arguments_template(version):
         help="Seed of the priors. Seed is set by default!",
     )
     parser.add_argument(
-        "--seed", "--model_seed",
+        "--model_seed", "--seed",
         type=int,
         default=165,
         help="Seed of the models. Seed is set by default!",
