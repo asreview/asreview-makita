@@ -82,7 +82,7 @@ asreview makita template basic -f jobs.bat
 
 The following table gives an overview of the available templates. See [Getting started](#getting-started) for instructions on usage.
 
-> Note: If no seed is set with the template command, the default seed is used. While this is important for the reproducibility of the results, it may lead to long-term bias. To avoid seed-related bias across different simulation studies, a seed should be for the prior records and models.
+> Note: if no seed is set with the template command, Makita uses a default seed. Be aware that this is the same seed every time, in contrast to the standard ASReview functionality, which chooses a random seed if none is specified. Although this feature ensures the reproducibility of your results, it may lead to long-term bias when used for all your simulation studies. To avoid seed-related bias across different simulation studies, make sure to specify a seed for model initialization (`--model_seed`) and for prior selection (`--init_seed`). 
 
 ### Basic template
 
