@@ -44,7 +44,7 @@ def shell_to_batch(job):
 
 class MakitaEntryPoint(BaseEntryPoint):
     """Makita Entry Point."""
-    
+
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
