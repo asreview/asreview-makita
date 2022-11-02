@@ -12,12 +12,14 @@ from asreviewcontrib.makita.utils import get_file
 
 
 def get_template_fp(name):
+    """Get the template file path."""
 
     return Path(TEMPLATES_FP, f"template_{name}.txt.template")
 
 
 def is_valid_template(fp):
     if Path(fp).is_file():
+    """Check if the template file is valid."""
         return True
     else:
         raise ValueError(f"Template {fp} not found")
@@ -31,6 +33,8 @@ def _valid_job_file(param):
 
 
 def shell_to_batch(job):
+    """Convert a shell script to a batch script."""
+
     job = f'@ echo off\nCOLOR E0{job}'
     job = job.replace('#', '::')
     job = job.replace('/', '\\')
@@ -38,6 +42,8 @@ def shell_to_batch(job):
 
 
 class MakitaEntryPoint(BaseEntryPoint):
+    """Makita Entry Point."""
+
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
