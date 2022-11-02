@@ -18,8 +18,9 @@ def get_template_fp(name):
 
 
 def is_valid_template(fp):
-    if Path(fp).is_file():
     """Check if the template file is valid."""
+
+    if Path(fp).is_file():
         return True
     else:
         raise ValueError(f"Template {fp} not found")
@@ -43,7 +44,7 @@ def shell_to_batch(job):
 
 class MakitaEntryPoint(BaseEntryPoint):
     """Makita Entry Point."""
-
+    
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
