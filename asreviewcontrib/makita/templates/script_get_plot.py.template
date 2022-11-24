@@ -40,7 +40,7 @@ def get_plot_from_states(state_path, filename, legend):
             plot_recall(ax, state)
 
             # set the label
-            if legend:
+            if legend and not legend == "filename":
                 metadata = state.settings_metadata
                 if metadata["settings"][legend] not in labels: 
                     ax.lines[-2].set_label(metadata["settings"][legend])
