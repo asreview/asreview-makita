@@ -47,6 +47,9 @@ def get_plot_from_states(state_path, filename, legend):
                     labels.append(metadata["settings"][legend])
                 ax.lines[-2].set_color(colors[labels.index(metadata["settings"][legend])%len(colors)])
                 ax.legend(loc=4, prop={'size': 8})
+            elif legend == "filename":
+                ax.lines[-2].set_label(state_file.stem)
+                ax.legend(loc=4, prop={'size': 8})
 
     fig.savefig(str(filename))
 

@@ -199,7 +199,7 @@ Still, `get_plot.py` can be used on its own, as it is a standalone script. To us
 use `-s` (source) and `-o` (output) to tweak paths.
 
 Adding a legend to the plot can be done with the `-l` or `--show_legend` flag,
-with the labels clustered on any of the following: `'model', 'query_strategy', 'balance_strategy', 'feature_extraction', 'n_instances', 'stop_if', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param', 'feature_param', 'balance_param'`
+with the labels clustered on any of the following: `'filename', 'model', 'query_strategy', 'balance_strategy', 'feature_extraction', 'n_instances', 'stop_if', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param', 'feature_param', 'balance_param'`
 
 #### Available scripts
 
