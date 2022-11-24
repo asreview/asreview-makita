@@ -54,7 +54,7 @@ if __name__ == "__main__":
         type=str,
         help="Output location")
     parser.add_argument(
-        "-l",
+        "--show_legend", "-l",
         action='store_true',
         help="Add a legend to the plot")
     args = parser.parse_args()
