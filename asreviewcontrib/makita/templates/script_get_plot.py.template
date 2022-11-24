@@ -60,5 +60,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # generate plot and save results
-    get_plot_from_states(args.s, args.o, args.l)
+    get_plot_from_states(args.s, args.o, legend=args.show_legend)
 
