@@ -42,10 +42,11 @@ def get_plot_from_states(state_path, filename, legend):
             # set the label
             if legend and not legend == "filename":
                 metadata = state.settings_metadata
-                if metadata["settings"][legend] not in labels:
-                    ax.lines[-2].set_label(metadata["settings"][legend])
-                    labels.append(metadata["settings"][legend])
-                ax.lines[-2].set_color(colors[labels.index(metadata["settings"][legend]) % len(colors)])
+                label = metadata["settings"][legend]
+                if label not in labels:
+                    ax.lines[-2].set_label(label)
+                    labels.append(label)
+                ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
                 ax.legend(loc=4, prop={'size': 8})
             elif legend == "filename":
                 ax.lines[-2].set_label(state_file.stem)
