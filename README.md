@@ -191,6 +191,12 @@ For example, the results from *ASReview datatools* are merged via the script `me
 
 Use `-s`  (source) and `-o` (output) to tweak paths.
 
+Some scripts are added automatically to the folder, as they are part of the
+template. For example, the `get_plot.py` script is added to the generated folder
+when using any template, as it is used to generate the plots. Still,
+`get_plot.py` can be used on its own, as it is a standalone script. To use it,
+use `-s` (source) and `-o` (output) to tweak paths and `--show_legend` to add a legend to the plot.
+
 #### Available scripts
 
 The following scripts are available:
