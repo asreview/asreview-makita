@@ -151,7 +151,9 @@ feature_extractions   ["doc2vec", "sbert", "tfidf"]
 impossible_models     [["nb", "doc2vec"], ["nb", "sbert"]]
 ```
 
-A command could look like this:
+>Example command: If you want to generate a multiple models template with classifiers `logistic`
+and `nb`, and feature extraction `tfidf`, you can use the following command:
+
 ```console
 asreview makita template multiple_models --classifiers logistic nb --feature_extractions tfidf
 ```
