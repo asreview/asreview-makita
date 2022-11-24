@@ -25,7 +25,7 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def get_plot_from_states(state_path, filename, legend):
+def get_plot_from_states(state_path, filename, legend=False):
     """Generate an ASReview plot from state files."""
 
     fig, ax = plt.subplots()
