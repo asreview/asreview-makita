@@ -43,6 +43,7 @@ def get_plot_from_states(state_path, filename, legend):
             if legend == "filename":
                 ax.lines[-2].set_label(state_file.stem)
                 ax.legend(loc=4, prop={'size': 8})
+                continue
             
             if legend:
                 metadata = state.settings_metadata
