@@ -13,11 +13,12 @@ from asreviewcontrib.makita.utils import get_file
 def render_jobs_multiple_models(
     datasets,
     output_folder="output",
+    n_runs=1,
     scripts_folder="scripts",
     init_seed=535,
     model_seed=165,
     all_classifiers=["logistic", "nb", "rf", "svm"],
-    all_feature_extractions=["doc2vec", "sbert", "tfidf"],
+    all_feature_extractors=["doc2vec", "sbert", "tfidf"],
     impossible_models=[["nb", "doc2vec"], ["nb", "sbert"]],
     fp_template=None,
     job_file='jobs.sh',
@@ -65,10 +66,11 @@ def render_jobs_multiple_models(
         {
             "datasets": params,
             "output_folder": output_folder,
+            "n_runs": n_runs,
             "scripts_folder": scripts_folder,
             "version": __version__,
             "all_classifiers": all_classifiers,
-            "all_feature_extractions": all_feature_extractions,
+            "all_feature_extractors": all_feature_extractors,
             "impossible_models": impossible_models,
         }
     )

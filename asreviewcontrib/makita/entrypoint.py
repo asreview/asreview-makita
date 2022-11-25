@@ -77,7 +77,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser = _parse_arguments_template(self.version)
 
         # template specific arguments
-        if args_program.name in ["basic"]:
+        if args_program.name in ["basic", "multiple_models"]:
             parser.add_argument("--n_runs",
                                 type=int,
                                 default=1,
@@ -95,10 +95,10 @@ class MakitaEntryPoint(BaseEntryPoint):
                                 default=["logistic", "nb", "rf", "svm"],
                                 help="Classifiers to use"
                                 )
-            parser.add_argument("--feature_extractions",
+            parser.add_argument("--feature_extractors",
                                 nargs="+",
                                 default=["doc2vec", "sbert", "tfidf"],
-                                help="Feature extractions to use"
+                                help="Feature extractors to use"
                                 )
             parser.add_argument("--impossible_models",
                                 nargs="+",
@@ -149,10 +149,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             job = render_jobs_multiple_models(
                 datasets,
                 output_folder=Path(args.o),
+                n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 all_classifiers=args.classifiers,
-                all_feature_extractions=args.feature_extractions,
+                all_feature_extractors=args.feature_extractors,
                 impossible_models=args.impossible_models,
                 fp_template=fp_template,
                 job_file=args.f,
