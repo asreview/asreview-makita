@@ -40,16 +40,40 @@ def get_plot_from_states(state_path, filename, legend):
             plot_recall(ax, state)
 
             # set the label
-            if legend and not legend == "filename":
+            if legend == "filename":
+                ax.lines[-2].set_label(state_file.stem)
+                ax.legend(loc=4, prop={'size': 8})
+
+            elif legend == "model":
                 metadata = state.settings_metadata
-                label = metadata["settings"][legend]
+                label = str(metadata["settings"]["model"] + " - " +
+                            metadata["settings"]["feature_extraction"])
                 if label not in labels:
                     ax.lines[-2].set_label(label)
                     labels.append(label)
                 ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
                 ax.legend(loc=4, prop={'size': 8})
-            elif legend == "filename":
-                ax.lines[-2].set_label(state_file.stem)
+
+            elif legend == "classifier":
+                metadata = state.settings_metadata
+                label = metadata["settings"]["model"]
+                if label not in labels:
+                    ax.lines[-2].set_label(label)
+                    labels.append(label)
+                ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
+                ax.legend(loc=4, prop={'size': 8})
+
+            elif legend:
+                metadata = state.settings_metadata
+                # try to get the label from the state file
+                try:
+                    label = metadata["settings"][legend]
+                except KeyError as exc:
+                    raise ValueError(f"Legend {legend} not found in state file settings.") from exc
+                if label not in labels:
+                    ax.lines[-2].set_label(label)
+                    labels.append(label)
+                ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
                 ax.legend(loc=4, prop={'size': 8})
 
     fig.savefig(str(filename))
