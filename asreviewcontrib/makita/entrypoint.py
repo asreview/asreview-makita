@@ -30,7 +30,7 @@ def _valid_job_file(param):
     return param
 
 
-def shell_to_batch(job):
+def _shell_to_batch(job):
     job = f'@ echo off\nCOLOR E0{job}'
     job = job.replace('#', '::')
     job = job.replace('/', '\\')
@@ -171,7 +171,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
         if Path(args.f).suffix.lower() == '.bat':
-            job = shell_to_batch(job)
+            job = _shell_to_batch(job)
 
         # store result in output folder
         Path(args.f).parent.mkdir(parents=True, exist_ok=True)
