@@ -28,7 +28,7 @@ The performance on the following datasets is evaluated:
 sh jobs.sh
 ```{% else %}To start the simulation, run the `{{ job_file }}` file.{% endif %}
 
-{% if template_name != 'custom' %}## structure
+{% if template_name != 'custom' %}## Structure
 
 The following files are found in this project:
 
