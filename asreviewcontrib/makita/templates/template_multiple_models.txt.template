@@ -25,6 +25,7 @@ mkdir {{ output_folder }}/simulation
 
 # Create output folder
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/
+mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics
 
 # Collect descriptives about the dataset {{ dataset.input_file_stem }}
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
@@ -44,7 +45,7 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 # Skipped {{ classifier }} + {{ feature_extraction }} model{% else %}
 # Classifier = {{ classifier }}, Feature extraction = {{ feature_extraction }} , Query strategy = max
 asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed }} --seed {{ dataset.model_seed }}
-asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.json{% endif %}
+asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.json{% endif %}
 
 {% endfor %}
 {% endfor %}
