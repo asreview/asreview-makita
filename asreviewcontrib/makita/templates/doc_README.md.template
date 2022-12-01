@@ -46,8 +46,9 @@ The following files are found in this project:
     |   |       ├── 📂state_files
     |   |       |   ├── 📜sim_{{ dataset.stem }}_`x`.asreview
     |   |       |   └── 📜...
-    |   |       ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
-    |   |       ├── 📜...
+    |   |       ├── 📂metrics
+    |   |       ├   ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
+    |   |       |   └── 📜...
     |   |       └── 📜plot_recall_{{ dataset.stem }}.png{% endfor %}
     │   └── 📂tables
     |       ├── 📜data_descriptives.csv

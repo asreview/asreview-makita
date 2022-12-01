@@ -7,7 +7,7 @@ Example
 
 or
 
-> python scripts/merge_metrics.py -s output/simulation/*/simulation_metrics_*.json
+> python scripts/merge_metrics.py -s output/simulation/*/metrics/simulation_metrics_*.json
 
 or
 
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics_sim_*.json",
+        default="output/simulation/*/metrics/metrics_sim_*.json",
         help="states location")
     parser.add_argument(
         "-o",
