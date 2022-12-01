@@ -117,6 +117,10 @@ class MakitaEntryPoint(BaseEntryPoint):
         datasets = list(Path(args.s).glob("*.csv")) \
             + list(Path(args.s).glob("*.ris")) + list(Path(args.s).glob("*.xlsx"))
 
+        # throw exception if no datasets are found
+        if len(datasets) == 0:
+            raise ValueError("No datasets found in the specified folder.")
+
         # create output folder
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
