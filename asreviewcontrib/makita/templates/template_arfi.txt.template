@@ -6,6 +6,7 @@ scripts:
   - get_plot.py
   - merge_descriptives.py
   - merge_metrics.py
+  - merge_tds.py
 
 docs:
   - README.md
@@ -50,3 +51,4 @@ python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dat
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py
 python {{ scripts_folder }}/merge_metrics.py
+python {{ scripts_folder }}/merge_tds.py
