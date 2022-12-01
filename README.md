@@ -209,6 +209,7 @@ The following scripts are available:
 - get_settings_from_state.py
 - merge_descriptives.py
 - merge_metrics.py
+- merge_tds.py
 - split_data_with_multiple_labels.py [DEPRECATED]
 
 ## License
