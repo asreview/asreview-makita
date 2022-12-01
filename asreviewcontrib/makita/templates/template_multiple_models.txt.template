@@ -38,19 +38,20 @@ asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
-{% for feature_extraction in all_feature_extractions %}
+{% for feature_extraction in all_feature_extractors %}
 {% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
-# Skipped {{ classifier }} + {{ feature_extraction }} model{% else %}
-# Classifier = {{ classifier }}, Feature extraction = {{ feature_extraction }} , Query strategy = max
-asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed }} --seed {{ dataset.model_seed }}
-asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}.json{% endif %}
-
+# Skipped {{ classifier }} + {{ feature_extraction }} model
+{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }} , Query strategy = max
+{% for run in range(n_runs) %}
+asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }}
+asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.json
+{% endfor %}{% endif %}
 {% endfor %}
 {% endfor %}
 
 # Generate plot for dataset
-python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/plot_recall_sim_{{ dataset.input_file_stem }}.png
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/plot_recall_sim_{{ dataset.input_file_stem }}.png --show_legend model
 {% endfor %}
 
 # Merge descriptives and metrics

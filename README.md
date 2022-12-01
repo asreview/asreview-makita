@@ -139,7 +139,7 @@ optional arguments:
   --model_seed MODEL_SEED                          Seed of the models. Seed is set by default!
   --template TEMPLATE                              Overwrite template with template file path.
   --classifiers CLASSIFIERS [CLASSIFIERS ...]                           Classifiers to use
-  --feature_extractions FEATURE_EXTRACTIONS [FEATURE_EXTRACTIONS ...]   Feature extractions to use
+  --feature_extractors FEATURE_EXTRACTOR [FEATURE_EXTRACTORS ...]   Feature extractors to use
   --impossible_models IMPOSSIBLE_MODELS [IMPOSSIBLE_MODELS ...]         Model combinations to exclude
 ```
 
@@ -147,8 +147,15 @@ The default models are:
 
 ```python
 classifiers           ["logistic", "nb", "rf", "svm"]
-feature_extractions   ["doc2vec", "sbert", "tfidf"]
+feature_extractors   ["doc2vec", "sbert", "tfidf"]
 impossible_models     [["nb", "doc2vec"], ["nb", "sbert"]]
+```
+
+>Example command: If you want to generate a multiple models template with classifiers `logistic`
+and `nb`, and feature extraction `tfidf`, you can use the following command:
+
+```console
+asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf
 ```
 
 ## Advanced usage
@@ -183,6 +190,16 @@ For example, the results from *ASReview datatools* are merged via the script `me
 3. Run `python scripts/merge_descriptives.py`
 
 Use `-s`  (source) and `-o` (output) to tweak paths.
+
+Some scripts are added automatically to the folder, as they are part of the
+template. For example, the `get_plot.py` script is added to the generated folder
+when using any template, as it is used to generate the plots. 
+
+Still, `get_plot.py` can be used on its own, as it is a standalone script. To use it,
+use `-s` (source) and `-o` (output) to tweak paths.
+
+Adding a legend to the plot can be done with the `-l` or `--show_legend` flag,
+with the labels clustered on any of the following: `'filename', 'model', 'query_strategy', 'balance_strategy', 'feature_extraction', 'n_instances', 'stop_if', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param', 'feature_param', 'balance_param'`
 
 #### Available scripts
 
