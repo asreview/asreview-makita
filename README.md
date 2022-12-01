@@ -139,7 +139,7 @@ optional arguments:
   --model_seed MODEL_SEED                          Seed of the models. Seed is set by default!
   --template TEMPLATE                              Overwrite template with template file path.
   --classifiers CLASSIFIERS [CLASSIFIERS ...]                           Classifiers to use
-  --feature_extraction FEATURE_EXTRACTION [FEATURE_EXTRACTION ...]   Feature extractions to use
+  --feature_extractions FEATURE_EXTRACTIONS [FEATURE_EXTRACTIONS ...]   Feature extractions to use
   --impossible_models IMPOSSIBLE_MODELS [IMPOSSIBLE_MODELS ...]         Model combinations to exclude
 ```
 
@@ -147,7 +147,7 @@ The default models are:
 
 ```python
 classifiers           ["logistic", "nb", "rf", "svm"]
-feature_extraction   ["doc2vec", "sbert", "tfidf"]
+feature_extractions   ["doc2vec", "sbert", "tfidf"]
 impossible_models     [["nb", "doc2vec"], ["nb", "sbert"]]
 ```
 
@@ -155,7 +155,7 @@ impossible_models     [["nb", "doc2vec"], ["nb", "sbert"]]
 and `nb`, and feature extraction `tfidf`, you can use the following command:
 
 ```console
-asreview makita template multiple_models --classifiers logistic nb --feature_extraction tfidf
+asreview makita template multiple_models --classifiers logistic nb --feature_extractions tfidf
 ```
 
 ## Advanced usage

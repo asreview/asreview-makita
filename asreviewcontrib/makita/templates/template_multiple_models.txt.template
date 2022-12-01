@@ -38,7 +38,7 @@ asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
-{% for feature_extraction in all_feature_extraction %}
+{% for feature_extraction in all_feature_extractors %}
 {% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
 # Skipped {{ classifier }} + {{ feature_extraction }} model

@@ -95,7 +95,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                                 default=["logistic", "nb", "rf", "svm"],
                                 help="Classifiers to use"
                                 )
-            parser.add_argument("--feature_extraction",
+            parser.add_argument("--feature_extractors",
                                 nargs="+",
                                 default=["doc2vec", "sbert", "tfidf"],
                                 help="Feature extractors to use"
@@ -153,7 +153,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 all_classifiers=args.classifiers,
-                all_feature_extraction=args.feature_extraction,
+                all_feature_extractors=args.feature_extractors,
                 impossible_models=args.impossible_models,
                 fp_template=fp_template,
                 job_file=args.f,

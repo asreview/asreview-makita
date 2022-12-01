@@ -18,7 +18,7 @@ def render_jobs_multiple_models(
     init_seed=535,
     model_seed=165,
     all_classifiers=["logistic", "nb", "rf", "svm"],
-    all_feature_extraction=["doc2vec", "sbert", "tfidf"],
+    all_feature_extractors=["doc2vec", "sbert", "tfidf"],
     impossible_models=[["nb", "doc2vec"], ["nb", "sbert"]],
     fp_template=None,
     job_file='jobs.sh',
@@ -70,7 +70,7 @@ def render_jobs_multiple_models(
             "scripts_folder": scripts_folder,
             "version": __version__,
             "all_classifiers": all_classifiers,
-            "all_feature_extraction": all_feature_extraction,
+            "all_feature_extractors": all_feature_extractors,
             "impossible_models": impossible_models,
         }
     )
