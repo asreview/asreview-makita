@@ -47,10 +47,11 @@ def get_plot_from_states(state_path, filename, legend=None):
                 metadata = state.settings_metadata
 
                 if legend == "model":
-                    label = metadata["settings"]["model"] + " - " +\
-                            metadata["settings"]["feature_extraction"] +\
-                            " - " + metadata["settings"]["balance_strategy"] +\
-                            " - " + metadata["settings"]["query_strategy"]
+                    label = " - ".join(
+                            [metadata["settings"]["model"],
+                             metadata["settings"]["feature_extraction"],
+                             metadata["settings"]["balance_strategy"],
+                             metadata["settings"]["query_strategy"]])
                 elif legend == "classifier":
                     label = metadata["settings"]["model"]
                 else:
