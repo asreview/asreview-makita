@@ -54,3 +54,5 @@ python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ da
 
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py
+python {{ scripts_folder }}/merge_metrics.py
+
