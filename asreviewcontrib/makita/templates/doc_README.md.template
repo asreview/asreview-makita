@@ -56,7 +56,9 @@ The following files are found in this project:
     |   |       └── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}
     │   └── 📂tables
     |       ├── 📜data_descriptives.csv
-    |       └── 📜data_descriptives.xlsx
+    |       ├── 📜data_descriptives.xlsx
+    |       ├── 📜data_metrics.csv
+    |       └── 📜data_metrics.xlsx
     ├── 📂scripts{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
