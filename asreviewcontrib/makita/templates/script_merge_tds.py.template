@@ -34,11 +34,12 @@ def create_table_state_tds(metrics):
     for metric in metrics:
         with open(metric) as f:
             i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']
-            values.extend(i)
+            values.append(pd.DataFrame(i, columns=['row_number', f'td - {Path(metric).name}']))
 
-    df = pd.DataFrame(values, columns=['record_id', 'td'])
-    return df.groupby('record_id').mean()
-
+    values = [df.set_index('row_number') for df in values]
+    values = pd.concat(values, axis=1)
+    values['td - average'] = values.mean(axis=1)
+    return values.sort_values(by='td - average')
 
 if __name__ == "__main__":
 
