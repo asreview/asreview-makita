@@ -48,7 +48,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics/metrics_sim_*.json",
+        default="output/simulation/*/metrics/",
         help="metrics location")
     parser.add_argument(
         "-o",
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load metrics
-    metrics = glob.glob(args.s)
+    metrics = glob.glob(args.s + "*")
 
     # merge results
     result = create_table_state_tds(metrics)
