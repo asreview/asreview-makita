@@ -55,8 +55,8 @@ asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/st
 
 :: Generate plot and tables for dataset
 python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/plot_recall_sim_{{ dataset.input_file_stem }}.png --show_legend model
-python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/data_metrics.csv
-python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/data_tds.csv
+python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/{{ dataset.input_file_stem }}_metrics.csv
+python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/{{ dataset.input_file_stem }}_tds.csv
 {% endfor %}
 
 # Merge descriptives and metrics

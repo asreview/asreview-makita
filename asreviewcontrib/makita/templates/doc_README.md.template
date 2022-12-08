@@ -49,10 +49,10 @@ The following files are found in this project:
     |   |       ├── 📂metrics
     |   |       ├   ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
     |   |       |   └── 📜...
-    |   |       ├── 📜data_metrics.csv
-    |   |       ├── 📜data_metrics.xlsx
-    |   |       ├── 📜data_tds.csv
-    |   |       ├── 📜data_tds.xlsx
+    |   |       ├── 📜{{ dataset.stem }}_metrics.csv
+    |   |       ├── 📜{{ dataset.stem }}_metrics.xlsx
+    |   |       ├── 📜{{ dataset.stem }}_tds.csv
+    |   |       ├── 📜{{ dataset.stem }}_tds.xlsx
     |   |       └── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}
     │   └── 📂tables
     |       ├── 📜data_descriptives.csv
