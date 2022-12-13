@@ -29,7 +29,7 @@ What Makita does not do:
 - Being a black-box
 - Writing your paper
 
-For a tutorial on using Makita we refer to the [online exercise](https://github.com/asreview/asreview-academy/blob/main/introducing-simulation-mode/README.md).
+For a tutorial on using Makita we refer to the [Exercise on Using the ASReview Simulation Mode](https://github.com/asreview/asreview-academy/blob/main/introducing-simulation-mode/README.md).
 
 ## Installation
 
