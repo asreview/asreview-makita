@@ -32,31 +32,33 @@ sh jobs.sh
 
 The following files are found in this project:
 
-    📦
+    📦Makita
     ├── 📂data{% for dataset in datasets %}
     │   ├── 📜{{ dataset.name }}{% endfor %}
     ├── 📂{{ output_folder }}
+    │   |── 📂figures{% for dataset in datasets %}
+    |   |   ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
+    |   |   ├── 📈wordcloud_{{ dataset.stem }}.png
+    |   |   ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
+    |   |   ├── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}
+    |   |   └── 📈...
     │   ├── 📂simulation{% for dataset in datasets %}
     |   |   └── 📂{{ dataset.stem }}
     |   |       ├── 📂descriptives
-    |   |       |   ├── 📜data_stats_{{ dataset.stem }}.json
-    |   |       |   ├── 📜wordcloud_{{ dataset.stem }}.png
-    |   |       |   ├── 📜wordcloud_relevant_{{ dataset.stem }}.png
-    |   |       |   └── 📜wordcloud_irrelevant_{{ dataset.stem }}.png
+    |   |       |   └── 📜data_stats_{{ dataset.stem }}.json
     |   |       ├── 📂state_files
     |   |       |   ├── 📜sim_{{ dataset.stem }}_`x`.asreview
     |   |       |   └── 📜...
-    |   |       ├── 📂metrics
-    |   |       ├   ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
-    |   |       |   └── 📜...
-    |   |       ├── 📜sim_{{ dataset.stem }}_metrics.csv
-    |   |       ├── 📜sim_{{ dataset.stem }}_metrics.xlsx
-    |   |       ├── 📜sim_{{ dataset.stem }}_tds.csv
-    |   |       ├── 📜sim_{{ dataset.stem }}_tds.xlsx
-    |   |       └── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}
+    |   |       └── 📂metrics
+    |   |           ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
+    |   |           └── 📜...{% endfor %}
     │   └── 📂tables
     |       ├── 📜data_descriptives.csv
-    |       ├── 📜data_descriptives.xlsx
+    |       ├── 📜data_descriptives.xlsx{% for dataset in datasets %}
+    |       ├── 📜tds_sim_{{ dataset.stem }}.csv
+    |       ├── 📜tds_sim_{{ dataset.stem }}.xlsx{% endfor %}{% for dataset in datasets %}
+    |       ├── 📜metrics_sim_{{ dataset.stem }}_metrics.csv
+    |       ├── 📜metrics_sim_{{ dataset.stem }}_metrics.xlsx{% endfor %}
     |       ├── 📜metrics_summary.csv
     |       └── 📜metrics_summary.xlsx
     ├── 📂scripts{% for script in template_scripts %}
