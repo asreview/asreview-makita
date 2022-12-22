@@ -11,7 +11,7 @@ The template is described as: '{{ template_name_long }}'.
 This project depends on Python 3.7 or later (python.org/download), and [ASReview](https://asreview.nl/download/). Install the following dependencies to run the simulation and analysis in this project.
 
 ```sh
-pip install asreview asreview-insights asreview-datatools
+pip install asreview>=1.0 asreview-insights>=1.1.2 asreview-datatools
 ```
 
 ## Data
@@ -32,32 +32,37 @@ sh jobs.sh
 
 The following files are found in this project:
 
-    📦
+    📦Makita
+    ├── 📜README.md
+    ├── 📜{{ job_file }}
     ├── 📂data{% for dataset in datasets %}
     │   ├── 📜{{ dataset.name }}{% endfor %}
-    ├── 📂{{ output_folder }}
-    │   ├── 📂simulation{% for dataset in datasets %}
-    |   |   └── 📂{{ dataset.stem }}
-    |   |       ├── 📂descriptives
-    |   |       |   ├── 📜data_stats_{{ dataset.stem }}.json
-    |   |       |   ├── 📜wordcloud_{{ dataset.stem }}.png
-    |   |       |   ├── 📜wordcloud_relevant_{{ dataset.stem }}.png
-    |   |       |   └── 📜wordcloud_irrelevant_{{ dataset.stem }}.png
-    |   |       ├── 📂state_files
-    |   |       |   ├── 📜sim_{{ dataset.stem }}_`x`.asreview
-    |   |       |   └── 📜...
-    |   |       ├── 📂metrics
-    |   |       ├   ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
-    |   |       |   └── 📜...
-    |   |       └── 📜plot_recall_{{ dataset.stem }}.png{% endfor %}
-    │   └── 📂tables
-    |       ├── 📜data_descriptives.csv
-    |       ├── 📜data_descriptives.xlsx
-    |       ├── 📜data_metrics.csv
-    |       └── 📜data_metrics.xlsx
     ├── 📂scripts{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
-    ├── 📜{{ job_file }}
-    └── 📜README.md
+    └── 📂{{ output_folder }}
+        ├── 📂simulation{% for dataset in datasets %}
+        |   └── 📂{{ dataset.stem }}
+        |       ├── 📂descriptives
+        |       |   └── 📜data_stats_{{ dataset.stem }}.json
+        |       ├── 📂state_files
+        |       |   ├── 📜sim_{{ dataset.stem }}_`x`.asreview
+        |       |   └── 📜...
+        |       └── 📂metrics
+        |           ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
+        |           └── 📜...{% endfor %}
+        ├── 📂tables
+        |   ├── 📜data_descriptives.csv
+        |   ├── 📜data_descriptives.xlsx{% for dataset in datasets %}
+        |   ├── 📜tds_sim_{{ dataset.stem }}.csv
+        |   ├── 📜tds_sim_{{ dataset.stem }}.xlsx{% endfor %}{% for dataset in datasets %}
+        |   ├── 📜metrics_sim_{{ dataset.stem }}_metrics.csv
+        |   ├── 📜metrics_sim_{{ dataset.stem }}_metrics.xlsx{% endfor %}
+        |   ├── 📜metrics_summary.csv
+        |   └── 📜metrics_summary.xlsx
+        └── 📂figures{% for dataset in datasets %}
+            ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
+            ├── 📈wordcloud_{{ dataset.stem }}.png
+            ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
+            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}
 {%endif %}
