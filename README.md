@@ -1,5 +1,7 @@
 # ASReview Makita
 
+[![DOI](https://zenodo.org/badge/DOI/x.x/zenodo.x.svg)](https://doi.org/x.x/zenodo.x)
+
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT** **A**utomatic) is a workflow generator for simulation studies using the command line interface of [ASReview
 LAB](https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita can be used to effortlessly generate the framework and code for your simulation study.
 
