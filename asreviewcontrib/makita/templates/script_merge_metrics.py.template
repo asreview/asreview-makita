@@ -62,7 +62,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/metrics_summary.csv",
+        default="output/tables/metrics_sim_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
