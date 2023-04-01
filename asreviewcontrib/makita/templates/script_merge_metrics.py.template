@@ -35,8 +35,6 @@ def create_table_state_metrics(states):
             data = json.load(f)['data']['items']
             values = {}
             values['file_name'] = Path(state).name
-            values['dataset'] = Path(state).parent.name
-            values['run_id'] = str.split(Path(state).stem, '_')[-1]
             for item in data:
                 if item['id'] == 'td':
                     continue
@@ -48,7 +46,7 @@ def create_table_state_metrics(states):
                     values[item['id']] = item['value']
             metrics.append(values)
 
-    return pd.DataFrame(metrics, index=[Path(state).stem for state in states])
+    return pd.DataFrame(metrics)
 
 
 if __name__ == "__main__":

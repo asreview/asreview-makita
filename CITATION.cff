@@ -1,0 +1,67 @@
+cff-version: 1.2.0
+title: >-
+  ASReview Makita: a workflow generator for simulation
+  studies using the command line interface of ASReview LAB
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Jelle
+    family-names: Teijema
+    email: j.j.teijema@uu.nl
+    affiliation: Utrecht University
+    orcid: 'https://orcid.org/0000-0001-9282-4311'
+  - given-names: Rens
+    family-names: Van de Schoot
+    email: a.g.j.vandeschoot@uu.nl
+    affiliation: Utrecht University
+    orcid: 'https://orcid.org/0000-0001-7736-2091'
+  - given-names: Gerbrich
+    family-names: Ferdinands
+    orcid: 'https://orcid.org/0000-0002-4998-3293'
+  - given-names: Peter
+    family-names: Lombaers
+    affiliation: IDFuse
+    orcid: 'https://orcid.org/0000-0002-8780-9376'
+  - given-names: Jonathan
+    family-names: De Bruin
+    email: j.debruin1@uu.nl
+    affiliation: Utrecht University
+    orcid: 'https://orcid.org/0000-0002-4297-0502'
+repository-code: 'https://github.com/asreview/asreview-makita'
+url: 'https://asreview.ai/'
+repository-artifact: 'https://pypi.org/project/asreview-makita/'
+abstract: >-
+  ASReviews' Makita (MAKe IT Automatic) is a workflow
+  generator for simulation studies using the command line
+  interface of ASReview LAB. Makita can be used to
+  effortlessly generate the framework and code for your
+  simulation study.
+
+
+  A simulation involves mimicking the screening process for
+  a systematic review of a human in interaction with an
+  Active learning model (i.e., a combination of a feature
+  extractor, classifier, balancing method, and query
+  strategy). The simulation reenacts the screening process
+  as if a researcher were using active learning. The
+  performance of one or multiple model(s) can then be
+  measured by performance metrics, such as the Work Saved
+  over Sampling, recall at a given point in the screening
+  process, or the average time to discover a relevant
+  record.
+
+
+  Using Makita templates, different study structures can be
+  generated to fit the needs of your very own study. If your
+  study requires a unique template, you can create a new one
+  and use it instead.
+keywords:
+  - systematic-review
+  - simulation
+  - asreview
+  - machine-learning
+  - active-learning
+  - template
+license: MIT
