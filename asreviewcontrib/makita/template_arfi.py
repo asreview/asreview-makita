@@ -70,22 +70,25 @@ def render_jobs_arfi(
     # open template TODO@{Replace by more sustainable module}
     template = ConfigTemplate(fp_template)
 
-    for s in template.scripts:
-        t_script = get_file(s, "script")
-        export_fp = Path(scripts_folder, s)
-        add_file(t_script, export_fp)
+    # check if template.script is not NoneType
+    if template.scripts is not None:
+        for s in template.scripts:
+            t_script = get_file(s, "script")
+            export_fp = Path(scripts_folder, s)
+            add_file(t_script, export_fp)
 
-    for s in template.docs:
-        t_docs = get_file(s,
-                          "doc",
-                          datasets=datasets,
-                          template_name=template.name if template.name == "ARFI" else "custom", # NOQA
-                          template_name_long=template.name_long,
-                          template_scripts=template.scripts,
-                          output_folder=output_folder,
-                          job_file=job_file,
-                          )
-        add_file(t_docs, s)
+    if template.docs is not None:
+        for s in template.docs:
+            t_docs = get_file(s,
+                            "doc",
+                            datasets=datasets,
+                            template_name=template.name if template.name == "ARFI" else "custom", # NOQA
+                            template_name_long=template.name_long,
+                            template_scripts=template.scripts,
+                            output_folder=output_folder,
+                            job_file=job_file,
+                            )
+            add_file(t_docs, s)
 
     return template.render(
         {
