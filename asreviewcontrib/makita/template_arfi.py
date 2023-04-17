@@ -55,7 +55,10 @@ def render_jobs_arfi(
         check_filename_dataset(fp_dataset)
 
         # render priors
-        priors = get_priors(fp_dataset, init_seed=init_seed + i, n_priors=n_priors)
+        priors = get_priors(fp_dataset,
+                            init_seed=init_seed + i,
+                            n_priors=n_priors
+                            )
 
         # params for single dataset
         params.append(
@@ -80,14 +83,14 @@ def render_jobs_arfi(
     if template.docs is not None:
         for s in template.docs:
             t_docs = get_file(s,
-                            "doc",
-                            datasets=datasets,
-                            template_name=template.name if template.name == "ARFI" else "custom", # NOQA
-                            template_name_long=template.name_long,
-                            template_scripts=template.scripts,
-                            output_folder=output_folder,
-                            job_file=job_file,
-                            )
+                              "doc",
+                              datasets=datasets,
+                              template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
+                              template_name_long=template.name_long,
+                              template_scripts=template.scripts,
+                              output_folder=output_folder,
+                              job_file=job_file,
+                              )
             add_file(t_docs, s)
 
     return template.render(
