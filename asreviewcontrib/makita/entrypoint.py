@@ -102,7 +102,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                                 )
             parser.add_argument("--impossible_models",
                                 nargs="+",
-                                default=[["nb", "doc2vec"], ["nb", "sbert"]],
+                                default=["nb,doc2vec", "nb,sbert"],
                                 help="Model combinations to exclude"
                                 )
 
