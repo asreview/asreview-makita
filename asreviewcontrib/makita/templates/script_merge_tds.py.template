@@ -41,7 +41,7 @@ def create_table_state_tds(metrics):
             pivoted = pivoted.reset_index()
     return pivoted
 
-def split_file_paths(file_paths):
+def _split_file_paths(file_paths):
     simulations = {}
     for path in file_paths:
         dirname = os.path.dirname(path)
