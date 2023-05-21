@@ -58,7 +58,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics/metrics_sim_*.json", 
+        default="output/simulation/*/metrics/metrics_sim_*.json",
         help="metrics location")
     parser.add_argument(
         "-o",
