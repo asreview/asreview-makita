@@ -216,6 +216,12 @@ The following scripts are available:
 - merge_tds.py
 - split_data_with_multiple_labels.py [DEPRECATED]
 
+#### Run Makita via Docker
+To run Makita template with Docker use following command:  
+``` docker
+docker run -v $PWD:/app ghcr.io/asreview/asreview makita <YOUR COMMAND>
+```
+
 ## License
 
 This extension is published under the [MIT license](/LICENSE).
