@@ -26,7 +26,7 @@ def get_priors(dataset, init_seed, n_priors):
     np.random.seed(init_seed)
 
     # sample n_priors irrelevant records
-    prior_irrelevant = list(np.random.choice(relevant_irrecord_ids, n_priors))
+    prior_irrelevant = list(np.random.choice(relevant_irrecord_ids, n_priors, replace=False))
 
     priors = []
 
