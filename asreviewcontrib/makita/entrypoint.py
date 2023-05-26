@@ -25,8 +25,8 @@ def is_valid_template(fp):
 
 def _valid_job_file(param):
     ext = Path(param).suffix
-    if ext.lower() not in ('.sh', '.bat'):
-        raise argparse.ArgumentTypeError('File must have a .sh or .bat extension')
+    if ext.lower() not in ('.sh', '.bat', '.yaml'):
+        raise argparse.ArgumentTypeError('File must have a .sh, .bat, .yaml extension')
     return param
 
 
