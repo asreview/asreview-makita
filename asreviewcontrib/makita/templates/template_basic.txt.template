@@ -44,7 +44,7 @@ asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordc
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for run in range(dataset.n_runs) %}
-asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ run}}.asreview --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed + run }}
+asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ run}}.asreview --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed + run }}
 asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ run }}.json
 {% endfor %}
 
