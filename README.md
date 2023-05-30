@@ -162,6 +162,12 @@ and `nb`, and feature extraction `tfidf`, you can use the following command:
 asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf
 ```
 
+>If you want to specify certain combinations of classifiers and feature extractors that should not be used, you can use the `--impossible_models` option. For instance, if you want to exclude the combinations of `nb` with `doc2vec` and `logistic` with `tfidf`, use the following command:
+
+```console
+asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf doc2vec --impossible_models nb,doc2vec logistic,tfidf
+```
+
 ## Advanced usage
 
 ### Create and use custom templates
