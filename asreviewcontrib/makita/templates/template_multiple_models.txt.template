@@ -7,7 +7,7 @@ scripts:
   - merge_descriptives.py
   - merge_metrics.py
   - merge_tds.py
-  - ATD_calculations.py
+  - atd_calculations.py
 
 docs:
   - README.md
@@ -62,5 +62,5 @@ python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dat
 python {{ scripts_folder }}/merge_descriptives.py
 python {{ scripts_folder }}/merge_metrics.py
 python {{ scripts_folder }}/merge_tds.py
-python {{ scripts_folder }}/ATD_calculations.py
+python {{ scripts_folder }}/atd_calculations.py
 
