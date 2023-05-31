@@ -7,7 +7,7 @@ scripts:
   - merge_descriptives.py
   - merge_metrics.py
   - merge_tds.py
-  - ATD_calculations.py
+  - atd_calculations.py
 
 docs:
   - README.md
