@@ -30,15 +30,18 @@ import os
 
 def create_table_state_tds(metrics):
     values = []
+    file_counter = 1
 
     for metric in metrics:
         with open(metric) as f:
             i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']
-            values.extend(i)
-            df = pd.DataFrame(values, columns=['record_id', 'td'])
-            pivoted = df.pivot_table(index='record_id', columns=df.groupby('record_id').cumcount()+1, values='td', aggfunc='first')
-            pivoted.columns = [f'td_{col}' for col in pivoted.columns]
-            pivoted = pivoted.reset_index()
+            values.extend((item[0], item[1], file_counter) for item in i)
+            file_counter += 1
+            
+    df = pd.DataFrame(values, columns=['record_id', 'td', 'metric_file'])
+    pivoted = df.pivot_table(index='record_id', columns='metric_file', values='td', aggfunc='first', fill_value=0)
+    pivoted.columns = [f'td_{col}' for col in pivoted.columns]
+    pivoted = pivoted.reset_index()
     return pivoted
 
 def _split_file_paths(file_paths):
