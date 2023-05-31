@@ -23,7 +23,7 @@ def render_jobs_basic(
     """Render jobs."""
     params = []
 
-    for fp_dataset in sorted(datasets):
+    for i, fp_dataset in enumerate(sorted(datasets)):
 
         check_filename_dataset(fp_dataset)
 
@@ -34,7 +34,7 @@ def render_jobs_basic(
             {
                 "input_file": fp_dataset.as_posix(),
                 "input_file_stem": fp_dataset.stem,
-                "model_seed": model_seed,
+                "model_seed": model_seed + i,
                 "init_seed": init_seed,
                 "n_runs": n_runs,
             }
