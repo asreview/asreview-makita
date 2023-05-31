@@ -4,7 +4,7 @@ name_long: Basic simulation for every possible combination of selected models
 
 scripts:
   - get_plot.py
-  - merge_descriptives.py 
+  - merge_descriptives.py
   - merge_metrics.py
 
 docs:
