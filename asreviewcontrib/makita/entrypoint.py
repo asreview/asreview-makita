@@ -7,8 +7,7 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
 from asreviewcontrib.makita.template_multiple_models import render_jobs_multiple_models
-from asreviewcontrib.makita.utils import add_file
-from asreviewcontrib.makita.utils import get_file
+from asreviewcontrib.makita.utils import FileHandler
 
 
 def get_template_fp(name):
@@ -47,6 +46,9 @@ class MakitaEntryPoint(BaseEntryPoint):
         super(MakitaEntryPoint, self).__init__()
 
         self.version = __version__
+
+        # initialize file handler
+        self.file_handler = FileHandler()
 
     def execute(self, argv):  # noqa: C901
 
@@ -187,10 +189,11 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser = _parse_arguments_scripts(self.version)
         args = parser.parse_args(args_name)
         params = {}
-        new_script = get_file(args_program.name, "script", **params)
+        new_script = self.file_handler.get_file(args_program.name, "script", **params)
 
         export_fp = Path(args.o, args_program.name)
-        add_file(new_script, export_fp)
+        self.file_handler.add_file(new_script, export_fp)
+        self.file_handler.print_summary()
 
 
 def _parse_arguments_program(version="Unknown", add_help=False):
