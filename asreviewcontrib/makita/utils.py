@@ -13,30 +13,32 @@ class FileHandler:
 
     def add_file(self, content, export_fp):
         # Check if the file already exists
-        if Path(export_fp).exists() and not self.overwrite_all:
-            response = None
-            while response not in ["y", "n", "a"]:
-                response = input(f"Overwrite {export_fp} ([Y]es/[N]o/[A]ll)? ").lower()
-                if response == "y":
-                    # Overwrite the file
-                    break
-                elif response == "n":
-                    # Do not overwrite, return from function
-                    print(f"Skipped {export_fp}")
-                    return
-                elif response == "a":
-                    # Overwrite all files
-                    self.overwrite_all = True
-                    break
+        def allow_overwrite():
+            response = input(f"Overwrite {export_fp} ([Y]es/[N]o/[A]ll)? ").lower()
+            if response in ["y", "yes"]:
+                # Overwrite the file
+                return True
+            elif response in ["n", "no"]:
+                # Do not overwrite, return from function
+                print(f"Skipped {export_fp}")
+                return False
+            elif response in ["a", "all"]:
+                # Overwrite all files
+                self.overwrite_all = True
+                return True
+            else:
+                # Ask again
+                allow_overwrite()
 
-        # store result in output folder
-        Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
+        if not Path(export_fp).exists() or self.overwrite_all or allow_overwrite():
+            # store result in output folder
+            Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
 
-        with open(export_fp, "w") as f:
-            f.write(content)
+            with open(export_fp, "w") as f:
+                f.write(content)
 
-        print(f"Added {export_fp}")
-        self.total_files += 1
+            print(f"Added {export_fp}")
+            self.total_files += 1
 
     def print_summary(self):
         print(f"{self.total_files} file(s) created.")
