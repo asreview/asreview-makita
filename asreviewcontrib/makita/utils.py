@@ -30,6 +30,7 @@ class FileHandler:
                 # Ask again
                 allow_overwrite()
 
+        # If the file does not exist, or overwrite all is True, or the user allows it:
         if not Path(export_fp).exists() or self.overwrite_all or allow_overwrite():
             # store result in output folder
             Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
