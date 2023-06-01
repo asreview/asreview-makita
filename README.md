@@ -218,7 +218,9 @@ The following scripts are available:
 
 #### Run Makita via Docker
 
-To run Makita template with Docker use the following command:  
+To run Makita template with Docker use the following command:
+
+```docker
 docker run -v $PWD:/app ghcr.io/asreview/asreview makita <YOUR COMMAND>
 ```
 
