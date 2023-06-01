@@ -16,7 +16,7 @@ class FileHandler:
         if Path(export_fp).exists() and not self.overwrite_all:
             response = None
             while response not in ["y", "n", "a"]:
-                response = input(f"Overwrite {export_fp} (Yes/No/All)? ").lower()
+                response = input(f"Overwrite {export_fp} ([Y]es/[N]o/[A]ll)? ").lower()
                 if response == "y":
                     # Overwrite the file
                     break
