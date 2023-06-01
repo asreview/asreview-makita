@@ -34,7 +34,7 @@ class FileHandler:
 
         with open(export_fp, "w") as f:
             f.write(content)
-        
+
         print(f"Added {export_fp}")
         self.total_files += 1
 
