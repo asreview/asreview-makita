@@ -7,9 +7,8 @@ from asreview import ASReviewData
 from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
-from asreviewcontrib.makita.utils import add_file
+from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
-from asreviewcontrib.makita.utils import get_file
 
 
 def get_priors(dataset, init_seed, n_priors):
@@ -51,6 +50,9 @@ def render_jobs_arfi(
     """Render jobs."""
     params = []
 
+    # initialize file handler
+    file_handler = FileHandler()
+
     for i, fp_dataset in enumerate(sorted(datasets)):
 
         check_filename_dataset(fp_dataset)
@@ -77,22 +79,24 @@ def render_jobs_arfi(
     # check if template.script is not NoneType
     if template.scripts is not None:
         for s in template.scripts:
-            t_script = get_file(s, "script")
+            t_script = file_handler.render_file_from_template(s, "script")
             export_fp = Path(scripts_folder, s)
-            add_file(t_script, export_fp)
+            file_handler.add_file(t_script, export_fp)
 
     if template.docs is not None:
         for s in template.docs:
-            t_docs = get_file(s,
-                              "doc",
-                              datasets=datasets,
-                              template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
-                              template_name_long=template.name_long,
-                              template_scripts=template.scripts,
-                              output_folder=output_folder,
-                              job_file=job_file,
-                              )
-            add_file(t_docs, s)
+            t_docs = file_handler.render_file_from_template(s,
+                                                            "doc",
+                                                            datasets=datasets,
+                                                            template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
+                                                            template_name_long=template.name_long,  # NOQA
+                                                            template_scripts=template.scripts,  # NOQA
+                                                            output_folder=output_folder,
+                                                            job_file=job_file,
+                                                            )
+            file_handler.add_file(t_docs, s)
+
+    file_handler.print_summary()
 
     return template.render(
         {

@@ -6,30 +6,57 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 
 
-def get_file(name, file_type, **kwargs):
+class FileHandler:
+    def __init__(self):
+        self.overwrite_all = False
+        self.total_files = 0
 
-    params = {
-        "version": __version__,
-    }
+    def add_file(self, content, export_fp):
+        # Check if the file already exists
+        def allow_overwrite():
+            response = input(f"Overwrite {export_fp} ([Y]es/[N]o/[A]ll)? ").lower()
+            if response in ["y", "yes"]:
+                # Overwrite the file
+                return True
+            elif response in ["n", "no"]:
+                # Do not overwrite, return from function
+                print(f"Skipped {export_fp}")
+                return False
+            elif response in ["a", "all"]:
+                # Overwrite all files
+                self.overwrite_all = True
+                return True
+            else:
+                # Ask again
+                allow_overwrite()
 
-    print(f"Loading {file_type} {name}")
+        # If the file does not exist, or overwrite all is True, or the user allows it:
+        if not Path(export_fp).exists() or self.overwrite_all or allow_overwrite():
+            # store result in output folder
+            Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
 
-    # open template
-    with open(Path(TEMPLATES_FP, f"{file_type}_{name}.template")) as f:
-        template = Template(f.read())
+            with open(export_fp, "w") as f:
+                f.write(content)
 
-    return template.render({**params, **kwargs})
+            print(f"Added {export_fp}")
+            self.total_files += 1
 
+    def print_summary(self):
+        print(f"{self.total_files} file(s) created.")
 
-def add_file(content, export_fp):
+    def render_file_from_template(self, name, file_type, **kwargs):
 
-    # store result in output folder
-    Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
+        params = {
+            "version": __version__,
+        }
 
-    with open(export_fp, "w") as f:
-        f.write(content)
+        print(f"Loading {file_type} {name}")
 
-    print(f"Added {export_fp}")
+        # open template
+        with open(Path(TEMPLATES_FP, f"{file_type}_{name}.template")) as f:
+            template = Template(f.read())
+
+        return template.render({**params, **kwargs})
 
 
 def check_filename_dataset(fp):
