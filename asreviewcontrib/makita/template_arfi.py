@@ -86,14 +86,14 @@ def render_jobs_arfi(
     if template.docs is not None:
         for s in template.docs:
             t_docs = file_handler.render_file_from_template(s,
-                                           "doc",
-                                           datasets=datasets,
-                                           template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
-                                           template_name_long=template.name_long,
-                                           template_scripts=template.scripts,
-                                           output_folder=output_folder,
-                                           job_file=job_file,
-                                           )
+                                                            "doc",
+                                                            datasets=datasets,
+                                                            template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
+                                                            template_name_long=template.name_long,
+                                                            template_scripts=template.scripts,
+                                                            output_folder=output_folder,
+                                                            job_file=job_file,
+                                                            )
             file_handler.add_file(t_docs, s)
 
     file_handler.print_summary()
