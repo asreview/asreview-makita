@@ -217,8 +217,8 @@ The following scripts are available:
 - split_data_with_multiple_labels.py [DEPRECATED]
 
 #### Run Makita via Docker
-To run Makita template with Docker use following command:  
-``` docker
+
+To run Makita template with Docker use the following command:  
 docker run -v $PWD:/app ghcr.io/asreview/asreview makita <YOUR COMMAND>
 ```
 
