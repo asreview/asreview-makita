@@ -47,9 +47,6 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         self.version = __version__
 
-        # initialize file handler
-        self.file_handler = FileHandler()
-
     def execute(self, argv):  # noqa: C901
 
         if len(argv) <= 2:
@@ -186,11 +183,16 @@ class MakitaEntryPoint(BaseEntryPoint):
         print(f"Rendered template {args_program.name} and saved to {args.f}")
 
     def _add_script(self, args_name, args_program):
+        # initialize file handler
+        self.file_handler = FileHandler()
+
+        # parse arguments
         parser = _parse_arguments_scripts(self.version)
         args = parser.parse_args(args_name)
         params = {}
         new_script = self.file_handler.get_file(args_program.name, "script", **params)
 
+        # export script
         export_fp = Path(args.o, args_program.name)
         self.file_handler.add_file(new_script, export_fp)
         self.file_handler.print_summary()
