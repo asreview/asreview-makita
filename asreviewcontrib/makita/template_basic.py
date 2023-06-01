@@ -6,6 +6,7 @@ from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
+from asreviewcontrib.makita.utils import check_filename_dataset
 
 
 def render_jobs_basic(
@@ -26,7 +27,7 @@ def render_jobs_basic(
 
     for i, fp_dataset in enumerate(sorted(datasets)):
 
-        file_handler.check_filename_dataset(fp_dataset)
+        check_filename_dataset(fp_dataset)
 
         fp_dataset = Path(fp_dataset)
 

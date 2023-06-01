@@ -8,6 +8,7 @@ from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
+from asreviewcontrib.makita.utils import check_filename_dataset
 
 
 def get_priors(dataset, init_seed, n_priors):
@@ -54,7 +55,7 @@ def render_jobs_arfi(
 
     for i, fp_dataset in enumerate(sorted(datasets)):
 
-        file_handler.check_filename_dataset(fp_dataset)
+        check_filename_dataset(fp_dataset)
 
         # render priors
         priors = get_priors(fp_dataset,

@@ -41,10 +41,6 @@ class FileHandler:
     def print_summary(self):
         print(f"{self.total_files} file(s) created.")
 
-    def check_filename_dataset(self, fp):
-        if (' ' in Path(fp).stem):
-            raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")
-
     def get_file(self, name, file_type, **kwargs):
 
         params = {
@@ -58,3 +54,8 @@ class FileHandler:
             template = Template(f.read())
 
         return template.render({**params, **kwargs})
+
+
+def check_filename_dataset(fp):
+    if (' ' in Path(fp).stem):
+        raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")
