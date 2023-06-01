@@ -41,7 +41,7 @@ class FileHandler:
     def print_summary(self):
         print(f"{self.total_files} file(s) created.")
 
-    def get_file(self, name, file_type, **kwargs):
+    def render_file_from_template(self, name, file_type, **kwargs):
 
         params = {
             "version": __version__,

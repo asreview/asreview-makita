@@ -79,13 +79,13 @@ def render_jobs_arfi(
     # check if template.script is not NoneType
     if template.scripts is not None:
         for s in template.scripts:
-            t_script = file_handler.get_file(s, "script")
+            t_script = file_handler.render_file_from_template(s, "script")
             export_fp = Path(scripts_folder, s)
             file_handler.add_file(t_script, export_fp)
 
     if template.docs is not None:
         for s in template.docs:
-            t_docs = file_handler.get_file(s,
+            t_docs = file_handler.render_file_from_template(s,
                                            "doc",
                                            datasets=datasets,
                                            template_name=template.name if template.name == "ARFI" else "custom",  # NOQA

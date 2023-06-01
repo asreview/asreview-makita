@@ -190,7 +190,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser = _parse_arguments_scripts(self.version)
         args = parser.parse_args(args_name)
         params = {}
-        new_script = self.file_handler.get_file(args_program.name, "script", **params)
+        new_script = self.file_handler.render_file_from_template(args_program.name, "script", **params)
 
         # export script
         export_fp = Path(args.o, args_program.name)
