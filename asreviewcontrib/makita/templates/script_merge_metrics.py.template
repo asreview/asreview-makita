@@ -57,17 +57,17 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics/metrics_sim_*.json",
+        default="output/simulation/*/metrics/",
         help="states location")
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/data_metrics.csv",
+        default="output/tables/metrics_sim_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
     # load states
-    states = glob.glob(args.s)
+    states = glob.glob(args.s + "*")
 
     # merge results
     result = create_table_state_metrics(states)
