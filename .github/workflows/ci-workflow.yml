@@ -54,8 +54,6 @@ jobs:
       uses: ludeeus/action-shellcheck@master
       with:
         scandir: './tmp'
-      env:
-        SHELLCHECK_OPTS: -e SC2148
     - name: Test makita scripts
       run: |  
         asreview makita add-script get_plot.py
