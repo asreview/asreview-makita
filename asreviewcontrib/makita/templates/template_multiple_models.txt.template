@@ -54,7 +54,7 @@ asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/st
 {% endfor %}
 {% endfor %}
 
-:: Generate plot and tables for dataset
+# Generate plot and tables for dataset
 python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png --show_legend model
 python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/metrics_sim_{{ dataset.input_file_stem }}.csv
 {% endfor %}
