@@ -35,7 +35,7 @@ jobs:
         mkdir data
         curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o data/labels.csv
         asreview makita template basic | tee output.txt
-        grep -q "ERROR" output.txt && exit 1
+        grep -q "ERROR" output.txt && exit 1 || true
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
     - name: Test makita scripts
