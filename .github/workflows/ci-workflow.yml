@@ -40,6 +40,7 @@ jobs:
       uses: ludeeus/action-shellcheck@master
       with:
         scandir: './makita_basic'
+      env:
         SHELLCHECK_OPTS: -e SC2148
     - name: Test makita scripts
       run: |  
