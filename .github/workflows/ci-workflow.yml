@@ -28,20 +28,24 @@ jobs:
     - name: Install makita
       run: |
         pip install .
-    - name: Test makita templates and scripts
+    - name: set up environment
       run: |
         mkdir tmp
         cd tmp
         mkdir data
+        curl https://raw.githubusercontent.com/asreview/asreview/master/tests/demo_data/generic_labels.csv -o data/generic_labels.csv
+    - name: Test makita templates
+      run: |
         asreview makita template arfi | tee output.txt
         grep -q "ERROR" output.txt && exit 1
         asreview makita template basic | tee output.txt
         grep -q "ERROR" output.txt && exit 1
         asreview makita template multiple_models | tee output.txt
         grep -q "ERROR" output.txt && exit 1
+    - name: Test makita scripts
+      run: |  
         asreview makita add-script get_plot.py
         asreview makita add-script merge_descriptives.py
         asreview makita add-script merge_metrics.py
         asreview makita add-script merge_tds.py
         asreview makita add-script get_settings_from_state.py
-
