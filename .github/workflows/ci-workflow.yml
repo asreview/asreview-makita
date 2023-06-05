@@ -28,10 +28,12 @@ jobs:
     - name: Install makita
       run: |
         pip install .
-    - name: test
+    - name: Test makita templates and scripts
       run: |
+        set -e
         mkdir tmp
         cd tmp
+        mkdir data
         asreview makita template arfi
         asreview makita template basic
         asreview makita template multiple_models
