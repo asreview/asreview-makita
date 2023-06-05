@@ -41,7 +41,7 @@ jobs:
         cp labels.csv multiple_models/data/labels.csv
     - name: Test makita templates
       run: |
-        cd basic
+        cd tmp/basic
         asreview makita template basic | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
