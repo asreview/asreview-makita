@@ -38,6 +38,8 @@ jobs:
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
+      with:
+        scandir: './tmp'
     - name: Test makita scripts
       run: |  
         asreview makita add-script get_plot.py
