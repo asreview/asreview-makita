@@ -30,8 +30,8 @@ jobs:
         pip install .
     - name: set up environment
       run: |
-        mkdir tmp
-        cd tmp
+        mkdir makita_basic
+        cd makita_basic
         mkdir data
         curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o data/labels.csv
         asreview makita template basic | tee output.txt
@@ -39,7 +39,8 @@ jobs:
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
       with:
-        scandir: './tmp'
+        scandir: './makita_basic'
+        severity: error
     - name: Test makita scripts
       run: |  
         asreview makita add-script get_plot.py
