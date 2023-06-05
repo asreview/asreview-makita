@@ -6,7 +6,6 @@ scripts:
   - get_plot.py
   - merge_descriptives.py
   - merge_metrics.py
-  - test
 
 docs:
   - README.md
