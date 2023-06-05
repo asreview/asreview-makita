@@ -32,9 +32,9 @@ jobs:
       run: |
         mkdir tmp
         cd tmp
-        mkdir basic/data
-        mkdir arfi/data
-        mkdir multiple_models/data
+        mkdir -p basic/data
+        mkdir -p arfi/data
+        mkdir -p multiple_models/data
         curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o labels.csv
         cp labels.csv basic/data/labels.csv
         cp labels.csv arfi/data/labels.csv
