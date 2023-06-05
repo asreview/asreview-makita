@@ -30,16 +30,30 @@ jobs:
         pip install .
     - name: set up environment
       run: |
-        mkdir makita_basic
-        cd makita_basic
-        mkdir data
-        curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o data/labels.csv
+        mkdir tmp
+        cd tmp
+        mkdir basic/data
+        mkdir arfi/data
+        mkdir multiple_models/data
+        curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o labels.csv
+        cp labels.csv basic/data/labels.csv
+        cp labels.csv arfi/data/labels.csv
+        cp labels.csv multiple_models/data/labels.csv
+    - name: Test makita templates
+      run: |
+        cd basic
         asreview makita template basic | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+        cd ../arfi
+        asreview makita template arfi | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+        cd ../multiple_models
+        asreview makita template multiple_models | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
       with:
-        scandir: './makita_basic'
+        scandir: './tmp'
       env:
         SHELLCHECK_OPTS: -e SC2148
     - name: Test makita scripts
