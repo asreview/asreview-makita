@@ -30,15 +30,14 @@ jobs:
         pip install .
     - name: Test makita templates and scripts
       run: |
-        set -e
         mkdir tmp
         cd tmp
         mkdir data
-        (asreview makita template arfi || true) | tee output.txt
+        asreview makita template arfi | tee output.txt
         grep -q "ERROR" output.txt && exit 1
-        (asreview makita template basic || true) | tee output.txt
+        asreview makita template basic | tee output.txt
         grep -q "ERROR" output.txt && exit 1
-        (asreview makita template multiple_models || true) | tee output.txt
+        asreview makita template multiple_models | tee output.txt
         grep -q "ERROR" output.txt && exit 1
         asreview makita add-script get_plot.py
         asreview makita add-script merge_descriptives.py
