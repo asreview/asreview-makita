@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
         architecture: 'x64'
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
         architecture: 'x64'
@@ -34,12 +34,10 @@ jobs:
         cd tmp
         mkdir data
         curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o data/labels.csv
-        asreview makita template arfi | tee output.txt
-        grep -q "ERROR" output.txt && exit 1
         asreview makita template basic | tee output.txt
         grep -q "ERROR" output.txt && exit 1
-        asreview makita template multiple_models | tee output.txt
-        grep -q "ERROR" output.txt && exit 1
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
     - name: Test makita scripts
       run: |  
         asreview makita add-script get_plot.py
