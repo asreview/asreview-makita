@@ -33,9 +33,7 @@ jobs:
         mkdir tmp
         cd tmp
         mkdir data
-        curl https://raw.githubusercontent.com/asreview/asreview/master/tests/demo_data/generic_labels.csv -o data/generic_labels.csv
-    - name: Test makita templates
-      run: |
+        curl https://raw.githubusercontent.com/asreview/asreview-makita/master/.github/workflows/test_data/labels.csv -o data/labels.csv
         asreview makita template arfi | tee output.txt
         grep -q "ERROR" output.txt && exit 1
         asreview makita template basic | tee output.txt
