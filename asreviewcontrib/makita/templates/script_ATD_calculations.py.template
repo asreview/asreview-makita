@@ -7,6 +7,7 @@ import argparse
 import glob
 from pathlib import Path
 
+
 def average_record_td(df):
     df['average_record_TD'] = df.iloc[:,2:].mean(axis=1)
     return df
