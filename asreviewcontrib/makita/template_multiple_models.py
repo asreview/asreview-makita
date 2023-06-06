@@ -5,9 +5,8 @@ from pathlib import Path
 from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
-from asreviewcontrib.makita.utils import add_file
+from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
-from asreviewcontrib.makita.utils import get_file
 
 
 def render_jobs_multiple_models(
@@ -19,12 +18,15 @@ def render_jobs_multiple_models(
     model_seed=165,
     all_classifiers=["logistic", "nb", "rf", "svm"],
     all_feature_extractors=["doc2vec", "sbert", "tfidf"],
-    impossible_models=[["nb", "doc2vec"], ["nb", "sbert"]],
+    impossible_models=["nb,doc2vec", "nb,sbert"],
     fp_template=None,
     job_file='jobs.sh',
 ):
     """Render jobs."""
     params = []
+
+    # initialize file handler
+    file_handler = FileHandler()
 
     for i, fp_dataset in enumerate(sorted(datasets)):
 
@@ -46,21 +48,23 @@ def render_jobs_multiple_models(
     template = ConfigTemplate(fp_template)
 
     for s in template.scripts:
-        t_script = get_file(s, "script")
+        t_script = file_handler.render_file_from_template(s, "script")
         export_fp = Path(scripts_folder, s)
-        add_file(t_script, export_fp)
+        file_handler.add_file(t_script, export_fp)
 
     for s in template.docs:
-        t_docs = get_file(s,
-                          "doc",
-                          datasets=datasets,
-                          template_name=template.name if template.name == "multiple_models" else "custom", # NOQA
-                          template_name_long=template.name_long,
-                          template_scripts=template.scripts,
-                          output_folder=output_folder,
-                          job_file=job_file,
-                          )
-        add_file(t_docs, s)
+        t_docs = file_handler.render_file_from_template(s,
+                                                        "doc",
+                                                        datasets=datasets,
+                                                        template_name=template.name if template.name == "multiple_models" else "custom", # NOQA
+                                                        template_name_long=template.name_long,  # NOQA
+                                                        template_scripts=template.scripts,  # NOQA
+                                                        output_folder=output_folder,
+                                                        job_file=job_file,
+                                                        )
+        file_handler.add_file(t_docs, s)
+
+    file_handler.print_summary()
 
     return template.render(
         {
@@ -71,6 +75,6 @@ def render_jobs_multiple_models(
             "version": __version__,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
-            "impossible_models": impossible_models,
+            "impossible_models": [i.split(',') for i in impossible_models],
         }
     )

@@ -7,8 +7,7 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
 from asreviewcontrib.makita.template_multiple_models import render_jobs_multiple_models
-from asreviewcontrib.makita.utils import add_file
-from asreviewcontrib.makita.utils import get_file
+from asreviewcontrib.makita.utils import FileHandler
 
 
 def get_template_fp(name):
@@ -102,7 +101,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                                 )
             parser.add_argument("--impossible_models",
                                 nargs="+",
-                                default=[["nb", "doc2vec"], ["nb", "sbert"]],
+                                default=["nb,doc2vec", "nb,sbert"],
                                 help="Model combinations to exclude"
                                 )
 
@@ -184,13 +183,21 @@ class MakitaEntryPoint(BaseEntryPoint):
         print(f"Rendered template {args_program.name} and saved to {args.f}")
 
     def _add_script(self, args_name, args_program):
+        # initialize file handler
+        self.file_handler = FileHandler()
+
+        # parse arguments
         parser = _parse_arguments_scripts(self.version)
         args = parser.parse_args(args_name)
         params = {}
-        new_script = get_file(args_program.name, "script", **params)
+        new_script = self.file_handler.render_file_from_template(args_program.name,
+                                                                 "script",
+                                                                 **params)
 
+        # export script
         export_fp = Path(args.o, args_program.name)
-        add_file(new_script, export_fp)
+        self.file_handler.add_file(new_script, export_fp)
+        self.file_handler.print_summary()
 
 
 def _parse_arguments_program(version="Unknown", add_help=False):
