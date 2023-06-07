@@ -35,7 +35,7 @@ jobs:
         mkdir -p basic/data
         mkdir -p arfi/data
         mkdir -p multiple_models/data
-        curl https://raw.githubusercontent.com/jteijema/asreview-makita/workflow-testing/.github/workflows/test_data/labels.csv -o labels.csv
+        curl .github/workflows/test_data/labels.csv -o labels.csv
         cp labels.csv basic/data/labels.csv
         cp labels.csv arfi/data/labels.csv
         cp labels.csv multiple_models/data/labels.csv
