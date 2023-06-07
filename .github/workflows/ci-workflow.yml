@@ -6,13 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
         architecture: 'x64'
     - name: Install flake8
       run: |
         pip install flake8
+    - name: Add templates to flake8 check
+      run: |
+        for file in asreviewcontrib/makita/templates/*.template; do 
+          mv "$file" "${file%.template}"
+          echo "Modified file: ${file%.template}"
+        done
     - name: Lint python with flake8
       run: |
         flake8 . --max-complexity=10 --statistics
@@ -21,22 +27,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: actions/setup-python@v1
+    - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
         architecture: 'x64'
     - name: Install makita
       run: |
         pip install .
-    - name: test
+    - name: set up environment
       run: |
         mkdir tmp
         cd tmp
-        asreview makita template arfi
-        asreview makita template basic
-        asreview makita template multiple_models
+        mkdir -p basic/data
+        mkdir -p arfi/data
+        mkdir -p multiple_models/data
+        cp ../.github/workflows/test_data/labels.csv basic/data/labels.csv
+        cp ../.github/workflows/test_data/labels.csv arfi/data/labels.csv
+        cp ../.github/workflows/test_data/labels.csv multiple_models/data/labels.csv
+    - name: Test makita templates
+      run: |
+        cd tmp/basic
+        asreview makita template basic | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+        cd ../arfi
+        asreview makita template arfi | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+        cd ../multiple_models
+        asreview makita template multiple_models | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+      with:
+        scandir: './tmp'
+      env:
+        SHELLCHECK_OPTS: -e SC2148
+    - name: Test makita scripts
+      run: |  
         asreview makita add-script get_plot.py
         asreview makita add-script merge_descriptives.py
         asreview makita add-script merge_metrics.py
+        asreview makita add-script merge_tds.py
         asreview makita add-script get_settings_from_state.py
-
