@@ -7,7 +7,7 @@ Example
 
 or
 
-> python scripts/get_plot.py -s output/simulation/ptsd/state_files -o output/simulation/ptsd/ptsd_recall_plot.png
+> python scripts/get_plot.py -s output/simulation/ptsd/state_files -o output/simulation/ptsd/ptsd_recall_plot.png  # noqa
 
 
 Authors
@@ -58,7 +58,7 @@ def get_plot_from_states(state_path, filename, legend=None):
                     try:
                         label = metadata["settings"][legend]
                     except KeyError as exc:
-                        raise ValueError(f"Legend setting '{legend}' not found in state file settings.") from exc
+                        raise ValueError(f"Legend setting '{legend}' not found in state file settings.") from exc  # noqa
                 if label not in labels:
                     ax.lines[-2].set_label(label)
                     labels.append(label)
@@ -89,4 +89,3 @@ if __name__ == "__main__":
 
     # generate plot and save results
     get_plot_from_states(args.s, args.o, args.show_legend)
-

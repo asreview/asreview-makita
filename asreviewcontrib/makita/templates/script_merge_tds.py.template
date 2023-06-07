@@ -33,7 +33,8 @@ def create_table_state_tds(metrics):
 
     for metric in metrics:
         with open(metric) as f:
-            i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']
+            i = next(filter(lambda x: x['id'] == 'td',
+                            json.load(f)['data']['items']))['value']
             values.extend(i)
 
     df = pd.DataFrame(values, columns=['record_id', 'td'])
@@ -67,4 +68,3 @@ if __name__ == "__main__":
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(Path(args.o))
     result.to_excel(Path(args.o).with_suffix('.xlsx'))
-

@@ -7,7 +7,7 @@ Example
 
 or
 
-> python scripts/merge_metrics.py -s output/simulation/*/metrics/simulation_metrics_*.json
+> python scripts/merge_metrics.py -s output/simulation/*/metrics/simulation_metrics_*.json  # noqa
 
 or
 
@@ -76,4 +76,3 @@ if __name__ == "__main__":
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(Path(args.o))
     result.to_excel(Path(args.o).with_suffix('.xlsx'))
-
