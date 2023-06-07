@@ -17,6 +17,7 @@ jobs:
       run: |
         for file in asreviewcontrib/makita/templates/*.template; do 
           mv "$file" "${file%.template}"
+          echo "Modified file: ${file%.template}"
         done
     - name: Lint python with flake8
       run: |
