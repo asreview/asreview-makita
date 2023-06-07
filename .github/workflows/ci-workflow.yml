@@ -35,10 +35,9 @@ jobs:
         mkdir -p basic/data
         mkdir -p arfi/data
         mkdir -p multiple_models/data
-        curl .github/workflows/test_data/labels.csv -o labels.csv
-        cp labels.csv basic/data/labels.csv
-        cp labels.csv arfi/data/labels.csv
-        cp labels.csv multiple_models/data/labels.csv
+        cp .github/workflows/test_data/labels.csv basic/data/labels.csv
+        cp .github/workflows/test_data/labels.csv arfi/data/labels.csv
+        cp .github/workflows/test_data/labels.csv multiple_models/data/labels.csv
     - name: Test makita templates
       run: |
         cd tmp/basic
