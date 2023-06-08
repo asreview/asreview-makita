@@ -55,5 +55,5 @@ python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{
 
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py
-python {{ scripts_folder }}/merge_metrics.py 
+python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/*/metrics/ -o {{ output_folder }}/tables/metrics_sim_all.csv
 
