@@ -67,7 +67,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load states
-    states = glob.glob(args.s + "*")
+    states = glob.glob(args.s + "metrics_sim_*.json")
 
     # merge results
     result = create_table_state_metrics(states)

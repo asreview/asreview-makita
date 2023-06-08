@@ -53,8 +53,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        nargs="*",
-        default="output/simulation/*/descriptives/data_stats_*.json",
+        default="output/simulation/*/descriptives/",
         help="Datasets location")
     parser.add_argument(
         "-o",
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load datasets
-    datasets = glob.glob(args.s)
+    datasets = glob.glob(args.s + "data_stats_*.json")
 
     # merge results
     result = create_table_descriptives(datasets)

@@ -52,6 +52,6 @@ python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{
 {% endfor %}
 
 # Merge descriptives and metrics
-python {{ scripts_folder }}/merge_descriptives.py -s {{ output_folder }}/simulation/*/descriptives/data_stats_*.json -o {{ output_folder }}/tables/data_descriptives_all.csv
+python {{ scripts_folder }}/merge_descriptives.py -s {{ output_folder }}/simulation/*/descriptives/ -o {{ output_folder }}/tables/data_descriptives_all.csv
 python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/*/metrics/ -o {{ output_folder }}/tables/metrics_sim_all.csv
 
