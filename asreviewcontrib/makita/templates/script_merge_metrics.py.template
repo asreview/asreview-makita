@@ -68,6 +68,9 @@ if __name__ == "__main__":
 
     # load states
     states = glob.glob(args.s + "metrics_sim_*.json")
+    # check if states are found
+    if len(metrics) == 0:
+        raise FileNotFoundError("No metrics found in " + args.s)
 
     # merge results
     result = create_table_state_metrics(states)

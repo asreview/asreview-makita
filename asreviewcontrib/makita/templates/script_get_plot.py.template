@@ -87,6 +87,10 @@ if __name__ == "__main__":
         help="Add a legend to the plot, based on the given parameter.")
     args = parser.parse_args()
 
+    # check if states are found
+    if len(list(states)) == 0:
+        raise FileNotFoundError(f"No state files found in {args.s}")
+
     # generate plot and save results
     get_plot_from_states(args.s, args.o, args.show_legend)
 
