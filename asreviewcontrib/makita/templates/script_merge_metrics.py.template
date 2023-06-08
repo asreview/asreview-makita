@@ -27,10 +27,10 @@ from pathlib import Path
 import pandas as pd
 
 
-def create_table_state_metrics(metrics):
+def create_table_state_metrics(metric_files):
     metrics = []
 
-    for metric in metrics:
+    for metric in metric_files:
         with open(metric) as f:
             data = json.load(f)['data']['items']
             values = {}
@@ -66,15 +66,15 @@ if __name__ == "__main__":
         help="Output table location")
     args = parser.parse_args()
 
-    # load metrics
-    metrics = glob.glob(args.s + "metrics_sim_*.json")
+    # load metric files
+    metric_files = glob.glob(args.s + "metrics_sim_*.json")
 
     # check if states are found
-    if len(metrics) == 0:
+    if len(metric_files) == 0:
         raise FileNotFoundError("No metrics found in " + args.s)
 
     # merge results
-    result = create_table_state_metrics(metrics)
+    result = create_table_state_metrics(metric_files)
 
     # store result in output folder
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
