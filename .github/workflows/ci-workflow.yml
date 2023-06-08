@@ -1,28 +1,7 @@
 name: test-suite
 on: [push, pull_request]
 jobs:
-  lint-python:
-    name: lint-python
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-        architecture: 'x64'
-    - name: Install flake8
-      run: |
-        pip install flake8
-    - name: Add templates to flake8 check
-      run: |
-        for file in asreviewcontrib/makita/templates/*.template; do 
-          mv "$file" "${file%.template}"
-          echo "Modified file: ${file%.template}"
-        done
-    - name: Lint python with flake8
-      run: |
-        flake8 . --max-complexity=10 --statistics --ignore=W391
-  test-template:
+  test-template-and-lint:
     name: test-templates-and-scripts
     runs-on: ubuntu-latest
     steps:
@@ -68,3 +47,9 @@ jobs:
         asreview makita add-script merge_metrics.py
         asreview makita add-script merge_tds.py
         asreview makita add-script get_settings_from_state.py
+    - name: Install flake8
+      run: |
+        pip install flake8
+    - name: Lint python with flake8
+      run: |
+        flake8 . --max-complexity=10 --statistics
