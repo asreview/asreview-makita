@@ -212,7 +212,12 @@ def _parse_arguments_program(version="Unknown", add_help=False):
         choices=["template", "add-script"],
         help="The internal tool to use (template or add-script).",
     )
-    parser.add_argument("name", type=str, nargs='?', help="The name of the template or script.")
+    parser.add_argument(
+        "name",
+        type=str,
+        nargs='?',
+        help="The name of the template or script."
+    )
     parser.add_argument(
         "-V",
         "--version",
