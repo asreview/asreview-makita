@@ -26,7 +26,7 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def get_plot_from_states(state_path, filename, legend=None):
+def get_plot_from_states(states, filename, legend=None):
     """Generate an ASReview plot from state files."""
 
     fig, ax = plt.subplots()
@@ -34,7 +34,7 @@ def get_plot_from_states(state_path, filename, legend=None):
     labels = []
     colors = list(mcolors.TABLEAU_COLORS.values())
 
-    for state_file in Path(state_path).glob("*.asreview"):
+    for state_file in states:
         with open_state(state_file) as state:
             # draw the plot
             plot_recall(ax, state)
@@ -87,10 +87,13 @@ if __name__ == "__main__":
         help="Add a legend to the plot, based on the given parameter.")
     args = parser.parse_args()
 
+    # load states
+    states = Path(args.s).glob("*.asreview")
+
     # check if states are found
     if len(list(states)) == 0:
         raise FileNotFoundError(f"No state files found in {args.s}")
 
     # generate plot and save results
-    get_plot_from_states(args.s, args.o, args.show_legend)
+    get_plot_from_states(states, args.o, args.show_legend)
 
