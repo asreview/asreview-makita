@@ -21,9 +21,9 @@ jobs:
         done
     - name: Lint python with flake8
       run: |
-        flake8 . --max-complexity=10 --statistics
+        flake8 . --max-complexity=10 --statistics --ignore=W391
   test-template:
-    name: test-templates-scripts
+    name: test-templates-and-scripts
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
