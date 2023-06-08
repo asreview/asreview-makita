@@ -45,11 +45,7 @@ jobs:
         SHELLCHECK_OPTS: -e SC2148
     - name: Generate makita scripts
       run: |  
-        asreview makita add-script get_plot.py
-        asreview makita add-script merge_descriptives.py
-        asreview makita add-script merge_metrics.py
-        asreview makita add-script merge_tds.py
-        asreview makita add-script get_settings_from_state.py
+        asreview makita add-script --all
     - name: Lint python with flake8
       run: |
         flake8 . --max-complexity=10 --statistics
