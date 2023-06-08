@@ -13,6 +13,9 @@ jobs:
     - name: Install makita
       run: |
         pip install .
+    - name: Install flake8
+      run: |
+        pip install flake8
     - name: set up environment
       run: |
         mkdir tmp
@@ -40,16 +43,13 @@ jobs:
         scandir: './tmp'
       env:
         SHELLCHECK_OPTS: -e SC2148
-    - name: Test makita scripts
+    - name: Generate makita scripts
       run: |  
         asreview makita add-script get_plot.py
         asreview makita add-script merge_descriptives.py
         asreview makita add-script merge_metrics.py
         asreview makita add-script merge_tds.py
         asreview makita add-script get_settings_from_state.py
-    - name: Install flake8
-      run: |
-        pip install flake8
     - name: Lint python with flake8
       run: |
         flake8 . --max-complexity=10 --statistics

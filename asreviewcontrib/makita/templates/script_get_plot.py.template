@@ -89,3 +89,4 @@ if __name__ == "__main__":
 
     # generate plot and save results
     get_plot_from_states(args.s, args.o, args.show_legend)
+
