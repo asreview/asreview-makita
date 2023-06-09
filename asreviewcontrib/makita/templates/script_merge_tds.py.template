@@ -26,7 +26,6 @@ import glob
 import json
 from pathlib import Path
 import pandas as pd
-import os
 
 
 def create_table_state_tds(metrics):
@@ -35,24 +34,15 @@ def create_table_state_tds(metrics):
 
     for metric in metrics:
         with open(metric) as f:
-            i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']
+            i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']  # noqa
             values.extend((item[0], item[1], file_counter) for item in i)
             file_counter += 1
-            
+
     df = pd.DataFrame(values, columns=['record_id', 'td', 'metric_file'])
     pivoted = df.pivot_table(index='record_id', columns='metric_file', values='td', aggfunc='first', fill_value=0)
     pivoted.columns = [f'td_{col}' for col in pivoted.columns]
     pivoted = pivoted.reset_index()
     return pivoted
-
-def _split_file_paths(file_paths):
-    simulations = {}
-    for path in file_paths:
-        dirname = os.path.dirname(path)
-        if dirname not in simulations:
-            simulations[dirname] = []
-        simulations[dirname].append(path)
-    return simulations
 
 
 if __name__ == "__main__":
@@ -62,27 +52,26 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics/metrics_sim_*.json",
+        default="output/simulation/*/metrics/",
         help="metrics location")
     parser.add_argument(
         "-o",
         type=str,
-        default="tables/data_tds.csv",
+        default="output/tables/tds_sim_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
-    # load metrics
-    metrics = glob.glob(args.s)
-    simulations = _split_file_paths(metrics)
-    simulations.items()
+    # load metric files
+    metric_files = glob.glob(args.s + "metrics_sim_*.json")
 
-    # merge results for each simulation
-    for dirname, sim_metrics in simulations.items():
-        result = create_table_state_tds(sim_metrics)
+    # check if states are found
+    if len(metric_files) == 0:
+        raise FileNotFoundError("No metrics found in " + args.s)
 
-        # store result in output folder
-        output_path = os.path.abspath(os.path.join(dirname, args.o))
-        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-        result.to_csv(output_path)
-        result.to_excel(os.path.splitext(output_path)[0] + '.xlsx')
+    states_table = create_table_state_tds(metric_files)
+
+    # store table
+    Path(args.o).parent.mkdir(parents=True, exist_ok=True)
+    states_table.to_csv(Path(args.o))
+    states_table.to_excel(Path(args.o).with_suffix('.xlsx'))
 
