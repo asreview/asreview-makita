@@ -1,4 +1,4 @@
-"""Render basic template."""
+"""Render multiple_models template."""
 
 from pathlib import Path
 
