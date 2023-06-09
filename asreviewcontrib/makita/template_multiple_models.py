@@ -37,6 +37,7 @@ def render_jobs_multiple_models(
     # initialize file handler
     file_handler = FileHandler()
 
+    # generate params for all simulations
     for i, fp_dataset in enumerate(sorted(datasets)):
         check_filename_dataset(fp_dataset)
 
@@ -52,7 +53,8 @@ def render_jobs_multiple_models(
             }
         )
 
-    # open template TODO@{Replace by more sustainable module}
+    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and 
+    # setting up template variables and extensions.
     template = ConfigTemplate(fp_template)
 
     # render scripts
@@ -81,8 +83,10 @@ def render_jobs_multiple_models(
         )
         file_handler.add_file(t_docs, s)
 
+    # print summary to console
     file_handler.print_summary()
 
+    # render file and return
     return template.render(
         {
             "datasets": params,
