@@ -22,7 +22,6 @@ def render_jobs_multiple_models(
     fp_template=None,
     job_file="jobs.sh",
 ):
-
     if all_classifiers is None:
         all_classifiers = ["logistic", "nb", "rf", "svm"]
 
