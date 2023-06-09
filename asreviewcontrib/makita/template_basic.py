@@ -34,6 +34,7 @@ def render_jobs_basic(
     # initialize file handler
     file_handler = FileHandler()
 
+    # generate params for all simulations
     for i, fp_dataset in enumerate(sorted(datasets)):
         check_filename_dataset(fp_dataset)
 
@@ -50,31 +51,42 @@ def render_jobs_basic(
             }
         )
 
-    # open template TODO@{Replace by more sustainable module}
+    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and 
+    # setting up template variables and extensions.
     template = ConfigTemplate(fp_template)
 
-    for s in template.scripts:
-        t_script = file_handler.render_file_from_template(s, "script")
-        export_fp = Path(scripts_folder, s)
-        file_handler.add_file(t_script, export_fp)
+    # render scripts
+    if template.scripts is not None:
+        for s in template.scripts:
+            t_script = file_handler.render_file_from_template(
+                s, 
+                "script", 
+                output_folder=output_folder
+            )
+            export_fp = Path(scripts_folder, s)
+            file_handler.add_file(t_script, export_fp)
 
-    for s in template.docs:
-        t_docs = file_handler.render_file_from_template(
-            s,
-            "doc",
-            datasets=datasets,
-            template_name=template.name
-            if template.name == "basic"
-            else "custom",  # NOQA
-            template_name_long=template.name_long,  # NOQA
-            template_scripts=template.scripts,  # NOQA
-            output_folder=output_folder,
-            job_file=job_file,
-        )
-        file_handler.add_file(t_docs, s)
+    # render docs
+    if template.docs is not None:
+        for s in template.docs:
+            t_docs = file_handler.render_file_from_template(
+                s,
+                "doc",
+                datasets=datasets,
+                template_name=template.name
+                if template.name == "basic"
+                else "custom",
+                template_name_long=template.name_long,
+                template_scripts=template.scripts,
+                output_folder=output_folder,
+                job_file=job_file,
+            )
+            file_handler.add_file(t_docs, s)
 
+    # print summary to console
     file_handler.print_summary()
 
+    # render file and return
     return template.render(
         {
             "datasets": params,

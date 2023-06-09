@@ -45,14 +45,19 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser = _parse_arguments_program(self.version)
         args_program, args_name = parser.parse_known_args(argv)
 
-        # generate templates
+        # Main entry point of the program, routing to either the 'template' 
+        # or 'add-script' functions based on user input.
+
+        # route to template
         if args_program.tool == "template":
             try:
                 self._template(args_name, args_program)
             except Exception as err:
                 print(f"\u001b[31mERROR: {err}\u001b[0m")
+        # route to add-script
         elif args_program.tool == "add-script":
             self._add_script(args_name, args_program)
+        # error if tool is not recognized
         else:
             parser.error(
                 f"Error: Can't find '{args_program.tool}' "
@@ -60,8 +65,10 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
     def _template(self, args_name, args_program):
-        # generate basic arguments
-        parser = _parse_arguments_template(self.version)
+        '''Generate a template.'''
+
+        # generate arguments used for all templates
+        parser = _parse_arguments_template()
 
         # template specific arguments
         if args_program.name in ["basic", "multiple_models"]:
@@ -181,7 +188,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         self.file_handler = FileHandler()
 
         # parse arguments
-        parser = _parse_arguments_scripts(self.version)
+        parser = _parse_arguments_scripts()
         args = parser.parse_args(args_name)
 
         tmp_scripts = []
@@ -201,7 +208,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             # export script
             export_fp = Path(args.o, script)
             self.file_handler.add_file(new_script, export_fp)
-            self.file_handler.print_summary()
+        self.file_handler.print_summary()
 
 
 def _parse_arguments_program(version="Unknown", add_help=False):
@@ -224,7 +231,7 @@ def _parse_arguments_program(version="Unknown", add_help=False):
     return parser
 
 
-def _parse_arguments_template(version):
+def _parse_arguments_template():
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
     parser.add_argument(
@@ -260,7 +267,7 @@ def _parse_arguments_template(version):
     return parser
 
 
-def _parse_arguments_scripts(version):
+def _parse_arguments_scripts():
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
     parser.add_argument("--all", "-a", action="store_true", help="Add all scripts.")
     parser.add_argument(
