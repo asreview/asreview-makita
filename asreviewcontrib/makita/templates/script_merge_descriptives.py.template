@@ -53,8 +53,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        nargs="*",
-        default="output/simulation/*/descriptives/data_stats_*.json",
+        default="output/simulation/*/descriptives/",
         help="Datasets location")
     parser.add_argument(
         "-o",
@@ -64,7 +63,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load datasets
-    datasets = glob.glob(args.s)
+    datasets = glob.glob(args.s + "data_stats_*.json")
+
+    # check if states are found
+    if len(datasets) == 0:
+        raise FileNotFoundError("No datasets found in " + args.s)
 
     # merge results
     result = create_table_descriptives(datasets)
@@ -73,3 +76,4 @@ if __name__ == "__main__":
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(Path(args.o))
     result.to_excel(Path(args.o).with_suffix('.xlsx'))
+
