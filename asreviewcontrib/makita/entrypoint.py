@@ -43,7 +43,7 @@ class MakitaEntryPoint(BaseEntryPoint):
     def __init__(self):
         from asreviewcontrib.makita.__init__ import __version__
 
-        super(MakitaEntryPoint, self).__init__()
+        super().__init__()
 
         self.version = __version__
 
