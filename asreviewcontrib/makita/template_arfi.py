@@ -78,6 +78,7 @@ def render_jobs_arfi(
     # print summary to console
     file_handler.print_summary()
 
+    # render file and return
     return template.render(
         {
             "datasets": params,
