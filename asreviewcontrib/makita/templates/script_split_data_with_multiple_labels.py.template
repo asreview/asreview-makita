@@ -7,15 +7,15 @@ Example
 
 2 label columns:
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening --suffix final tiab
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening --suffix final tiab  # noqa
 
 3 label columns:
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening label3 --suffix final tiab label3
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening label3 --suffix final tiab label3  # noqa
 
 1 label column (renames the label only):
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included --suffix final
+>>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included --suffix final  # noqa
 
 
 
@@ -101,3 +101,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     etl(args.s, args.o, split=args.split, suffix=args.suffix)
+

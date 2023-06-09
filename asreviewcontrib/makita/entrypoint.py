@@ -7,8 +7,7 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
 from asreviewcontrib.makita.template_multiple_models import render_jobs_multiple_models
-from asreviewcontrib.makita.utils import add_file
-from asreviewcontrib.makita.utils import get_file
+from asreviewcontrib.makita.utils import FileHandler
 
 
 def get_template_fp(name):
@@ -49,10 +48,6 @@ class MakitaEntryPoint(BaseEntryPoint):
         self.version = __version__
 
     def execute(self, argv):  # noqa: C901
-
-        if len(argv) <= 2:
-            parser = _parse_arguments_program(self.version, add_help=True)
-            parser.parse_args(argv)
 
         # get tool and version number
         parser = _parse_arguments_program(self.version)
@@ -102,7 +97,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                                 )
             parser.add_argument("--impossible_models",
                                 nargs="+",
-                                default=[["nb", "doc2vec"], ["nb", "sbert"]],
+                                default=["nb,doc2vec", "nb,sbert"],
                                 help="Model combinations to exclude"
                                 )
 
@@ -184,13 +179,29 @@ class MakitaEntryPoint(BaseEntryPoint):
         print(f"Rendered template {args_program.name} and saved to {args.f}")
 
     def _add_script(self, args_name, args_program):
+        # initialize file handler
+        self.file_handler = FileHandler()
+
+        # parse arguments
         parser = _parse_arguments_scripts(self.version)
         args = parser.parse_args(args_name)
-        params = {}
-        new_script = get_file(args_program.name, "script", **params)
 
-        export_fp = Path(args.o, args_program.name)
-        add_file(new_script, export_fp)
+        tmp_scripts = []
+        if args.all:
+            tmp_scripts = [
+                p.name[7:-9] for p in Path(TEMPLATES_FP).glob("script_*.template")]
+        else:
+            tmp_scripts = [args_program.name]
+
+        for script in tmp_scripts:
+            params = {}
+            new_script = self.file_handler.render_file_from_template(
+                script, "script", **params)
+
+            # export script
+            export_fp = Path(args.o, script)
+            self.file_handler.add_file(new_script, export_fp)
+            self.file_handler.print_summary()
 
 
 def _parse_arguments_program(version="Unknown", add_help=False):
@@ -201,7 +212,12 @@ def _parse_arguments_program(version="Unknown", add_help=False):
         choices=["template", "add-script"],
         help="The internal tool to use (template or add-script).",
     )
-    parser.add_argument("name", type=str, help="The name of the template or script.")
+    parser.add_argument(
+        "name",
+        type=str,
+        nargs='?',
+        help="The name of the template or script."
+    )
     parser.add_argument(
         "-V",
         "--version",
@@ -213,7 +229,6 @@ def _parse_arguments_program(version="Unknown", add_help=False):
 
 def _parse_arguments_template(version):
 
-    # parser = _parse_arguments_program(version)
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
     parser.add_argument("-f", type=_valid_job_file, default="jobs.sh",
@@ -240,8 +255,9 @@ def _parse_arguments_template(version):
 
 def _parse_arguments_scripts(version):
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
-
-    # parser = _parse_arguments_program(version)
+    parser.add_argument(
+        "--all", "-a", action="store_true", help="Add all scripts."
+    )
     parser.add_argument(
         "-o", type=str, default="scripts", help="Location of the scripts folder."
     )

@@ -13,7 +13,8 @@ from pathlib import Path
 
 from asreview import open_state
 
-# version {{ version }} 
+# version {{ version }}
+
 
 def get_settings_from_state(state):
     """Extract settings from state file.
@@ -59,3 +60,4 @@ if __name__ == '__main__':
 
     with open(Path(args.o), "w") as f:
         json.dump(result, f)
+
