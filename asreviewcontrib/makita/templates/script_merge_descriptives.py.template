@@ -53,12 +53,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/descriptives/",
+        default="{{ output_folder }}/simulation/*/descriptives/",
         help="Datasets location")
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/data_descriptives_all.csv",
+        default="{{ output_folder }}/tables/data_descriptives_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
