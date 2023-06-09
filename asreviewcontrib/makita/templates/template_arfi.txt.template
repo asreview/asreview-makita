@@ -7,7 +7,6 @@ scripts:
   - merge_descriptives.py
   - merge_metrics.py
   - merge_tds.py
-  - atd_calculations.py
 
 docs:
   - README.md
@@ -59,6 +58,3 @@ python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ da
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py -s {{ output_folder }}/simulation/*/descriptives/ -o {{ output_folder }}/tables/data_descriptives_all.csv
 python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/*/metrics/ -o {{ output_folder }}/tables/metrics_sim_all.csv
-python {{ scripts_folder }}/merge_tds.py
-python {{ scripts_folder }}/atd_calculations.py
-
