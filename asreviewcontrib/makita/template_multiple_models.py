@@ -12,6 +12,7 @@ ALL_CLASSIFIERS = ["logistic", "nb", "rf", "svm"]
 ALL_FEATURE_EXTRACTORS = ["doc2vec", "sbert", "tfidf"]
 IMPOSSIBLE_MODELS = ["nb,doc2vec", "nb,sbert"]
 
+
 def render_jobs_multiple_models(
     datasets,
     output_folder="output",
