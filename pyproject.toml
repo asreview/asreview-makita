@@ -27,7 +27,7 @@ repository = "https://github.com/asreview/asreview-makita"
 makita = "asreviewcontrib.makita.entrypoint:MakitaEntryPoint"
 
 [project.optional-dependencies]
-lint = ["flake8", "isort", "flake8-isort"]
+lint = ["ruff"]
 test = ["pytest"]
 
 [build-system]
