@@ -1,59 +1,70 @@
 
 
-# version 0+unknown
+# version 0.0.0
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
 mkdir output/simulation
+mkdir output/tables
+mkdir output/tables/metrics
+mkdir output/tables/time_to_discovery
+mkdir output/figures
+
 
 ##################################
-### DATASET: ptsd
-##################################
-
-# Create output folder
-mkdir output/simulation/ptsd/
-
-# Collect descriptives about the dataset ptsd
-mkdir output/simulation/ptsd/descriptives
-asreview data describe data/ptsd.csv -o output/simulation/ptsd/descriptives/data_stats_ptsd.json
-
-# Generate wordcloud visualizations of all datasets
-asreview wordcloud data/ptsd.csv -o output/simulation/ptsd/descriptives/wordcloud_ptsd.png --width 800 --height 500
-asreview wordcloud data/ptsd.csv -o output/simulation/ptsd/descriptives/wordcloud_relevant_ptsd.png --width 800 --height 500 --relevant
-asreview wordcloud data/ptsd.csv -o output/simulation/ptsd/descriptives/wordcloud_irrelevant_ptsd.png --width 800 --height 500 --irrelevant
-
-# Simulate runs
-mkdir output/simulation/ptsd/state_files
-asreview simulate data/ptsd.csv -s output/simulation/ptsd/state_files/sim_ptsd_0.asreview --init_seed 535 --seed 165
-asreview metrics output/simulation/ptsd/state_files/sim_ptsd_0.asreview -o output/simulation/ptsd/metrics_sim_ptsd_0.json
-
-# Generate plot for dataset
-python scripts/get_plot.py -s output/simulation/ptsd/state_files/ -o output/simulation/ptsd/plot_recall_sim_ptsd.png
-
-##################################
-### DATASET: ptsd_copy
+### DATASET: Smid_2020
 ##################################
 
 # Create output folder
-mkdir output/simulation/ptsd_copy/
+mkdir output/simulation/Smid_2020/
+mkdir output/simulation/Smid_2020/metrics
 
-# Collect descriptives about the dataset ptsd_copy
-mkdir output/simulation/ptsd_copy/descriptives
-asreview data describe data/ptsd_copy.csv -o output/simulation/ptsd_copy/descriptives/data_stats_ptsd_copy.json
+# Collect descriptives about the dataset Smid_2020
+mkdir output/simulation/Smid_2020/descriptives
+asreview data describe data/Smid_2020.csv -o output/simulation/Smid_2020/descriptives/data_stats_Smid_2020.json
 
 # Generate wordcloud visualizations of all datasets
-asreview wordcloud data/ptsd_copy.csv -o output/simulation/ptsd_copy/descriptives/wordcloud_ptsd_copy.png --width 800 --height 500
-asreview wordcloud data/ptsd_copy.csv -o output/simulation/ptsd_copy/descriptives/wordcloud_relevant_ptsd_copy.png --width 800 --height 500 --relevant
-asreview wordcloud data/ptsd_copy.csv -o output/simulation/ptsd_copy/descriptives/wordcloud_irrelevant_ptsd_copy.png --width 800 --height 500 --irrelevant
+asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_Smid_2020.png --width 800 --height 500
+asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_relevant_Smid_2020.png --width 800 --height 500 --relevant
+asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_irrelevant_Smid_2020.png --width 800 --height 500 --irrelevant
 
 # Simulate runs
-mkdir output/simulation/ptsd_copy/state_files
-asreview simulate data/ptsd_copy.csv -s output/simulation/ptsd_copy/state_files/sim_ptsd_copy_0.asreview --init_seed 535 --seed 166
-asreview metrics output/simulation/ptsd_copy/state_files/sim_ptsd_copy_0.asreview -o output/simulation/ptsd_copy/metrics_sim_ptsd_copy_0.json
+mkdir output/simulation/Smid_2020/state_files
+asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_0.asreview --init_seed 535 --seed 165
+asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_0.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_0.json
 
-# Generate plot for dataset
-python scripts/get_plot.py -s output/simulation/ptsd_copy/state_files/ -o output/simulation/ptsd_copy/plot_recall_sim_ptsd_copy.png
+# Generate plot and tables for dataset
+python scripts/get_plot.py -s output/simulation/Smid_2020/state_files/ -o output/figures/plot_recall_sim_Smid_2020.png
+python scripts/merge_metrics.py -s output/simulation/Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_Smid_2020.csv
+python scripts/merge_tds.py -s output/simulation/Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_Smid_2020.csv
+
+##################################
+### DATASET: van_de_Schoot_2018
+##################################
+
+# Create output folder
+mkdir output/simulation/van_de_Schoot_2018/
+mkdir output/simulation/van_de_Schoot_2018/metrics
+
+# Collect descriptives about the dataset van_de_Schoot_2018
+mkdir output/simulation/van_de_Schoot_2018/descriptives
+asreview data describe data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/descriptives/data_stats_van_de_Schoot_2018.json
+
+# Generate wordcloud visualizations of all datasets
+asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_van_de_Schoot_2018.png --width 800 --height 500
+asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_relevant_van_de_Schoot_2018.png --width 800 --height 500 --relevant
+asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_irrelevant_van_de_Schoot_2018.png --width 800 --height 500 --irrelevant
+
+# Simulate runs
+mkdir output/simulation/van_de_Schoot_2018/state_files
+asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_0.asreview --init_seed 535 --seed 166
+asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_0.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_0.json
+
+# Generate plot and tables for dataset
+python scripts/get_plot.py -s output/simulation/van_de_Schoot_2018/state_files/ -o output/figures/plot_recall_sim_van_de_Schoot_2018.png
+python scripts/merge_metrics.py -s output/simulation/van_de_Schoot_2018/metrics/ -o output/tables/metrics/metrics_sim_van_de_Schoot_2018.csv
+python scripts/merge_tds.py -s output/simulation/van_de_Schoot_2018/metrics/ -o output/tables/time_to_discovery/tds_sim_van_de_Schoot_2018.csv
 
 # Merge descriptives and metrics
-python scripts/merge_descriptives.py
-python scripts/merge_metrics.py
+python scripts/merge_descriptives.py -s output/simulation/*/descriptives/ -o output/tables/data_descriptives_all.csv
+python scripts/merge_metrics.py -s output/simulation/*/metrics/ -o output/tables/metrics_sim_all.csv

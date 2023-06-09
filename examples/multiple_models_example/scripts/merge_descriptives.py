@@ -7,18 +7,18 @@ Example
 
 or
 
-> python scripts/merge_descriptives.py -s output/simulation/*/descriptives/data_stats_*.json
+> python scripts/merge_descriptives.py -s data_descriptives
 
 or
 
-> python scripts/merge_descriptives.py -o output/my_table.json
+> python scripts/merge_descriptives.py -o my_table.json
 
 Authors
 -------
 - De Bruin, Jonathan
 """
 
-# version 0+unknown
+# version 0.0.0
 
 import argparse
 import glob
@@ -53,18 +53,21 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        nargs="*",
-        default="output/simulation/*/descriptives/data_stats_*.json",
+        default="output/simulation/*/descriptives/",
         help="Datasets location")
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/data_descriptives.csv",
+        default="output/tables/data_descriptives_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
     # load datasets
-    datasets = glob.glob(args.s)
+    datasets = glob.glob(args.s + "data_stats_*.json")
+
+    # check if states are found
+    if len(datasets) == 0:
+        raise FileNotFoundError("No datasets found in " + args.s)
 
     # merge results
     result = create_table_descriptives(datasets)
