@@ -181,7 +181,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         self.file_handler = FileHandler()
 
         # parse arguments
-        parser = _parse_arguments_scripts(self.version)
+        parser = _parse_arguments_scripts()
         args = parser.parse_args(args_name)
 
         tmp_scripts = []
@@ -253,7 +253,7 @@ def _parse_arguments_template(version):
     return parser
 
 
-def _parse_arguments_scripts(version):
+def _parse_arguments_scripts():
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
     parser.add_argument("--all", "-a", action="store_true", help="Add all scripts.")
     parser.add_argument(
