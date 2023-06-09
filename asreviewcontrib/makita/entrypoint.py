@@ -201,7 +201,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             # export script
             export_fp = Path(args.o, script)
             self.file_handler.add_file(new_script, export_fp)
-            self.file_handler.print_summary()
+        self.file_handler.print_summary()
 
 
 def _parse_arguments_program(version="Unknown", add_help=False):
