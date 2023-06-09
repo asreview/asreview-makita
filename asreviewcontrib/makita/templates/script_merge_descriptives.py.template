@@ -59,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/data_descriptives.csv",
+        default="output/tables/data_descriptives_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
