@@ -7,11 +7,11 @@ Example
 
 or
 
-> python scripts/merge_descriptives.py -s output/simulation/*/descriptives/data_stats_*.json  # NOQA
+> python scripts/merge_descriptives.py -s data_descriptives
 
 or
 
-> python scripts/merge_descriptives.py -o output/my_table.json
+> python scripts/merge_descriptives.py -o my_table.json
 
 Authors
 -------

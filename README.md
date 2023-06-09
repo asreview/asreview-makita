@@ -1,6 +1,6 @@
 # ASReview Makita
 
-[![PyPI version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py/asreview-makita) [![Downloads](https://pepy.tech/badge/asreview-makita)](https://pepy.tech/project/asreview-makita) ![PyPI - License](https://img.shields.io/pypi/l/asreview-makita) ![Deploy and release](https://github.com/asreview/asreview-makita/workflows/Deploy%20and%20release/badge.svg) ![Build status](https://github.com/asreview/asreview-makita/workflows/test-suite/badge.svg) [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
+[![PyPI version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py/asreview-makita) [![Downloads](https://pepy.tech/badge/asreview-makita)](https://pepy.tech/project/asreview-makita) ![PyPI - License](https://img.shields.io/pypi/l/asreview-makita) [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
 
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT** **A**utomatic) is a workflow generator for simulation studies using the command line interface of [ASReview
 LAB](https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita can be used to effortlessly generate the framework and code for your simulation study.

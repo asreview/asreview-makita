@@ -25,8 +25,9 @@ def get_priors(dataset, init_seed, n_priors):
     np.random.seed(init_seed)
 
     # sample n_priors irrelevant records
-    prior_irrelevant = list(np.random.choice(relevant_irrecord_ids, n_priors,
-                                             replace=False))
+    prior_irrelevant = list(
+        np.random.choice(relevant_irrecord_ids, n_priors, replace=False)
+    )
 
     priors = []
 
@@ -45,7 +46,7 @@ def render_jobs_arfi(
     init_seed=535,
     model_seed=165,
     fp_template=None,
-    job_file='jobs.sh',
+    job_file="jobs.sh",
 ):
     """Render jobs."""
     params = []
@@ -54,14 +55,10 @@ def render_jobs_arfi(
     file_handler = FileHandler()
 
     for i, fp_dataset in enumerate(sorted(datasets)):
-
         check_filename_dataset(fp_dataset)
 
         # render priors
-        priors = get_priors(fp_dataset,
-                            init_seed=init_seed + i,
-                            n_priors=n_priors
-                            )
+        priors = get_priors(fp_dataset, init_seed=init_seed + i, n_priors=n_priors)
 
         # params for single dataset
         params.append(
@@ -85,15 +82,18 @@ def render_jobs_arfi(
 
     if template.docs is not None:
         for s in template.docs:
-            t_docs = file_handler.render_file_from_template(s,
-                                                            "doc",
-                                                            datasets=datasets,
-                                                            template_name=template.name if template.name == "ARFI" else "custom",  # NOQA
-                                                            template_name_long=template.name_long,  # NOQA
-                                                            template_scripts=template.scripts,  # NOQA
-                                                            output_folder=output_folder,
-                                                            job_file=job_file,
-                                                            )
+            t_docs = file_handler.render_file_from_template(
+                s,
+                "doc",
+                datasets=datasets,
+                template_name=template.name
+                if template.name == "ARFI"
+                else "custom",  # NOQA
+                template_name_long=template.name_long,  # NOQA
+                template_scripts=template.scripts,  # NOQA
+                output_folder=output_folder,
+                job_file=job_file,
+            )
             file_handler.add_file(t_docs, s)
 
     file_handler.print_summary()

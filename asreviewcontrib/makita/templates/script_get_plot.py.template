@@ -7,7 +7,7 @@ Example
 
 or
 
-> python scripts/get_plot.py -s output/simulation/ptsd/state_files -o output/simulation/ptsd/ptsd_recall_plot.png  # noqa
+> python scripts/get_plot.py -s asreview_files -o plot.png
 
 
 Authors
@@ -19,10 +19,11 @@ Authors
 
 import argparse
 from pathlib import Path
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
 from asreview import open_state
+
 from asreviewcontrib.insights.plot import plot_recall
 
 
@@ -58,7 +59,10 @@ def get_plot_from_states(states, filename, legend=None):
                     try:
                         label = metadata["settings"][legend]
                     except KeyError as exc:
-                        raise ValueError(f"Legend setting '{legend}' not found in state file settings.") from exc  # noqa
+                        raise ValueError(
+                            f"Legend setting '{legend}' "
+                            "not found in state file settings."
+                        ) from exc
                 if label not in labels:
                     ax.lines[-2].set_label(label)
                     labels.append(label)
@@ -96,4 +100,3 @@ if __name__ == "__main__":
 
     # generate plot and save results
     get_plot_from_states(states, args.o, args.show_legend)
-

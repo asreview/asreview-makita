@@ -7,11 +7,11 @@ Example
 
 or
 
-> python scripts/merge_metrics.py -s output/simulation/*/metrics/simulation_metrics_*.json  # noqa
+> python scripts/merge_metrics.py -s simulation_metrics
 
 or
 
-> python scripts/merge_metrics.py -o output/my_table.json
+> python scripts/merge_metrics.py -o my_table.json
 
 Authors
 -------
@@ -24,6 +24,7 @@ import argparse
 import glob
 import json
 from pathlib import Path
+
 import pandas as pd
 
 

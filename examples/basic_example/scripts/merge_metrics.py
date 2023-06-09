@@ -7,36 +7,35 @@ Example
 
 or
 
-> python scripts/merge_metrics.py -s output/simulation/*/simulation_metrics_*.json
+> python scripts/merge_metrics.py -s simulation_metrics
 
 or
 
-> python scripts/merge_metrics.py -o output/my_table.json
+> python scripts/merge_metrics.py -o my_table.json
 
 Authors
 -------
 - De Bruin, Jonathan
 """
 
-# version 0+unknown
+# version 0.0.0
 
 import argparse
 import glob
 import json
 from pathlib import Path
+
 import pandas as pd
 
 
-def create_table_state_metrics(states):
+def create_table_state_metrics(metric_files):
     metrics = []
 
-    for state in states:
-        with open(state) as f:
+    for metric in metric_files:
+        with open(metric) as f:
             data = json.load(f)['data']['items']
             values = {}
-            values['file_name'] = Path(state).name
-            values['dataset'] = Path(state).parent.name
-            values['run_id'] = str.split(Path(state).stem, '_')[-1]
+            values['file_name'] = Path(metric).name
             for item in data:
                 if item['id'] == 'td':
                     continue
@@ -48,7 +47,7 @@ def create_table_state_metrics(states):
                     values[item['id']] = item['value']
             metrics.append(values)
 
-    return pd.DataFrame(metrics, index=[Path(state).stem for state in states])
+    return pd.DataFrame(metrics)
 
 
 if __name__ == "__main__":
@@ -59,20 +58,24 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics_sim_*.json",
+        default="output/simulation/*/metrics/",
         help="states location")
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/data_metrics.csv",
+        default="output/tables/metrics_sim_all.csv",
         help="Output table location")
     args = parser.parse_args()
 
-    # load states
-    states = glob.glob(args.s)
+    # load metric files
+    metric_files = glob.glob(args.s + "metrics_sim_*.json")
+
+    # check if states are found
+    if len(metric_files) == 0:
+        raise FileNotFoundError("No metrics found in " + args.s)
 
     # merge results
-    result = create_table_state_metrics(states)
+    result = create_table_state_metrics(metric_files)
 
     # store result in output folder
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)

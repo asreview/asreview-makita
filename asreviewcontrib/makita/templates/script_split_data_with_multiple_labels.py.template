@@ -7,15 +7,18 @@ Example
 
 2 label columns:
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening --suffix final tiab  # noqa
+>>> python split_data_with_multiple_labels.py ptsd.csv output
+>>>     --split label_included label_abstract_screening --suffix final tiab
 
 3 label columns:
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included label_abstract_screening label3 --suffix final tiab label3  # noqa
+>>> python split_data_with_multiple_labels.py ptsd.csv output
+>>>     --split label1 label2 label3 --suffix label1 label2 label3
 
 1 label column (renames the label only):
 
->>> python split_data_with_multiple_labels.py ptsd.csv output --split label_included --suffix final  # noqa
+>>> python split_data_with_multiple_labels.py ptsd.csv output
+>>>     --split label_included --suffix final
 
 
 
