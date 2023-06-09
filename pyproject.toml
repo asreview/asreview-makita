@@ -1,0 +1,47 @@
+[project]
+name = "asreview-makita"
+description = "Makita workflow tool for the ASReview project"
+authors = [
+    { name = "ASReview LAB developers", email = "asreview@uu.nl" }
+]
+readme = "README.md"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11"
+]
+license = {text = "MIT"}
+dependencies = ["asreview", "jinja2", "cfgtemplater"]
+dynamic = ["version"]
+requires-python = ">=3.7"
+
+[project.urls]
+homepage = "https://asreview.ai"
+repository = "https://github.com/asreview/asreview-makita"
+
+[project.entry-points."asreview.entry_points"]
+makita = "asreviewcontrib.makita.entrypoint:MakitaEntryPoint"
+
+[project.optional-dependencies]
+lint = ["flake8", "isort", "flake8-isort"]
+test = ["pytest"]
+
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+
+[tool.setuptools]
+packages = ["asreviewcontrib"]
+
+[tool.setuptools_scm]
+write_to = "asreviewcontrib/makita/_version.py"
+
+[tool.ruff]
+select = ["E", "F", "UP", "I", "B"]
+
+[tool.ruff.isort]
+force-single-line = true
