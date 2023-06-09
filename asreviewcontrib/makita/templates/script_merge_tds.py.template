@@ -66,12 +66,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         type=str,
-        default="output/simulation/*/metrics/",
+        required=True,
         help="metrics location")
     parser.add_argument(
         "-o",
         type=str,
-        default="output/tables/tds_sim_all.csv",
+        required=True,
         help="Output table location")
     args = parser.parse_args()
 

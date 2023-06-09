@@ -7,12 +7,25 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 
 
 class FileHandler:
+    """
+    The FileHandler class handles file operations such as adding files and rendering 
+    scripts.
+    """
+
     def __init__(self):
         self.overwrite_all = False
         self.total_files = 0
 
     def add_file(self, content, export_fp):
-        # Check if the file already exists
+        """
+        Add a file to the specified directory.
+
+        Args:
+        content (str): The content to be written into the file.
+        export_fp (Path): A Path object that specifies the directory where the file 
+        should be added.
+        """
+
         def allow_overwrite():
             response = input(f"Overwrite {export_fp} ([Y]es/[N]o/[A]ll)? ").lower()
             if response in ["y", "yes"]:
@@ -42,9 +55,25 @@ class FileHandler:
             self.total_files += 1
 
     def print_summary(self):
+        """
+        Print the total number of files created by the FileHandler object.
+        """
+
         print(f"{self.total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
+        """
+        Render a file from a template.
+
+        Args:
+        name (str): The name of the file to be rendered.
+        file_type (str): The type of the file to be rendered.
+        kwargs: Additional keyword arguments.
+
+        Returns:
+        str: The content of the file rendered from the template.
+        """
+
         params = {
             "version": __version__,
         }
@@ -59,5 +88,15 @@ class FileHandler:
 
 
 def check_filename_dataset(fp):
+    """
+    Check if the filename of the dataset contains any whitespace.
+
+    Args:
+    fp (str): The file path of the dataset.
+
+    Raises:
+    ValueError: If the filename of the dataset contains whitespace.
+    """
+
     if " " in Path(fp).stem:
         raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")

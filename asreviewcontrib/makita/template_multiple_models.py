@@ -1,4 +1,4 @@
-"""Render basic template."""
+"""Render multiple_models template."""
 
 from pathlib import Path
 
@@ -8,10 +8,6 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
 
-ALL_CLASSIFIERS = ["logistic", "nb", "rf", "svm"]
-ALL_FEATURE_EXTRACTORS = ["doc2vec", "sbert", "tfidf"]
-IMPOSSIBLE_MODELS = ["nb,doc2vec", "nb,sbert"]
-
 
 def render_jobs_multiple_models(
     datasets,
@@ -20,18 +16,28 @@ def render_jobs_multiple_models(
     scripts_folder="scripts",
     init_seed=535,
     model_seed=165,
-    all_classifiers=ALL_CLASSIFIERS,
-    all_feature_extractors=ALL_FEATURE_EXTRACTORS,
-    impossible_models=IMPOSSIBLE_MODELS,
+    all_classifiers=None,
+    all_feature_extractors=None,
+    impossible_models=None,
     fp_template=None,
     job_file="jobs.sh",
 ):
+    if all_classifiers is None:
+        all_classifiers = ["logistic", "nb", "rf", "svm"]
+
+    if all_feature_extractors is None:
+        all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
+
+    if impossible_models is None:
+        impossible_models = ["nb,doc2vec", "nb,sbert"]
+
     """Render jobs."""
     params = []
 
     # initialize file handler
     file_handler = FileHandler()
 
+    # generate params for all simulations
     for i, fp_dataset in enumerate(sorted(datasets)):
         check_filename_dataset(fp_dataset)
 
@@ -47,31 +53,42 @@ def render_jobs_multiple_models(
             }
         )
 
-    # open template TODO@{Replace by more sustainable module}
+    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and 
+    # setting up template variables and extensions.
     template = ConfigTemplate(fp_template)
 
-    for s in template.scripts:
-        t_script = file_handler.render_file_from_template(s, "script")
-        export_fp = Path(scripts_folder, s)
-        file_handler.add_file(t_script, export_fp)
+    # render scripts
+    if template.scripts is not None:
+        for s in template.scripts:
+            t_script = file_handler.render_file_from_template(
+                s, 
+                "script", 
+                output_folder=output_folder
+            )
+            export_fp = Path(scripts_folder, s)
+            file_handler.add_file(t_script, export_fp)
 
-    for s in template.docs:
-        t_docs = file_handler.render_file_from_template(
-            s,
-            "doc",
-            datasets=datasets,
-            template_name=template.name
-            if template.name == "multiple_models"
-            else "custom",  # NOQA
-            template_name_long=template.name_long,  # NOQA
-            template_scripts=template.scripts,  # NOQA
-            output_folder=output_folder,
-            job_file=job_file,
-        )
-        file_handler.add_file(t_docs, s)
+    # render docs
+    if template.docs is not None:
+        for s in template.docs:
+            t_docs = file_handler.render_file_from_template(
+                s,
+                "doc",
+                datasets=datasets,
+                template_name=template.name
+                if template.name == "multiple_models"
+                else "custom",
+                template_name_long=template.name_long,
+                template_scripts=template.scripts,
+                output_folder=output_folder,
+                job_file=job_file,
+            )
+            file_handler.add_file(t_docs, s)
 
+    # print summary to console
     file_handler.print_summary()
 
+    # render file and return
     return template.render(
         {
             "datasets": params,
