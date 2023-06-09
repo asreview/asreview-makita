@@ -22,7 +22,8 @@ class FileHandler:
 
         Args:
         content (str): The content to be written into the file.
-        export_fp (Path): A Path object that specifies the directory where the file should be added.
+        export_fp (Path): A Path object that specifies the directory where the file 
+        should be added.
         """
 
         def allow_overwrite():
@@ -57,7 +58,7 @@ class FileHandler:
         """
         Print the total number of files created by the FileHandler object.
         """
-        
+
         print(f"{self.total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
