@@ -45,7 +45,6 @@ def create_table_state_tds(metrics):
                              aggfunc='first',
                              fill_value=0)
     pivoted.columns = [f'td_sim_{col}' for col in pivoted.columns]
-    pivoted = pivoted.reset_index()
     return pivoted
 
 
