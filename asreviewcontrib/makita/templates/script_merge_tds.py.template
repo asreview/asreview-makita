@@ -25,7 +25,7 @@ import argparse
 import glob
 import json
 from pathlib import Path
-
+from math import nan
 import pandas as pd
 
 
@@ -44,7 +44,7 @@ def create_table_state_tds(metrics):
                              columns='metric_file',
                              values='td',
                              aggfunc='first',
-                             fill_value=0)
+                             fill_value=nan)
     pivoted.columns = [f'td_sim_{col}' for col in pivoted.columns]
     return pivoted
 
