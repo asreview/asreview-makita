@@ -75,9 +75,9 @@ def render_jobs_multiple_models(
             datasets=datasets,
             template_name=template.name
             if template.name == "multiple_models"
-            else "custom",  # NOQA
-            template_name_long=template.name_long,  # NOQA
-            template_scripts=template.scripts,  # NOQA
+            else "custom",
+            template_name_long=template.name_long,
+            template_scripts=template.scripts,
             output_folder=output_folder,
             job_file=job_file,
         )
