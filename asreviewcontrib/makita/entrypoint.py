@@ -73,8 +73,8 @@ class MakitaEntryPoint(BaseEntryPoint):
     def _template(self, args_name, args_program):
         '''Generate a template.'''
 
-        # generate basic arguments
-        parser = _parse_arguments_template(self.version)
+        # generate arguments used for all templates
+        parser = _parse_arguments_template()
 
         # template specific arguments
         if args_program.name in ["basic", "multiple_models"]:
