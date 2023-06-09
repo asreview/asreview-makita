@@ -1,5 +1,7 @@
 """Render basic template."""
 
+import os
+import platform
 from pathlib import Path
 
 from cfgtemplater.config_template import ConfigTemplate
@@ -18,8 +20,15 @@ def render_jobs_basic(
     model_seed=165,
     fp_template=None,
     job_file=None,
+    platform_sys=None,
 ):
     """Render jobs."""
+
+    if not platform_sys:
+        platform_sys = platform.system()
+    if not job_file:
+        job_file = "jobs.bat" if os.name == "nt" else "jobs.sh"
+
     params = []
 
     # initialize file handler
@@ -71,6 +80,7 @@ def render_jobs_basic(
             "datasets": params,
             "output_folder": output_folder,
             "scripts_folder": scripts_folder,
+            "platform_sys": platform_sys,
             "version": __version__,
         }
     )

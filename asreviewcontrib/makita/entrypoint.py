@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 
 from asreview.entry_points import BaseEntryPoint
@@ -19,13 +20,6 @@ def is_valid_template(fp):
         return True
     else:
         raise ValueError(f"Template {fp} not found")
-
-
-def _valid_job_file(param):
-    ext = Path(param).suffix
-    if ext.lower() not in (".sh", ".bat", ".yaml"):
-        raise argparse.ArgumentTypeError("File must have a .sh, .bat, .yaml extension")
-    return param
 
 
 def _shell_to_batch(job):
@@ -126,7 +120,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
-                job_file=args.f,
+                job_file=args.job_file,
+                platform_sys=args.platform,
             )
 
         elif args_program.name in ["arfi"]:
@@ -138,7 +133,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
-                job_file=args.f,
+                job_file=args.job_file,
+                platform_sys=args.platform,
             )
 
         elif args_program.name in ["multiple_models"]:
@@ -153,7 +149,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 all_feature_extractors=args.feature_extractors,
                 impossible_models=args.impossible_models,
                 fp_template=fp_template,
-                job_file=args.f,
+                job_file=args.job_file,
+                platform_sys=args.platform,
             )
 
         else:
@@ -164,17 +161,20 @@ class MakitaEntryPoint(BaseEntryPoint):
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 fp_template=fp_template,
-                job_file=args.f,
+                job_file=args.job_file,
+                platform_sys=args.platform,
             )
 
-        if Path(args.f).suffix.lower() == ".bat":
+        if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
             job = _shell_to_batch(job)
+            job_file = "jobs.bat" if args.job_file is None else args.job_file
+        else:
+            job_file = "jobs.sh" if args.job_file is None else args.job_file
 
         # store result in output folder
-        Path(args.f).parent.mkdir(parents=True, exist_ok=True)
-        with open(args.f, "w") as f:
+        with open(job_file, "w") as f:
             f.write(job)
-        print(f"Rendered template {args_program.name} and saved to {args.f}")
+        print(f"Rendered template {args_program.name} and saved to {job_file}")
 
     def _add_script(self, args_name, args_program):
         # initialize file handler
@@ -228,10 +228,11 @@ def _parse_arguments_template(version):
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
     parser.add_argument(
+        "--job_file",
         "-f",
-        type=_valid_job_file,
-        default="jobs.sh",
-        help="Script with study jobs to run",
+        type=str,
+        help="The name of the file with jobs. Default "
+        "jobs.bat for Windows, otherwise jobs.sh.",
     )
     parser.add_argument("-s", type=str, default="data", help="Dataset folder")
     parser.add_argument("-o", type=str, default="output", help="Output folder")
@@ -249,6 +250,12 @@ def _parse_arguments_template(version):
     )
     parser.add_argument(
         "--template", type=str, help="Overwrite template with template file path."
+    )
+    parser.add_argument(
+        "--platform",
+        type=str,
+        help="Platform to run jobs: Windows, Darwin, Linux. "
+        "Default: the system of rendering templates.",
     )
     return parser
 

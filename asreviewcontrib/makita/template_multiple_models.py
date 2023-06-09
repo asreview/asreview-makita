@@ -1,5 +1,7 @@
 """Render basic template."""
 
+import os
+import platform
 from pathlib import Path
 
 from cfgtemplater.config_template import ConfigTemplate
@@ -24,9 +26,16 @@ def render_jobs_multiple_models(
     all_feature_extractors=ALL_FEATURE_EXTRACTORS,
     impossible_models=IMPOSSIBLE_MODELS,
     fp_template=None,
-    job_file="jobs.sh",
+    job_file=None,
+    platform_sys=None,
 ):
     """Render jobs."""
+
+    if not platform_sys:
+        platform_sys = platform.system()
+    if not job_file:
+        job_file = "jobs.bat" if os.name == "nt" else "jobs.sh"
+
     params = []
 
     # initialize file handler
@@ -78,6 +87,7 @@ def render_jobs_multiple_models(
             "output_folder": output_folder,
             "n_runs": n_runs,
             "scripts_folder": scripts_folder,
+            "platform": platform_sys,
             "version": __version__,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,

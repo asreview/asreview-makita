@@ -1,5 +1,7 @@
 """Render ARFI template."""
 
+import os
+import platform
 from pathlib import Path
 
 import numpy as np
@@ -46,9 +48,16 @@ def render_jobs_arfi(
     init_seed=535,
     model_seed=165,
     fp_template=None,
-    job_file="jobs.sh",
+    job_file=None,
+    platform_sys=None,
 ):
     """Render jobs."""
+
+    if not platform_sys:
+        platform_sys = platform.system()
+    if not job_file:
+        job_file = "jobs.bat" if os.name == "nt" else "jobs.sh"
+
     params = []
 
     # initialize file handler
@@ -104,6 +113,7 @@ def render_jobs_arfi(
             "init_seed": init_seed,
             "output_folder": output_folder,
             "scripts_folder": scripts_folder,
+            "platform": platform_sys,
             "version": __version__,
         }
     )
