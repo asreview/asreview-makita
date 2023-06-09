@@ -39,8 +39,12 @@ def create_table_state_tds(metrics):
             file_counter += 1
 
     df = pd.DataFrame(values, columns=['record_id', 'td', 'metric_file'])
-    pivoted = df.pivot_table(index='record_id', columns='metric_file', values='td', aggfunc='first', fill_value=0)
-    pivoted.columns = [f'td_{col}' for col in pivoted.columns]
+    pivoted = df.pivot_table(index='record_id',
+                             columns='metric_file',
+                             values='td',
+                             aggfunc='first',
+                             fill_value=0)
+    pivoted.columns = [f'td_sim_{col}' for col in pivoted.columns]
     pivoted = pivoted.reset_index()
     return pivoted
 
