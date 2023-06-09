@@ -45,7 +45,6 @@ class FileHandler:
         print(f"{self.total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
-
         params = {
             "version": __version__,
         }
@@ -60,5 +59,5 @@ class FileHandler:
 
 
 def check_filename_dataset(fp):
-    if (' ' in Path(fp).stem):
+    if " " in Path(fp).stem:
         raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")

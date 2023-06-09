@@ -43,49 +43,50 @@ def get_plot_from_states(states, filename, legend=None):
             # set the label
             if legend == "filename":
                 ax.lines[-2].set_label(state_file.stem)
-                ax.legend(loc=4, prop={'size': 8})
+                ax.legend(loc=4, prop={"size": 8})
             elif legend:
                 metadata = state.settings_metadata
 
                 if legend == "model":
                     label = " - ".join(
-                            [metadata["settings"]["model"],
-                             metadata["settings"]["feature_extraction"],
-                             metadata["settings"]["balance_strategy"],
-                             metadata["settings"]["query_strategy"]])
+                        [
+                            metadata["settings"]["model"],
+                            metadata["settings"]["feature_extraction"],
+                            metadata["settings"]["balance_strategy"],
+                            metadata["settings"]["query_strategy"],
+                        ]
+                    )
                 elif legend == "classifier":
                     label = metadata["settings"]["model"]
                 else:
                     try:
                         label = metadata["settings"][legend]
                     except KeyError as exc:
-                        raise ValueError(f"Legend setting '{legend}' not found in state file settings.") from exc  # noqa
+                        raise ValueError(
+                            f"Legend setting '{legend}' "
+                            "not found in state file settings."
+                        ) from exc
                 if label not in labels:
                     ax.lines[-2].set_label(label)
                     labels.append(label)
                 ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
-                ax.legend(loc=4, prop={'size': 8})
+                ax.legend(loc=4, prop={"size": 8})
 
     fig.savefig(str(filename))
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(
         description="Generate an ASReview plot from the found state files."
     )
+    parser.add_argument("-s", type=str, help="States location")
+    parser.add_argument("-o", type=str, help="Output location")
     parser.add_argument(
-        "-s",
+        "--show_legend",
+        "-l",
         type=str,
-        help="States location")
-    parser.add_argument(
-        "-o",
-        type=str,
-        help="Output location")
-    parser.add_argument(
-        "--show_legend", "-l",
-        type=str,
-        help="Add a legend to the plot, based on the given parameter.")
+        help="Add a legend to the plot, based on the given parameter.",
+    )
     args = parser.parse_args()
 
     # load states

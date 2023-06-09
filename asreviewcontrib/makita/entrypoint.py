@@ -11,7 +11,6 @@ from asreviewcontrib.makita.utils import FileHandler
 
 
 def get_template_fp(name):
-
     return Path(TEMPLATES_FP, f"template_{name}.txt.template")
 
 
@@ -24,15 +23,15 @@ def is_valid_template(fp):
 
 def _valid_job_file(param):
     ext = Path(param).suffix
-    if ext.lower() not in ('.sh', '.bat', '.yaml'):
-        raise argparse.ArgumentTypeError('File must have a .sh, .bat, .yaml extension')
+    if ext.lower() not in (".sh", ".bat", ".yaml"):
+        raise argparse.ArgumentTypeError("File must have a .sh, .bat, .yaml extension")
     return param
 
 
 def _shell_to_batch(job):
-    job = f'@ echo off\nCOLOR E0{job}'
-    job = job.replace('#', '::')
-    job = job.replace('/', '\\')
+    job = f"@ echo off\nCOLOR E0{job}"
+    job = job.replace("#", "::")
+    job = job.replace("/", "\\")
     return job
 
 
@@ -48,7 +47,6 @@ class MakitaEntryPoint(BaseEntryPoint):
         self.version = __version__
 
     def execute(self, argv):  # noqa: C901
-
         # get tool and version number
         parser = _parse_arguments_program(self.version)
         args_program, args_name = parser.parse_known_args(argv)
@@ -73,33 +71,30 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         # template specific arguments
         if args_program.name in ["basic", "multiple_models"]:
-            parser.add_argument("--n_runs",
-                                type=int,
-                                default=1,
-                                help="Number of runs"
-                                )
+            parser.add_argument("--n_runs", type=int, default=1, help="Number of runs")
         if args_program.name in ["arfi"]:
-            parser.add_argument("--n_priors",
-                                type=int,
-                                default=10,
-                                help="Number of priors"
-                                )
+            parser.add_argument(
+                "--n_priors", type=int, default=10, help="Number of priors"
+            )
         if args_program.name in ["multiple_models"]:
-            parser.add_argument("--classifiers",
-                                nargs="+",
-                                default=["logistic", "nb", "rf", "svm"],
-                                help="Classifiers to use"
-                                )
-            parser.add_argument("--feature_extractors",
-                                nargs="+",
-                                default=["doc2vec", "sbert", "tfidf"],
-                                help="Feature extractors to use"
-                                )
-            parser.add_argument("--impossible_models",
-                                nargs="+",
-                                default=["nb,doc2vec", "nb,sbert"],
-                                help="Model combinations to exclude"
-                                )
+            parser.add_argument(
+                "--classifiers",
+                nargs="+",
+                default=["logistic", "nb", "rf", "svm"],
+                help="Classifiers to use",
+            )
+            parser.add_argument(
+                "--feature_extractors",
+                nargs="+",
+                default=["doc2vec", "sbert", "tfidf"],
+                help="Feature extractors to use",
+            )
+            parser.add_argument(
+                "--impossible_models",
+                nargs="+",
+                default=["nb,doc2vec", "nb,sbert"],
+                help="Model combinations to exclude",
+            )
 
         # parse arguments
         args = parser.parse_args(args_name)
@@ -109,8 +104,11 @@ class MakitaEntryPoint(BaseEntryPoint):
         is_valid_template(fp_template)
 
         # load datasets
-        datasets = list(Path(args.s).glob("*.csv")) \
-            + list(Path(args.s).glob("*.ris")) + list(Path(args.s).glob("*.xlsx"))
+        datasets = (
+            list(Path(args.s).glob("*.csv"))
+            + list(Path(args.s).glob("*.ris"))
+            + list(Path(args.s).glob("*.xlsx"))
+        )
 
         # throw exception if no datasets are found
         if len(datasets) == 0:
@@ -169,7 +167,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 job_file=args.f,
             )
 
-        if Path(args.f).suffix.lower() == '.bat':
+        if Path(args.f).suffix.lower() == ".bat":
             job = _shell_to_batch(job)
 
         # store result in output folder
@@ -189,14 +187,16 @@ class MakitaEntryPoint(BaseEntryPoint):
         tmp_scripts = []
         if args.all:
             tmp_scripts = [
-                p.name[7:-9] for p in Path(TEMPLATES_FP).glob("script_*.template")]
+                p.name[7:-9] for p in Path(TEMPLATES_FP).glob("script_*.template")
+            ]
         else:
             tmp_scripts = [args_program.name]
 
         for script in tmp_scripts:
             params = {}
             new_script = self.file_handler.render_file_from_template(
-                script, "script", **params)
+                script, "script", **params
+            )
 
             # export script
             export_fp = Path(args.o, script)
@@ -213,10 +213,7 @@ def _parse_arguments_program(version="Unknown", add_help=False):
         help="The internal tool to use (template or add-script).",
     )
     parser.add_argument(
-        "name",
-        type=str,
-        nargs='?',
-        help="The name of the template or script."
+        "name", type=str, nargs="?", help="The name of the template or script."
     )
     parser.add_argument(
         "-V",
@@ -228,11 +225,14 @@ def _parse_arguments_program(version="Unknown", add_help=False):
 
 
 def _parse_arguments_template(version):
-
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
-    parser.add_argument("-f", type=_valid_job_file, default="jobs.sh",
-                        help="Script with study jobs to run")
+    parser.add_argument(
+        "-f",
+        type=_valid_job_file,
+        default="jobs.sh",
+        help="Script with study jobs to run",
+    )
     parser.add_argument("-s", type=str, default="data", help="Dataset folder")
     parser.add_argument("-o", type=str, default="output", help="Output folder")
     parser.add_argument(
@@ -255,9 +255,7 @@ def _parse_arguments_template(version):
 
 def _parse_arguments_scripts(version):
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
-    parser.add_argument(
-        "--all", "-a", action="store_true", help="Add all scripts."
-    )
+    parser.add_argument("--all", "-a", action="store_true", help="Add all scripts.")
     parser.add_argument(
         "-o", type=str, default="scripts", help="Location of the scripts folder."
     )
