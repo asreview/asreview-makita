@@ -47,14 +47,15 @@ def render_jobs_basic(
     template = ConfigTemplate(fp_template)
 
     # render scripts
-    for s in template.scripts:
-        t_script = file_handler.render_file_from_template(
-            s, 
-            "script", 
-            output_folder=output_folder
-        )
-        export_fp = Path(scripts_folder, s)
-        file_handler.add_file(t_script, export_fp)
+    if template.scripts is not None:
+        for s in template.scripts:
+            t_script = file_handler.render_file_from_template(
+                s, 
+                "script", 
+                output_folder=output_folder
+            )
+            export_fp = Path(scripts_folder, s)
+            file_handler.add_file(t_script, export_fp)
 
     # render docs
     for s in template.docs:
