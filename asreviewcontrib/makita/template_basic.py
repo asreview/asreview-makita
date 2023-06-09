@@ -44,6 +44,7 @@ def render_jobs_basic(
     # open template TODO@{Replace by more sustainable module}
     template = ConfigTemplate(fp_template)
 
+    # render scripts
     for s in template.scripts:
         t_script = file_handler.render_file_from_template(
             s, 
@@ -53,6 +54,7 @@ def render_jobs_basic(
         export_fp = Path(scripts_folder, s)
         file_handler.add_file(t_script, export_fp)
 
+    # render docs
     for s in template.docs:
         t_docs = file_handler.render_file_from_template(
             s,

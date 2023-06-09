@@ -11,33 +11,6 @@ from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
 
 
-def get_priors(dataset, init_seed, n_priors):
-    """Sample priors."""
-    asdata = ASReviewData.from_file(dataset)
-    relevant_record_ids = asdata.record_ids[asdata.labels == 1]
-    relevant_irrecord_ids = asdata.record_ids[asdata.labels == 0]
-
-    if len(relevant_record_ids) == 0:
-        raise ValueError("Not enough relevant records found.")
-    if len(relevant_irrecord_ids) == 0:
-        raise ValueError("Not enough irrelevant records found.")
-
-    np.random.seed(init_seed)
-
-    # sample n_priors irrelevant records
-    prior_irrelevant = list(
-        np.random.choice(relevant_irrecord_ids, n_priors, replace=False)
-    )
-
-    priors = []
-
-    for incl in list(relevant_record_ids):
-        priors_list = [incl] + prior_irrelevant
-        priors.append(list(map(str, priors_list)))
-
-    return priors
-
-
 def render_jobs_arfi(
     datasets,
     output_folder="output",
@@ -58,7 +31,7 @@ def render_jobs_arfi(
         check_filename_dataset(fp_dataset)
 
         # render priors
-        priors = get_priors(fp_dataset, init_seed=init_seed + i, n_priors=n_priors)
+        priors = _get_priors(fp_dataset, init_seed=init_seed + i, n_priors=n_priors)
 
         # params for single dataset
         params.append(
@@ -73,17 +46,17 @@ def render_jobs_arfi(
     # open template TODO@{Replace by more sustainable module}
     template = ConfigTemplate(fp_template)
 
-    # check if template.script is not NoneType
-    if template.scripts is not None:
-        for s in template.scripts:
-            t_script = file_handler.render_file_from_template(
-                s, 
-                "script", 
-                output_folder=output_folder
-            )
-            export_fp = Path(scripts_folder, s)
-            file_handler.add_file(t_script, export_fp)
+    # render scripts
+    for s in template.scripts:
+        t_script = file_handler.render_file_from_template(
+            s, 
+            "script", 
+            output_folder=output_folder
+        )
+        export_fp = Path(scripts_folder, s)
+        file_handler.add_file(t_script, export_fp)
 
+    # render docs
     if template.docs is not None:
         for s in template.docs:
             t_docs = file_handler.render_file_from_template(
@@ -111,3 +84,32 @@ def render_jobs_arfi(
             "version": __version__,
         }
     )
+
+
+
+def _get_priors(dataset, init_seed, n_priors):
+    """Sample priors."""
+    asdata = ASReviewData.from_file(dataset)
+    relevant_record_ids = asdata.record_ids[asdata.labels == 1]
+    relevant_irrecord_ids = asdata.record_ids[asdata.labels == 0]
+
+    if len(relevant_record_ids) == 0:
+        raise ValueError("Not enough relevant records found.")
+    if len(relevant_irrecord_ids) == 0:
+        raise ValueError("Not enough irrelevant records found.")
+
+    np.random.seed(init_seed)
+
+    # sample n_priors irrelevant records
+    prior_irrelevant = list(
+        np.random.choice(relevant_irrecord_ids, n_priors, replace=False)
+    )
+
+    priors = []
+
+    for incl in list(relevant_record_ids):
+        priors_list = [incl] + prior_irrelevant
+        priors.append(list(map(str, priors_list)))
+
+    return priors
+
