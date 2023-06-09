@@ -231,7 +231,7 @@ def _parse_arguments_program(version="Unknown", add_help=False):
     return parser
 
 
-def _parse_arguments_template(version):
+def _parse_arguments_template():
     parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
 
     parser.add_argument(
