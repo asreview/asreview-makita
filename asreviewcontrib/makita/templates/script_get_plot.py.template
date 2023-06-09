@@ -7,7 +7,7 @@ Example
 
 or
 
-> python scripts/get_plot.py -s output/simulation/ptsd/state_files -o output/simulation/ptsd/ptsd_recall_plot.png  # noqa
+> python scripts/get_plot.py -s asreview_files -o plot.png
 
 
 Authors
@@ -19,10 +19,11 @@ Authors
 
 import argparse
 from pathlib import Path
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
 from asreview import open_state
+
 from asreviewcontrib.insights.plot import plot_recall
 
 
