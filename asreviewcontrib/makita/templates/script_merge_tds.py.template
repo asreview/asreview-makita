@@ -30,7 +30,7 @@ import pandas as pd
 
 def create_table_state_tds(metrics):
     values = []
-    file_counter = 1
+    file_counter = 0
 
     for metric in metrics:
         with open(metric) as f:
