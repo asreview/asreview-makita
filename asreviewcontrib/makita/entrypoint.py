@@ -51,14 +51,19 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser = _parse_arguments_program(self.version)
         args_program, args_name = parser.parse_known_args(argv)
 
-        # generate templates
+        # Main entry point of the program, routing to either the 'template' 
+        # or 'add-script' functions based on user input.
+
+        # route to template
         if args_program.tool == "template":
             try:
                 self._template(args_name, args_program)
             except Exception as err:
                 print(f"\u001b[31mERROR: {err}\u001b[0m")
+        # route to add-script
         elif args_program.tool == "add-script":
             self._add_script(args_name, args_program)
+        # error if tool is not recognized
         else:
             parser.error(
                 f"Error: Can't find '{args_program.tool}' "
@@ -66,6 +71,8 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
     def _template(self, args_name, args_program):
+        '''Generate a template.'''
+
         # generate basic arguments
         parser = _parse_arguments_template(self.version)
 
