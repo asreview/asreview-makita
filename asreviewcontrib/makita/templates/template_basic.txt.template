@@ -6,6 +6,7 @@ scripts:
   - get_plot.py
   - merge_descriptives.py
   - merge_metrics.py
+  - merge_tds.py
 
 docs:
   - README.md
@@ -20,6 +21,8 @@ docs:
 mkdir {{ output_folder }}
 mkdir {{ output_folder }}/simulation
 mkdir {{ output_folder }}/tables
+mkdir {{ output_folder }}/tables/metrics
+mkdir {{ output_folder }}/tables/time_to_discovery
 mkdir {{ output_folder }}/figures
 
 {% for dataset in datasets %}
@@ -50,10 +53,11 @@ asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/st
 
 # Generate plot and tables for dataset
 python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png
-python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/metrics_sim_{{ dataset.input_file_stem }}.csv
+python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/metrics/metrics_sim_{{ dataset.input_file_stem }}.csv
+python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/time_to_discovery/tds_sim_{{ dataset.input_file_stem }}.csv
 {% endfor %}
 
 # Merge descriptives and metrics
-python {{ scripts_folder }}/merge_descriptives.py
-python {{ scripts_folder }}/merge_metrics.py 
+python {{ scripts_folder }}/merge_descriptives.py -s {{ output_folder }}/simulation/*/descriptives/ -o {{ output_folder }}/tables/data_descriptives_all.csv
+python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/*/metrics/ -o {{ output_folder }}/tables/metrics_sim_all.csv
 
