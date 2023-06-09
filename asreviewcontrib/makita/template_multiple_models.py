@@ -8,10 +8,6 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
 
-ALL_CLASSIFIERS = ["logistic", "nb", "rf", "svm"]
-ALL_FEATURE_EXTRACTORS = ["doc2vec", "sbert", "tfidf"]
-IMPOSSIBLE_MODELS = ["nb,doc2vec", "nb,sbert"]
-
 
 def render_jobs_multiple_models(
     datasets,
@@ -20,12 +16,22 @@ def render_jobs_multiple_models(
     scripts_folder="scripts",
     init_seed=535,
     model_seed=165,
-    all_classifiers=ALL_CLASSIFIERS,
-    all_feature_extractors=ALL_FEATURE_EXTRACTORS,
-    impossible_models=IMPOSSIBLE_MODELS,
+    all_classifiers=None,
+    all_feature_extractors=None,
+    impossible_models=None,
     fp_template=None,
     job_file="jobs.sh",
 ):
+
+    if all_classifiers is None:
+        all_classifiers = ["logistic", "nb", "rf", "svm"]
+
+    if all_feature_extractors is None:
+        all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
+
+    if impossible_models is None:
+        impossible_models = ["nb,doc2vec", "nb,sbert"]
+
     """Render jobs."""
     params = []
 
