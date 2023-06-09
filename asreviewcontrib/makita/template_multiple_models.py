@@ -69,20 +69,21 @@ def render_jobs_multiple_models(
             file_handler.add_file(t_script, export_fp)
 
     # render docs
-    for s in template.docs:
-        t_docs = file_handler.render_file_from_template(
-            s,
-            "doc",
-            datasets=datasets,
-            template_name=template.name
-            if template.name == "multiple_models"
-            else "custom",
-            template_name_long=template.name_long,
-            template_scripts=template.scripts,
-            output_folder=output_folder,
-            job_file=job_file,
-        )
-        file_handler.add_file(t_docs, s)
+    if template.docs is not None:
+        for s in template.docs:
+            t_docs = file_handler.render_file_from_template(
+                s,
+                "doc",
+                datasets=datasets,
+                template_name=template.name
+                if template.name == "multiple_models"
+                else "custom",
+                template_name_long=template.name_long,
+                template_scripts=template.scripts,
+                output_folder=output_folder,
+                job_file=job_file,
+            )
+            file_handler.add_file(t_docs, s)
 
     # print summary to console
     file_handler.print_summary()
