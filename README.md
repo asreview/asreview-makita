@@ -72,15 +72,20 @@ sh jobs.sh
 
 The `jobs.sh` script is a shell script that runs all jobs in the project folder.
 
-### Windows support
+### Platform support
 
-For Windows users, ASReview Makita offers support for batch files. Use the `-f` option to generate a `jobs.bat` script instead of the default `jobs.sh` script.
+By default, ASReview Makita renders job files for the platform of rendering. It is possible to render jobs for other platforms as well. Use the argument `--platform` with values "Windows", "Linux", or "Darwin" (MacOS) to change the output.
 
 ```console
-asreview makita template basic -f jobs.bat
+asreview makita template basic --platform Windows
 ```
 
-> Alternatively, Windows CMD does not support the `sh` command, and a bash shell is required. You can use tools such as Git Bash, Cygwin, WSL, etc. to run the `jobs.sh` script instead.
+By default, the job file depends on the platform. Windows users will see a `jobs.bat` file, while other users will see `jobs.sh`. You can overwrite this with
+
+```console
+asreview makita template basic --job_file my_jobs_file.my_ext
+```
+
 
 ## Templates
 
@@ -203,7 +208,7 @@ Use `-s`  (source) and `-o` (output) to tweak paths.
 
 Some scripts are added automatically to the folder, as they are part of the
 template. For example, the `get_plot.py` script is added to the generated folder
-when using any template, as it is used to generate the plots. 
+when using any template, as it is used to generate the plots.
 
 Still, `get_plot.py` can be used on its own, as it is a standalone script. To use it,
 use `-s` (source) and `-o` (output) to tweak paths.
