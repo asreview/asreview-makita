@@ -1,0 +1,6 @@
+{
+  "project_name": "Python Boilerplate",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "output_folder": "output",
+  "version": "0.1.0"
+}

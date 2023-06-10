@@ -3,7 +3,9 @@ import os
 from pathlib import Path
 
 from asreview.entry_points import BaseEntryPoint
+from cookiecutter.main import cookiecutter
 
+from asreviewcontrib.makita.config import COOKIECUTTER_FP
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
@@ -49,10 +51,13 @@ class MakitaEntryPoint(BaseEntryPoint):
         # or 'add-script' functions based on user input.
 
         if args_program.tool == "template":
-            try:
-                self._template(args_name, args_program)
-            except Exception as err:
-                print(f"\u001b[31mERROR: {err}\u001b[0m")
+            # try:
+            #     self._template(args_name, args_program)
+            # except Exception as err:
+            #     print(f"\u001b[31mERROR: {err}\u001b[0m")
+
+            # Create project from the cookiecutter-pypackage/ template
+            cookiecutter(str(COOKIECUTTER_FP))
 
         elif args_program.tool == "add-script":
             self._add_script(args_name, args_program)
