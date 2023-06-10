@@ -2,8 +2,10 @@ name: test-suite
 on: [push, pull_request]
 jobs:
   test-template-and-lint:
-    name: test-templates-and-scripts
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-python@v4
