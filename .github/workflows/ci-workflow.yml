@@ -40,6 +40,7 @@ jobs:
         asreview makita template multiple_models | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run ShellCheck
+      if: ${{ matrix.os != 'windows-latest' }}
       uses: ludeeus/action-shellcheck@master
       with:
         scandir: './tmp'
