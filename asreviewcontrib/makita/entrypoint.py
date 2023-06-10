@@ -42,42 +42,39 @@ class MakitaEntryPoint(BaseEntryPoint):
 
     def execute(self, argv):  # noqa: C901
         # get tool and version number
-        parser = _parse_arguments_program(self.version)
+        parser = _parse_arguments_program(self.version, add_help=False)
         args_program, args_name = parser.parse_known_args(argv)
 
-        # Main entry point of the program, routing to either the 'template' 
+        # Main entry point of the program, routing to either the 'template'
         # or 'add-script' functions based on user input.
 
-        # route to template
         if args_program.tool == "template":
             try:
                 self._template(args_name, args_program)
             except Exception as err:
                 print(f"\u001b[31mERROR: {err}\u001b[0m")
-        # route to add-script
+
         elif args_program.tool == "add-script":
             self._add_script(args_name, args_program)
-        # error if tool is not recognized
         else:
-            parser.error(
-                f"Error: Can't find '{args_program.tool}' "
-                f"and '{args_program.name}'. Check spelling."
-            )
+            parser = _parse_arguments_program(self.version, add_help=True)
+            parser.parse_args(argv)
 
     def _template(self, args_name, args_program):
-        '''Generate a template.'''
+        """Generate a template."""
 
         # generate arguments used for all templates
         parser = _parse_arguments_template()
+        args_template, _ = parser.parse_known_args(args_name)
 
         # template specific arguments
-        if args_program.name in ["basic", "multiple_models"]:
+        if args_template.name in ["basic", "multiple_models"]:
             parser.add_argument("--n_runs", type=int, default=1, help="Number of runs")
-        if args_program.name in ["arfi"]:
+        if args_template.name in ["arfi"]:
             parser.add_argument(
                 "--n_priors", type=int, default=10, help="Number of priors"
             )
-        if args_program.name in ["multiple_models"]:
+        if args_template.name in ["multiple_models"]:
             parser.add_argument(
                 "--classifiers",
                 nargs="+",
@@ -101,7 +98,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         args = parser.parse_args(args_name)
 
         # check if a custom template is used, otherwise use the default template
-        fp_template = args.template or get_template_fp(args_program.name)
+        fp_template = args.template or get_template_fp(args_template.name)
         is_valid_template(fp_template)
 
         # load datasets
@@ -118,7 +115,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         # create output folder
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
-        if args_program.name in ["basic"]:
+        if args_template.name in ["basic"]:
             # render jobs
             job = render_jobs_basic(
                 datasets,
@@ -131,7 +128,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             )
 
-        elif args_program.name in ["arfi"]:
+        elif args_template.name in ["arfi"]:
             # render jobs
             job = render_jobs_arfi(
                 datasets,
@@ -144,7 +141,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             )
 
-        elif args_program.name in ["multiple_models"]:
+        elif args_template.name in ["multiple_models"]:
             # render jobs
             job = render_jobs_multiple_models(
                 datasets,
@@ -181,7 +178,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         # store result in output folder
         with open(job_file, "w") as f:
             f.write(job)
-        print(f"Rendered template {args_program.name} and saved to {job_file}")
+        print(f"Rendered template {args_template.name} and saved to {job_file}")
 
     def _add_script(self, args_name, args_program):
         # initialize file handler
@@ -197,7 +194,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 p.name[7:-9] for p in Path(TEMPLATES_FP).glob("script_*.template")
             ]
         else:
-            tmp_scripts = [args_program.name]
+            tmp_scripts = [args.name]
 
         for script in tmp_scripts:
             params = {}
@@ -216,11 +213,9 @@ def _parse_arguments_program(version="Unknown", add_help=False):
     parser.add_argument(
         "tool",
         type=str,
+        nargs="?",
         choices=["template", "add-script"],
         help="The internal tool to use (template or add-script).",
-    )
-    parser.add_argument(
-        "name", type=str, nargs="?", help="The name of the template or script."
     )
     parser.add_argument(
         "-V",
@@ -232,8 +227,8 @@ def _parse_arguments_program(version="Unknown", add_help=False):
 
 
 def _parse_arguments_template():
-    parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
-
+    parser = argparse.ArgumentParser(prog="asreview makita template", add_help=True)
+    parser.add_argument("name", type=str, nargs="?", help="The name of the template.")
     parser.add_argument(
         "--job_file",
         "-f",
@@ -268,7 +263,8 @@ def _parse_arguments_template():
 
 
 def _parse_arguments_scripts():
-    parser = argparse.ArgumentParser(prog="asreview makita", add_help=True)
+    parser = argparse.ArgumentParser(prog="asreview makita add-script", add_help=True)
+    parser.add_argument("name", type=str, nargs="?", help="The name of the script.")
     parser.add_argument("--all", "-a", action="store_true", help="Add all scripts.")
     parser.add_argument(
         "-o", type=str, default="scripts", help="Location of the scripts folder."
