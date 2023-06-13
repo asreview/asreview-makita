@@ -227,6 +227,10 @@ The following scripts are available:
 - merge_tds.py
 - split_data_with_multiple_labels.py [DEPRECATED]
 
+#### Time to Discovery Tables 
+
+The 'merge_tds.py' script creates a table of the time to discovery (TD) values for each dataset, with each row corresponding to each record ID of the relevant records in a dataset, and the columns correspond to each simulation run (e.g, for the multiple models template each column corresponds to a simualtion run with each active learning model). Additionally, the tables includes the average-record-TD values (the average of the TD values for a record across multiple simulation runs), and the average-simulation-TD values (the average of the TD values across all records for a single simulation run). 
+
 #### Run Makita via Docker
 
 To run Makita template with Docker use the following command:
