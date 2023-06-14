@@ -41,21 +41,27 @@ def get_plot_from_states(states, filename, legend=None):
             # draw the plot
             plot_recall(ax, state)
 
-            # set the label
+            # settings for legend "filename"
             if legend == "filename":
                 ax.lines[-2].set_label(state_file.stem)
                 ax.legend(loc=4, prop={'size': 8})
+            # settings for legend "settings"
             elif legend:
                 metadata = state.settings_metadata
 
+                # settings for legend "model"
                 if legend == "model":
                     label = " - ".join(
                             [metadata["settings"]["model"],
                              metadata["settings"]["feature_extraction"],
                              metadata["settings"]["balance_strategy"],
                              metadata["settings"]["query_strategy"]])
+                    
+                # settings for legend "classifier"
                 elif legend == "classifier":
                     label = metadata["settings"]["model"]
+
+                # settings for legend from metadata
                 else:
                     try:
                         label = metadata["settings"][legend]
@@ -64,12 +70,17 @@ def get_plot_from_states(states, filename, legend=None):
                             f"Legend setting '{legend}' "
                             "not found in state file settings."
                         ) from exc
+                    
+                # add label to legend if not already present 
+                # (multiple states can have the same label)
                 if label not in labels:
                     ax.lines[-2].set_label(label)
                     labels.append(label)
 
+    # add legend to plot
     ax.legend(loc=4, prop={'size': 8})
 
+    # save plot
     fig.savefig(str(filename))
 
 
