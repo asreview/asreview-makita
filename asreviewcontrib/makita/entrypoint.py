@@ -97,6 +97,11 @@ class MakitaEntryPoint(BaseEntryPoint):
         # parse arguments
         args = parser.parse_args(args_name)
 
+        # check if a custom template or a template name is given
+        if not args.template and not args_template.name:
+            raise ValueError('A template name or a filepath must be provided.\
+                             Use -h for more information.')
+
         # check if a custom template is used, otherwise use the default template
         fp_template = args.template or get_template_fp(args_template.name)
         is_valid_template(fp_template)
