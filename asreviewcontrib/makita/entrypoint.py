@@ -16,7 +16,7 @@ def get_template_fp(name):
 
 
 def is_valid_template(fp):
-    if Path(fp).is_file():
+    if fp and Path(fp).is_file():
         return True
     else:
         raise ValueError(f"Template {fp} not found")
@@ -53,9 +53,11 @@ class MakitaEntryPoint(BaseEntryPoint):
                 self._template(args_name, args_program)
             except Exception as err:
                 print(f"\u001b[31mERROR: {err}\u001b[0m")
-
         elif args_program.tool == "add-script":
-            self._add_script(args_name, args_program)
+            try:
+                self._add_script(args_name, args_program)
+            except Exception as err:
+                print(f"\u001b[31mERROR: {err}\u001b[0m")
         else:
             parser = _parse_arguments_program(self.version, add_help=True)
             parser.parse_args(argv)
@@ -98,7 +100,9 @@ class MakitaEntryPoint(BaseEntryPoint):
         args = parser.parse_args(args_name)
 
         # check if a custom template is used, otherwise use the default template
-        fp_template = args.template or get_template_fp(args_template.name)
+        fp_template = args.template or (
+            args_template.name and get_template_fp(args_template.name)
+        )
         is_valid_template(fp_template)
 
         # load datasets

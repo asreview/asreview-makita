@@ -35,17 +35,21 @@ def create_table_state_tds(metrics):
 
     for metric in metrics:
         with open(metric) as f:
-            i = next(filter(lambda x: x['id'] == 'td', json.load(f)['data']['items']))['value']  # noqa
+            i = next(filter(lambda x: x["id"] == "td", json.load(f)["data"]["items"]))[
+                "value"
+            ]  # noqa
             values.extend((item[0], item[1], file_counter) for item in i)
             file_counter += 1
 
-    df = pd.DataFrame(values, columns=['record_id', 'td', 'metric_file'])
-    pivoted = df.pivot_table(index='record_id',
-                             columns='metric_file',
-                             values='td',
-                             aggfunc='first',
-                             fill_value=0)
-    pivoted.columns = [f'td_sim_{col}' for col in pivoted.columns]
+    df = pd.DataFrame(values, columns=["record_id", "td", "metric_file"])
+    pivoted = df.pivot_table(
+        index="record_id",
+        columns="metric_file",
+        values="td",
+        aggfunc="first",
+        fill_value=0,
+    )
+    pivoted.columns = [f"td_sim_{col}" for col in pivoted.columns]
     return pivoted
 
 
@@ -54,15 +58,14 @@ if __name__ == "__main__":
         description="Merge tds of multiple metrics into single table."
     )
     parser.add_argument(
-        "-s",
-        type=str,
-        default="output/simulation/*/metrics/",
-        help="metrics location")
+        "-s", type=str, default="output/simulation/*/metrics/", help="metrics location"
+    )
     parser.add_argument(
         "-o",
         type=str,
         default="output/tables/tds_sim_all.csv",
-        help="Output table location")
+        help="Output table location",
+    )
     args = parser.parse_args()
 
     # load metric files
@@ -77,4 +80,4 @@ if __name__ == "__main__":
     # store table
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
     states_table.to_csv(Path(args.o))
-    states_table.to_excel(Path(args.o).with_suffix('.xlsx'))
+    states_table.to_excel(Path(args.o).with_suffix(".xlsx"))
