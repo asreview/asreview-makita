@@ -16,7 +16,7 @@ authors:
     orcid: 0000-0002-4297-0502
   - name: Rens van de Schoot
     affiliation: 1
-    orcid: 000-0001-7736-2091
+    orcid: 0000-0001-7736-2091
 affiliations:
  - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, The Netherlands
    index: 1
