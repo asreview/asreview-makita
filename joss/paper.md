@@ -67,6 +67,8 @@ reproducibility. Overall, the architecture provides a modular and
 flexible framework, allowing users to easily adapt the tool to their
 specific research needs.
 
+## Usage
+
 Upon creating a ’data’ folder with the desired datasets, running the
 Makita command for the `basic` template generates the study
 structure. In this case, a `n_runs` argument is added
