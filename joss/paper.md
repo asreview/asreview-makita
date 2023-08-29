@@ -111,6 +111,7 @@ kubernetes cluster, generating custom templates on the fly for each of the
 cluster nodes' specific needs [@simulation_project].
 
 ## Usage
+
 Upon creating a `data` folder with the desired datasets, running the Makita
 command for the `basic` template generates the study structure. In this case, a
 `n_runs` argument is added to the command, indicating 100 simulations with
@@ -124,62 +125,59 @@ following Scitree [@scitree].
     > asreview makita template basic -n_runs 100
 
 Before execution:
-```console
-Makita_basic/
-├── README.md
-├── jobs.bat
-├── data/
-│   └── generic_labels.csv
-└── scripts/
-    ├── get_plot.py
-    ├── merge_descriptives.py
-    ├── merge_metrics.py
-    └── merge_tds.py
-```
+
+    Makita_basic/
+    ├── README.md
+    ├── jobs.bat
+    ├── data/
+    │   └── generic_labels.csv
+    └── scripts/
+        ├── get_plot.py
+        ├── merge_descriptives.py
+        ├── merge_metrics.py
+        └── merge_tds.py
 
 And after execution of the `jobs.bat` file.
 
-```console
-Makita_basic/
-├── README.md
-├── jobs.bat
-├── data/
-│   └── generic_labels.csv
-├── scripts/
-│   ├── get_plot.py
-│   ├── merge_descriptives.py
-│   ├── merge_metrics.py
-│   └── merge_tds.py
-└── output/
-    ├── figures/
-    │   ├── plot_recall_sim_generic_labels.png
-    │   ├── wordcloud_generic_labels.png
-    │   ├── wordcloud_irrelevant_generic_labels.png
-    │   └── wordcloud_relevant_generic_labels.png
-    ├── simulation/
-    │   └── generic_labels/
-    │       ├── descriptives/
-    │       │   └── data_stats_generic_labels.json
-    │       ├── metrics/
-    │       │   ├── metrics_sim_generic_labels_0.json
-                ├── ...
-    │       │   └── metrics_sim_generic_labels_99.json
-    │       └── state_files/
-    │           ├── sim_generic_labels_0.asreview
-                ├── ...
-    │           └── sim_generic_labels_99.asreview
-    └── tables/
-        ├── metrics_sim_all.csv
-        ├── metrics_sim_all.xlsx
-        ├── data_descriptives_all.csv
-        ├── data_descriptives_all.xlsx
-        ├── metrics/
-        │   ├── metrics_sim_generic_labels.csv
-        │   └── metrics_sim_generic_labels.xlsx
-        └── time_to_discovery/
-            ├── tds_sim_generic_labels.csv
-            └── tds_sim_generic_labels.xlsx
-```
+    Makita_basic/
+    ├── README.md
+    ├── jobs.bat
+    ├── data/
+    │   └── generic_labels.csv
+    ├── scripts/
+    │   ├── get_plot.py
+    │   ├── merge_descriptives.py
+    │   ├── merge_metrics.py
+    │   └── merge_tds.py
+    └── output/
+        ├── figures/
+        │   ├── plot_recall_sim_generic_labels.png
+        │   ├── wordcloud_generic_labels.png
+        │   ├── wordcloud_irrelevant_generic_labels.png
+        │   └── wordcloud_relevant_generic_labels.png
+        ├── simulation/
+        │   └── generic_labels/
+        │       ├── descriptives/
+        │       │   └── data_stats_generic_labels.json
+        │       ├── metrics/
+        │       │   ├── metrics_sim_generic_labels_0.json
+                    ├── ...
+        │       │   └── metrics_sim_generic_labels_99.json
+        │       └── state_files/
+        │           ├── sim_generic_labels_0.asreview
+                    ├── ...
+        │           └── sim_generic_labels_99.asreview
+        └── tables/
+            ├── metrics_sim_all.csv
+            ├── metrics_sim_all.xlsx
+            ├── data_descriptives_all.csv
+            ├── data_descriptives_all.xlsx
+            ├── metrics/
+            │   ├── metrics_sim_generic_labels.csv
+            │   └── metrics_sim_generic_labels.xlsx
+            └── time_to_discovery/
+                ├── tds_sim_generic_labels.csv
+                └── tds_sim_generic_labels.xlsx
 
 # Ongoing Research and Contributions
 
