@@ -33,7 +33,7 @@ The performance of one or multiple model(s) can then be measured by performance
 metrics, such as the Work Saved over Sampling, recall at a given point in the
 screening process, or the average time to discover a relevant record.
 
-The field of systematic reviews is rapidly evolving[@teijema2023simulation],
+The field of systematic reviews is rapidly evolving [@teijema2023simulation],
 with new methods and tools being developed and tested. Simulation studies are a
 powerful tool to compare the performance of different methods and tools for
 systematic reviews. However, setting up a simulation study can be a
@@ -73,7 +73,7 @@ Makita automatically generates an hierarchical folder structure, a README.md
 additional code used for pre- and post-processing, and batch or shell execution
 scripts. Makita offers scripts for, among others, extracting dataset statistics
 [@datatools], extracting simulation performance metrics, merging those metrics
-into easy to read tables, generating wordclouds[@wordcloud], and plotting the
+into easy to read tables, generating wordclouds [@wordcloud], and plotting the
 results [@insights]. Makita assures that all steps of the simulation study are
 stored and thus reproducible and transparent.
 
