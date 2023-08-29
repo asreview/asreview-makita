@@ -114,7 +114,7 @@ cluster nodes' specific needs [@simulation_project].
 Upon creating a `data` folder with the desired datasets, running the Makita
 command for the `basic` template generates the study structure. In this case, a
 `n_runs` argument is added to the command, indicating 100 simulations with
-different seeds is needed for the study. Executing the generated jobs file
+different seeds are needed for the study. Executing the generated jobs file
 starts the simulation tests, producing output logs and metrics within the
 created folder structure. This allows for easy access to performance metrics and
 study results. Below are filetree results for running the basic template and
