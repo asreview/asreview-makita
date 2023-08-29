@@ -1,4 +1,9 @@
+name: Generate PDF
 on: [push]
+on:
+    push:
+      branches:
+        - JOSS
 
 jobs:
   paper:
