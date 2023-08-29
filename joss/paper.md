@@ -73,9 +73,9 @@ Makita automatically generates an hierarchical folder structure, a README.md
 additional code used for pre- and post-processing, and batch or shell execution
 scripts. Makita offers scripts for, among others, extracting dataset statistics
 [@datatools], extracting simulation performance metrics, merging those metrics
-into easy to read tables, generating word clouds, and plotting the results
-[@insights]. Makita assures that all steps of the simulation study are stored
-and thus reproducible and transparent.
+into easy to read tables, generating wordclouds[@wordcloud], and plotting the
+results [@insights]. Makita assures that all steps of the simulation study are
+stored and thus reproducible and transparent.
 
 The Jinja based templates handle study structure while accompanying Python
 templates add extended functionality. A range of standard templates is
