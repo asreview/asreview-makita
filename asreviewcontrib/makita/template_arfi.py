@@ -53,7 +53,7 @@ def render_jobs_arfi(
             }
         )
 
-    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and 
+    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and
     # setting up template variables and extensions.
     template = ConfigTemplate(fp_template)
 
@@ -61,9 +61,7 @@ def render_jobs_arfi(
     if template.scripts is not None:
         for s in template.scripts:
             t_script = file_handler.render_file_from_template(
-                s, 
-                "script", 
-                output_folder=output_folder
+                s, "script", output_folder=output_folder
             )
             export_fp = Path(scripts_folder, s)
             file_handler.add_file(t_script, export_fp)
@@ -75,9 +73,7 @@ def render_jobs_arfi(
                 s,
                 "doc",
                 datasets=datasets,
-                template_name=template.name
-                if template.name == "ARFI"
-                else "custom",
+                template_name=template.name if template.name == "ARFI" else "custom",
                 template_name_long=template.name_long,
                 template_scripts=template.scripts,
                 output_folder=output_folder,
@@ -99,7 +95,6 @@ def render_jobs_arfi(
             "version": __version__,
         }
     )
-
 
 
 def _get_priors(dataset, init_seed, n_priors):
@@ -127,4 +122,3 @@ def _get_priors(dataset, init_seed, n_priors):
         priors.append(list(map(str, priors_list)))
 
     return priors
-

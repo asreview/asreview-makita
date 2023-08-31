@@ -8,7 +8,7 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 
 class FileHandler:
     """
-    The FileHandler class handles file operations such as adding files and rendering 
+    The FileHandler class handles file operations such as adding files and rendering
     scripts.
     """
 
@@ -22,7 +22,7 @@ class FileHandler:
 
         Args:
         content (str): The content to be written into the file.
-        export_fp (Path): A Path object that specifies the directory where the file 
+        export_fp (Path): A Path object that specifies the directory where the file
         should be added.
         """
 
