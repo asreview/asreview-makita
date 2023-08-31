@@ -97,10 +97,10 @@ What Makita does not do:
 - Writing the study paper
 
 While Makita was originally developed for use with ASReview’s simulation CLI,
-Makita’s design allows it to be integrated with any other CLI tool, broadening
-its applicability across different large scale research environments. Makita can
-be run locally, on a server, or in the cloud, and can be used in combination
-with Docker and Kubernetes.
+Makita’s design allows it to be integrated with any other CLI tool via a
+customized template, broadening its applicability across different large
+scale research environments. Makita can be run locally, on a server, or in
+the cloud, and can be used in combination with Docker and Kubernetes.
 
 Very large scale simulation studies have been successfully run using Makita,
 with over 27.000 simulations in a single study, using 26 different datasets and
