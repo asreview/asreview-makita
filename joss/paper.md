@@ -26,19 +26,17 @@ bibliography: paper.bib
 
 # Summary
 
-A simulation study involves mimicking the screening process for a systematic
-review of a human in interaction with an Active learning model. The simulation
-reenacts the screening process as if a researcher were using active learning.
-The performance of one or multiple model(s) can then be measured by performance
-metrics, such as the Work Saved over Sampling, recall at a given point in the
-screening process, or the average time to discover a relevant record.
-
-The field of systematic reviews is rapidly evolving [@teijema2023simulation],
-with new methods and tools being developed and tested. Simulation studies are a
-powerful tool to compare the performance of different methods and tools for
-systematic reviews. However, setting up a simulation study can be a
-time-consuming and error-prone process, especially since reproduciblity is of
-key importance.
+The field of accelerating the screening phase of systematic reviews with
+advanced machine learning methods is rapidly evolving
+[@teijema2023simulation]. A simulation study involves mimicking the screening
+process for a systematic review of a human in interaction with an Active
+learning model. The simulation reenacts the screening process as if a
+researcher were using a machine learning model. The performance of one or multiple
+model(s) can then be measured by performance metrics, such as the Work Saved
+over Sampling, recall at a given point in the screening process, or the
+average time to discover a relevant record. However, setting up a simulation
+study can be a time-consuming and error-prone process, especially since
+reproduciblity is of key importance.
 
 This paper presents **ASReview’s Makita** (**MAK**e **IT** **A**utomatic)
 [@makita_zenodo]. ASReview Makita streamlines the simulation study design
@@ -53,11 +51,11 @@ and expert researchers.
 # Statement of need
 
 Although tools such as ASReview LAB [@asreview_lab] offer various ways to
-simulate the screening process in systematic reviews, there is a need for
-automation in setting up the research environment for large scale simulations
-research. ASReview Makita fills this gap by automating the workflow setup,
-preparing GitHub repositories, documentation, pre/post-processing code, and
-generating execution scripts.
+simulate the screening process in systematic reviews via its WebApp, there is
+a need for automation in setting up the research environment for large scale
+simulations research. ASReview Makita fills this gap by automating the
+workflow setup, preparing GitHub repositories, documentation,
+pre/post-processing code, and generating execution scripts.
 
 Simplifying reproducibility and maintaining an organized folder structure are
 crucial for scientific research. They ensure that experiments can be reliably
