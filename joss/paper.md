@@ -165,11 +165,11 @@ And after execution of the `jobs.bat` file.
         │       │   └── data_stats_generic_labels.json
         │       ├── metrics/
         │       │   ├── metrics_sim_generic_labels_0.json
-                    ├── ...
+        │       │   ├── ...
         │       │   └── metrics_sim_generic_labels_99.json
         │       └── state_files/
         │           ├── sim_generic_labels_0.asreview
-                    ├── ...
+        │           ├── ...
         │           └── sim_generic_labels_99.asreview
         └── tables/
             ├── metrics_sim_all.csv
