@@ -11,16 +11,23 @@ authors:
     corresponding: true
     orcid: 0000-0001-9282-4311
     affiliation: 1
-  - name: Jonathan de Bruin
-    affiliation: 1
-    orcid: 0000-0002-4297-0502
+  - name: Gerbrich Ferdinands
+    affiliation: 2
+    orcid: 0000-0002-4998-3293
   - name: Rens van de Schoot
     affiliation: 1
     orcid: 0000-0001-7736-2091
+  - name: Jonathan de Bruin
+    affiliation: 3
+    orcid: 0000-0002-4297-0502
 affiliations:
  - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, The Netherlands
    index: 1
-date: 29 September 2023
+ - name: AFFILIATION
+   index: 2
+ - name: AFFILIATION
+   index: 3
+date: 31 September 2023
 bibliography: paper.bib
 ---
 
