@@ -18,14 +18,14 @@ authors:
     affiliation: 1
     orcid: 0000-0001-7736-2091
   - name: Jonathan de Bruin
-    affiliation: 3
+    affiliation: 2
     orcid: 0000-0002-4297-0502
 affiliations:
  - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, The Netherlands
    index: 1
  - name: AFFILIATION
-   index: 3
-date: 31 September 2023
+   index: 2
+date: 1 September 2023
 bibliography: paper.bib
 ---
 
