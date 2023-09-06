@@ -1,8 +1,11 @@
 name: Generate PDF
 on:
- push:
-   branches:
-   - JOSS
+  push:
+    branches:
+    - JOSS
+  pull_request:
+    branches:
+      - JOSS
 
 jobs:
   paper:
