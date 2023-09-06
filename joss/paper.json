@@ -1,0 +1,37 @@
+{
+    "@context": "https://raw.githubusercontent.com/codemeta/codemeta/master/codemeta.jsonld",
+    "@type": "Code",
+    "author": [
+      {
+        "@id": "http://orcid.org/0000-0001-9282-4311",
+        "@type": "Person",
+        "email": "j.j.teijema@uu.nl",
+        "name": "Jelle Jasper Teijema",
+        "affiliation": "Utrecht University."
+      },
+      {
+        "@id": "https://orcid.org/0000-0002-4297-0502",
+        "@type": "Person",
+        "email": "j.debruin1@uu.nl",
+        "name": "Jonathan de Bruin",
+        "affiliation": "Utrecht University."
+      },
+      {
+        "@id": "https://orcid.org/0000-0001-7736-2091",
+        "@type": "Person",
+        "email": "a.g.j.vandeschoot@uu.nl",
+        "name": "Rens van de Schoot",
+        "affiliation": "Utrecht University."
+      }
+
+    ],
+    "identifier": "https://doi.org/10.5281/zenodo.7550649",
+    "codeRepository": "https://github.com/asreview/asreview-makita",
+    "datePublished": "2023-05-18",
+    "dateModified": "2023-08-29",
+    "dateCreated": "2023-01-19",
+    "description": "ASReviews' Makita (MAKe IT Automatic)",
+    "keywords": "Workflow generator, Simulation study, Reproducibility, ASReview, Automation",
+    "license": "MIT",
+    "title": "ASReview Makita",
+    "version": "v0.7.1"
