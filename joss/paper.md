@@ -1,5 +1,5 @@
 ---
-title: Makita - A Workflow Generator for large scale and reproducible Simulation Studies mimicking labeling texts
+title: Makita - A Workflow Generator for Large-scale and Reproducible Simulation Studies
 tags:
   - Workflow generator
   - Simulation study
@@ -40,19 +40,19 @@ advanced machine learning methods is rapidly evolving [@teijema2023simulation].
 A simulation study involves mimicking the screening process for a systematic
 review of a human in interaction with an Active learning model. The simulation
 reenacts the screening process as if a researcher were using a machine learning
-model for prioritizing the order of papers being screened. The performance of
+model to prioritize the order of papers being screened. The performance of
 one or multiple model(s) can then be measured by performance metrics, such as
 the Work Saved over Sampling, recall at a given point in the screening process,
 or the average time to discover a relevant record. However, setting up a
 simulation study can be a time-consuming and error-prone process, especially
-since reproduciblity is of key importance.
+since reproducibility is of key importance.
 
 This paper presents **ASReview’s Makita** (**MAK**e **IT** **A**utomatic)
 [@makita_zenodo]. ASReview Makita streamlines the simulation study design
 process for systematic reviews using ASReview [@asreview_nature], providing a
 generative framework to simplify creating and running large-scale simulations.
 Using Makita templates, different study workflows can be generated to fit the
-study needs. If a study requires a unique template, a custom templated can be
+study needs. If a study requires a unique template, a custom template can be
 used. Its implementation through the command-line interface aims to make
 reproducible and repeatable research easy and efficient, to assist both novice
 and expert researchers.
@@ -61,33 +61,33 @@ and expert researchers.
 
 Although tools such as ASReview LAB [@asreview_lab] offer various ways to
 simulate the screening process in systematic reviews via its WebApp, there is a
-need for automation in setting up the research environment for large scale
+need for automation in setting up the research environment for large-scale
 simulations research. Setting up the structure of a simulation study manually is
 prone to mistakes and a tedious task, especially when the scale of the
 simulation increases. ASReview Makita fills this gap by automating the workflow
 setup, preparing GitHub repositories, documentation, pre/post-processing code,
 and generating execution scripts.
 
-Simplifying reproducibility and maintaining an organized folder structure are
+Simplifying reproducibility and maintaining an organized folder structure is
 crucial for scientific research. They ensure that experiments can be reliably
-repeated and build upon by other researchers. A well-organized directory makes
+repeated and built upon by other researchers. A well-organized directory makes
 it easier to understand the workflow, locate files, and contributes to the
 transparency and credibility of the study.
 
 # Technical Functionality
 
 Utilizing a combination of Jinja-based templates and Python templates, ASReview
-Makita automatically generates an hierarchical folder structure, a README.md
+Makita automatically generates a hierarchical folder structure, a README.md
 (including descriptions, instructions, file tree, and data statements), any
-additional code used for pre- and post-processing, and batch or shell execution
+additional code used for pre-and post-processing, and batch or shell execution
 scripts. Makita offers scripts for, among others, extracting dataset statistics
 [@datatools], extracting simulation performance metrics such as Time to
-Discovery [@ferdinands2023performance], merging those metrics into easy to read
+Discovery [@ferdinands2023performance], merging those metrics into easy-to-read 
 tables, generating wordclouds [@wordcloud], and plotting the results
 [@insights]. Makita assures that all steps of the simulation study are stored
 and thus reproducible and transparent.
 
-The Jinja based templates handle study structure while accompanying Python
+The Jinja-based templates handle study structure while accompanying Python
 templates add extended functionality. A range of standard templates is
 available, specifically tailored for ASReview simulations. Overall, the
 architecture provides a modular and flexible framework, allowing users to easily
@@ -110,26 +110,26 @@ What Makita does not do:
 
 While Makita was originally developed for use with ASReview’s simulation CLI,
 Makita’s design allows it to be integrated with any other CLI tool via a
-customized template, broadening its applicability across different large scale
+customized template, broadening its applicability across different large-scale
 research environments. Makita can be used locally, on a server, or can be used
 in combination with Docker and Kubernetes.
 
-Very large scale simulation studies have been successfully run using Makita,
+Very large-scale simulation studies have been successfully run using Makita,
 with over 27.000 simulations in a single study, using 26 different datasets and
 13 different simulation models [@paper3]. The study implemented Makita within a
-kubernetes cluster, generating custom templates on the fly for each of the
+Kubernetes cluster, generating custom templates on the fly for each of the
 cluster nodes' specific needs [@simulation_project].
 
 ## Usage
 
 Upon creating a `data` folder with the desired datasets, the study structure is
 generated by running the Makita command for the `basic` template. In this case,
-a `n_runs` argument is added to the command, indicating 100 simulations with
+a `n_runs` argument is added to the command, indicating that 100 simulations with
 different seeds are needed for the study. Executing the generated jobs file
 starts the simulation tests, producing output logs and metrics within the
 created folder structure. This allows for easy access to performance metrics and
-study results. Below are filetree results for running the basic template and
-executing the jobs file. Filetrees are generated with scientific ordering,
+study results. Below are file tree results for running the basic template and
+executing the jobs file. File trees are generated with scientific ordering,
 following Scitree [@scitree].
 
     > asreview makita template basic -n_runs 100
