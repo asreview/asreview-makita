@@ -27,7 +27,19 @@ from asreviewcontrib.insights.plot import plot_recall
 
 
 def get_plot_from_states(states, filename, legend=None):
-    """Generate an ASReview plot from state files."""
+    """Generate an ASReview plot from state files.
+    
+    Arguments
+    ---------
+    states: list
+        List of state files.
+    filename: str
+        Filename of the plot.
+    legend: str
+        Add a legend to the plot, based on the given parameter.
+        Possible values: "filename", "model", "feature_extraction",
+        "balance_strategy", "query_strategy", "classifier".
+    """
 
     # sort the states alphabetically
     states = sorted(states)
@@ -78,7 +90,8 @@ def get_plot_from_states(states, filename, legend=None):
                     labels.append(label)
 
     # add legend to plot
-    ax.legend(loc=4, prop={'size': 8})
+    if legend:
+        ax.legend(loc=4, prop={'size': 8})
 
     # save plot
     fig.savefig(str(filename))
