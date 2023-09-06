@@ -23,7 +23,7 @@ authors:
 affiliations:
  - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, The Netherlands
    index: 1
- - name: AFFILIATION
+ - name: Department of Research and Data Management Services, Information Technology Services, Utrecht University, Utrecht, the Netherlands
    index: 2
 date: 1 September 2023
 bibliography: paper.bib
