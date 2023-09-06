@@ -1,5 +1,5 @@
 ---
-title: Makita - A Workflow Generator for large scale Simulation Studies
+title: Makita - A Workflow Generator for large scale and reproducible Simulation Studies mimicking labeling texts
 tags:
   - Workflow generator
   - Simulation study
