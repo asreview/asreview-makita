@@ -21,7 +21,7 @@ authors:
     affiliation: 2
     orcid: 0000-0002-4297-0502
 affiliations:
- - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, The Netherlands
+ - name: Department of Methodology and Statistics, Faculty of Social and Behavioral Sciences, Utrecht University, Utrecht, The Netherlands
    index: 1
  - name: Department of Research and Data Management Services, Information Technology Services, Utrecht University, Utrecht, the Netherlands
    index: 2
