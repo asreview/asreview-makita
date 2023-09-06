@@ -26,6 +26,31 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
+def _set_legend(ax, state, legend_option, labels, state_file):
+    metadata = state.settings_metadata
+    label = None
+
+    if legend_option == "filename":
+        label = state_file.stem
+    elif legend_option == "model":
+        label = " - ".join(
+            [metadata["settings"]["model"],
+             metadata["settings"]["feature_extraction"],
+             metadata["settings"]["balance_strategy"],
+             metadata["settings"]["query_strategy"]])
+    elif legend_option == "classifier":
+        label = metadata["settings"]["model"]
+    else:
+        try:
+            label = metadata["settings"][legend_option]
+        except KeyError:
+            raise ValueError(f"Invalid legend setting: '{legend_option}'")
+
+    if label and label not in labels:
+        ax.lines[-2].set_label(label)
+        labels.append(label)
+
+
 def get_plot_from_states(states, filename, legend=None):
     """Generate an ASReview plot from state files.
     
@@ -40,60 +65,18 @@ def get_plot_from_states(states, filename, legend=None):
         Possible values: "filename", "model", "feature_extraction",
         "balance_strategy", "query_strategy", "classifier".
     """
-
-    # sort the states alphabetically
     states = sorted(states)
-
     fig, ax = plt.subplots()
-
     labels = []
 
     for state_file in states:
         with open_state(state_file) as state:
-            # draw the plot
             plot_recall(ax, state)
+            if legend:
+                _set_legend(ax, state, legend, labels, state_file)
 
-            # settings for legend "filename"
-            if legend == "filename":
-                ax.lines[-2].set_label(state_file.stem)
-                ax.legend(loc=4, prop={'size': 8})
-            # settings for legend "settings"
-            elif legend:
-                metadata = state.settings_metadata
-
-                # settings for legend "model"
-                if legend == "model":
-                    label = " - ".join(
-                            [metadata["settings"]["model"],
-                             metadata["settings"]["feature_extraction"],
-                             metadata["settings"]["balance_strategy"],
-                             metadata["settings"]["query_strategy"]])
-                    
-                # settings for legend "classifier"
-                elif legend == "classifier":
-                    label = metadata["settings"]["model"]
-
-                # settings for legend from metadata
-                else:
-                    try:
-                        label = metadata["settings"][legend]
-                    except KeyError as exc:
-                        raise ValueError(
-                            f"Legend setting '{legend}' "
-                            "not found in state file settings."
-                        ) from exc
-                    
-                # add label to legend if not already present 
-                # (multiple states can have the same label)
-                if label not in labels:
-                    ax.lines[-2].set_label(label)
-                    labels.append(label)
-
-    # add legend to plot
     if legend:
         ax.legend(loc=4, prop={'size': 8})
-
-    # save plot
     fig.savefig(str(filename))
 
 
