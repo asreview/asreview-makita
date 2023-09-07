@@ -43,8 +43,8 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file):
     else:
         try:
             label = metadata["settings"][legend_option]
-        except KeyError:
-            raise ValueError(f"Invalid legend setting: '{legend_option}'")
+        except KeyError as err:
+            raise ValueError(f"Invalid legend setting: '{legend_option}'") from err  # noqa: E501
 
     if label:
         # add label to line
@@ -59,7 +59,7 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file):
 
 def get_plot_from_states(states, filename, legend=None):
     """Generate an ASReview plot from state files.
-    
+
     Arguments
     ---------
     states: list
