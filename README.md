@@ -70,7 +70,13 @@ Your simulation study is now properly set up and ready for use. To start the sim
 sh jobs.sh
 ```
 
-The `jobs.sh` script is a shell script that runs all jobs in the project folder.
+Or on Windows:
+
+```console
+jobs.bat
+```
+
+The `jobs` script runs all jobs in the project folder.
 
 ### Platform support
 
@@ -88,9 +94,13 @@ asreview makita template basic --job_file my_jobs_file.my_ext
 
 ## Templates
 
-The following table gives an overview of the available templates. See [Getting started](#getting-started) for instructions on usage.
+The following table gives an overview of the available templates.
+See [Getting started](#getting-started) for instructions on usage.
 
-> Note: If no seed is set with the template command, the default seed is used. While this is important for the reproducibility of the results, it may lead to long-term bias. To avoid seed-related bias across different simulation studies, a seed should be for the prior records and models.
+> Note: If no seed is set with the template command, the default seed is used.
+> While this is important for the reproducibility of the results, it may lead to
+> long-term bias. To avoid seed-related bias across different simulation
+> studies, a seed should be for the prior records and models.
 
 ### Basic template
 
@@ -102,21 +112,21 @@ optional arguments:
 
 ```console
   -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs. Default jobs.bat for Windows, otherwise jobs.sh.
+  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
   -s DATA_FOLDER                            Dataset folder
   -o OUTPUT_FOLDER                          Output folder
-  --init_seed INIT_SEED                     Seed of the priors.                           Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                           Seed is set to 165 by default.
+  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
-  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux. Default: the system of rendering templates.
-  --n_runs N_RUNS                           Number of runs.                               Default: 1.
+  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
+  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
-  --classifier CLASSIFIER                   Classifier to use.                            Default: nb.
-  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                     Default: tfidf.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                        Default: max.
-  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                      Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.      Default 'min' will stop simulating when all relevant records are found.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
 ### ARFI template
@@ -129,21 +139,21 @@ optional arguments:
 
 ```console
   -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs. Default jobs.bat for Windows, otherwise jobs.sh.
+  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
   -s DATA_FOLDER                            Dataset folder
   -o OUTPUT_FOLDER                          Output folder
-  --init_seed INIT_SEED                     Seed of the priors.                           Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                           Seed is set to 165 by default.
+  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
-  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux. Default: the system of rendering templates.
-  --n_priors N_PRIORS                       Number of priors. Only for template 'arfi'.   Default: 10.
+  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
+  --n_priors N_PRIORS                       Number of priors.                               Default: 10.
   --no_wordclouds                           Disables the generation of wordclouds.
-  --classifier CLASSIFIER                   Classifier to use.                            Default: nb.
-  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                     Default: tfidf.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                        Default: max.
-  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                      Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.      Default 'min' will stop simulating when all relevant records are found.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
 ### Multiple models template
@@ -156,32 +166,29 @@ optional arguments:
 
 ```console
   -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs. Default jobs.bat for Windows, otherwise jobs.sh.
+  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
   -s DATA_FOLDER                            Dataset folder
   -o OUTPUT_FOLDER                          Output folder
-  --init_seed INIT_SEED                     Seed of the priors.                           Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                           Seed is set to 165 by default.
+  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
-  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux. Default: the system of rendering templates.
-  --n_runs N_RUNS                           Number of runs.                               Default: 1.
+  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
+  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                        Default: max.
-  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                      Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.      Default 'min' will stop simulating when all relevant records are found.
-  --classifiers CLASSIFIERS [CLASSIFIERS ...]                       Classifiers to use              Default: ['logistic', 'nb', 'rf', 'svm']
-  --feature_extractors FEATURE_EXTRACTOR [FEATURE_EXTRACTORS ...]   Feature extractors to use       Default: ['doc2vec', 'sbert', 'tfidf']
-  --impossible_models IMPOSSIBLE_MODELS [IMPOSSIBLE_MODELS ...]     Model combinations to exclude   Default: ['nb,doc2vec', 'nb,sbert']
+  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
+  --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
+  --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
->Example command: If you want to generate a multiple models template with classifiers `logistic`
-and `nb`, and feature extraction `tfidf`, you can use the following command:
-
-```console
-asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf
-```
-
->If you want to specify certain combinations of classifiers and feature extractors that should not be used, you can use the `--impossible_models` option. For instance, if you want to exclude the combinations of `nb` with `doc2vec` and `logistic` with `tfidf`, use the following command:
+If you want to specify certain combinations of classifiers and feature
+extractors that should and should not be used, you can use the `--classifiers`,
+`--feature_extractors`, and `--impossible_models` option. For instance, if you
+want to exclude the combinations of `nb` with `doc2vec` and `logistic` with
+`tfidf`, use the following command:
 
 ```console
 asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf doc2vec --impossible_models nb,doc2vec logistic,tfidf
