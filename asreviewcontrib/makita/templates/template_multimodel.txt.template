@@ -1,5 +1,5 @@
 ---
-name: multiple_models
+name: multimodel
 name_long: Basic simulation for every possible combination of selected models
 
 scripts:
@@ -12,7 +12,7 @@ docs:
   - README.md
 ---
 
-{# This is a template for the multiple_models method #}
+{# This is a template for the multimodel method #}
 # version {{ version }}
 
 # Create folder structure. By default, the folder 'output' is used to store output.

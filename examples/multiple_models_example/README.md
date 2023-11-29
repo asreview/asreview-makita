@@ -2,7 +2,7 @@
 
 *This project was rendered with ASReview-Makita version 0.0.0.*
 
-This project was rendered from the Makita-multiple_models template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
+This project was rendered from the Makita-multimodel template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
 
 The template is described as: 'Basic simulation for every possible combination of selected models'.
 

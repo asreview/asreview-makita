@@ -156,9 +156,9 @@ optional arguments:
   --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
-### Multiple models template
+### Multimodel template
 
-command: `multiple_models`
+command: `multimodel`
 
 The multiple model template prepares a script for running a simulation study comparing multiple models for one dataset and a fixed set of priors (one relevant and one irrelevant record; identical across models).
 
@@ -191,7 +191,7 @@ want to exclude the combinations of `nb` with `doc2vec` and `logistic` with
 `tfidf`, use the following command:
 
 ```console
-asreview makita template multiple_models --classifiers logistic nb --feature_extractors tfidf doc2vec --impossible_models nb,doc2vec logistic,tfidf
+asreview makita template multimodel --classifiers logistic nb --feature_extractors tfidf doc2vec --impossible_models nb,doc2vec logistic,tfidf
 ```
 
 ## Advanced usage
@@ -250,7 +250,7 @@ The following scripts are available:
 
 #### Time to Discovery Tables
 
-The 'merge_tds.py' script creates a table of the time to discovery (TD) values for each dataset, with each row corresponding to each record ID of the relevant records in a dataset, and the columns correspond to each simulation run (e.g, for the multiple models template each column corresponds to a simualtion run with each active learning model). Additionally, the tables includes the average-record-TD values (the average of the TD values for a record across multiple simulation runs), and the average-simulation-TD values (the average of the TD values across all records for a single simulation run).
+The 'merge_tds.py' script creates a table of the time to discovery (TD) values for each dataset, with each row corresponding to each record ID of the relevant records in a dataset, and the columns correspond to each simulation run (e.g, for the Multimodel template each column corresponds to a simualtion run with each active learning model). Additionally, the tables includes the average-record-TD values (the average of the TD values for a record across multiple simulation runs), and the average-simulation-TD values (the average of the TD values across all records for a single simulation run).
 
 #### Run Makita via Docker
 

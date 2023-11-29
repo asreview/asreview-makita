@@ -1,4 +1,4 @@
-"""Render multiple_models template."""
+"""Render multimodel template."""
 
 import os
 import platform
@@ -11,7 +11,7 @@ from asreviewcontrib.makita.utils import FileHandler
 from asreviewcontrib.makita.utils import check_filename_dataset
 
 
-def render_jobs_multiple_models(
+def render_jobs_multimodel(
     datasets,
     output_folder="output",
     n_runs=1,
@@ -88,7 +88,7 @@ def render_jobs_multiple_models(
                 "doc",
                 datasets=datasets,
                 template_name=template.name
-                if template.name == "multiple_models"
+                if template.name == "multimodel"
                 else "custom",
                 template_name_long=template.name_long,
                 template_scripts=template.scripts,

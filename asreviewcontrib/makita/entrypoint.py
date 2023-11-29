@@ -8,7 +8,7 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
-from asreviewcontrib.makita.template_multiple_models import render_jobs_multiple_models
+from asreviewcontrib.makita.template_multimodel import render_jobs_multimodel
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -88,7 +88,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--n_runs",
             type=int,
             default=1,
-            help="Number of runs. Only for templates 'basic' and 'multiple_models'. "
+            help="Number of runs. Only for templates 'basic' and 'multimodel'. "
             "Default: 1.",
         )
         parser_template.add_argument(
@@ -149,21 +149,21 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--classifiers",
             nargs="+",
             default=["logistic", "nb", "rf", "svm"],
-            help="Classifiers to use. Only for template 'multiple_models'. "
+            help="Classifiers to use. Only for template 'multimodel'. "
             "Default: ['logistic', 'nb', 'rf', 'svm']",
         )
         parser_template.add_argument(
             "--feature_extractors",
             nargs="+",
             default=["doc2vec", "sbert", "tfidf"],
-            help="Feature extractors to use. Only for template 'multiple_models'. "
+            help="Feature extractors to use. Only for template 'multimodel'. "
             "Default: ['doc2vec', 'sbert', 'tfidf']",
         )
         parser_template.add_argument(
             "--impossible_models",
             nargs="+",
             default=["nb,doc2vec", "nb,sbert"],
-            help="Model combinations to exclude. Only for template 'multiple_models'. "
+            help="Model combinations to exclude. Only for template 'multimodel'. "
             "Default: ['nb,doc2vec', 'nb,sbert']",
         )
 
@@ -252,9 +252,9 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             )
 
-        elif args.name in ["multiple_models"]:
+        elif args.name in ["multimodel"]:
             # render jobs
-            job = render_jobs_multiple_models(
+            job = render_jobs_multimodel(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
