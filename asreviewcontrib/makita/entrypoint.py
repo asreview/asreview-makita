@@ -67,13 +67,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--init_seed",
             type=int,
             default=535,
-            help="Seed of the priors. Seed is set by default!",
+            help="Seed of the priors. Seed is set to 535 by default.",
         )
         parser_template.add_argument(
             "--model_seed",
             type=int,
             default=165,
-            help="Seed of the models. Seed is set by default!",
+            help="Seed of the models. Seed is set to 165 by default.",
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
@@ -88,31 +88,83 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--n_runs",
             type=int,
             default=1,
-            help="Number of runs. Only for templates 'basic' and 'multiple_models'.",
+            help="Number of runs. Only for templates 'basic' and 'multiple_models'. "
+            "Default: 1.",
         )
         parser_template.add_argument(
             "--n_priors",
             type=int,
             default=10,
-            help="Number of priors. Only for template 'arfi'.",
+            help="Number of priors. Only for template 'arfi'. "
+            "Default: 10.",
+        )
+        parser_template.add_argument(
+            "--no_wordclouds",
+            action="store_false",
+            help="Disables the generation of wordclouds. "
+        )
+        parser_template.add_argument(
+            "--classifier",
+            type=str,
+            default="nb",
+            help="Classifier to use. Only for template 'basic' and 'arfi'. "
+            "Default: nb.",
+        )
+        parser_template.add_argument(
+            "--feature_extractor",
+            type=str,
+            default="tfidf",
+            help="Feature_extractor to use. Only for template 'basic' and 'arfi'. "
+            "Default: tfidf.",
+        )
+        parser_template.add_argument(
+            "--query_strategy",
+            type=str,
+            default="max",
+            help="Query strategy to use. "
+            "Default: max.",
+        )
+        parser_template.add_argument(
+            "--balance_strategy",
+            type=str,
+            default="double",
+            help="Balance strategy to use. "
+            "Default: double.",
+        )
+        parser_template.add_argument(
+            "--instances_per_query",
+            type=int,
+            default=1,
+            help="Number of instances per query. "
+            "Default: 1.",
+        )
+        parser_template.add_argument(
+            "--stop_if",
+            type=str,
+            default="min",
+            help="The number of label actions to simulate. "
+            "Default 'min' will stop simulating when all relevant records are found.",
         )
         parser_template.add_argument(
             "--classifiers",
             nargs="+",
             default=["logistic", "nb", "rf", "svm"],
-            help="Classifiers to use. Only for template 'multiple_models'.",
+            help="Classifiers to use. Only for template 'multiple_models'. "
+            "Default: ['logistic', 'nb', 'rf', 'svm']",
         )
         parser_template.add_argument(
             "--feature_extractors",
             nargs="+",
             default=["doc2vec", "sbert", "tfidf"],
-            help="Feature extractors to use. Only for template 'multiple_models'.",
+            help="Feature extractors to use. Only for template 'multiple_models'. "
+            "Default: ['doc2vec', 'sbert', 'tfidf']",
         )
         parser_template.add_argument(
             "--impossible_models",
             nargs="+",
             default=["nb,doc2vec", "nb,sbert"],
-            help="Model combinations to exclude. Only for template 'multiple_models'.",
+            help="Model combinations to exclude. Only for template 'multiple_models'. "
+            "Default: ['nb,doc2vec', 'nb,sbert']",
         )
 
         parser_template.set_defaults(func=self._template_cli)
@@ -165,9 +217,16 @@ class MakitaEntryPoint(BaseEntryPoint):
             job = render_jobs_basic(
                 datasets,
                 output_folder=Path(args.o),
+                create_wordclouds=args.no_wordclouds,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
+                classifier=args.classifier,
+                feature_extractor=args.feature_extractor,
+                query_strategy=args.query_strategy,
+                balance_strategy=args.balance_strategy,
+                instances_per_query=args.instances_per_query,
+                stop_if=args.stop_if,
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
@@ -178,9 +237,16 @@ class MakitaEntryPoint(BaseEntryPoint):
             job = render_jobs_arfi(
                 datasets,
                 output_folder=Path(args.o),
+                create_wordclouds=args.no_wordclouds,
                 n_priors=args.n_priors,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
+                classifier=args.classifier,
+                feature_extractor=args.feature_extractor,
+                query_strategy=args.query_strategy,
+                balance_strategy=args.balance_strategy,
+                instances_per_query=args.instances_per_query,
+                stop_if=args.stop_if,
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
@@ -191,12 +257,17 @@ class MakitaEntryPoint(BaseEntryPoint):
             job = render_jobs_multiple_models(
                 datasets,
                 output_folder=Path(args.o),
+                create_wordclouds=args.no_wordclouds,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
                 all_classifiers=args.classifiers,
                 all_feature_extractors=args.feature_extractors,
                 impossible_models=args.impossible_models,
+                query_strategy=args.query_strategy,
+                balance_strategy=args.balance_strategy,
+                instances_per_query=args.instances_per_query,
+                stop_if=args.stop_if,
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
