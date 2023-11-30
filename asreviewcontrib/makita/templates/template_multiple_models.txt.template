@@ -34,13 +34,13 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics
 
 # Collect descriptives about the dataset {{ dataset.input_file_stem }}
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
-asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
+python -m asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
 {% if create_wordclouds %}
 
 # Generate wordcloud visualizations of all datasets
-asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
-asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
-asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
+python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
+python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
+python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
 {% endif %}
 
 # Simulate runs
@@ -53,8 +53,8 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 # Skipped {{ classifier }} + {{ feature_extraction }} model
 {% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }} , Query strategy = max
 {% for run in range(n_runs) %}
-asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
-asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.json
+python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview --model {{ classifier }} --query_strategy max --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
+python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ run }}.json
 {% endfor %}{% endif %}
 {% endfor %}
 {% endfor %}
