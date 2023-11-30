@@ -194,6 +194,10 @@ class MakitaEntryPoint(BaseEntryPoint):
     def _template(self, args):
         """Generate a template."""
 
+        # backwards compatibility for 'multiple_models'
+        if args.name == "multiple_models":
+            args.name = "multimodel"
+
         # check if a custom template is used, otherwise use the default template
         fp_template = args.template or (args.name and _get_template_fp(args.name))
         _is_valid_template(fp_template)
@@ -252,7 +256,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             )
 
-        elif args.name in ["multimodel", "multiple_models"]:
+        elif args.name in ["multimodel"]:
             # render jobs
             job = render_jobs_multimodel(
                 datasets,
