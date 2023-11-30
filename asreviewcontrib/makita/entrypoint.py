@@ -252,7 +252,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             )
 
-        elif args.name in ["multimodel"]:
+        elif args.name in ["multimodel", "multiple_models"]:
             # render jobs
             job = render_jobs_multimodel(
                 datasets,
