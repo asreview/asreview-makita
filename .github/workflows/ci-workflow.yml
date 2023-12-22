@@ -24,10 +24,10 @@ jobs:
         cd tmp
         mkdir -p basic/data
         mkdir -p arfi/data
-        mkdir -p multiple_models/data
+        mkdir -p multimodel/data
         cp ../.github/workflows/test_data/labels.csv basic/data/labels.csv
         cp ../.github/workflows/test_data/labels.csv arfi/data/labels.csv
-        cp ../.github/workflows/test_data/labels.csv multiple_models/data/labels.csv
+        cp ../.github/workflows/test_data/labels.csv multimodel/data/labels.csv
     - name: Test makita templates
       run: |
         cd tmp/basic
@@ -36,8 +36,8 @@ jobs:
         cd ../arfi
         asreview makita template arfi | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
-        cd ../multiple_models
-        asreview makita template multiple_models | tee output.txt
+        cd ../multimodel
+        asreview makita template multimodel | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run ShellCheck
       if: ${{ matrix.os != 'windows-latest' }}

@@ -11,8 +11,8 @@ synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/basic_example/da
 cd examples/basic_example
 asreview makita template basic
 cd ../..
-synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/multiple_models_example/data -l
-cd examples/multiple_models_example
-asreview makita template multiple_models
+synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/multimodel_example/data -l
+cd examples/multimodel_example
+asreview makita template multimodel
 cd ../..
 ```
