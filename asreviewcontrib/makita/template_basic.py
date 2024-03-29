@@ -12,7 +12,7 @@ class RenderJobsBasic(RenderTemplateBase):
         self.feature_extractor = kwargs.pop('feature_extractor', "tfidf")
         super().__init__(*args, **kwargs)
 
-    def prepare_dataset_params(self, index, fp_dataset):
+    def get_dynamic_params(self, index, fp_dataset):
         return {
             "input_file": fp_dataset.as_posix(),
             "input_file_stem": fp_dataset.stem,
@@ -21,7 +21,7 @@ class RenderJobsBasic(RenderTemplateBase):
             "n_runs": self.n_runs,
         }
 
-    def prepare_template_params(self, params):
+    def get_static_params(self, params):
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,

@@ -16,7 +16,7 @@ class RenderJobsARFI(RenderTemplateBase):
         self.n_priors = kwargs.pop('n_priors', 10)
         super().__init__(*args, **kwargs)
 
-    def prepare_dataset_params(self, index, fp_dataset):
+    def get_dynamic_params(self, index, fp_dataset):
         priors = _get_priors(fp_dataset,
                              init_seed=self.init_seed + index,
                              n_priors=self.n_priors)
@@ -27,7 +27,7 @@ class RenderJobsARFI(RenderTemplateBase):
             "model_seed": self.model_seed + index,
         }
 
-    def prepare_template_params(self, params):
+    def get_static_params(self, params):
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,

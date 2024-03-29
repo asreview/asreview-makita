@@ -37,18 +37,18 @@ class RenderTemplateBase:
         assert self.template is not None, "Template is None."
         assert self.fp_template is not None, "Template file is None."
 
-    def prepare_dataset_params(self, index, fp_dataset):
+    def get_dynamic_params(self, index, fp_dataset):
         raise NotImplementedError("Subclasses should implement this method to prepare dataset-specific parameters.")  # noqa
 
-    def prepare_template_params(self, params):
+    def get_static_params(self, params):
         raise NotImplementedError("Subclasses should implement this method to prepare template-specific parameters.")  # noqa
 
-    def gather_dataset_params(self):
+    def collect_dynamic_params(self):
         params = []
         for i, fp_dataset in enumerate(sorted(self.datasets)):
             check_filename_dataset(fp_dataset)
             fp_dataset = Path(fp_dataset)
-            params.append(self.prepare_dataset_params(i, fp_dataset))
+            params.append(self.get_dynamic_params(i, fp_dataset))
         return params
 
     def render_scripts(self, scripts: list):
@@ -75,8 +75,6 @@ class RenderTemplateBase:
             self.file_handler.add_file(t_docs, s)
 
     def render(self):
-        dataset_params = self.gather_dataset_params()
-
         if self.template.scripts:
             self.render_scripts(self.template.scripts)
 
@@ -85,7 +83,7 @@ class RenderTemplateBase:
 
         try:
             rendered_output = self.template.render(
-                self.prepare_template_params(dataset_params)
+                self.get_static_params(self.collect_dynamic_params())
             )
         except Exception as e:
             if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
