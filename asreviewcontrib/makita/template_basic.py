@@ -13,6 +13,9 @@ class RenderJobsBasic(RenderTemplateBase):
         super().__init__(*args, **kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
+        """Prepare dataset-specific parameters. These parameters are provided to the
+        template once for each dataset."""
+
         return {
             "input_file": fp_dataset.as_posix(),
             "input_file_stem": fp_dataset.stem,
@@ -22,6 +25,9 @@ class RenderJobsBasic(RenderTemplateBase):
         }
 
     def get_static_params(self, params):
+        """Prepare template-specific parameters. These parameters are provided to the
+        template only once."""
+
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
