@@ -17,6 +17,9 @@ class RenderJobsARFI(RenderTemplateBase):
         super().__init__(*args, **kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
+        """Prepare dataset-specific parameters. These parameters are provided to the
+        template once for each dataset."""
+
         priors = _get_priors(fp_dataset,
                              init_seed=self.init_seed + index,
                              n_priors=self.n_priors)
@@ -28,6 +31,9 @@ class RenderJobsARFI(RenderTemplateBase):
         }
 
     def get_static_params(self, params):
+        """Prepare template-specific parameters. These parameters are provided to the
+        template only once."""
+
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,

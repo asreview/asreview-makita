@@ -38,12 +38,20 @@ class RenderTemplateBase:
         assert self.fp_template is not None, "Template file is None."
 
     def get_dynamic_params(self, index, fp_dataset):
+        """Prepare dataset-specific parameters. These parameters are provided to the
+        template once for each dataset."""
+
         raise NotImplementedError("Subclasses should implement this method to prepare dataset-specific parameters.")  # noqa
 
     def get_static_params(self, params):
+        """Prepare template-specific parameters. These parameters are provided to the
+        template only once."""
+
         raise NotImplementedError("Subclasses should implement this method to prepare template-specific parameters.")  # noqa
 
     def render_scripts(self, scripts: list):
+        """Render scripts."""
+
         for s in scripts:
             t_script = self.file_handler.render_file_from_template(
                 s, "script", output_folder=self.output_folder
@@ -52,6 +60,8 @@ class RenderTemplateBase:
             self.file_handler.add_file(t_script, export_fp)
 
     def render_docs(self, docs: list):
+        """Render docs."""
+
         for s in docs:
             t_docs = self.file_handler.render_file_from_template(
                 s,
@@ -67,7 +77,7 @@ class RenderTemplateBase:
             self.file_handler.add_file(t_docs, s)
 
     def render(self):
-        """Render the template."""
+        """Render template."""
 
         # render scripts
         if self.template.scripts:
@@ -91,13 +101,12 @@ class RenderTemplateBase:
             )
         except Exception as e:
             if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
-                if self.template_name is None:
-                    print("\033[31mERROR: A rendering exception occurred -", e)
-                    print("The rendering process failed due to undefined parameters in the template.")  # noqa
-                    print("\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m")  # noqa
-                    exit(1)
-                else:
-                    raise
+                print("\033[31mERROR: A rendering exception occurred -", e)
+                print("The rendering process failed due to undefined parameters in the template.")  # noqa
+                print("\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m")  # noqa
+                exit(1)
+            else:
+                raise e
 
         self.file_handler.print_summary()
         return rendered_output

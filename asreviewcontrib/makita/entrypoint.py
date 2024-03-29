@@ -299,9 +299,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                     job_file=args.job_file,
                     platform_sys=args.platform,
                 ).render()
-            except Exception:
-                print(f"\u001b[31mERROR: Template {args.name} not found.\u001b[0m")
-                return
+            except Exception as e:
+                raise e
 
         if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
             job = _shell_to_batch(job)
