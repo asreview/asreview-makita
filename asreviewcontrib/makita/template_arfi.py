@@ -7,12 +7,13 @@ from asreviewcontrib.makita.template_base import RenderTemplateBase
 
 
 class RenderJobsARFI(RenderTemplateBase):
+    template_name = "ARFI"
+
     def __init__(self, *args, **kwargs):
         self.n_runs = kwargs.pop('n_runs', 1)
         self.classifier = kwargs.pop('classifier', "nb")
         self.feature_extractor = kwargs.pop('feature_extractor', "tfidf")
         self.n_priors = kwargs.pop('n_priors', 10)
-        self.template_name = "ARFI"
         super().__init__(*args, **kwargs)
 
     def prepare_dataset_params(self, index, fp_dataset):

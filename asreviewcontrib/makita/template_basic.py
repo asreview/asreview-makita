@@ -4,11 +4,12 @@ from asreviewcontrib.makita.template_base import RenderTemplateBase
 
 
 class RenderJobsBasic(RenderTemplateBase):
+    template_name = "basic"
+
     def __init__(self, *args, **kwargs):
         self.n_runs = kwargs.pop('n_runs', 1)
         self.classifier = kwargs.pop('classifier', "nb")
         self.feature_extractor = kwargs.pop('feature_extractor', "tfidf")
-        self.template_name = "basic"
         super().__init__(*args, **kwargs)
 
     def prepare_dataset_params(self, index, fp_dataset):

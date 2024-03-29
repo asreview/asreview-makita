@@ -6,6 +6,8 @@ from asreview.entry_points import BaseEntryPoint
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
+from asreviewcontrib.makita.template_arfi import RenderJobsARFI
+from asreviewcontrib.makita.template_basic import RenderJobsBasic
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -208,14 +210,12 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         # throw exception if no datasets are found
         if len(datasets) == 0:
-            raise ValueError("No datasets found in the specified folder.")
+            raise ValueError("No datasets found in the selected data folder.")
 
         # create output folder
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
-        if args.name in ["basic"]:
-            from asreviewcontrib.makita.template_basic import RenderJobsBasic
-
+        if args.name in [RenderJobsBasic.template_name]:
             job = RenderJobsBasic(
                 datasets,
                 output_folder=Path(args.o),
@@ -234,9 +234,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             ).render()
 
-        elif args.name in ["arfi"]:
-            from asreviewcontrib.makita.template_arfi import RenderJobsARFI
-            # render jobs
+        elif args.name in [RenderJobsARFI.template_name]:
             job = RenderJobsARFI(
                 datasets,
                 output_folder=Path(args.o),
@@ -256,7 +254,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             ).render()
 
         elif args.name in ["multimodel"]:
-            # render jobs
+
             job = render_jobs_multimodel(
                 datasets,
                 output_folder=Path(args.o),
@@ -277,8 +275,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
         else:
-            # render jobs
-            job = render_jobs_basic(
+            job = RenderJobsBasic(
                 datasets,
                 output_folder=Path(args.o),
                 init_seed=args.init_seed,
@@ -286,7 +283,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
-            )
+            ).render()
 
         if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
             job = _shell_to_batch(job)
