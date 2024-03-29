@@ -8,6 +8,7 @@ class RenderJobsBasic(RenderTemplateBase):
         self.n_runs = kwargs.pop('n_runs', 1)
         self.classifier = kwargs.pop('classifier', "nb")
         self.feature_extractor = kwargs.pop('feature_extractor', "tfidf")
+        self.template_name = "basic"
         super().__init__(*args, **kwargs)
 
     def prepare_dataset_params(self, index, fp_dataset):
@@ -19,17 +20,8 @@ class RenderJobsBasic(RenderTemplateBase):
             "n_runs": self.n_runs,
         }
 
-    def render(self):
-        self.file_handler.print_summary()
-        params = self.prepare_common_params()
-
-        if self.template.scripts:
-            self.render_scripts(self.template.scripts)
-
-        if self.template.docs:
-            self.render_docs(self.template.docs, "basic")
-
-        rendered_output = self.template.render({
+    def prepare_template_params(self, params):
+        return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
             "classifier": self.classifier,
@@ -42,6 +34,4 @@ class RenderJobsBasic(RenderTemplateBase):
             "scripts_folder": self.scripts_folder,
             "platform": self.platform_sys,
             "version": self.__version__,
-        })
-
-        return rendered_output
+        }

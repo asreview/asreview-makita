@@ -33,10 +33,27 @@ class RenderTemplateBase:
         self.file_handler = FileHandler()
         self.file_handler.overwrite_all = allow_overwrite
         self.template = ConfigTemplate(fp_template)
+        self.template_name = None
         self.__version__ = __version__
 
+        assert self.template is not None, "Template is None."
+        assert self.fp_template is not None, "Template file is None."
+
     def render(self):
-        raise NotImplementedError("Subclasses should implement this method to render specific templates.")
+        params = self.prepare_common_params()
+
+        if self.template.scripts:
+            self.render_scripts(self.template.scripts)
+
+        if self.template.docs:
+            self.render_docs(self.template.docs, self.template_name)
+
+        rendered_output = self.template.render(
+            self.prepare_template_params(params)
+        )
+
+        self.file_handler.print_summary()
+        return rendered_output
 
     def prepare_common_params(self):
         params = []
