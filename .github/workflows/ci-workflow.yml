@@ -51,4 +51,4 @@ jobs:
         asreview makita add-script --all
     - name: Lint python with ruff
       run: |
-        ruff .
+        ruff check .
