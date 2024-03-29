@@ -203,6 +203,9 @@ class MakitaEntryPoint(BaseEntryPoint):
         if args.name == "multiple_models":
             args.name = "multimodel"
 
+        # lowcase name
+        args.name = args.name.lower()
+
         # check if a custom template is used, otherwise use the default template
         fp_template = args.template or (args.name and _get_template_fp(args.name))
         _is_valid_template(fp_template)
@@ -283,15 +286,22 @@ class MakitaEntryPoint(BaseEntryPoint):
             ).render()
 
         else:
-            job = RenderJobsBasic(
-                datasets,
-                output_folder=Path(args.o),
-                init_seed=args.init_seed,
-                model_seed=args.model_seed,
-                fp_template=fp_template,
-                job_file=args.job_file,
-                platform_sys=args.platform,
-            ).render()
+            try:
+                job = RenderJobsBasic(
+                    datasets,
+                    output_folder=Path(args.o),
+                    create_wordclouds=args.no_wordclouds,
+                    allow_overwrite=args.overwrite,
+                    init_seed=args.init_seed,
+                    model_seed=args.model_seed,
+                    stop_if=args.stop_if,
+                    fp_template=fp_template,
+                    job_file=args.job_file,
+                    platform_sys=args.platform,
+                ).render()
+            except Exception:
+                print(f"\u001b[31mERROR: Template {args.name} not found.\u001b[0m")
+                return
 
         if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
             job = _shell_to_batch(job)

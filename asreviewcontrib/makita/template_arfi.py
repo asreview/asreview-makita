@@ -7,7 +7,7 @@ from asreviewcontrib.makita.template_base import RenderTemplateBase
 
 
 class RenderJobsARFI(RenderTemplateBase):
-    template_name = "ARFI"
+    template_name = "arfi"
 
     def __init__(self, *args, **kwargs):
         self.n_runs = kwargs.pop('n_runs', 1)
