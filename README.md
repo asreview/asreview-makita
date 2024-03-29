@@ -186,12 +186,12 @@ optional arguments:
 
 If you want to specify certain combinations of classifiers and feature
 extractors that should and should not be used, you can use the `--classifiers`,
-`--feature_extractors`, and `--impossible_models` option. For instance, if you
+`--feature_extractors`, `--query_strategies` and `--impossible_models` option. For instance, if you
 want to exclude the combinations of `nb` with `doc2vec` and `logistic` with
 `tfidf`, use the following command:
 
 ```console
-asreview makita template multimodel --classifiers logistic nb --feature_extractors tfidf doc2vec --impossible_models nb,doc2vec logistic,tfidf
+asreview makita template multimodel --classifiers logistic nb --feature_extractors tfidf doc2vec --query_strategies max max_random max_uncertainty cluster --impossible_models nb,doc2vec logistic,tfidf
 ```
 
 ## Advanced usage
