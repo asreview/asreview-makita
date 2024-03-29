@@ -17,6 +17,7 @@ def render_jobs_multimodel(
     n_runs=1,
     scripts_folder="scripts",
     create_wordclouds=True,
+    allow_overwrite=False,
     init_seed=535,
     model_seed=165,
     all_classifiers=None,
@@ -50,6 +51,10 @@ def render_jobs_multimodel(
 
     # initialize file handler
     file_handler = FileHandler()
+
+    # Allow overwriting of files
+    if allow_overwrite:
+        file_handler.overwrite_all = True
 
     # generate params for all simulations
     for i, fp_dataset in enumerate(sorted(datasets)):

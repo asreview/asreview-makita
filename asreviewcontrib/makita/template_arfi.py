@@ -18,6 +18,7 @@ def render_jobs_arfi(
     output_folder="output",
     scripts_folder="scripts",
     create_wordclouds=True,
+    allow_overwrite=False,
     n_priors=10,
     init_seed=535,
     model_seed=165,
@@ -42,6 +43,10 @@ def render_jobs_arfi(
 
     # initialize file handler
     file_handler = FileHandler()
+
+    # Allow overwriting of files
+    if allow_overwrite:
+        file_handler.overwrite_all = True
 
     # generate params for all simulations
     for i, fp_dataset in enumerate(sorted(datasets)):

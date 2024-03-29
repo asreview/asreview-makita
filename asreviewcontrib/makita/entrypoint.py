@@ -104,6 +104,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             help="Disables the generation of wordclouds. "
         )
         parser_template.add_argument(
+            "--overwrite",
+            action="store_true",
+            help="Overwrite existing files in the output folder. ",
+        )
+        parser_template.add_argument(
             "--classifier",
             type=str,
             default="nb",
@@ -222,6 +227,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
@@ -242,6 +248,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_priors=args.n_priors,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
@@ -262,6 +269,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
