@@ -43,14 +43,6 @@ class RenderTemplateBase:
     def get_static_params(self, params):
         raise NotImplementedError("Subclasses should implement this method to prepare template-specific parameters.")  # noqa
 
-    def collect_dynamic_params(self):
-        params = []
-        for i, fp_dataset in enumerate(sorted(self.datasets)):
-            check_filename_dataset(fp_dataset)
-            fp_dataset = Path(fp_dataset)
-            params.append(self.get_dynamic_params(i, fp_dataset))
-        return params
-
     def render_scripts(self, scripts: list):
         for s in scripts:
             t_script = self.file_handler.render_file_from_template(
@@ -75,22 +67,34 @@ class RenderTemplateBase:
             self.file_handler.add_file(t_docs, s)
 
     def render(self):
+        """Render the template."""
+
+        # render scripts
         if self.template.scripts:
             self.render_scripts(self.template.scripts)
 
+        # render docs
         if self.template.docs:
             self.render_docs(self.template.docs)
 
+        # collect dynamic parameters
+        params = []
+        for i, fp_dataset in enumerate(sorted(self.datasets)):
+            check_filename_dataset(fp_dataset)
+            fp_dataset = Path(fp_dataset)
+            params.append(self.get_dynamic_params(i, fp_dataset))
+
+        # render template
         try:
             rendered_output = self.template.render(
-                self.get_static_params(self.collect_dynamic_params())
+                self.get_static_params(params)
             )
         except Exception as e:
             if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
                 if self.template_name is None:
                     print("\033[31mERROR: A rendering exception occurred -", e)
                     print("The rendering process failed due to undefined parameters in the template.")  # noqa
-                    print("\033[33mPlease verify that the chosen base template is compatible with the selected template.\033[0m")  # noqa
+                    print("\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m")  # noqa
                     exit(1)
                 else:
                     raise
