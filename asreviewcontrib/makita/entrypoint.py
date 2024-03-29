@@ -6,9 +6,7 @@ from asreview.entry_points import BaseEntryPoint
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
-from asreviewcontrib.makita.template_arfi import render_jobs_arfi
 from asreviewcontrib.makita.template_basic import render_jobs_basic
-from asreviewcontrib.makita.template_multimodel import render_jobs_multimodel
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -217,8 +215,9 @@ class MakitaEntryPoint(BaseEntryPoint):
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
         if args.name in ["basic"]:
-            # render jobs
-            job = render_jobs_basic(
+            from asreviewcontrib.makita.template_basic import RenderJobsBasic
+
+            job = RenderJobsBasic(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
@@ -234,7 +233,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
-            )
+            ).render()
 
         elif args.name in ["arfi"]:
             # render jobs
