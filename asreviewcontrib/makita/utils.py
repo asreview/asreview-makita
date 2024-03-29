@@ -12,8 +12,8 @@ class FileHandler:
     scripts.
     """
 
-    def __init__(self):
-        self.overwrite_all = False
+    def __init__(self, allow_overwrite=False):
+        self.overwrite_all = allow_overwrite
         self.total_files = 0
 
     def add_file(self, content, export_fp):

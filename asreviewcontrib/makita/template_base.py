@@ -30,8 +30,7 @@ class RenderTemplateBase:
         self.fp_template = fp_template
         self.job_file = job_file if job_file else "jobs.bat" if os.name == "nt" else "jobs.sh"
         self.platform_sys = platform_sys if platform_sys else platform.system()
-        self.file_handler = FileHandler()
-        self.file_handler.overwrite_all = allow_overwrite
+        self.file_handler = FileHandler(allow_overwrite)
         self.template = ConfigTemplate(fp_template)
         self.__version__ = __version__
 

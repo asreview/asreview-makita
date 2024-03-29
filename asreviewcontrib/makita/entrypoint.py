@@ -8,6 +8,7 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import RenderJobsARFI
 from asreviewcontrib.makita.template_basic import RenderJobsBasic
+from asreviewcontrib.makita.template_multimodel import RenderJobsMultiModel
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -101,6 +102,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--no_wordclouds",
             action="store_false",
             help="Disables the generation of wordclouds. "
+        )
+        parser_template.add_argument(
+            "--overwrite",
+            action="store_true",
+            help="Overwrite existing files in the output folder. ",
         )
         parser_template.add_argument(
             "--classifier",
@@ -220,6 +226,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
@@ -239,6 +246,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_priors=args.n_priors,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
@@ -253,12 +261,12 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             ).render()
 
-        elif args.name in ["multimodel"]:
-
-            job = render_jobs_multimodel(
+        elif args.name in [RenderJobsMultiModel.template_name]:
+            job = RenderJobsMultiModel(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
                 init_seed=args.init_seed,
                 model_seed=args.model_seed,
@@ -272,7 +280,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
-            )
+            ).render()
 
         else:
             job = RenderJobsBasic(
