@@ -121,6 +121,7 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
+  --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
@@ -148,6 +149,7 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_priors N_PRIORS                       Number of priors.                               Default: 10.
   --no_wordclouds                           Disables the generation of wordclouds.
+  --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
@@ -175,6 +177,7 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
+  --overwrite                               Automatically accepts all overwrite requests.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
