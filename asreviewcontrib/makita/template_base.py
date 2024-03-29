@@ -68,6 +68,7 @@ class RenderTemplateBase:
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
+                create_wordclouds=self.create_wordclouds,
                 output_folder=self.output_folder,
                 job_file=self.job_file,
             )

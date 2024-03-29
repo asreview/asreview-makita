@@ -13,13 +13,13 @@ This project depends on Python 3.7 or later (python.org/download), and [ASReview
 ```sh
 pip install asreview>=1.0 asreview-insights>=1.1.2 asreview-datatools
 ```
-
-If wordcloud images are required, install the following dependencies.
+{% if create_wordclouds %}
+For generating wordclouds, install the following dependencies.
 
 ```sh
 pip install asreview-wordcloud
 ```
-
+{% endif %}
 ## Data
 
 The performance on the following datasets is evaluated:
