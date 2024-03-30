@@ -85,18 +85,3 @@ class FileHandler:
             template = Template(f.read())
 
         return template.render({**params, **kwargs})
-
-
-def check_filename_dataset(fp):
-    """
-    Check if the filename of the dataset contains any whitespace.
-
-    Args:
-    fp (str): The file path of the dataset.
-
-    Raises:
-    ValueError: If the filename of the dataset contains whitespace.
-    """
-
-    if " " in Path(fp).stem:
-        raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")

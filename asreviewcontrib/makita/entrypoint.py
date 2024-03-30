@@ -12,17 +12,6 @@ from asreviewcontrib.makita.template_multimodel import RenderJobsMultiModel
 from asreviewcontrib.makita.utils import FileHandler
 
 
-def _get_template_fp(name):
-    return Path(TEMPLATES_FP, f"template_{name}.txt.template")
-
-
-def _is_valid_template(fp):
-    if fp and Path(fp).is_file():
-        return True
-    else:
-        raise ValueError(f"Template {fp} not found")
-
-
 def _shell_to_batch(job):
     job = f"@ echo off\nCOLOR E0{job}"
     job = job.replace("#", "::")
@@ -203,12 +192,22 @@ class MakitaEntryPoint(BaseEntryPoint):
         if args.name == "multiple_models":
             args.name = "multimodel"
 
-        # lowcase name
+        # lowercase name
         args.name = args.name.lower()
 
-        # check if a custom template is used, otherwise use the default template
-        fp_template = args.template or (args.name and _get_template_fp(args.name))
-        _is_valid_template(fp_template)
+        # check if the template exists
+        fp_template = Path(TEMPLATES_FP, f"template_{args.name}.txt.template")
+        if not fp_template.is_file():
+            raise ValueError(f"Template {args.name} not found")
+
+        # if a custom template is provided, check if it exists
+        if args.template:
+            fp_template = Path(args.template)
+            if not fp_template.is_file():
+                raise ValueError(f"Custom template {args.template} not found")
+            print(f"\033[33mRendering custom template {args.template}.\u001b[0m\n")
+        else:
+            print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
 
         # load datasets
         datasets = (
@@ -286,21 +285,19 @@ class MakitaEntryPoint(BaseEntryPoint):
             ).render()
 
         else:
-            try:
-                job = RenderJobsBasic(
-                    datasets,
-                    output_folder=Path(args.o),
-                    create_wordclouds=args.no_wordclouds,
-                    allow_overwrite=args.overwrite,
-                    init_seed=args.init_seed,
-                    model_seed=args.model_seed,
-                    stop_if=args.stop_if,
-                    fp_template=fp_template,
-                    job_file=args.job_file,
-                    platform_sys=args.platform,
-                ).render()
-            except Exception as e:
-                raise e
+            print("\033[33mUsing with basic template.\u001b[0m\n")
+            job = RenderJobsBasic(
+                datasets,
+                output_folder=Path(args.o),
+                create_wordclouds=args.no_wordclouds,
+                allow_overwrite=args.overwrite,
+                init_seed=args.init_seed,
+                model_seed=args.model_seed,
+                stop_if=args.stop_if,
+                fp_template=fp_template,
+                job_file=args.job_file,
+                platform_sys=args.platform,
+            ).render()
 
         if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
             job = _shell_to_batch(job)

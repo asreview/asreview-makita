@@ -8,7 +8,6 @@ from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
-from asreviewcontrib.makita.utils import check_filename_dataset
 
 
 class RenderTemplateBase:
@@ -90,7 +89,8 @@ class RenderTemplateBase:
         # collect dynamic parameters
         params = []
         for i, fp_dataset in enumerate(sorted(self.datasets)):
-            check_filename_dataset(fp_dataset)
+            if " " in Path(fp_dataset).stem:
+                raise ValueError(f"Dataset filename '{fp_dataset}' cannot contain whitespace.")
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dynamic_params(i, fp_dataset))
 
