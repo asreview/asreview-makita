@@ -90,7 +90,7 @@ class RenderTemplateBase:
         params = []
         for i, fp_dataset in enumerate(sorted(self.datasets)):
             if " " in Path(fp_dataset).stem:
-                raise ValueError(f"Dataset filename '{fp_dataset}' cannot contain whitespace.")
+                raise ValueError(f"Dataset filename '{fp_dataset}' cannot contain whitespace.")  # noqa
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dynamic_params(i, fp_dataset))
 
