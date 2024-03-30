@@ -51,7 +51,8 @@ class FileHandler:
             with open(export_fp, "w") as f:
                 f.write(content)
 
-            print(f"Added {export_fp}")
+            print(f"Created {export_fp}")
+
             self.total_files += 1
 
     def print_summary(self):
@@ -59,7 +60,7 @@ class FileHandler:
         Print the total number of files created by the FileHandler object.
         """
 
-        print(f"{self.total_files} file(s) created.")
+        print(f"\n{self.total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
         """
@@ -78,7 +79,6 @@ class FileHandler:
             "version": __version__,
         }
 
-        print(f"Loading {file_type} {name}")
 
         # open template
         with open(Path(TEMPLATES_FP, f"{file_type}_{name}.template")) as f:

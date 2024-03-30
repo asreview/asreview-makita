@@ -205,7 +205,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             fp_template = Path(args.template)
             if not fp_template.is_file():
                 raise ValueError(f"Custom template {args.template} not found")
-            print(f"\033[33mRendering custom template {args.template}.\u001b[0m\n")
+
+        # print rendering message
+        if args.template:
+            print(f"\
+\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n")
         else:
             print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
 
