@@ -79,7 +79,6 @@ class FileHandler:
             "version": __version__,
         }
 
-
         # open template
         with open(Path(TEMPLATES_FP, f"{file_type}_{name}.template")) as f:
             template = Template(f.read())
