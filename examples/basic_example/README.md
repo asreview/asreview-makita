@@ -29,7 +29,6 @@ The performance on the following datasets is evaluated:
 
 ## Run simulation
 
-To start the simulation, run the following command in the project directory.
 To start the simulation, run the `jobs.bat` file.
 
 ## Structure
