@@ -41,7 +41,7 @@ class TemplateBase:
         self.fp_template = fp_template
         self.job_file = (
             job_file if job_file else "jobs.bat" if os.name == "nt" else "jobs.sh"
-        )  # noqa
+        )
         self.platform_sys = platform_sys if platform_sys else platform.system()
         self.file_handler = FileHandler(allow_overwrite)
         self.template = ConfigTemplate(fp_template)
