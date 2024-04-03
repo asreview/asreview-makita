@@ -286,7 +286,9 @@ class MakitaEntryPoint(BaseEntryPoint):
             ).render()
 
         else:
-            print("\033[33mUsing with basic template.\u001b[0m\n")
+            # Fallback to basic template
+            # This case can occur if a user adds a new template to the templates folder
+            print("\u001b[31mFallback: \033[33mUsing the basic template.\u001b[0m\n")
             job = TemplateBasic(
                 datasets,
                 output_folder=Path(args.o),
