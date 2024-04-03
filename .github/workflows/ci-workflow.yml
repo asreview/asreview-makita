@@ -52,12 +52,14 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Install asreview-datatools asreview-insights
+    - name: Install asreview-datatools asreview-insights synergy-dataset
       run: |
         pip install asreview-datatools asreview-insights synergy-dataset
     - name: Run basic template
       run: |
-        cd tmp/basic
+        mkdir -p tmp/synergy
+        cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o /data -l
-        asreview makita template basic --instances_per_query 10 --no_wordclouds --overwrite
+        asreview makita template basic --instances_per_query 100 --no_wordclouds --overwrite
         sh jobs.sh
+        ls -R
