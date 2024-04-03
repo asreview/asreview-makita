@@ -88,4 +88,3 @@ if __name__ == "__main__":
     Path(args.o).parent.mkdir(parents=True, exist_ok=True)
     atd_table.to_csv(Path(args.o))
     atd_table.to_excel(Path(args.o).with_suffix(".xlsx"))
-

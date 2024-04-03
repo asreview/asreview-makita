@@ -72,5 +72,4 @@ The following files are found in this project:
             ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
             ├── 📈wordcloud_{{ dataset.stem }}.png
             ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
-            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}
-{%endif %}
+            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}{%endif %}

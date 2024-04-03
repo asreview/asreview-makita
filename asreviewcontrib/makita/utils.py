@@ -50,6 +50,7 @@ class FileHandler:
 
             with open(export_fp, "w") as f:
                 f.write(content)
+                f.write("\n")
 
             print(f"Created {export_fp}")
 

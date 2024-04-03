@@ -104,4 +104,3 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     etl(args.s, args.o, split=args.split, suffix=args.suffix)
-

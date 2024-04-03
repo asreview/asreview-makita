@@ -49,6 +49,9 @@ jobs:
     - name: Generate makita scripts
       run: |
         asreview makita add-script --all
+    - name: rename .py.template files to .py
+      run: |
+        find . -name "*.py.template" -exec bash -c 'mv "$1" "${1%.template}"' - '{}' \;
     - name: Lint python with ruff
       run: |
         ruff check .
