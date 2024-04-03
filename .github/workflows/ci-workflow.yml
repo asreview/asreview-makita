@@ -52,14 +52,15 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Install asreview-datatools asreview-insights synergy-dataset
+    - name: Install Simulation Tools
       run: |
-        pip install asreview-datatools asreview-insights synergy-dataset
+        pip install asreview-datatools asreview-insights synergy-dataset scitree
     - name: Run basic template
+      if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         mkdir -p tmp/synergy/data
         cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
         asreview makita template basic --instances_per_query 100 --no_wordclouds --overwrite
         sh jobs.sh
-        ls -R
+        scitree
