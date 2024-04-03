@@ -7,13 +7,14 @@ class TemplateMultiModel(TemplateBase):
     template_name = "multimodel"
 
     def __init__(self, *args, **kwargs):
-        self.n_runs = kwargs.pop('n_runs', 1)
-        self.all_classifiers = kwargs.pop('all_classifiers',
-                                          ["logistic", "nb", "rf"])
-        self.all_feature_extractors = kwargs.pop('all_feature_extractors',
-                                                 ["doc2vec", "sbert", "tfidf"])
-        self.impossible_models = kwargs.pop('impossible_models',
-                                            ["nb,doc2vec", "nb,sbert"])
+        self.n_runs = kwargs.pop("n_runs", 1)
+        self.all_classifiers = kwargs.pop("all_classifiers", ["logistic", "nb", "rf"])
+        self.all_feature_extractors = kwargs.pop(
+            "all_feature_extractors", ["doc2vec", "sbert", "tfidf"]
+        )
+        self.impossible_models = kwargs.pop(
+            "impossible_models", ["nb,doc2vec", "nb,sbert"]
+        )
         super().__init__(*args, **kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):

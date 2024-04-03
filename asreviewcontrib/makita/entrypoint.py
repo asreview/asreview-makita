@@ -84,13 +84,12 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--n_priors",
             type=int,
             default=10,
-            help="Number of priors. Only for template 'arfi'. "
-            "Default: 10.",
+            help="Number of priors. Only for template 'arfi'. " "Default: 10.",
         )
         parser_template.add_argument(
             "--no_wordclouds",
             action="store_false",
-            help="Disables the generation of wordclouds. "
+            help="Disables the generation of wordclouds. ",
         )
         parser_template.add_argument(
             "--overwrite",
@@ -115,22 +114,19 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--query_strategy",
             type=str,
             default="max",
-            help="Query strategy to use. "
-            "Default: max.",
+            help="Query strategy to use. " "Default: max.",
         )
         parser_template.add_argument(
             "--balance_strategy",
             type=str,
             default="double",
-            help="Balance strategy to use. "
-            "Default: double.",
+            help="Balance strategy to use. " "Default: double.",
         )
         parser_template.add_argument(
             "--instances_per_query",
             type=int,
             default=1,
-            help="Number of instances per query. "
-            "Default: 1.",
+            help="Number of instances per query. " "Default: 1.",
         )
         parser_template.add_argument(
             "--stop_if",
@@ -188,12 +184,12 @@ class MakitaEntryPoint(BaseEntryPoint):
     def _template(self, args):
         """Generate a template."""
 
+        # lowercase name
+        args.name = args.name.lower()
+
         # backwards compatibility for 'multiple_models'
         if args.name == "multiple_models":
             args.name = "multimodel"
-
-        # lowercase name
-        args.name = args.name.lower()
 
         # check if the template exists
         fp_template = Path(TEMPLATES_FP, f"template_{args.name}.txt.template")
@@ -208,8 +204,9 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         # print rendering message
         if args.template:
-            print(f"\
-\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n")
+            print(
+                f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"
+            )  # noqa
         else:
             print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
 

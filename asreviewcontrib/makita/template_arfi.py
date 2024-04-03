@@ -10,19 +10,19 @@ class TemplateARFI(TemplateBase):
     template_name = "arfi"
 
     def __init__(self, *args, **kwargs):
-        self.n_runs = kwargs.pop('n_runs', 1)
-        self.classifier = kwargs.pop('classifier', "nb")
-        self.feature_extractor = kwargs.pop('feature_extractor', "tfidf")
-        self.n_priors = kwargs.pop('n_priors', 10)
+        self.n_runs = kwargs.pop("n_runs", 1)
+        self.classifier = kwargs.pop("classifier", "nb")
+        self.feature_extractor = kwargs.pop("feature_extractor", "tfidf")
+        self.n_priors = kwargs.pop("n_priors", 10)
         super().__init__(*args, **kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
-        priors = _get_priors(fp_dataset,
-                             init_seed=self.init_seed + index,
-                             n_priors=self.n_priors)
+        priors = _get_priors(
+            fp_dataset, init_seed=self.init_seed + index, n_priors=self.n_priors
+        )
         return {
             "input_file": fp_dataset.as_posix(),
             "input_file_stem": fp_dataset.stem,

@@ -11,11 +11,23 @@ from asreviewcontrib.makita.utils import FileHandler
 
 
 class TemplateBase:
-    def __init__(self, datasets, output_folder="output", scripts_folder="scripts",
-                 create_wordclouds=True, allow_overwrite=False, init_seed=535,
-                 model_seed=165, query_strategy="max", balance_strategy="double",
-                 instances_per_query=1, stop_if='min', fp_template=None, job_file=None,
-                 platform_sys=None):
+    def __init__(
+        self,
+        datasets,
+        output_folder="output",
+        scripts_folder="scripts",
+        create_wordclouds=True,
+        allow_overwrite=False,
+        init_seed=535,
+        model_seed=165,
+        query_strategy="max",
+        balance_strategy="double",
+        instances_per_query=1,
+        stop_if="min",
+        fp_template=None,
+        job_file=None,
+        platform_sys=None,
+    ):
         self.datasets = datasets
         self.output_folder = output_folder
         self.scripts_folder = scripts_folder
@@ -27,7 +39,9 @@ class TemplateBase:
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
         self.fp_template = fp_template
-        self.job_file = job_file if job_file else "jobs.bat" if os.name == "nt" else "jobs.sh"  # noqa
+        self.job_file = (
+            job_file if job_file else "jobs.bat" if os.name == "nt" else "jobs.sh"
+        )  # noqa
         self.platform_sys = platform_sys if platform_sys else platform.system()
         self.file_handler = FileHandler(allow_overwrite)
         self.template = ConfigTemplate(fp_template)
@@ -40,13 +54,17 @@ class TemplateBase:
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
-        raise NotImplementedError("Subclasses should implement this method to prepare dataset-specific parameters.")  # noqa
+        raise NotImplementedError(
+            "Subclasses should implement this method to prepare dataset-specific parameters."
+        )  # noqa
 
     def get_static_params(self, params):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        raise NotImplementedError("Subclasses should implement this method to prepare template-specific parameters.")  # noqa
+        raise NotImplementedError(
+            "Subclasses should implement this method to prepare template-specific parameters."
+        )  # noqa
 
     def render_scripts(self, scripts: list):
         """Render scripts."""
@@ -90,20 +108,24 @@ class TemplateBase:
         params = []
         for i, fp_dataset in enumerate(sorted(self.datasets)):
             if " " in Path(fp_dataset).stem:
-                raise ValueError(f"Dataset filename '{fp_dataset}' cannot contain whitespace.")  # noqa
+                raise ValueError(
+                    f"Dataset filename '{fp_dataset}' cannot contain whitespace."
+                )  # noqa
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dynamic_params(i, fp_dataset))
 
         # render template
         try:
-            rendered_output = self.template.render(
-                self.get_static_params(params)
-            )
+            rendered_output = self.template.render(self.get_static_params(params))
         except Exception as e:
             if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
                 print("\033[31mERROR: A rendering exception occurred -", e)
-                print("The rendering process failed due to undefined parameters in the template.")  # noqa
-                print("\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m")  # noqa
+                print(
+                    "The rendering process failed due to undefined parameters in the template."
+                )  # noqa
+                print(
+                    "\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m"
+                )  # noqa
                 exit(1)
             else:
                 raise e
