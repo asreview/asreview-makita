@@ -34,10 +34,13 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file):
         label = state_file.stem
     elif legend_option == "model":
         label = " - ".join(
-            [metadata["settings"]["model"],
-             metadata["settings"]["feature_extraction"],
-             metadata["settings"]["balance_strategy"],
-             metadata["settings"]["query_strategy"]])
+            [
+                metadata["settings"]["model"],
+                metadata["settings"]["feature_extraction"],
+                metadata["settings"]["balance_strategy"],
+                metadata["settings"]["query_strategy"],
+            ]
+        )
     elif legend_option == "classifier":
         label = metadata["settings"]["model"]
     else:
@@ -82,27 +85,22 @@ def get_plot_from_states(states, filename, legend=None):
                 _set_legend(ax, state, legend, label_to_line, state_file)
 
     if legend:
-        ax.legend(loc=4, prop={'size': 8})
+        ax.legend(loc=4, prop={"size": 8})
     fig.savefig(str(filename))
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(
         description="Generate an ASReview plot from the found state files."
     )
+    parser.add_argument("-s", type=str, help="States location")
+    parser.add_argument("-o", type=str, help="Output location")
     parser.add_argument(
-        "-s",
+        "--show_legend",
+        "-l",
         type=str,
-        help="States location")
-    parser.add_argument(
-        "-o",
-        type=str,
-        help="Output location")
-    parser.add_argument(
-        "--show_legend", "-l",
-        type=str,
-        help="Add a legend to the plot, based on the given parameter.")
+        help="Add a legend to the plot, based on the given parameter.",
+    )
     args = parser.parse_args()
 
     # load states

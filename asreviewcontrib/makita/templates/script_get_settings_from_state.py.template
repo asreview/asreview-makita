@@ -36,23 +36,13 @@ def get_settings_from_state(state):
     return state.settings.to_dict()
 
 
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(
-        description='Convert ASReview state file to CSV'
-    )
-    parser.add_argument(
-        's',
-        type=str,
-        help='State file location')
-    parser.add_argument(
-        'o',
-        type=str,
-        help='Export file location (json)')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert ASReview state file to CSV")
+    parser.add_argument("s", type=str, help="State file location")
+    parser.add_argument("o", type=str, help="Export file location (json)")
     args = parser.parse_args()
 
     with open_state(args.s) as state:
-
         result = get_settings_from_state(state)
 
     # store result in output folder
@@ -60,4 +50,3 @@ if __name__ == '__main__':
 
     with open(Path(args.o), "w") as f:
         json.dump(result, f)
-
