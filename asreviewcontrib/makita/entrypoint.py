@@ -205,7 +205,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         # print rendering message
         if args.template:
             print(
-                f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"  # noqa
+                f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"  # noqa: E501
             )
         else:
             print(f"\033[33mRendering template {args.name}.\u001b[0m\n")

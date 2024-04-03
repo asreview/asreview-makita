@@ -55,7 +55,7 @@ class TemplateBase:
         template once for each dataset."""
 
         raise NotImplementedError(
-            "Subclasses should implement this method to prepare dataset-specific parameters."  # noqa
+            "Subclasses should implement this method to prepare dataset-specific parameters."  # noqa: E501
         )
 
     def get_static_params(self, params):
@@ -63,7 +63,7 @@ class TemplateBase:
         template only once."""
 
         raise NotImplementedError(
-            "Subclasses should implement this method to prepare template-specific parameters."  # noqa
+            "Subclasses should implement this method to prepare template-specific parameters."  # noqa: E501
         )
 
     def render_scripts(self, scripts: list):
@@ -121,10 +121,10 @@ class TemplateBase:
             if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
                 print("\033[31mERROR: A rendering exception occurred -", e)
                 print(
-                    "The rendering process failed due to undefined parameters in the template."  # noqa
+                    "The rendering process failed due to undefined parameters in the template."  # noqa: E501
                 )
                 print(
-                    "\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m"  # noqa
+                    "\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m"  # noqa: E501
                 )
                 exit(1)
             else:
