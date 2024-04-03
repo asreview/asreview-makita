@@ -31,7 +31,7 @@ jobs:
     - name: Test makita templates
       run: |
         cd tmp/basic
-        asreview makita template basic | tee output.txt
+        asreview makita template basic --instances_per_query 100 -no_wordcloud| tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
         asreview makita template arfi | tee output.txt
@@ -52,3 +52,10 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
+    - name: Install asreview-datatools asreview-insights
+      run: |
+        pip install asreview-datatools asreview-insights
+    - name: Run basic template
+      run: |
+        cd tmp/basic
+        sh jobs.sh
