@@ -42,6 +42,7 @@ write_to = "asreviewcontrib/makita/_version.py"
 
 [tool.ruff]
 lint.select = ["E", "F", "UP", "I", "B"]
+include = ["**/*.py", "**/*.py.template"]
 
 [tool.ruff.lint.isort]
 force-single-line = true
