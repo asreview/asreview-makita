@@ -43,7 +43,6 @@ The following files are found in this project:
     ├── 📜README.md
     ├── 📜jobs.sh
     ├── 📂data
-    │   ├── 📜van_de_Schoot_2018.csv
     │   ├── 📜Smid_2020.csv
     │   ├── 📜van_de_Schoot_2018.csv
     ├── 📂scripts
