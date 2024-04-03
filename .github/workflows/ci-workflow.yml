@@ -31,7 +31,7 @@ jobs:
     - name: Test makita templates
       run: |
         cd tmp/basic
-        asreview makita template basic --instances_per_query 100 -no_wordclouds| tee output.txt
+        asreview makita template basic --instances_per_query 100 --no_wordclouds| tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
         asreview makita template arfi | tee output.txt
