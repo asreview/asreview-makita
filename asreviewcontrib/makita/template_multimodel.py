@@ -1,9 +1,9 @@
 """Render multimodel template."""
 
-from asreviewcontrib.makita.template_base import RenderTemplateBase
+from asreviewcontrib.makita.template_base import TemplateBase
 
 
-class RenderJobsMultiModel(RenderTemplateBase):
+class TemplateMultiModel(TemplateBase):
     template_name = "multimodel"
 
     def __init__(self, *args, **kwargs):

@@ -10,7 +10,7 @@ from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.utils import FileHandler
 
 
-class RenderTemplateBase:
+class TemplateBase:
     def __init__(self, datasets, output_folder="output", scripts_folder="scripts",
                  create_wordclouds=True, allow_overwrite=False, init_seed=535,
                  model_seed=165, query_strategy="max", balance_strategy="double",

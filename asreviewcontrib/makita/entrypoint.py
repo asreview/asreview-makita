@@ -6,9 +6,9 @@ from asreview.entry_points import BaseEntryPoint
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
-from asreviewcontrib.makita.template_arfi import RenderJobsARFI
-from asreviewcontrib.makita.template_basic import RenderJobsBasic
-from asreviewcontrib.makita.template_multimodel import RenderJobsMultiModel
+from asreviewcontrib.makita.template_arfi import TemplateARFI
+from asreviewcontrib.makita.template_basic import TemplateBasic
+from asreviewcontrib.makita.template_multimodel import TemplateMultiModel
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -227,8 +227,8 @@ class MakitaEntryPoint(BaseEntryPoint):
         # create output folder
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
-        if args.name in [RenderJobsBasic.template_name]:
-            job = RenderJobsBasic(
+        if args.name in [TemplateBasic.template_name]:
+            job = TemplateBasic(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
@@ -247,8 +247,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             ).render()
 
-        elif args.name in [RenderJobsARFI.template_name]:
-            job = RenderJobsARFI(
+        elif args.name in [TemplateARFI.template_name]:
+            job = TemplateARFI(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
@@ -267,8 +267,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 platform_sys=args.platform,
             ).render()
 
-        elif args.name in [RenderJobsMultiModel.template_name]:
-            job = RenderJobsMultiModel(
+        elif args.name in [TemplateMultiModel.template_name]:
+            job = TemplateMultiModel(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,
@@ -290,7 +290,7 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         else:
             print("\033[33mUsing with basic template.\u001b[0m\n")
-            job = RenderJobsBasic(
+            job = TemplateBasic(
                 datasets,
                 output_folder=Path(args.o),
                 create_wordclouds=args.no_wordclouds,

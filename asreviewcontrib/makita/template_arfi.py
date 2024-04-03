@@ -3,10 +3,10 @@
 import numpy as np
 from asreview.data import ASReviewData
 
-from asreviewcontrib.makita.template_base import RenderTemplateBase
+from asreviewcontrib.makita.template_base import TemplateBase
 
 
-class RenderJobsARFI(RenderTemplateBase):
+class TemplateARFI(TemplateBase):
     template_name = "arfi"
 
     def __init__(self, *args, **kwargs):

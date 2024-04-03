@@ -1,9 +1,9 @@
 """Render basic template."""
 
-from asreviewcontrib.makita.template_base import RenderTemplateBase
+from asreviewcontrib.makita.template_base import TemplateBase
 
 
-class RenderJobsBasic(RenderTemplateBase):
+class TemplateBasic(TemplateBase):
     template_name = "basic"
 
     def __init__(self, *args, **kwargs):
