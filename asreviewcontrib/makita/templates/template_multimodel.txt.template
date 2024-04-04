@@ -52,7 +52,7 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% if temp in impossible_models %}
 
 # Skipped {{ classifier }} + {{ feature_extraction }} + {{ query_strategy}} model
-{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }} , Query strategy = {{ query_strategy }}
+{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ query_strategy }}
 {% for run in range(n_runs) %}
 python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.asreview --model {{ classifier }} --query_strategy {{query_strategy}} --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.json
