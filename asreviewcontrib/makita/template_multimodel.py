@@ -23,7 +23,6 @@ def render_jobs_multimodel(
     all_feature_extractors=None,
     impossible_models=None,
     all_query_strategies=None,
-    query_strategy=None, # max was default
     balance_strategy="double",
     instances_per_query=1,
     stop_if='min',
@@ -32,8 +31,11 @@ def render_jobs_multimodel(
     platform_sys=None,
 ):
     if all_query_strategies is None:
-        all_query_strategies = ["max", "max_random", "max_uncertainty", "cluster", "uncertainty"]
-    
+        all_query_strategies = [
+            "max", "max_random", "max_uncertainty", 
+            "cluster", "uncertainty"
+    ]
+
     if all_classifiers is None:
         all_classifiers = ["logistic", "nb", "rf", "svm"]
 
@@ -108,7 +110,6 @@ def render_jobs_multimodel(
         {
             "datasets": params,
             "create_wordclouds": create_wordclouds,
-            # "query_strategy": query_strategy,
             "balance_strategy": balance_strategy,
             "instances_per_query": instances_per_query,
             "stop_if": stop_if,
