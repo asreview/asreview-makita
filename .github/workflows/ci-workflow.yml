@@ -15,9 +15,9 @@ jobs:
     - name: Install makita
       run: |
         pip install .
-    - name: Install ruff scitree
+    - name: Install ruff
       run: |
-        pip install ruff scitree
+        pip install ruff
     - name: set up environment
       run: |
         mkdir tmp
@@ -43,6 +43,11 @@ jobs:
         asreview makita template multimodel | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ..
+    - name: Run scitree on output
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        pip install scitree
+        cd tmp
         scitree
     - name: Run ShellCheck
       if: ${{ matrix.os != 'windows-latest' }}
