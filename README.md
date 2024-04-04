@@ -178,7 +178,6 @@ optional arguments:
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
   --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
