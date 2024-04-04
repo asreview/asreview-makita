@@ -5,6 +5,7 @@ from pathlib import Path
 from asreview.entry_points import BaseEntryPoint
 
 from asreviewcontrib.makita import __version__
+from asreviewcontrib.makita.config import DEFAULTS
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.template_arfi import TemplateARFI
 from asreviewcontrib.makita.template_basic import TemplateBasic
@@ -47,22 +48,22 @@ class MakitaEntryPoint(BaseEntryPoint):
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "-s", type=str, default="data", help="Dataset folder"
+            "-s", type=str, default=DEFAULTS["dataset_folder"], help="Dataset folder"
         )
         parser_template.add_argument(
-            "-o", type=str, default="output", help="Output folder"
+            "-o", type=str, default=DEFAULTS["output_folder"], help="Output folder"
         )
         parser_template.add_argument(
             "--init_seed",
             type=int,
-            default=535,
-            help="Seed of the priors. Seed is set to 535 by default.",
+            default=DEFAULTS["init_seed"],
+            help="Seed of the priors. " f"{DEFAULTS['init_seed']} by default.",
         )
         parser_template.add_argument(
             "--model_seed",
             type=int,
-            default=165,
-            help="Seed of the models. Seed is set to 165 by default.",
+            default=DEFAULTS["model_seed"],
+            help="Seed of the models. " f"{DEFAULTS['model_seed']} by default.",
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
@@ -76,14 +77,11 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--n_runs",
             type=int,
-            default=1,
-            help="Number of runs. Only for templates 'basic' and 'multimodel'. "
-            "Default: 1.",
+            help="Number of runs. Only for templates 'basic' and 'multimodel'. ",
         )
         parser_template.add_argument(
             "--n_priors",
             type=int,
-            default=10,
             help="Number of priors. Only for template 'arfi'. " "Default: 10.",
         )
         parser_template.add_argument(
@@ -99,82 +97,78 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--classifier",
             type=str,
-            default="nb",
             help="Classifier to use. Only for template 'basic' and 'arfi'. "
-            "Default: nb.",
         )
         parser_template.add_argument(
             "--feature_extractor",
             type=str,
-            default="tfidf",
             help="Feature_extractor to use. Only for template 'basic' and 'arfi'. "
-            "Default: tfidf.",
         )
         parser_template.add_argument(
             "--query_strategy",
             type=str,
-            default="max",
-            help="Query strategy to use. " "Default: max.",
+            help="Query strategy to use. Only for template 'basic' and 'arfi'. "
         )
         parser_template.add_argument(
             "--balance_strategy",
             type=str,
-            default="double",
-            help="Balance strategy to use. " "Default: double.",
+            default=DEFAULTS["balance_strategy"],
+            help="Balance strategy to use. "
+            f"{DEFAULTS['balance_strategy']} by default.",
         )
         parser_template.add_argument(
             "--instances_per_query",
             type=int,
-            default=1,
-            help="Number of instances per query. " "Default: 1.",
+            default=DEFAULTS["instances_per_query"],
+            help="Number of instances per query. "
+            f"{DEFAULTS['instances_per_query']} by default.",
         )
         parser_template.add_argument(
             "--stop_if",
             type=str,
-            default="min",
+            default=DEFAULTS["stop_if"],
             help="The number of label actions to simulate. "
-            "Default 'min' will stop simulating when all relevant records are found.",
+            f"{DEFAULTS['stop_if']} by default.",
         )
         parser_template.add_argument(
             "--classifiers",
             nargs="+",
-            default=["logistic", "nb", "rf", "svm"],
-            help="Classifiers to use. Only for template 'multimodel'. "
-            "Default: ['logistic', 'nb', 'rf', 'svm']",
+            help="Classifiers to use. Only for template 'multimodel'. ",
         )
         parser_template.add_argument(
             "--feature_extractors",
             nargs="+",
-            default=["doc2vec", "sbert", "tfidf"],
-            help="Feature extractors to use. Only for template 'multimodel'. "
-            "Default: ['doc2vec', 'sbert', 'tfidf']",
+            help="Feature extractors to use. Only for template 'multimodel'. ",
         )
         parser_template.add_argument(
             "--query_strategies",
             nargs="+",
-            default=["max"],
-            help="Query strategies to use. Only for template 'multimodel'. "
-            "Default: ['max']",
+            help="Query strategies to use. Only for template 'multimodel'. ",
         )
         parser_template.add_argument(
             "--impossible_models",
             nargs="+",
-            default=["nb,doc2vec", "nb,sbert"],
-            help="Model combinations to exclude. Only for template 'multimodel'. "
-            "Default: ['nb,doc2vec', 'nb,sbert']",
+            help="Model combinations to exclude. Only for template 'multimodel'. ",
         )
 
         parser_template.set_defaults(func=self._template_cli)
 
         parser_script = subparsers.add_parser("add-script")
         parser_script.add_argument(
-            "name", type=str, nargs="?", help="The name of the script."
+            "name",
+            type=str,
+            nargs="?",
+            help="The name of the script."
         )
         parser_script.add_argument(
-            "--all", "-a", action="store_true", help="Add all scripts."
+            "--all", "-a",
+            action="store_true",
+            help="Add all scripts."
         )
         parser_script.add_argument(
-            "-o", type=str, default="scripts", help="Location of the scripts folder."
+            "-o",
+            type=str, default=DEFAULTS["scripts_folder"],
+            help="Location of the scripts folder."
         )
         parser_script.set_defaults(func=self._add_script_cli)
 
@@ -232,9 +226,21 @@ class MakitaEntryPoint(BaseEntryPoint):
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
         if args.name in [TemplateBasic.template_name]:
+            prohibited_args = ['classifiers',
+                               'feature_extractors',
+                               'query_strategies',
+                               'impossible_models',
+                               'n_priors']
+            for arg in prohibited_args:
+                if getattr(args, arg):
+                    raise ValueError(
+                        f"Argument {arg} is not allowed for template {args.name}")
+
             job = TemplateBasic(
-                datasets,
+                datasets=datasets,
+                fp_template=fp_template,
                 output_folder=Path(args.o),
+                scripts_folder=Path(DEFAULTS["scripts_folder"]),
                 create_wordclouds=args.no_wordclouds,
                 allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
@@ -246,15 +252,26 @@ class MakitaEntryPoint(BaseEntryPoint):
                 balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
-                fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
             ).render()
 
         elif args.name in [TemplateARFI.template_name]:
+            prohibited_args = ['n_runs',
+                               'classifiers',
+                               'feature_extractors',
+                               'query_strategies',
+                               'impossible_models']
+            for arg in prohibited_args:
+                if getattr(args, arg):
+                    raise ValueError(
+                        f"Argument {arg} is not allowed for template {args.name}")
+
             job = TemplateARFI(
-                datasets,
+                datasets=datasets,
+                fp_template=fp_template,
                 output_folder=Path(args.o),
+                scripts_folder=Path(DEFAULTS["scripts_folder"]),
                 create_wordclouds=args.no_wordclouds,
                 allow_overwrite=args.overwrite,
                 n_priors=args.n_priors,
@@ -266,15 +283,25 @@ class MakitaEntryPoint(BaseEntryPoint):
                 balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
-                fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
             ).render()
 
         elif args.name in [TemplateMultiModel.template_name]:
+            prohibited_args = ['classifier',
+                               'feature_extractor',
+                               'query_strategy',
+                               'n_priors']
+            for arg in prohibited_args:
+                if getattr(args, arg):
+                    raise ValueError(
+                        f"Argument {arg} is not allowed for template {args.name}")
+
             job = TemplateMultiModel(
-                datasets,
+                datasets=datasets,
+                fp_template=fp_template,
                 output_folder=Path(args.o),
+                scripts_folder=Path(DEFAULTS["scripts_folder"]),
                 create_wordclouds=args.no_wordclouds,
                 allow_overwrite=args.overwrite,
                 n_runs=args.n_runs,
@@ -287,7 +314,6 @@ class MakitaEntryPoint(BaseEntryPoint):
                 balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
-                fp_template=fp_template,
                 job_file=args.job_file,
                 platform_sys=args.platform,
             ).render()

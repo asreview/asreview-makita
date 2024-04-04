@@ -6,23 +6,32 @@ from asreviewcontrib.makita.template_base import TemplateBase
 class TemplateMultiModel(TemplateBase):
     template_name = "multimodel"
 
-    def __init__(self, *args, **kwargs):
-        self.n_runs = kwargs.pop(
-            "n_runs", 1
-        )
-        self.all_classifiers = kwargs.pop(
-            "all_classifiers", ["logistic", "nb", "rf"]
-        )
-        self.all_feature_extractors = kwargs.pop(
-            "all_feature_extractors", ["doc2vec", "sbert", "tfidf"]
-        )
-        self.all_query_strategies = kwargs.pop(
-            "all_query_strategies", ["max"]
-        )
-        self.impossible_models = kwargs.pop(
-            "impossible_models", ["nb,doc2vec", "nb,sbert"]
-        )
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        n_runs,
+        all_classifiers,
+        all_feature_extractors,
+        all_query_strategies,
+        impossible_models,
+        **kwargs,
+    ):
+        if n_runs is None:
+            n_runs = 1
+        if all_classifiers is None:
+            all_classifiers = ["logistic", "nb", "rf"]
+        if all_feature_extractors is None:
+            all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
+        if all_query_strategies is None:
+            all_query_strategies = ["max"]
+        if impossible_models is None:
+            impossible_models = ["nb,doc2vec", "nb,sbert"]
+
+        self.n_runs = n_runs
+        self.all_classifiers = all_classifiers
+        self.all_feature_extractors = all_feature_extractors
+        self.all_query_strategies = all_query_strategies
+        self.impossible_models = impossible_models
+        super().__init__(**kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the
@@ -42,7 +51,6 @@ class TemplateMultiModel(TemplateBase):
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
-            "query_strategy": self.query_strategy,
             "balance_strategy": self.balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,

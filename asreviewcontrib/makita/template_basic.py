@@ -6,11 +6,28 @@ from asreviewcontrib.makita.template_base import TemplateBase
 class TemplateBasic(TemplateBase):
     template_name = "basic"
 
-    def __init__(self, *args, **kwargs):
-        self.n_runs = kwargs.pop("n_runs", 1)
-        self.classifier = kwargs.pop("classifier", "nb")
-        self.feature_extractor = kwargs.pop("feature_extractor", "tfidf")
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        classifier,
+        feature_extractor,
+        query_strategy,
+        n_runs,
+        **kwargs,
+    ):
+        if classifier is None:
+            classifier = "nb"
+        if feature_extractor is None:
+            feature_extractor = "tfidf"
+        if query_strategy is None:
+            query_strategy = "max"
+        if n_runs is None:
+            n_runs = 1
+
+        self.classifier = classifier
+        self.feature_extractor = feature_extractor
+        self.query_strategy = query_strategy
+        self.n_runs = n_runs
+        super().__init__(**kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the

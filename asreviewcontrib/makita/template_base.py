@@ -14,19 +14,18 @@ class TemplateBase:
     def __init__(
         self,
         datasets,
-        output_folder="output",
-        scripts_folder="scripts",
-        create_wordclouds=True,
-        allow_overwrite=False,
-        init_seed=535,
-        model_seed=165,
-        query_strategy="max",
-        balance_strategy="double",
-        instances_per_query=1,
-        stop_if="min",
-        fp_template=None,
-        job_file=None,
-        platform_sys=None,
+        fp_template,
+        output_folder,
+        scripts_folder,
+        create_wordclouds,
+        allow_overwrite,
+        init_seed,
+        model_seed,
+        balance_strategy,
+        instances_per_query,
+        stop_if,
+        job_file,
+        platform_sys,
     ):
         self.datasets = datasets
         self.output_folder = output_folder
@@ -34,7 +33,6 @@ class TemplateBase:
         self.create_wordclouds = create_wordclouds
         self.init_seed = init_seed
         self.model_seed = model_seed
-        self.query_strategy = query_strategy
         self.balance_strategy = balance_strategy
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
@@ -46,9 +44,6 @@ class TemplateBase:
         self.file_handler = FileHandler(allow_overwrite)
         self.template = ConfigTemplate(fp_template)
         self.__version__ = __version__
-
-        assert self.template is not None, "Template is None."
-        assert self.fp_template is not None, "Template file is None."
 
     def get_dynamic_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the
