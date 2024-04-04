@@ -118,13 +118,6 @@ class MakitaEntryPoint(BaseEntryPoint):
             "Default: tfidf.",
         )
         parser_template.add_argument(
-            "--query_strategies",
-            nargs="+",
-            default=["max"],
-            help="Query strategies to use. Only for template 'multimodel'. "
-            "Default: ['max']",
-        )
-        parser_template.add_argument(
             "--query_strategy",
             type=str,
             default="max",
@@ -165,6 +158,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             default=["doc2vec", "sbert", "tfidf"],
             help="Feature extractors to use. Only for template 'multimodel'. "
             "Default: ['doc2vec', 'sbert', 'tfidf']",
+        )
+        parser_template.add_argument(
+            "--query_strategies",
+            nargs="+",
+            default=["max"],
+            help="Query strategies to use. Only for template 'multimodel'. "
+            "Default: ['max']",
         )
         parser_template.add_argument(
             "--impossible_models",
