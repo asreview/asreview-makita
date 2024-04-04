@@ -15,9 +15,9 @@ jobs:
     - name: Install makita
       run: |
         pip install .
-    - name: Install ruff
+    - name: Install ruff scitree
       run: |
-        pip install ruff
+        pip install ruff scitree
     - name: set up environment
       run: |
         mkdir tmp
@@ -42,6 +42,8 @@ jobs:
         cd ../multimodel
         asreview makita template multimodel | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
+        cd ..
+        scitree
     - name: Run ShellCheck
       if: ${{ matrix.os != 'windows-latest' }}
       uses: ludeeus/action-shellcheck@master
@@ -58,7 +60,7 @@ jobs:
     - name: Run basic template
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        pip install asreview-datatools asreview-insights synergy-dataset scitree
+        pip install asreview-datatools asreview-insights synergy-dataset
         mkdir -p tmp/synergy/data
         cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
