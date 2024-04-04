@@ -7,10 +7,17 @@ class TemplateMultiModel(TemplateBase):
     template_name = "multimodel"
 
     def __init__(self, *args, **kwargs):
-        self.n_runs = kwargs.pop("n_runs", 1)
-        self.all_classifiers = kwargs.pop("all_classifiers", ["logistic", "nb", "rf"])
+        self.n_runs = kwargs.pop(
+            "n_runs", 1
+        )
+        self.all_classifiers = kwargs.pop(
+            "all_classifiers", ["logistic", "nb", "rf"]
+        )
         self.all_feature_extractors = kwargs.pop(
             "all_feature_extractors", ["doc2vec", "sbert", "tfidf"]
+        )
+        self.all_query_strategies = kwargs.pop(
+            "all_query_strategies", ["max"]
         )
         self.impossible_models = kwargs.pop(
             "impossible_models", ["nb,doc2vec", "nb,sbert"]
@@ -46,5 +53,6 @@ class TemplateMultiModel(TemplateBase):
             "version": self.__version__,
             "all_classifiers": self.all_classifiers,
             "all_feature_extractors": self.all_feature_extractors,
+            "all_query_strategies": self.all_query_strategies,
             "impossible_models": [i.split(",") for i in self.impossible_models],
         }
