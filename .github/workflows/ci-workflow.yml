@@ -23,9 +23,11 @@ jobs:
         mkdir tmp
         cd tmp
         mkdir -p basic/data
+        mkdir -p basic/data-test
         mkdir -p arfi/data
         mkdir -p multimodel/data
         cp ../.github/workflows/test_data/labels.csv basic/data/labels.csv
+        cp ../.github/workflows/test_data/labels.csv basic/data-test/labels.csv
         cp ../.github/workflows/test_data/labels.csv arfi/data/labels.csv
         cp ../.github/workflows/test_data/labels.csv multimodel/data/labels.csv
     - name: Test makita templates
