@@ -22,8 +22,8 @@ def render_jobs_multimodel(
     all_classifiers=None,
     all_feature_extractors=None,
     all_query_strategies=None,
+    all_balancing_strategies=None,
     impossible_models=None,
-    balance_strategy="double",
     instances_per_query=1,
     stop_if='min',
     fp_template=None,
@@ -39,6 +39,9 @@ def render_jobs_multimodel(
     if all_query_strategies is None:
         all_query_strategies = ["max"]
 
+    if all_balancing_strategies is None:
+        all_balancing_strategies = ["double"]
+        
     if impossible_models is None:
         impossible_models = ["nb,doc2vec", "nb,sbert"]
         
@@ -108,7 +111,6 @@ def render_jobs_multimodel(
         {
             "datasets": params,
             "create_wordclouds": create_wordclouds,
-            "balance_strategy": balance_strategy,
             "instances_per_query": instances_per_query,
             "stop_if": stop_if,
             "output_folder": output_folder,
@@ -119,6 +121,7 @@ def render_jobs_multimodel(
             "all_query_strategies": all_query_strategies,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
+            "all_balancing_strategies": all_balancing_strategies,
             "impossible_models": [i.split(",") for i in impossible_models],
         }
     )

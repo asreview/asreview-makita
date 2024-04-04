@@ -167,6 +167,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             "Default: ['max']",
         )
         parser_template.add_argument(
+            "--balancing_strategies",
+            nargs="+",
+            default=["double"],
+            help="Balancing strategies to use. Only for template 'multimodel'. "
+            "Default: ['max']",
+        )
+        parser_template.add_argument(
             "--impossible_models",
             nargs="+",
             default=["nb,doc2vec", "nb,sbert"],
@@ -275,8 +282,8 @@ class MakitaEntryPoint(BaseEntryPoint):
                 all_classifiers=args.classifiers,
                 all_feature_extractors=args.feature_extractors,
                 all_query_strategies=args.query_strategies,
+                all_balancing_strategies=args.balancing_strategies,
                 impossible_models=args.impossible_models,
-                balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
                 fp_template=fp_template,
