@@ -1,7 +1,5 @@
 """Rendering base class for templates."""
 
-import os
-import platform
 from pathlib import Path
 
 from cfgtemplater.config_template import ConfigTemplate
