@@ -120,9 +120,9 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--query_strategies",
             nargs="+",
-            default=["max", "max_random", "max_uncertainty", "cluster", "uncertainty"],
+            default=["max"],
             help="Query strategies to use. Only for template 'multimodel'. "
-            "Default: ['max', 'max_random', 'max_uncertainty', 'cluster', 'uncertainty']",
+            "Default: ['max']",
         )
         parser_template.add_argument(
             "--query_strategy",

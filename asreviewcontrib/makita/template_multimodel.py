@@ -30,20 +30,18 @@ def render_jobs_multimodel(
     job_file=None,
     platform_sys=None,
 ):
-    if all_query_strategies is None:
-        all_query_strategies = [
-            "max", "max_random", "max_uncertainty", 
-            "cluster", "uncertainty"
-    ]
-
     if all_classifiers is None:
         all_classifiers = ["logistic", "nb", "rf", "svm"]
 
     if all_feature_extractors is None:
         all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
 
+    if all_query_strategies is None:
+        all_query_strategies = ["max"]
+
     if impossible_models is None:
         impossible_models = ["nb,doc2vec", "nb,sbert"]
+        
 
     """Render jobs."""
     if not platform_sys:
