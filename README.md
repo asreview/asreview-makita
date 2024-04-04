@@ -180,7 +180,7 @@ optional arguments:
   --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
-  --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max, max_random, max_uncertainty, cluster]
+  --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max']
   --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
