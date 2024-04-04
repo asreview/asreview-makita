@@ -32,6 +32,7 @@ jobs:
       run: |
         cd tmp/basic
         asreview makita template basic | tee output.txt
+        asreview makita template basic --classifier nb --feature_extractor tfidf --query_strategy max --n_runs 1 -s data-test -o output-test --init_seed 1 --model_seed 2 --no_wordclouds --overwrite --instances_per_query 2 --stop_if min --balance_strategy double | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
         asreview makita template arfi | tee output.txt

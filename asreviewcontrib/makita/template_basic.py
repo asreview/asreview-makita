@@ -56,6 +56,5 @@ class TemplateBasic(TemplateBase):
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,
             "scripts_folder": self.scripts_folder,
-            "platform": self.platform_sys,
             "version": self.__version__,
         }
