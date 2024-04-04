@@ -13,13 +13,6 @@ from asreviewcontrib.makita.template_multimodel import TemplateMultiModel
 from asreviewcontrib.makita.utils import FileHandler
 
 
-def _shell_to_batch(job):
-    job = f"@ echo off\nCOLOR E0{job}"
-    job = job.replace("#", "::")
-    job = job.replace("/", "\\")
-    return job
-
-
 class MakitaEntryPoint(BaseEntryPoint):
     # backward compat?
     description = "Makita functionality for ASReview datasets."
@@ -97,17 +90,17 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--classifier",
             type=str,
-            help="Classifier to use. Only for template 'basic' and 'arfi'. "
+            help="Classifier to use. Only for template 'basic' and 'arfi'. ",
         )
         parser_template.add_argument(
             "--feature_extractor",
             type=str,
-            help="Feature_extractor to use. Only for template 'basic' and 'arfi'. "
+            help="Feature_extractor to use. Only for template 'basic' and 'arfi'. ",
         )
         parser_template.add_argument(
             "--query_strategy",
             type=str,
-            help="Query strategy to use. Only for template 'basic' and 'arfi'. "
+            help="Query strategy to use. Only for template 'basic' and 'arfi'. ",
         )
         parser_template.add_argument(
             "--balance_strategy",
@@ -155,20 +148,16 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         parser_script = subparsers.add_parser("add-script")
         parser_script.add_argument(
-            "name",
-            type=str,
-            nargs="?",
-            help="The name of the script."
+            "name", type=str, nargs="?", help="The name of the script."
         )
         parser_script.add_argument(
-            "--all", "-a",
-            action="store_true",
-            help="Add all scripts."
+            "--all", "-a", action="store_true", help="Add all scripts."
         )
         parser_script.add_argument(
             "-o",
-            type=str, default=DEFAULTS["scripts_folder"],
-            help="Location of the scripts folder."
+            type=str,
+            default=DEFAULTS["scripts_folder"],
+            help="Location of the scripts folder.",
         )
         parser_script.set_defaults(func=self._add_script_cli)
 
@@ -225,16 +214,26 @@ class MakitaEntryPoint(BaseEntryPoint):
         # create output folder
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
+        # get job file
+        if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
+            job_file = "jobs.bat" if args.job_file is None else args.job_file
+        else:
+            job_file = "jobs.sh" if args.job_file is None else args.job_file
+
+        # render jobs file
         if args.name in [TemplateBasic.template_name]:
-            prohibited_args = ['classifiers',
-                               'feature_extractors',
-                               'query_strategies',
-                               'impossible_models',
-                               'n_priors']
+            prohibited_args = [
+                "classifiers",
+                "feature_extractors",
+                "query_strategies",
+                "impossible_models",
+                "n_priors",
+            ]
             for arg in prohibited_args:
                 if getattr(args, arg):
                     raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}")
+                        f"Argument {arg} is not allowed for template {args.name}"
+                    )
 
             job = TemplateBasic(
                 datasets=datasets,
@@ -253,19 +252,21 @@ class MakitaEntryPoint(BaseEntryPoint):
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
                 job_file=args.job_file,
-                platform_sys=args.platform,
             ).render()
 
         elif args.name in [TemplateARFI.template_name]:
-            prohibited_args = ['n_runs',
-                               'classifiers',
-                               'feature_extractors',
-                               'query_strategies',
-                               'impossible_models']
+            prohibited_args = [
+                "n_runs",
+                "classifiers",
+                "feature_extractors",
+                "query_strategies",
+                "impossible_models",
+            ]
             for arg in prohibited_args:
                 if getattr(args, arg):
                     raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}")
+                        f"Argument {arg} is not allowed for template {args.name}"
+                    )
 
             job = TemplateARFI(
                 datasets=datasets,
@@ -283,19 +284,21 @@ class MakitaEntryPoint(BaseEntryPoint):
                 balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
-                job_file=args.job_file,
-                platform_sys=args.platform,
+                job_file=job_file,
             ).render()
 
         elif args.name in [TemplateMultiModel.template_name]:
-            prohibited_args = ['classifier',
-                               'feature_extractor',
-                               'query_strategy',
-                               'n_priors']
+            prohibited_args = [
+                "classifier",
+                "feature_extractor",
+                "query_strategy",
+                "n_priors",
+            ]
             for arg in prohibited_args:
                 if getattr(args, arg):
                     raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}")
+                        f"Argument {arg} is not allowed for template {args.name}"
+                    )
 
             job = TemplateMultiModel(
                 datasets=datasets,
@@ -314,8 +317,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 balance_strategy=args.balance_strategy,
                 instances_per_query=args.instances_per_query,
                 stop_if=args.stop_if,
-                job_file=args.job_file,
-                platform_sys=args.platform,
+                job_file=job_file,
             ).render()
 
         else:
@@ -331,15 +333,14 @@ class MakitaEntryPoint(BaseEntryPoint):
                 model_seed=args.model_seed,
                 stop_if=args.stop_if,
                 fp_template=fp_template,
-                job_file=args.job_file,
-                platform_sys=args.platform,
+                job_file=job_file,
             ).render()
 
-        if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
-            job = _shell_to_batch(job)
-            job_file = "jobs.bat" if args.job_file is None else args.job_file
-        else:
-            job_file = "jobs.sh" if args.job_file is None else args.job_file
+        # convert shell to batch if needed
+        if job_file.endswith(".bat"):
+            job = f"@ echo off\nCOLOR E0{job}"
+            job = job.replace("#", "::")
+            job = job.replace("/", "\\")
 
         # store result in output folder
         with open(job_file, "w") as f:

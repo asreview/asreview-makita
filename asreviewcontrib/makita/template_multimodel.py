@@ -57,7 +57,6 @@ class TemplateMultiModel(TemplateBase):
             "output_folder": self.output_folder,
             "n_runs": self.n_runs,
             "scripts_folder": self.scripts_folder,
-            "platform": self.platform_sys,
             "version": self.__version__,
             "all_classifiers": self.all_classifiers,
             "all_feature_extractors": self.all_feature_extractors,

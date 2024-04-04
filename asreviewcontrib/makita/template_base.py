@@ -24,8 +24,7 @@ class TemplateBase:
         balance_strategy,
         instances_per_query,
         stop_if,
-        job_file,
-        platform_sys,
+        job_file
     ):
         self.datasets = datasets
         self.output_folder = output_folder
@@ -37,10 +36,7 @@ class TemplateBase:
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
         self.fp_template = fp_template
-        self.job_file = (
-            job_file if job_file else "jobs.bat" if os.name == "nt" else "jobs.sh"
-        )
-        self.platform_sys = platform_sys if platform_sys else platform.system()
+        self.job_file = job_file
         self.file_handler = FileHandler(allow_overwrite)
         self.template = ConfigTemplate(fp_template)
         self.__version__ = __version__
