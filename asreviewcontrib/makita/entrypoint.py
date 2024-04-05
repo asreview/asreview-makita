@@ -315,7 +315,7 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         else:
             # Fallback to basic template
-            print(f"\u001b[31mERROR: \033[33mTemplate {args.name} not found.\u001b[0m\n")
+            print(f"\u001b[31mERROR: \033[33mTemplate {args.name} not found.\u001b[0m\n")  # noqa: E501
             print("\u001b[31mFallback: \033[33mUsing the basic template.\u001b[0m\n")
             job = TemplateBasic(
                 datasets,
