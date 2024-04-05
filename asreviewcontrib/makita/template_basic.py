@@ -39,7 +39,6 @@ class TemplateBasic(TemplateBase):
             "input_file_stem": fp_dataset.stem,
             "model_seed": self.model_seed + index,
             "init_seed": self.init_seed,
-            "n_runs": self.n_runs,
         }
 
     def get_static_params(self, params):
@@ -56,6 +55,7 @@ class TemplateBasic(TemplateBase):
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,
+            "n_runs": self.n_runs,
             "scripts_folder": self.scripts_folder,
             "version": self.__version__,
         }
