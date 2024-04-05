@@ -69,6 +69,6 @@ jobs:
         mkdir -p tmp/synergy/data
         cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
-        asreview makita template basic --instances_per_query 100 --no_wordclouds --overwrite
+        asreview makita template basic --instances_per_query 100 --no_wordclouds --overwrite --n_runs 2
         sh jobs.sh
         scitree
