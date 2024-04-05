@@ -25,7 +25,7 @@ class TemplateBase:
         balance_strategy,
         instances_per_query,
         stop_if,
-        job_file
+        job_file,
     ):
         self.datasets = datasets
         self.output_folder = output_folder
@@ -40,7 +40,9 @@ class TemplateBase:
         self.file_handler = FileHandler(allow_overwrite)
         self.__version__ = __version__
 
-        self.template = ConfigTemplate(fp_template if fp_template is not None else self.get_template_file())  # noqa: E501
+        self.template = ConfigTemplate(
+            fp_template if fp_template is not None else self.get_template_file()
+        )  # noqa: E501
 
     def get_template_file(self):
         return Path(TEMPLATES_FP, self.template_file)
