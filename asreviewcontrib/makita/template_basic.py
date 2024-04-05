@@ -4,7 +4,8 @@ from asreviewcontrib.makita.template_base import TemplateBase
 
 
 class TemplateBasic(TemplateBase):
-    template_name = "basic"
+    template_name = ["basic"]
+    template_file = "template_basic.txt.template"
 
     def __init__(
         self,

@@ -5,10 +5,13 @@ from pathlib import Path
 from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
+from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.utils import FileHandler
 
 
 class TemplateBase:
+    template_file = None
+
     def __init__(
         self,
         datasets,
@@ -33,11 +36,14 @@ class TemplateBase:
         self.balance_strategy = balance_strategy
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
-        self.fp_template = fp_template
         self.job_file = job_file
         self.file_handler = FileHandler(allow_overwrite)
-        self.template = ConfigTemplate(fp_template)
         self.__version__ = __version__
+
+        self.template = ConfigTemplate(fp_template if fp_template is not None else self.get_template_file())  # noqa: E501
+
+    def get_template_file(self):
+        return Path(TEMPLATES_FP, self.template_file)
 
     def get_dynamic_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the

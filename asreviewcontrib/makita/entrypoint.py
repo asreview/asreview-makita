@@ -161,7 +161,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         )
         parser_script.set_defaults(func=self._add_script_cli)
 
-        # parse the args and call whatever function was selected
+        # parse the args and call the selected function
         args = parser.parse_args(argv)
         args.func(args)
 
@@ -177,20 +177,13 @@ class MakitaEntryPoint(BaseEntryPoint):
         # lowercase name
         args.name = args.name.lower()
 
-        # backwards compatibility for 'multiple_models'
-        if args.name == "multiple_models":
-            args.name = "multimodel"
-
-        # check if the template exists
-        fp_template = Path(TEMPLATES_FP, f"template_{args.name}.txt.template")
-        if not fp_template.is_file():
-            raise ValueError(f"Template {args.name} not found")
-
         # if a custom template is provided, check if it exists
         if args.template:
             fp_template = Path(args.template)
             if not fp_template.is_file():
                 raise ValueError(f"Custom template {args.template} not found")
+        else:
+            fp_template = None
 
         # print rendering message
         if args.template:
@@ -221,7 +214,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             job_file = "jobs.sh" if args.job_file is None else args.job_file
 
         # render jobs file
-        if args.name in [TemplateBasic.template_name]:
+        if args.name in TemplateBasic.template_name:
             prohibited_args = [
                 "classifiers",
                 "feature_extractors",
@@ -254,7 +247,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 job_file=args.job_file,
             ).render()
 
-        elif args.name in [TemplateARFI.template_name]:
+        elif args.name in TemplateARFI.template_name:
             prohibited_args = [
                 "n_runs",
                 "classifiers",
@@ -287,7 +280,7 @@ class MakitaEntryPoint(BaseEntryPoint):
                 job_file=job_file,
             ).render()
 
-        elif args.name in [TemplateMultiModel.template_name]:
+        elif args.name in TemplateMultiModel.template_name:
             prohibited_args = [
                 "classifier",
                 "feature_extractor",
@@ -322,7 +315,7 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         else:
             # Fallback to basic template
-            # This case can occur if a user adds a new template to the templates folder
+            print(f"\u001b[31mERROR: \033[33mTemplate {args.name} not found.\u001b[0m\n")
             print("\u001b[31mFallback: \033[33mUsing the basic template.\u001b[0m\n")
             job = TemplateBasic(
                 datasets,

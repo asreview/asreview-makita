@@ -7,7 +7,8 @@ from asreviewcontrib.makita.template_base import TemplateBase
 
 
 class TemplateARFI(TemplateBase):
-    template_name = "arfi"
+    template_name = ["arfi"]
+    template_file = "template_arfi.txt.template"
 
     def __init__(
         self,
