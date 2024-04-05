@@ -4,7 +4,7 @@ from asreviewcontrib.makita.template_base import TemplateBase
 
 
 class TemplateMultiModel(TemplateBase):
-    template_name = ["multimodel", "multiple_models"]
+    template_name = ["multimodel", "multiple_models", "modelmatrix"]
     template_file = "template_multimodel.txt.template"
 
     def __init__(
