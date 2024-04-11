@@ -9,9 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-        architecture: 'x64'
     - name: Install makita
       run: |
         pip install .
@@ -62,7 +59,7 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Run basic template
+    - name: Execute basic template jobsfile
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         pip install asreview-datatools asreview-insights synergy-dataset
