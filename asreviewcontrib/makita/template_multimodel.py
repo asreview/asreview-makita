@@ -44,10 +44,8 @@ class TemplateMultiModel(TemplateBase):
         all_classifiers = self.all_classifiers if self.all_classifiers is not None else ["logistic", "nb", "rf"] # noqa: E501
         all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
         all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY] # noqa: E501
-        impossible_models = self.impossible_models if self.impossible_models is not None else ["nb,doc2vec", "nb,sbert"] # noqa: E501
+        impossible_models = [i.split(",") for i in self.impossible_models] if self.impossible_models is not None else [['nb', 'doc2vec'], ['nb', 'sbert']] # noqa: E501
         n_runs = self.n_runs if self.n_runs is not None else 1
-
-        impossible_models = [i.split(",") for i in impossible_models]
 
         return {
             "datasets": params,
