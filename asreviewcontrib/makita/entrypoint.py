@@ -74,6 +74,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--stop_if",
             type=str,
+            default="min",
             help="The number of label actions to simulate. ",
         )
         parser_template.add_argument(
