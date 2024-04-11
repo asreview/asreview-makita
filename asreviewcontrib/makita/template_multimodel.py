@@ -1,5 +1,7 @@
 """Render multimodel template."""
 
+from asreview import config as ASREVIEW_CONFIG
+
 from asreviewcontrib.makita.template_base import TemplateBase
 
 
@@ -9,29 +11,19 @@ class TemplateMultiModel(TemplateBase):
 
     def __init__(
         self,
-        n_runs,
         all_classifiers,
         all_feature_extractors,
         all_query_strategies,
         impossible_models,
+        n_runs,
         **kwargs,
     ):
-        if n_runs is None:
-            n_runs = 1
-        if all_classifiers is None:
-            all_classifiers = ["logistic", "nb", "rf"]
-        if all_feature_extractors is None:
-            all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
-        if all_query_strategies is None:
-            all_query_strategies = ["max"]
-        if impossible_models is None:
-            impossible_models = ["nb,doc2vec", "nb,sbert"]
-
         self.n_runs = n_runs
         self.all_classifiers = all_classifiers
         self.all_feature_extractors = all_feature_extractors
         self.all_query_strategies = all_query_strategies
         self.impossible_models = impossible_models
+
         super().__init__(**kwargs)
 
     def get_dynamic_params(self, index, fp_dataset):
@@ -49,6 +41,14 @@ class TemplateMultiModel(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
+        all_classifiers = self.all_classifiers if self.all_classifiers is not None else ["logistic", "nb", "rf"] # noqa: E501
+        all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
+        all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY] # noqa: E501
+        impossible_models = self.impossible_models if self.impossible_models is not None else ["nb,doc2vec", "nb,sbert"] # noqa: E501
+        n_runs = self.n_runs if self.n_runs is not None else 1
+
+        impossible_models = [i.split(",") for i in impossible_models]
+
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
@@ -56,11 +56,11 @@ class TemplateMultiModel(TemplateBase):
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,
-            "n_runs": self.n_runs,
+            "n_runs": n_runs,
             "scripts_folder": self.scripts_folder,
             "version": self.__version__,
-            "all_classifiers": self.all_classifiers,
-            "all_feature_extractors": self.all_feature_extractors,
-            "all_query_strategies": self.all_query_strategies,
-            "impossible_models": [i.split(",") for i in self.impossible_models],
+            "all_classifiers": all_classifiers,
+            "all_feature_extractors": all_feature_extractors,
+            "all_query_strategies": all_query_strategies,
+            "impossible_models": impossible_models,
         }

@@ -27,6 +27,11 @@ repository = "https://github.com/asreview/asreview-makita"
 [project.entry-points."asreview.entry_points"]
 makita = "asreviewcontrib.makita.entrypoint:MakitaEntryPoint"
 
+[project.entry-points."asreview.makita.templates"]
+basic = "asreviewcontrib.makita.template_basic:TemplateBasic"
+arfi = "asreviewcontrib.makita.template_arfi:TemplateARFI"
+multimodel = "asreviewcontrib.makita.template_multimodel:TemplateMultiModel"
+
 [project.optional-dependencies]
 lint = ["ruff"]
 test = ["pytest"]

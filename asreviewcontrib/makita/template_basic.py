@@ -1,5 +1,7 @@
 """Render basic template."""
 
+from asreview import config as ASREVIEW_CONFIG
+
 from asreviewcontrib.makita.template_base import TemplateBase
 
 
@@ -15,15 +17,6 @@ class TemplateBasic(TemplateBase):
         n_runs,
         **kwargs,
     ):
-        if classifier is None:
-            classifier = "nb"
-        if feature_extractor is None:
-            feature_extractor = "tfidf"
-        if query_strategy is None:
-            query_strategy = "max"
-        if n_runs is None:
-            n_runs = 1
-
         self.classifier = classifier
         self.feature_extractor = feature_extractor
         self.query_strategy = query_strategy
@@ -45,17 +38,23 @@ class TemplateBasic(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
+        # set default values if not provided
+        classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.DEFAULT_MODEL # noqa: E501
+        feature_extractor = self.feature_extractor if self.feature_extractor is None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
+        query_strategy = self.query_strategy if self.query_strategy is None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
+        n_runs = self.n_runs if self.n_runs is not None else 1
+
         return {
+            "classifier": classifier,
+            "feature_extractor": feature_extractor,
+            "query_strategy": query_strategy,
+            "n_runs": n_runs,
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
-            "classifier": self.classifier,
-            "feature_extractor": self.feature_extractor,
-            "query_strategy": self.query_strategy,
             "balance_strategy": self.balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,
-            "n_runs": self.n_runs,
             "scripts_folder": self.scripts_folder,
             "version": self.__version__,
         }

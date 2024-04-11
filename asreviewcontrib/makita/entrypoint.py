@@ -2,14 +2,12 @@ import argparse
 import os
 from pathlib import Path
 
+from asreview import config as ASREVIEW_CONFIG
 from asreview.entry_points import BaseEntryPoint
+from asreview.utils import _entry_points
 
 from asreviewcontrib.makita import __version__
-from asreviewcontrib.makita.config import DEFAULTS
 from asreviewcontrib.makita.config import TEMPLATES_FP
-from asreviewcontrib.makita.template_arfi import TemplateARFI
-from asreviewcontrib.makita.template_basic import TemplateBasic
-from asreviewcontrib.makita.template_multimodel import TemplateMultiModel
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -41,22 +39,22 @@ class MakitaEntryPoint(BaseEntryPoint):
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "-s", type=str, default=DEFAULTS["dataset_folder"], help="Dataset folder"
+            "-s", type=str, default="data", help="Dataset folder"
         )
         parser_template.add_argument(
-            "-o", type=str, default=DEFAULTS["output_folder"], help="Output folder"
+            "-o", type=str, default="output", help="Output folder"
         )
         parser_template.add_argument(
             "--init_seed",
             type=int,
-            default=DEFAULTS["init_seed"],
-            help="Seed of the priors. " f"{DEFAULTS['init_seed']} by default.",
+            default=535,
+            help="Seed of the priors. " "535 by default.",
         )
         parser_template.add_argument(
             "--model_seed",
             type=int,
-            default=DEFAULTS["model_seed"],
-            help="Seed of the models. " f"{DEFAULTS['model_seed']} by default.",
+            default=165,
+            help="Seed of the models. " "165 by default.",
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
@@ -68,6 +66,17 @@ class MakitaEntryPoint(BaseEntryPoint):
             "Default: the system of rendering templates.",
         )
         parser_template.add_argument(
+            "--instances_per_query",
+            type=int,
+            default=ASREVIEW_CONFIG.DEFAULT_N_INSTANCES,
+            help="Number of instances per query. ",
+        )
+        parser_template.add_argument(
+            "--stop_if",
+            type=str,
+            help="The number of label actions to simulate. ",
+        )
+        parser_template.add_argument(
             "--n_runs",
             type=int,
             help="Number of runs. Only for templates 'basic' and 'multimodel'. ",
@@ -75,7 +84,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--n_priors",
             type=int,
-            help="Number of priors. Only for template 'arfi'. " "Default: 10.",
+            help="Number of priors. Only for template 'arfi'.",
         )
         parser_template.add_argument(
             "--no_wordclouds",
@@ -105,23 +114,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--balance_strategy",
             type=str,
-            default=DEFAULTS["balance_strategy"],
-            help="Balance strategy to use. "
-            f"{DEFAULTS['balance_strategy']} by default.",
-        )
-        parser_template.add_argument(
-            "--instances_per_query",
-            type=int,
-            default=DEFAULTS["instances_per_query"],
-            help="Number of instances per query. "
-            f"{DEFAULTS['instances_per_query']} by default.",
-        )
-        parser_template.add_argument(
-            "--stop_if",
-            type=str,
-            default=DEFAULTS["stop_if"],
-            help="The number of label actions to simulate. "
-            f"{DEFAULTS['stop_if']} by default.",
+            help="Balance strategy to use. ",
         )
         parser_template.add_argument(
             "--classifiers",
@@ -141,7 +134,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--impossible_models",
             nargs="+",
-            help="Model combinations to exclude. Only for template 'multimodel'. ",
+            help="Model combinations to exclude. Only for template 'multimodel'.",
         )
 
         parser_template.set_defaults(func=self._template_cli)
@@ -156,7 +149,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_script.add_argument(
             "-o",
             type=str,
-            default=DEFAULTS["scripts_folder"],
+            default="scripts",
             help="Location of the scripts folder.",
         )
         parser_script.set_defaults(func=self._add_script_cli)
@@ -177,20 +170,20 @@ class MakitaEntryPoint(BaseEntryPoint):
         # lowercase name
         args.name = args.name.lower()
 
+        # check if args.name is in _entry_points
+        if args.name not in _entry_points(group="asreview.makita.templates").names:
+            raise ValueError(f"Template {args.name} not found.")
+
         # if a custom template is provided, check if it exists
         if args.template:
             fp_template = Path(args.template)
             if not fp_template.is_file():
                 raise ValueError(f"Custom template {args.template} not found")
-        else:
-            fp_template = None
-
-        # print rendering message
-        if args.template:
             print(
                 f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"  # noqa: E501
             )
         else:
+            fp_template = None
             print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
 
         # load datasets
@@ -213,121 +206,32 @@ class MakitaEntryPoint(BaseEntryPoint):
         else:
             job_file = "jobs.sh" if args.job_file is None else args.job_file
 
-        # render jobs file
-        if args.name in TemplateBasic.template_name:
-            prohibited_args = [
-                "classifiers",
-                "feature_extractors",
-                "query_strategies",
-                "impossible_models",
-                "n_priors",
-            ]
-            for arg in prohibited_args:
-                if getattr(args, arg):
-                    raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}"
-                    )
+        # load template
+        template = _entry_points(group="asreview.makita.templates")[args.name].load()
 
-            job = TemplateBasic(
-                datasets=datasets,
-                fp_template=fp_template,
-                output_folder=Path(args.o),
-                scripts_folder=Path(DEFAULTS["scripts_folder"]),
-                create_wordclouds=args.no_wordclouds,
-                allow_overwrite=args.overwrite,
-                n_runs=args.n_runs,
-                init_seed=args.init_seed,
-                model_seed=args.model_seed,
-                classifier=args.classifier,
-                feature_extractor=args.feature_extractor,
-                query_strategy=args.query_strategy,
-                balance_strategy=args.balance_strategy,
-                instances_per_query=args.instances_per_query,
-                stop_if=args.stop_if,
-                job_file=args.job_file,
-            ).render()
-
-        elif args.name in TemplateARFI.template_name:
-            prohibited_args = [
-                "n_runs",
-                "classifiers",
-                "feature_extractors",
-                "query_strategies",
-                "impossible_models",
-            ]
-            for arg in prohibited_args:
-                if getattr(args, arg):
-                    raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}"
-                    )
-
-            job = TemplateARFI(
-                datasets=datasets,
-                fp_template=fp_template,
-                output_folder=Path(args.o),
-                scripts_folder=Path(DEFAULTS["scripts_folder"]),
-                create_wordclouds=args.no_wordclouds,
-                allow_overwrite=args.overwrite,
-                n_priors=args.n_priors,
-                init_seed=args.init_seed,
-                model_seed=args.model_seed,
-                classifier=args.classifier,
-                feature_extractor=args.feature_extractor,
-                query_strategy=args.query_strategy,
-                balance_strategy=args.balance_strategy,
-                instances_per_query=args.instances_per_query,
-                stop_if=args.stop_if,
-                job_file=job_file,
-            ).render()
-
-        elif args.name in TemplateMultiModel.template_name:
-            prohibited_args = [
-                "classifier",
-                "feature_extractor",
-                "query_strategy",
-                "n_priors",
-            ]
-            for arg in prohibited_args:
-                if getattr(args, arg):
-                    raise ValueError(
-                        f"Argument {arg} is not allowed for template {args.name}"
-                    )
-
-            job = TemplateMultiModel(
-                datasets=datasets,
-                fp_template=fp_template,
-                output_folder=Path(args.o),
-                scripts_folder=Path(DEFAULTS["scripts_folder"]),
-                create_wordclouds=args.no_wordclouds,
-                allow_overwrite=args.overwrite,
-                n_runs=args.n_runs,
-                init_seed=args.init_seed,
-                model_seed=args.model_seed,
-                all_classifiers=args.classifiers,
-                all_feature_extractors=args.feature_extractors,
-                all_query_strategies=args.query_strategies,
-                impossible_models=args.impossible_models,
-                balance_strategy=args.balance_strategy,
-                instances_per_query=args.instances_per_query,
-                stop_if=args.stop_if,
-                job_file=job_file,
-            ).render()
-
-        else:
-            # Fallback to basic template
-            print(f"\u001b[31mERROR: \033[33mTemplate {args.name} not found.\u001b[0m\n")  # noqa: E501
-            print("\u001b[31mFallback: \033[33mUsing the basic template.\u001b[0m\n")
-            job = TemplateBasic(
-                datasets,
-                output_folder=Path(args.o),
-                create_wordclouds=args.no_wordclouds,
-                allow_overwrite=args.overwrite,
-                init_seed=args.init_seed,
-                model_seed=args.model_seed,
-                stop_if=args.stop_if,
-                fp_template=fp_template,
-                job_file=job_file,
-            ).render()
+        job = template(
+            datasets=datasets,
+            fp_template=fp_template,
+            output_folder=Path(args.o),
+            scripts_folder=Path("scripts"),
+            create_wordclouds=args.no_wordclouds,
+            allow_overwrite=args.overwrite,
+            n_runs=args.n_runs,
+            n_priors=args.n_priors,
+            init_seed=args.init_seed,
+            model_seed=args.model_seed,
+            classifier=args.classifier,
+            feature_extractor=args.feature_extractor,
+            query_strategy=args.query_strategy,
+            balance_strategy=args.balance_strategy,
+            all_classifiers=args.classifiers,
+            all_feature_extractors=args.feature_extractors,
+            all_query_strategies=args.query_strategies,
+            impossible_models=args.impossible_models,
+            instances_per_query=args.instances_per_query,
+            stop_if=args.stop_if,
+            job_file=job_file,
+        ).render()
 
         # convert shell to batch if needed
         if job_file.endswith(".bat"):

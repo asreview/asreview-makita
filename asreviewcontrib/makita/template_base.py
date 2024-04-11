@@ -10,7 +10,8 @@ from asreviewcontrib.makita.utils import FileHandler
 
 
 class TemplateBase:
-    template_file = None
+    template_name = []
+    template_file = ""
 
     def __init__(
         self,
@@ -26,6 +27,7 @@ class TemplateBase:
         instances_per_query,
         stop_if,
         job_file,
+        **kwargs
     ):
         self.datasets = datasets
         self.output_folder = output_folder
@@ -43,6 +45,12 @@ class TemplateBase:
         self.template = ConfigTemplate(
             fp_template if fp_template is not None else self.get_template_file()
         )  # noqa: E501
+
+        for param in kwargs:
+            if kwargs[param] is not None:
+                # print value of param
+                print(f"{param} = {kwargs[param]}")
+                raise ValueError(f"{param} should not be set for this template.")
 
     def get_template_file(self):
         return Path(TEMPLATES_FP, self.template_file)
@@ -111,17 +119,16 @@ class TemplateBase:
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dynamic_params(i, fp_dataset))
 
-        # render template
         try:
             rendered_output = self.template.render(self.get_static_params(params))
-        except Exception as e:
-            if str(e) == "'StrictUndefined' object cannot be interpreted as an integer":
+        except TypeError as e:
+            if "'StrictUndefined' object cannot be interpreted as an integer" in str(e):
                 print("\033[31mERROR: A rendering exception occurred -", e)
                 print(
-                    "The rendering process failed due to undefined parameters in the template."  # noqa: E501
+                    "The rendering process failed due to an attempt to use an undefined variable where an integer was expected."  # noqa: E501
                 )
                 print(
-                    "\033[33mPlease verify that the chosen template is compatible with the selected custom template.\033[0m"  # noqa: E501
+                    "\033[33mPlease check your template for variables that are not properly defined or passed in.\033[0m"  # noqa: E501
                 )
                 exit(1)
             else:

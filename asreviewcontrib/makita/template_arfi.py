@@ -2,6 +2,7 @@
 
 import numpy as np
 from asreview.data import ASReviewData
+from asreview import config as ASREVIEW_CONFIG
 
 from asreviewcontrib.makita.template_base import TemplateBase
 
@@ -18,15 +19,6 @@ class TemplateARFI(TemplateBase):
         n_priors,
         **kwargs,
     ):
-        if classifier is None:
-            classifier = "nb"
-        if feature_extractor is None:
-            feature_extractor = "tfidf"
-        if query_strategy is None:
-            query_strategy = "max"
-        if n_priors is None:
-            n_priors = 10
-
         self.classifier = classifier
         self.feature_extractor = feature_extractor
         self.query_strategy = query_strategy
@@ -37,8 +29,10 @@ class TemplateARFI(TemplateBase):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
+        n_priors = self.n_priors if self.n_priors is not None else 10
+
         priors = _get_priors(
-            fp_dataset, init_seed=self.init_seed + index, n_priors=self.n_priors
+            fp_dataset, init_seed=self.init_seed + index, n_priors=n_priors
         )
         return {
             "input_file": fp_dataset.as_posix(),
@@ -51,12 +45,17 @@ class TemplateARFI(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
+        # set default values if not provided
+        classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.DEFAULT_MODEL # noqa: E501
+        feature_extractor = self.feature_extractor if self.feature_extractor is None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
+        query_strategy = self.query_strategy if self.query_strategy is None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
+
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
-            "classifier": self.classifier,
-            "feature_extractor": self.feature_extractor,
-            "query_strategy": self.query_strategy,
+            "classifier": classifier,
+            "feature_extractor": feature_extractor,
+            "query_strategy": query_strategy,
             "balance_strategy": self.balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
