@@ -14,7 +14,7 @@ class FileHandler:
 
     def __init__(self, allow_overwrite=False):
         self.overwrite_all = allow_overwrite
-        self.total_files = 0
+        self._total_files = 0
 
     def add_file(self, content, export_fp):
         """
@@ -54,14 +54,14 @@ class FileHandler:
 
             print(f"Created {export_fp}")
 
-            self.total_files += 1
+            self._total_files += 1
 
     def print_summary(self):
         """
         Print the total number of files created by the FileHandler object.
         """
 
-        print(f"\n{self.total_files} file(s) created.")
+        print(f"\n{self._total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
         """
