@@ -6,7 +6,6 @@ from asreviewcontrib.makita.template_base import TemplateBase
 
 
 class TemplateMultiModel(TemplateBase):
-    template_name = ["multimodel", "multiple_models", "modelmatrix"]
     template_file = "template_multimodel.txt.template"
 
     def __init__(
@@ -45,12 +44,13 @@ class TemplateMultiModel(TemplateBase):
         all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
         all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY] # noqa: E501
         impossible_models = [i.split(",") for i in self.impossible_models] if self.impossible_models is not None else [['nb', 'doc2vec'], ['nb', 'sbert']] # noqa: E501
+        balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY # noqa: E501
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {
             "datasets": params,
             "create_wordclouds": self.create_wordclouds,
-            "balance_strategy": self.balance_strategy,
+            "balance_strategy": balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,

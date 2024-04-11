@@ -8,7 +8,6 @@ from asreviewcontrib.makita.template_base import TemplateBase
 
 
 class TemplateARFI(TemplateBase):
-    template_name = ["arfi"]
     template_file = "template_arfi.txt.template"
 
     def __init__(
@@ -49,6 +48,7 @@ class TemplateARFI(TemplateBase):
         classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.DEFAULT_MODEL # noqa: E501
         feature_extractor = self.feature_extractor if self.feature_extractor is not None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
         query_strategy = self.query_strategy if self.query_strategy is not None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
+        balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY # noqa: E501
 
         return {
             "datasets": params,
@@ -56,7 +56,7 @@ class TemplateARFI(TemplateBase):
             "classifier": classifier,
             "feature_extractor": feature_extractor,
             "query_strategy": query_strategy,
-            "balance_strategy": self.balance_strategy,
+            "balance_strategy": balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "init_seed": self.init_seed,
