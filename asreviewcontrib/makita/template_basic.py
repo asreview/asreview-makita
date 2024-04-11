@@ -40,8 +40,8 @@ class TemplateBasic(TemplateBase):
 
         # set default values if not provided
         classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.DEFAULT_MODEL # noqa: E501
-        feature_extractor = self.feature_extractor if self.feature_extractor is None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
-        query_strategy = self.query_strategy if self.query_strategy is None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
+        feature_extractor = self.feature_extractor if self.feature_extractor is not None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
+        query_strategy = self.query_strategy if self.query_strategy is not None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {
