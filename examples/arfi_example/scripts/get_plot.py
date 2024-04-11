@@ -20,72 +20,58 @@ Authors
 import argparse
 from pathlib import Path
 
+import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 from asreview import open_state
 
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def _set_legend(ax, state, legend_option, label_to_line, state_file):
-    metadata = state.settings_metadata
-    label = None
-
-    if legend_option == "filename":
-        label = state_file.stem
-    elif legend_option == "model":
-        label = " - ".join(
-            [
-                metadata["settings"]["model"],
-                metadata["settings"]["feature_extraction"],
-                metadata["settings"]["balance_strategy"],
-                metadata["settings"]["query_strategy"],
-            ]
-        )
-    elif legend_option == "classifier":
-        label = metadata["settings"]["model"]
-    else:
-        try:
-            label = metadata["settings"][legend_option]
-        except KeyError as err:
-            raise ValueError(f"Invalid legend setting: '{legend_option}'") from err  # noqa: E501
-
-    if label:
-        # add label to line
-        if label not in label_to_line:
-            ax.lines[-2].set_label(label)
-            label_to_line[label] = ax.lines[-2]
-        # set color of line to the color of the first line with the same label
-        else:
-            ax.lines[-2].set_color(label_to_line[label].get_color())
-            ax.lines[-2].set_label("_no_legend_")
-
-
 def get_plot_from_states(states, filename, legend=None):
-    """Generate an ASReview plot from state files.
+    """Generate an ASReview plot from state files."""
 
-    Arguments
-    ---------
-    states: list
-        List of state files.
-    filename: str
-        Filename of the plot.
-    legend: str
-        Add a legend to the plot, based on the given parameter.
-        Possible values: "filename", "model", "feature_extraction",
-        "balance_strategy", "query_strategy", "classifier".
-    """
-    states = sorted(states)
     fig, ax = plt.subplots()
-    label_to_line = {}
+
+    labels = []
+    colors = list(mcolors.TABLEAU_COLORS.values())
 
     for state_file in states:
         with open_state(state_file) as state:
+            # draw the plot
             plot_recall(ax, state)
-            if legend:
-                _set_legend(ax, state, legend, label_to_line, state_file)
 
-    if legend:
-        ax.legend(loc=4, prop={"size": 8})
+            # set the label
+            if legend == "filename":
+                ax.lines[-2].set_label(state_file.stem)
+                ax.legend(loc=4, prop={"size": 8})
+            elif legend:
+                metadata = state.settings_metadata
+
+                if legend == "model":
+                    label = " - ".join(
+                        [
+                            metadata["settings"]["model"],
+                            metadata["settings"]["feature_extraction"],
+                            metadata["settings"]["balance_strategy"],
+                            metadata["settings"]["query_strategy"],
+                        ]
+                    )
+                elif legend == "classifier":
+                    label = metadata["settings"]["model"]
+                else:
+                    try:
+                        label = metadata["settings"][legend]
+                    except KeyError as exc:
+                        raise ValueError(
+                            f"Legend setting '{legend}' "
+                            "not found in state file settings."
+                        ) from exc
+                if label not in labels:
+                    ax.lines[-2].set_label(label)
+                    labels.append(label)
+                ax.lines[-2].set_color(colors[labels.index(label) % len(colors)])
+                ax.legend(loc=4, prop={"size": 8})
+
     fig.savefig(str(filename))
 
 
@@ -104,10 +90,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load states
-    states = list(Path(args.s).glob("*.asreview"))
+    states = Path(args.s).glob("*.asreview")
 
     # check if states are found
-    if len(states) == 0:
+    if len(list(states)) == 0:
         raise FileNotFoundError(f"No state files found in {args.s}")
 
     # generate plot and save results
