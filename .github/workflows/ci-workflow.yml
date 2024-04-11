@@ -27,7 +27,7 @@ jobs:
         cp ../.github/workflows/test_data/labels.csv basic/data-test/labels.csv
         cp ../.github/workflows/test_data/labels.csv arfi/data/labels.csv
         cp ../.github/workflows/test_data/labels.csv multimodel/data/labels.csv
-    - name: Test makita templates
+    - name: Render makita templates
       run: |
         cd tmp/basic
         asreview makita template basic | tee output.txt
@@ -59,7 +59,7 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Execute basic template jobsfile
+    - name: Execute basic template jobs file
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
         pip install asreview-datatools asreview-insights synergy-dataset
