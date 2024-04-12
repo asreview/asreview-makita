@@ -44,7 +44,7 @@ jobs:
         cd ../multimodel
         asreview makita template multimodel | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
-    - name: Render makita templates
+    - name: Render makita scripts
       run: |
         asreview makita add-script --all -o ./tmp/scripts | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
