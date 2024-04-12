@@ -70,6 +70,6 @@ The following files are found in this project:
         |   └── 📜metrics_summary.xlsx
         └── 📂figures{% for dataset in datasets %}
             ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
-            ├── 📈wordcloud_{{ dataset.stem }}.png
+{% if not skip_wordclouds %}            ├── 📈wordcloud_{{ dataset.stem }}.png
             ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
-            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}{%endif %}
+            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{% endfor %}{%endif %}{%endif %}
