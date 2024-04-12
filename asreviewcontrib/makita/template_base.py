@@ -10,7 +10,6 @@ from asreviewcontrib.makita.utils import FileHandler
 
 
 class TemplateBase:
-    template_name = []
     template_file = ""
 
     def __init__(

@@ -202,35 +202,55 @@ class MakitaEntryPoint(BaseEntryPoint):
         Path(args.o).parent.mkdir(parents=True, exist_ok=True)
 
         # get job file
-        if args.platform == "Windows" or (args.platform is None and os.name == "nt"):
-            job_file = "jobs.bat" if args.job_file is None else args.job_file
-        else:
-            job_file = "jobs.sh" if args.job_file is None else args.job_file
+        if args.job_file is None:
+            if args.platform == "Windows" or (
+                args.platform is None and os.name == "nt"
+            ):  # noqa: E501
+                args.job_file = "jobs.bat"
+            else:
+                args.job_file = "jobs.sh"
 
         # load template
         template = _entry_points(group="asreview.makita.templates")[args.name].load()
 
-        print(vars(args))
+        keys_of_interest = [
+            "skip_wordclouds",
+            "overwrite",
+            "n_runs",
+            "n_priors",
+            "init_seed",
+            "model_seed",
+            "classifier",
+            "feature_extractor",
+            "query_strategy",
+            "balance_strategy",
+            "classifiers",
+            "feature_extractors",
+            "query_strategies",
+            "impossible_models",
+            "instances_per_query",
+            "stop_if",
+            "job_file",
+        ]
 
         job = template(
             datasets=datasets,
             fp_template=fp_template,
             output_folder=Path(args.o),
             scripts_folder=Path("scripts"),
-            job_file=job_file,
-            **vars(args),
+            **{key: vars(args)[key] for key in keys_of_interest if key in vars(args)},
         ).render()
 
         # convert shell to batch if needed
-        if job_file.endswith(".bat"):
+        if args.job_file.endswith(".bat"):
             job = f"@ echo off\nCOLOR E0{job}"
             job = job.replace("#", "::")
             job = job.replace("/", "\\")
 
         # store result in output folder
-        with open(job_file, "w") as f:
+        with open(args.job_file, "w") as f:
             f.write(job)
-        print(f"Rendered template {args.name} and saved to {job_file}")
+        print(f"Rendered template {args.name} and saved to {args.job_file}")
 
     def _add_script_cli(self, args):
         try:
