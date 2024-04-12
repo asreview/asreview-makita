@@ -17,7 +17,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: |
-          ${{ runner.os == 'Windows' && 'D:\\a\\_temp\\pip\\Cache' || '~/.cache/pip' }}
+          ${{ runner.os == 'Windows' && 'C:\users\runneradmin\appdata\local\pip\cache' || '~/.cache/pip' }}
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
