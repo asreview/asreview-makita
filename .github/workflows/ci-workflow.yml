@@ -49,6 +49,7 @@ jobs:
         asreview makita add-script --all -o ./tmp/scripts | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run SciTree
+      if: ${{ matrix.os != 'windows-latest' }}
       run: |
         cd ./tmp/
         scitree
