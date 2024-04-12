@@ -26,9 +26,8 @@ jobs:
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Set up directories
-      run: |
-        mkdir -p ./tmp/basic/data-test ./tmp/arfi/data ./tmp/multimodel/data ./tmp/scripts ./tmp/synergy/data
+    - name: Create directories using Python
+      run: python -c "import os; [os.makedirs(path, exist_ok=True) for path in ['./tmp/basic/data-test', './tmp/arfi/data', './tmp/multimodel/data', './tmp/scripts', './tmp/synergy/data']]"
     - name: set up environment
       run: |
         cp .github/workflows/test_data/labels.csv ./tmp/basic/data-test/labels.csv
@@ -51,6 +50,7 @@ jobs:
         grep -q "ERROR" output.txt && exit 1 || true
     - name: Run SciTree
       run: |
+        cd ./tmp/
         scitree
     - name: Execute basic template jobs file
       if: ${{ matrix.os == 'ubuntu-latest' }}
