@@ -51,7 +51,7 @@ class TemplateBasic(TemplateBase):
             "balance_strategy": balance_strategy,
             "n_runs": n_runs,
             "datasets": params,
-            "create_wordclouds": self.create_wordclouds,
+            "skip_wordclouds": self.skip_wordclouds,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "output_folder": self.output_folder,

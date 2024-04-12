@@ -13,7 +13,7 @@ This project depends on Python 3.7 or later (python.org/download), and [ASReview
 ```sh
 pip install asreview>=1.0 asreview-insights>=1.1.2 asreview-datatools
 ```
-{% if create_wordclouds %}
+{% if not skip_wordclouds %}
 For generating wordclouds, install the following dependencies.
 
 ```sh

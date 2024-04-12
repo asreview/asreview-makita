@@ -88,8 +88,8 @@ class MakitaEntryPoint(BaseEntryPoint):
             help="Number of priors. Only for template 'arfi'.",
         )
         parser_template.add_argument(
-            "--no_wordclouds",
-            action="store_false",
+            "--skip_wordclouds",
+            action="store_true",
             help="Disables the generation of wordclouds. ",
         )
         parser_template.add_argument(
@@ -210,28 +210,15 @@ class MakitaEntryPoint(BaseEntryPoint):
         # load template
         template = _entry_points(group="asreview.makita.templates")[args.name].load()
 
+        print(vars(args))
+
         job = template(
             datasets=datasets,
             fp_template=fp_template,
             output_folder=Path(args.o),
             scripts_folder=Path("scripts"),
-            create_wordclouds=args.no_wordclouds,
-            allow_overwrite=args.overwrite,
-            n_runs=args.n_runs,
-            n_priors=args.n_priors,
-            init_seed=args.init_seed,
-            model_seed=args.model_seed,
-            classifier=args.classifier,
-            feature_extractor=args.feature_extractor,
-            query_strategy=args.query_strategy,
-            balance_strategy=args.balance_strategy,
-            all_classifiers=args.classifiers,
-            all_feature_extractors=args.feature_extractors,
-            all_query_strategies=args.query_strategies,
-            impossible_models=args.impossible_models,
-            instances_per_query=args.instances_per_query,
-            stop_if=args.stop_if,
             job_file=job_file,
+            **vars(args),
         ).render()
 
         # convert shell to batch if needed

@@ -10,17 +10,17 @@ class TemplateMultiModel(TemplateBase):
 
     def __init__(
         self,
-        all_classifiers,
-        all_feature_extractors,
-        all_query_strategies,
+        classifiers,
+        feature_extractors,
+        query_strategies,
         impossible_models,
         n_runs,
         **kwargs,
     ):
         self.n_runs = n_runs
-        self.all_classifiers = all_classifiers
-        self.all_feature_extractors = all_feature_extractors
-        self.all_query_strategies = all_query_strategies
+        self.all_classifiers = classifiers
+        self.all_feature_extractors = feature_extractors
+        self.all_query_strategies = query_strategies
         self.impossible_models = impossible_models
 
         super().__init__(**kwargs)
@@ -49,7 +49,7 @@ class TemplateMultiModel(TemplateBase):
 
         return {
             "datasets": params,
-            "create_wordclouds": self.create_wordclouds,
+            "skip_wordclouds": self.skip_wordclouds,
             "balance_strategy": balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,

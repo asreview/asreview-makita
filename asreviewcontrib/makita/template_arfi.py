@@ -52,7 +52,7 @@ class TemplateARFI(TemplateBase):
 
         return {
             "datasets": params,
-            "create_wordclouds": self.create_wordclouds,
+            "skip_wordclouds": self.skip_wordclouds,
             "classifier": classifier,
             "feature_extractor": feature_extractor,
             "query_strategy": query_strategy,

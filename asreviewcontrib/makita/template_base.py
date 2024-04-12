@@ -19,8 +19,8 @@ class TemplateBase:
         fp_template,
         output_folder,
         scripts_folder,
-        create_wordclouds,
-        allow_overwrite,
+        skip_wordclouds,
+        overwrite,
         init_seed,
         model_seed,
         balance_strategy,
@@ -32,14 +32,14 @@ class TemplateBase:
         self.datasets = datasets
         self.output_folder = output_folder
         self.scripts_folder = scripts_folder
-        self.create_wordclouds = create_wordclouds
+        self.skip_wordclouds = skip_wordclouds
         self.init_seed = init_seed
         self.model_seed = model_seed
         self.balance_strategy = balance_strategy
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
         self.job_file = job_file
-        self.file_handler = FileHandler(allow_overwrite)
+        self.file_handler = FileHandler(overwrite)
         self.__version__ = __version__
 
         self.template = ConfigTemplate(
@@ -92,7 +92,7 @@ class TemplateBase:
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
-                create_wordclouds=self.create_wordclouds,
+                skip_wordclouds=self.skip_wordclouds,
                 output_folder=self.output_folder,
                 job_file=self.job_file,
             )
