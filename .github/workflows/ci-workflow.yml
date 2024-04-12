@@ -14,12 +14,17 @@ jobs:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
     - name: Cache Python packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
-        path: ~/.cache/pip
+        path: |
+          ${{ runner.os == 'Windows' && 'D:\\a\\_temp\\pip\\Cache' || '~/.cache/pip' }}
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+    - name: Print pip cache directory
+      run: echo "Pip cache directory: $env:LOCALAPPDATA\pip\Cache"
+      shell: pwsh
+      if: runner.os == 'Windows'
     - name: Install dependencies
       run: |
         pip install . ruff scitree asreview-datatools asreview-insights synergy-dataset
@@ -54,7 +59,7 @@ jobs:
         cd ./tmp/
         scitree
     - name: Execute basic template jobs file
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+      if: ${{ matrix.os != 'windows-latest' }}
       run: |
         cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
