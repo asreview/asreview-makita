@@ -31,7 +31,6 @@ jobs:
         mkdir -p ./tmp/basic/data-test ./tmp/arfi/data ./tmp/multimodel/data ./tmp/scripts ./tmp/synergy/data
     - name: set up environment
       run: |
-        cp .github/workflows/test_data/labels.csv ./tmp/basic/data/labels.csv
         cp .github/workflows/test_data/labels.csv ./tmp/basic/data-test/labels.csv
         cp .github/workflows/test_data/labels.csv ./tmp/arfi/data/labels.csv
         cp .github/workflows/test_data/labels.csv ./tmp/multimodel/data/labels.csv
