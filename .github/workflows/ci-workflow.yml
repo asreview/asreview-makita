@@ -13,28 +13,31 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
-    - name: Install makita
+    - name: Lint python with ruff
       run: |
-        pip install .
-    - name: Install ruff
+        ruff check .
+    - name: Cache Python packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install dependencies
       run: |
-        pip install ruff
+        pip install . ruff scitree asreview-datatools asreview-insights synergy-dataset
+    - name: Set up directories
+      run: |
+        mkdir -p ./tmp/basic/data-test ./tmp/arfi/data ./tmp/multimodel/data ./tmp/scripts ./tmp/synergy/data
     - name: set up environment
       run: |
-        mkdir tmp
-        cd tmp
-        mkdir -p basic/data
-        mkdir -p basic/data-test
-        mkdir -p arfi/data
-        mkdir -p multimodel/data
-        cp ../.github/workflows/test_data/labels.csv basic/data/labels.csv
-        cp ../.github/workflows/test_data/labels.csv basic/data-test/labels.csv
-        cp ../.github/workflows/test_data/labels.csv arfi/data/labels.csv
-        cp ../.github/workflows/test_data/labels.csv multimodel/data/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/basic/data/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/basic/data-test/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/arfi/data/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/multimodel/data/labels.csv
     - name: Render makita templates
       run: |
         cd tmp/basic
-        asreview makita template basic | tee output.txt
         asreview makita template basic --classifier nb --feature_extractor tfidf --query_strategy max --n_runs 1 -s data-test -o output-test --init_seed 1 --model_seed 2 --skip_wordclouds --overwrite --instances_per_query 2 --stop_if min --balance_strategy double | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
@@ -43,31 +46,16 @@ jobs:
         cd ../multimodel
         asreview makita template multimodel | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
-        cd ..
-    - name: Run scitree on output
-      if: ${{ matrix.os == 'ubuntu-latest' }}
+    - name: Render makita templates
       run: |
-        pip install scitree
-        cd tmp
+        asreview makita add-script --all -o ./tmp/scripts | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+    - name: Run SciTree
+      run: |
         scitree
-    - name: Run ShellCheck
-      if: ${{ matrix.os != 'windows-latest' }}
-      uses: ludeeus/action-shellcheck@master
-      with:
-        scandir: './tmp'
-      env:
-        SHELLCHECK_OPTS: -e SC2148
-    - name: Generate makita scripts
-      run: |
-        asreview makita add-script --all
-    - name: Lint python with ruff
-      run: |
-        ruff check .
     - name: Execute basic template jobs file
       if: ${{ matrix.os == 'ubuntu-latest' }}
       run: |
-        pip install asreview-datatools asreview-insights synergy-dataset
-        mkdir -p tmp/synergy/data
         cd tmp/synergy
         synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
         asreview makita template basic --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 2
