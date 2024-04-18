@@ -38,7 +38,7 @@ For a tutorial on using Makita we refer to the [Exercise on Using the ASReview S
 ### Prerequisites:
 
 ```
-python=3.11
+python=3.11 (recommended)
 ```
 
 ### Install the Makita extension with pip:
