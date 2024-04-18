@@ -22,7 +22,7 @@ class TemplateBasic(TemplateBase):
         self.n_runs = n_runs
         super().__init__(**kwargs)
 
-    def get_dynamic_params(self, index, fp_dataset):
+    def get_dataset_specific_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
@@ -33,7 +33,7 @@ class TemplateBasic(TemplateBase):
             "init_seed": self.init_seed,
         }
 
-    def get_static_params(self, params):
+    def get_template_specific_params(self, params):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 

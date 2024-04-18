@@ -54,7 +54,7 @@ class TemplateBase:
     def get_template_file(self):
         return Path(TEMPLATES_FP, self.template_file)
 
-    def get_dynamic_params(self, index, fp_dataset):
+    def get_dataset_specific_params(self, index, fp_dataset):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
@@ -62,7 +62,7 @@ class TemplateBase:
             "Subclasses should implement this method to prepare dataset-specific parameters."  # noqa: E501
         )
 
-    def get_static_params(self, params):
+    def get_template_specific_params(self, params):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
@@ -116,10 +116,10 @@ class TemplateBase:
                     f"Dataset filename '{fp_dataset}' cannot contain whitespace."
                 )  # noqa
             fp_dataset = Path(fp_dataset)
-            params.append(self.get_dynamic_params(i, fp_dataset))
+            params.append(self.get_dataset_specific_params(i, fp_dataset))
 
         try:
-            rendered_output = self.template.render(self.get_static_params(params))
+            rendered_output = self.template.render(self.get_template_specific_params(params))
         except TypeError as e:
             if "'StrictUndefined' object cannot be interpreted as an integer" in str(e):
                 print("\033[31mERROR: A rendering exception occurred -", e)

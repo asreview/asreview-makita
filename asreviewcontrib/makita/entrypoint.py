@@ -48,13 +48,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--init_seed",
             type=int,
             default=535,
-            help="Seed of the priors. " "535 by default.",
+            help="Seed of the priors. 535 by default.",
         )
         parser_template.add_argument(
             "--model_seed",
             type=int,
             default=165,
-            help="Seed of the models. " "165 by default.",
+            help="Seed of the models. 165 by default.",
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
