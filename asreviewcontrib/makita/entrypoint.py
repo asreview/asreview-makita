@@ -115,7 +115,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--balance_strategy",
             type=str,
-            help="Balance strategy to use. ",
+            help="Balance strategy to use. Only for template 'basic' and 'arfi'. ",
         )
         parser_template.add_argument(
             "--classifiers",
@@ -131,6 +131,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--query_strategies",
             nargs="+",
             help="Query strategies to use. Only for template 'multimodel'. ",
+        )
+        parser_template.add_argument(
+            "--balancing_strategies",
+            nargs="+",
+            help="Balancing strategies to use. Only for template 'multimodel'. ",
         )
         parser_template.add_argument(
             "--impossible_models",
@@ -227,6 +232,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             "classifiers",
             "feature_extractors",
             "query_strategies",
+            "balancing_strategies",
             "impossible_models",
             "instances_per_query",
             "stop_if",
