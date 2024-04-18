@@ -26,7 +26,7 @@ class TemplateBase:
         instances_per_query,
         stop_if,
         job_file,
-        **kwargs
+        **kwargs,
     ):
         self.datasets = datasets
         self.output_folder = output_folder
@@ -119,7 +119,9 @@ class TemplateBase:
             params.append(self.get_dataset_specific_params(i, fp_dataset))
 
         try:
-            rendered_output = self.template.render(self.get_template_specific_params(params))
+            rendered_output = self.template.render(
+                self.get_template_specific_params(params)
+            )
         except TypeError as e:
             if "'StrictUndefined' object cannot be interpreted as an integer" in str(e):
                 print("\033[31mERROR: A rendering exception occurred -", e)
