@@ -1,127 +1,66 @@
 """Render multimodel template."""
 
-import os
-import platform
-from pathlib import Path
+from asreview import config as ASREVIEW_CONFIG
 
-from cfgtemplater.config_template import ConfigTemplate
-
-from asreviewcontrib.makita import __version__
-from asreviewcontrib.makita.utils import FileHandler
-from asreviewcontrib.makita.utils import check_filename_dataset
+from asreviewcontrib.makita.template_base import TemplateBase
 
 
-def render_jobs_multimodel(
-    datasets,
-    output_folder="output",
-    n_runs=1,
-    scripts_folder="scripts",
-    create_wordclouds=True,
-    init_seed=535,
-    model_seed=165,
-    all_classifiers=None,
-    all_feature_extractors=None,
-    all_query_strategies=None,
-    all_balancing_strategies=None,
-    impossible_models=None,
-    instances_per_query=1,
-    stop_if='min',
-    fp_template=None,
-    job_file=None,
-    platform_sys=None,
-):
-    if all_classifiers is None:
-        all_classifiers = ["logistic", "nb", "rf", "svm"]
+class TemplateMultiModel(TemplateBase):
+    template_file = "template_multimodel.txt.template"
 
-    if all_feature_extractors is None:
-        all_feature_extractors = ["doc2vec", "sbert", "tfidf"]
+    def __init__(
+        self,
+        classifiers,
+        feature_extractors,
+        query_strategies,
+        balance_strategies,
+        impossible_models,
+        n_runs,
+        **kwargs,
+    ):
+        self.n_runs = n_runs
+        self.all_classifiers = classifiers
+        self.all_feature_extractors = feature_extractors
+        self.all_query_strategies = query_strategies
+        self.all_balance_strategies = balance_strategies
+        self.impossible_models = impossible_models
 
-    if all_query_strategies is None:
-        all_query_strategies = ["max"]
+        super().__init__(**kwargs)
 
-    if all_balancing_strategies is None:
-        all_balancing_strategies = ["double"]
-        
-    if impossible_models is None:
-        impossible_models = ["nb,doc2vec", "nb,sbert"]
-        
+    def get_dataset_specific_params(self, index, fp_dataset):
+        """Prepare dataset-specific parameters. These parameters are provided to the
+        template once for each dataset."""
 
-    """Render jobs."""
-    if not platform_sys:
-        platform_sys = platform.system()
-    if not job_file:
-        job_file = "jobs.bat" if os.name == "nt" else "jobs.sh"
+        return {
+            "input_file": fp_dataset.as_posix(),
+            "input_file_stem": fp_dataset.stem,
+            "model_seed": self.model_seed + index,
+            "init_seed": self.init_seed,
+        }
 
-    params = []
+    def get_template_specific_params(self, params):
+        """Prepare template-specific parameters. These parameters are provided to the
+        template only once."""
 
-    # initialize file handler
-    file_handler = FileHandler()
+        all_classifiers = self.all_classifiers if self.all_classifiers is not None else ["logistic", "nb", "rf"] # noqa: E501
+        all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
+        all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY] # noqa: E501
+        all_balance_strategies = self.all_balance_strategies if self.all_balance_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY] # noqa: E501
+        impossible_models = [i.split(",") for i in self.impossible_models] if self.impossible_models is not None else [['nb', 'doc2vec'], ['nb', 'sbert']] # noqa: E501
+        n_runs = self.n_runs if self.n_runs is not None else 1
 
-    # generate params for all simulations
-    for i, fp_dataset in enumerate(sorted(datasets)):
-        check_filename_dataset(fp_dataset)
-
-        fp_dataset = Path(fp_dataset)
-
-        # params for single dataset
-        params.append(
-            {
-                "input_file": fp_dataset.as_posix(),
-                "input_file_stem": fp_dataset.stem,
-                "model_seed": model_seed + i,
-                "init_seed": init_seed,
-            }
-        )
-
-    # Instantiate a ConfigTemplate object, initializing a Jinja2 environment and
-    # setting up template variables and extensions.
-    template = ConfigTemplate(fp_template)
-
-    # render scripts
-    if template.scripts is not None:
-        for s in template.scripts:
-            t_script = file_handler.render_file_from_template(
-                s, "script", output_folder=output_folder
-            )
-            export_fp = Path(scripts_folder, s)
-            file_handler.add_file(t_script, export_fp)
-
-    # render docs
-    if template.docs is not None:
-        for s in template.docs:
-            t_docs = file_handler.render_file_from_template(
-                s,
-                "doc",
-                datasets=datasets,
-                template_name=template.name
-                if template.name == "multimodel"
-                else "custom",
-                template_name_long=template.name_long,
-                template_scripts=template.scripts,
-                output_folder=output_folder,
-                job_file=job_file,
-            )
-            file_handler.add_file(t_docs, s)
-
-    # print summary to console
-    file_handler.print_summary()
-
-    # render file and return
-    return template.render(
-        {
+        return {
             "datasets": params,
-            "create_wordclouds": create_wordclouds,
-            "instances_per_query": instances_per_query,
-            "stop_if": stop_if,
-            "output_folder": output_folder,
+            "skip_wordclouds": self.skip_wordclouds,
+            "instances_per_query": self.instances_per_query,
+            "stop_if": self.stop_if,
+            "output_folder": self.output_folder,
             "n_runs": n_runs,
-            "scripts_folder": scripts_folder,
-            "platform": platform_sys,
-            "version": __version__,
-            "all_query_strategies": all_query_strategies,
+            "scripts_folder": self.scripts_folder,
+            "version": self.__version__,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
-            "all_balancing_strategies": all_balancing_strategies,
-            "impossible_models": [i.split(",") for i in impossible_models],
+            "all_query_strategies": all_query_strategies,
+            "all_balance_strategies": all_balance_strategies,
+            "impossible_models": impossible_models,
         }
-    )

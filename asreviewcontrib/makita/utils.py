@@ -12,9 +12,9 @@ class FileHandler:
     scripts.
     """
 
-    def __init__(self):
-        self.overwrite_all = False
-        self.total_files = 0
+    def __init__(self, allow_overwrite=False):
+        self.overwrite_all = allow_overwrite
+        self._total_files = 0
 
     def add_file(self, content, export_fp):
         """
@@ -50,16 +50,18 @@ class FileHandler:
 
             with open(export_fp, "w") as f:
                 f.write(content)
+                f.write("\n")
 
-            print(f"Added {export_fp}")
-            self.total_files += 1
+            print(f"Created {export_fp}")
+
+            self._total_files += 1
 
     def print_summary(self):
         """
         Print the total number of files created by the FileHandler object.
         """
 
-        print(f"{self.total_files} file(s) created.")
+        print(f"\n{self._total_files} file(s) created.")
 
     def render_file_from_template(self, name, file_type, **kwargs):
         """
@@ -78,25 +80,8 @@ class FileHandler:
             "version": __version__,
         }
 
-        print(f"Loading {file_type} {name}")
-
         # open template
         with open(Path(TEMPLATES_FP, f"{file_type}_{name}.template")) as f:
             template = Template(f.read())
 
         return template.render({**params, **kwargs})
-
-
-def check_filename_dataset(fp):
-    """
-    Check if the filename of the dataset contains any whitespace.
-
-    Args:
-    fp (str): The file path of the dataset.
-
-    Raises:
-    ValueError: If the filename of the dataset contains whitespace.
-    """
-
-    if " " in Path(fp).stem:
-        raise ValueError(f"Dataset filename '{fp}' cannot contain whitespace.")

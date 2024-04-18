@@ -12,10 +12,11 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11"
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
 ]
 license = {text = "MIT"}
-dependencies = ["asreview", "jinja2", "cfgtemplater"]
+dependencies = ["asreview>=1,<2", "jinja2", "cfgtemplater"]
 dynamic = ["version"]
 requires-python = ">=3.7"
 
@@ -25,6 +26,12 @@ repository = "https://github.com/asreview/asreview-makita"
 
 [project.entry-points."asreview.entry_points"]
 makita = "asreviewcontrib.makita.entrypoint:MakitaEntryPoint"
+
+[project.entry-points."asreview.makita.templates"]
+basic = "asreviewcontrib.makita.template_basic:TemplateBasic"
+arfi = "asreviewcontrib.makita.template_arfi:TemplateARFI"
+multimodel = "asreviewcontrib.makita.template_multimodel:TemplateMultiModel"
+multiple_models = "asreviewcontrib.makita.template_multimodel:TemplateMultiModel"
 
 [project.optional-dependencies]
 lint = ["ruff"]
@@ -41,7 +48,8 @@ packages = ["asreviewcontrib"]
 write_to = "asreviewcontrib/makita/_version.py"
 
 [tool.ruff]
-select = ["E", "F", "UP", "I", "B"]
+lint.select = ["E", "F", "UP", "I", "B"]
+include = ["**/*.py", "**/*.py.template"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 force-single-line = true
