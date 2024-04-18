@@ -171,7 +171,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             nargs="+",
             default=["double"],
             help="Balancing strategies to use. Only for template 'multimodel'. "
-            "Default: ['max']",
+            "Default: ['double']",
         )
         parser_template.add_argument(
             "--impossible_models",
