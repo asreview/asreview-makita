@@ -13,7 +13,7 @@ class TemplateMultiModel(TemplateBase):
         classifiers,
         feature_extractors,
         query_strategies,
-        balancing_strategies,
+        balance_strategies,
         impossible_models,
         n_runs,
         **kwargs,
@@ -22,7 +22,7 @@ class TemplateMultiModel(TemplateBase):
         self.all_classifiers = classifiers
         self.all_feature_extractors = feature_extractors
         self.all_query_strategies = query_strategies
-        self.all_balancing_strategies = balancing_strategies
+        self.all_balance_strategies = balance_strategies
         self.impossible_models = impossible_models
 
         super().__init__(**kwargs)
@@ -45,7 +45,7 @@ class TemplateMultiModel(TemplateBase):
         all_classifiers = self.all_classifiers if self.all_classifiers is not None else ["logistic", "nb", "rf"] # noqa: E501
         all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
         all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY] # noqa: E501
-        all_balancing_strategies = self.all_balancing_strategies if self.all_balancing_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY] # noqa: E501
+        all_balance_strategies = self.all_balance_strategies if self.all_balance_strategies is not None else [ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY] # noqa: E501
         impossible_models = [i.split(",") for i in self.impossible_models] if self.impossible_models is not None else [['nb', 'doc2vec'], ['nb', 'sbert']] # noqa: E501
         n_runs = self.n_runs if self.n_runs is not None else 1
 
@@ -61,6 +61,6 @@ class TemplateMultiModel(TemplateBase):
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
             "all_query_strategies": all_query_strategies,
-            "all_balancing_strategies": all_balancing_strategies,
+            "all_balance_strategies": all_balance_strategies,
             "impossible_models": impossible_models,
         }

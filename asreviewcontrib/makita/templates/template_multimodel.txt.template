@@ -48,7 +48,7 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
 {% for feature_extraction in all_feature_extractors %}
 {% for query_strategy in all_query_strategies %}
-{% for balance_strategy in all_balancing_strategies %}
+{% for balance_strategy in all_balance_strategies %}
 {% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
 

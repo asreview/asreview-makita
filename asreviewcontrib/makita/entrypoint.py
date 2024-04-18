@@ -133,7 +133,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             help="Query strategies to use. Only for template 'multimodel'. ",
         )
         parser_template.add_argument(
-            "--balancing_strategies",
+            "--balance_strategies",
             nargs="+",
             help="Balancing strategies to use. Only for template 'multimodel'. ",
         )
@@ -232,7 +232,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             "classifiers",
             "feature_extractors",
             "query_strategies",
-            "balancing_strategies",
+            "balance_strategies",
             "impossible_models",
             "instances_per_query",
             "stop_if",
