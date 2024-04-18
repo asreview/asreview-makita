@@ -38,7 +38,7 @@ For a tutorial on using Makita we refer to the [Exercise on Using the ASReview S
 ### Prerequisites:
 
 ```
-Python version: It is recommended to use Python 3.11. However, this package is compatible with any Python version from 3.8 to 3.12.
+Python 3.11 recommended; compatible with Python 3.8 to 3.12.
 ```
 
 ### Install the Makita extension with pip:
