@@ -175,18 +175,18 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --no_wordclouds                           Disables the generation of wordclouds.
-  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
   --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
   --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max']
+  --balancing_strategies BALANCE_STRATEGY   Balance strategies to use                       Default: ['double']
   --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
 If you want to specify certain combinations of classifiers and feature
 extractors that should and should not be used, you can use the `--classifiers`,
-`--feature_extractors`, `--query_strategies` and `--impossible_models` option. For instance, if you
+`--feature_extractors`, `--query_strategies`, `--balancing_strategies` and `--impossible_models` option. For instance, if you
 want to exclude the combinations of `nb` with `doc2vec` and `logistic` with
 `tfidf`, use the following command:
 

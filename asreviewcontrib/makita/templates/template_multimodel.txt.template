@@ -48,19 +48,20 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
 {% for feature_extraction in all_feature_extractors %}
 {% for query_strategy in all_query_strategies %}
-{% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}{{ temp.append(query_strategy)|default("", True) }}
+{% for balance_strategy in all_balancing_strategies %}
+{% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
 
 # Skipped {{ classifier }} + {{ feature_extraction }} + {{ query_strategy}} model
-{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ query_strategy }}
+{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ query_strategy }}, Balance strategy = {{balance_strategy}}
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.asreview --model {{ classifier }} --query_strategy {{query_strategy}} --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
-python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ run }}.json
+python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{balance_strategy}}_{{ run }}.asreview --model {{ classifier }} --query_strategy {{query_strategy}} --balance_strategy {{balance_strategy}} --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
+python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{balance_strategy}}_{{ run }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{balance_strategy}}_{{ run }}.json
 {% endfor %}{% endif %}
 {% endfor %}
 {% endfor %}
 {% endfor %}
-
+{% endfor %}
 
 # Generate plot and tables for dataset
 python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png --show_legend model
