@@ -12,9 +12,9 @@ measured by performance metrics, such as the Work Saved over Sampling, recall at
 Using Makita templates, different study structures can be generated to fit the needs of your very own study. If your study requires a unique template, you can create a new one and use it
 instead.
 
-With [ASReview LAB](https://github.com/asreview/asreview), you can [simulate]( https://asreview.readthedocs.io/en/latest/simulation_overview.html#overview) with the [web
+With [ASReview LAB](https://github.com/asreview/asreview), you can [simulate](https://asreview.readthedocs.io/en/latest/simulation_overview.html#overview) with the [web
 interface](https://asreview.readthedocs.io/en/latest/simulation_overview.html#simulating-with-asreview-lab), the [Python API](https://asreview.readthedocs.io/en/latest/simulation_api_example.html), or
-the [Command Line Interface (CLI)]( https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita makes use of the CLI.
+the [Command Line Interface (CLI)](https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita makes use of the CLI.
 
 What Makita does:
 
@@ -35,15 +35,21 @@ For a tutorial on using Makita we refer to the [Exercise on Using the ASReview S
 
 ## Installation
 
-Install the Makita extension with pip:
+### Prerequisites:
 
-``` bash
+```
+Python version: It is recommended to use Python 3.11. However, this package is compatible with any Python version from 3.8 to 3.12.
+```
+
+### Install the Makita extension with pip:
+
+```bash
 pip install asreview-makita
 ```
 
-For upgrading, use:
+### For upgrading, use:
 
-``` bash
+```bash
 pip install --upgrade asreview-makita
 ```
 
@@ -212,7 +218,7 @@ It is possible to overwrite the internal templates. This can be useful for simul
    [Cheatsheet](https://cheatography.com/skalavala/cheat-sheets/jinja/).
 4. Edit the Jinja template to your needs.
 5. Run the custom template with the command line option `--template PATH_TO_MY_TEMPLATE.txt.template`. For the ARFI example, this would be `asreview makita template arfi --template
-   PATH_TO_MY_TEMPLATE.txt.template`. Please keep in mind that you follow the usual steps for running a template.
+PATH_TO_MY_TEMPLATE.txt.template`. Please keep in mind that you follow the usual steps for running a template.
 6. A `jobs.sh` file should be in the your folder.
 
 Please contribute your templates back to the project by making a Pull Request. Then, we can integrate it in the core of the makita package.
@@ -222,13 +228,13 @@ Please contribute your templates back to the project by making a Pull Request. T
 Makita can add scripts to your repository. The scripts are mainly pre- and postprocessing scripts. These scripts are not (yet) available in any existing ASReview software. Therefore, they can be added manually
 with `asreview makita add-script NAME_OF_SCRIPT`.
 
-For example, the results from *ASReview datatools* are merged via the script `merge_descriptives.py` (or `merge_metrics.py` for *ASReview insights*), using:
+For example, the results from _ASReview datatools_ are merged via the script `merge_descriptives.py` (or `merge_metrics.py` for _ASReview insights_), using:
 
 1. Collect statistics (with template)
-2. Run  `asreview makita add-script merge_descriptives.py`
+2. Run `asreview makita add-script merge_descriptives.py`
 3. Run `python scripts/merge_descriptives.py`
 
-Use `-s`  (source) and `-o` (output) to tweak paths.
+Use `-s` (source) and `-o` (output) to tweak paths.
 
 Some scripts are added automatically to the folder, as they are part of the
 template. For example, the `get_plot.py` script is added to the generated folder
