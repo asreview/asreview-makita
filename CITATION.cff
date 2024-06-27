@@ -7,28 +7,9 @@ message: >-
   metadata from this file.
 type: software
 authors:
-  - given-names: Jelle
-    family-names: Teijema
-    email: j.j.teijema@uu.nl
+  - given-names: ASReview LAB developers
     affiliation: Utrecht University
-    orcid: 'https://orcid.org/0000-0001-9282-4311'
-  - given-names: Rens
-    family-names: Van de Schoot
-    email: a.g.j.vandeschoot@uu.nl
-    affiliation: Utrecht University
-    orcid: 'https://orcid.org/0000-0001-7736-2091'
-  - given-names: Gerbrich
-    family-names: Ferdinands
-    orcid: 'https://orcid.org/0000-0002-4998-3293'
-  - given-names: Peter
-    family-names: Lombaers
-    affiliation: IDFuse
-    orcid: 'https://orcid.org/0000-0002-8780-9376'
-  - given-names: Jonathan
-    family-names: De Bruin
-    email: j.debruin1@uu.nl
-    affiliation: Utrecht University
-    orcid: 'https://orcid.org/0000-0002-4297-0502'
+    email: asreview@uu.nl
 repository-code: 'https://github.com/asreview/asreview-makita'
 url: 'https://asreview.ai/'
 repository-artifact: 'https://pypi.org/project/asreview-makita/'
