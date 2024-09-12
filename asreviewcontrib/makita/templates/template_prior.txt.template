@@ -1,0 +1,27 @@
+---
+name: priors
+name_long: Prior comparison simulations template
+
+scripts:
+  - get_plot.py
+
+docs:
+  - README.md
+
+---
+
+{# This is a template for the priors method #}
+
+# version {{ version }}
+
+# Create folder structure. By default, the folder 'output' is used to store output.
+mkdir {{ output_folder }}
+mkdir {{ output_folder }}/simulation
+mkdir {{ output_folder }}/figures
+
+echo {{ filepath_with_priors }}
+echo {{ filepath_without_priors }}
+echo {{ prior_idx }}
+
+# Generate plot and tables for dataset
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png
