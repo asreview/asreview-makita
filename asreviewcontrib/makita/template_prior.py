@@ -22,7 +22,7 @@ class TemplatePrior(TemplateBase):
         self.feature_extractor = feature_extractor
         self.query_strategy = query_strategy
         self.n_runs = n_runs
-        self.datasets = []
+        self.prior_makita_datasets = []
         super().__init__(**kwargs)
 
     def get_dataset_specific_params(self, index, fp_dataset):
@@ -42,11 +42,13 @@ class TemplatePrior(TemplateBase):
         # Add the 'makita_priors' column
         if fp_dataset.name.startswith("priors_"):
             dataset["makita_priors"] = 1
+            print("Found priors dataset")
         else:
             dataset["makita_priors"] = 0
+            print("Found regular dataset")
 
         # Add the dataset to the list
-        self.datasets.append(dataset)
+        self.prior_makita_datasets.append(dataset)
 
         return {}
 
@@ -60,7 +62,9 @@ class TemplatePrior(TemplateBase):
         balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
         n_runs = self.n_runs if self.n_runs is not None else 1
 
-        combined_dataset = pd.concat(self.datasets, ignore_index=True)
+        print(0)
+
+        combined_dataset = pd.concat(self.prior_makita_datasets, ignore_index=True)
 
         generated_folder = Path("data/generated")
         generated_folder.mkdir(parents=True, exist_ok=True)
