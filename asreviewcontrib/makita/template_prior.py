@@ -34,9 +34,9 @@ class TemplatePrior(TemplateBase):
 
         # Create a DataFrame with the desired columns: label, abstract, and title
         dataset = pd.DataFrame({
-            'label': asreview_data.labels,
+            'title': asreview_data.title,
             'abstract': asreview_data.abstract,
-            'title': asreview_data.title
+            'label': asreview_data.labels,
         })
 
         # Add the 'makita_priors' column
