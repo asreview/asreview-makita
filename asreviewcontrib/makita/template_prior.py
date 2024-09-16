@@ -40,7 +40,7 @@ class TemplatePrior(TemplateBase):
         })
 
         # Add the 'makita_priors' column
-        if fp_dataset.name.startswith("priors_"):
+        if fp_dataset.name.startswith("prior_") or fp_dataset.name.startswith("priors_"):
             dataset["makita_priors"] = 1
             print("Found priors dataset")
         else:
@@ -62,20 +62,19 @@ class TemplatePrior(TemplateBase):
         balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
         n_runs = self.n_runs if self.n_runs is not None else 1
 
-        print(0)
-
-        combined_dataset = pd.concat(self.prior_makita_datasets, ignore_index=True)
-
-        generated_folder = Path("data/generated")
+        # gather and create datasets for simulation
+        generated_folder = Path("generated_data")
         generated_folder.mkdir(parents=True, exist_ok=True)
 
         filepath_with_priors = generated_folder / "dataset_with_priors.csv"
         filepath_without_priors = generated_folder / "dataset_without_priors.csv"
 
+        combined_dataset = pd.concat(self.prior_makita_datasets, ignore_index=True)
+        combined_dataset.drop(combined_dataset[combined_dataset.label == -1].index, inplace=True)
         combined_dataset.to_csv(filepath_with_priors, index=False)
-        combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(filepath_without_priors, index=False)  # noqa
+        combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(filepath_without_priors, index=False)
 
-        prior_idx = " ".join(map(str, combined_dataset[combined_dataset["makita_priors"] == 1].index.tolist()))  # noqa
+        prior_idx = " ".join(map(str, combined_dataset[combined_dataset["makita_priors"] == 1].index.tolist()))
 
         return {
             "classifier": classifier,
@@ -93,6 +92,8 @@ class TemplatePrior(TemplateBase):
             "model_seed": self.model_seed,
             "init_seed": self.init_seed,
             "filepath_with_priors": filepath_with_priors,
+            "filepath_with_priors_stem": filepath_with_priors.stem,
             "filepath_without_priors": filepath_without_priors,
+            "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx
         }
