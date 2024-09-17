@@ -28,11 +28,13 @@ jobs:
       run: |
         ruff check .
     - name: Create directories using Python
-      run: python -c "import os; [os.makedirs(path, exist_ok=True) for path in ['./tmp/basic/data-test', './tmp/arfi/data', './tmp/multimodel/data', './tmp/scripts', './tmp/synergy/data']]"
+      run: python -c "import os; [os.makedirs(path, exist_ok=True) for path in ['./tmp/basic/data-test', './tmp/arfi/data', './tmp/prior/data', './tmp/multimodel/data', './tmp/scripts', './tmp/synergy/data']]"
     - name: set up environment
       run: |
         cp .github/workflows/test_data/labels.csv ./tmp/basic/data-test/labels.csv
         cp .github/workflows/test_data/labels.csv ./tmp/arfi/data/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/prior/data/labels.csv
+        cp .github/workflows/test_data/labels.csv ./tmp/prior/data/prior_labels.csv
         cp .github/workflows/test_data/labels.csv ./tmp/multimodel/data/labels.csv
     - name: Render makita templates
       run: |
@@ -41,6 +43,9 @@ jobs:
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../arfi
         asreview makita template arfi | tee output.txt
+        grep -q "ERROR" output.txt && exit 1 || true
+        cd ../prior
+        asreview makita template prior | tee output.txt
         grep -q "ERROR" output.txt && exit 1 || true
         cd ../multimodel
         asreview makita template multimodel | tee output.txt
