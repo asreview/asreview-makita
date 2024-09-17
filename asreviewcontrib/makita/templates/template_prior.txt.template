@@ -1,5 +1,5 @@
 ---
-name: priors
+name: prior
 name_long: Prior comparison simulations template
 
 scripts:
