@@ -29,7 +29,11 @@ The performance on the following datasets is evaluated:
 
 ## Run simulation
 
-To start the simulation, run the `jobs.bat` file.
+To start the simulation, run the following command in the project directory.
+
+```sh
+sh jobs.sh
+```
 
 ## Structure
 
@@ -37,7 +41,7 @@ The following files are found in this project:
 
     📦Makita
     ├── 📜README.md
-    ├── 📜jobs.bat
+    ├── 📜jobs.sh
     ├── 📂data
     │   ├── 📜prior_Smid_2020.csv
     │   ├── 📜van_de_Schoot_2018.csv
