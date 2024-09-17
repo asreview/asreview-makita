@@ -242,7 +242,7 @@ Put at least 2 datasets in the data folder. One starting with the `prior_` prefi
 > note: `priors_` will also work, testing showed that users try to use both.
 
 ```console
-asreview makita template prior --classifier logistic --feature_extractor tfidf --n_runs 2
+asreview makita template prior --classifier logistic --feature_extractor tfidf
 ```
 
 ## Advanced usage
