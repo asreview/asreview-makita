@@ -209,7 +209,9 @@ asreview makita template multimodel --classifiers logistic nb --feature_extracto
 
 command: `prior`
 
-The prior template is used to evaluate how prior knowledge affects simulation performance. It processes all datasets from the `data` folder, grouping them into two: one containing datasets labeled `prior_[dataset_name]`, and another excluding these datasets. The template runs two simulations: the first includes both the prior and non-prior datasets, and the second uses only the non-prior datasets. This approach helps measure the impact of prior knowledge on simulation outcomes.
+The prior template evaluates how large amounts of prior knowledge might affect simulation performance. It processes two types of data in the data folder: labeled dataset(s) to be simulated and labeled dataset(s) to be used as prior knowledge. The filename(s) of the dataset(s) containing the prior knowledge should use the naming prefix `prior_[dataset_name]`. 
+
+The template runs two simulations: the first simulation uses all records from the `prior_` dataset(s) as prior knowledge, and the second uses a 1+1 randomly chosen set of prior knowledge from the non-prior knowledge dataset. Both runs simulate performance on the combined non-prior dataset(s).
 
 Running this template creates a `generated_data` folder. This folder contains two datasets; `dataset_with_priors.csv` and `dataset_without_priors.csv`. The simulations specified in the generated jobs file will use these datasets for their simulations.
 
