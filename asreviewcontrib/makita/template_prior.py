@@ -141,9 +141,13 @@ class TemplatePrior(TemplateBase):
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
         # Save the combined dataset to the appropriate file paths
-        combined_dataset.to_csv(filepath_with_priors, index=False)
+        combined_dataset.to_csv(filepath_with_priors, 
+                                index=True, 
+                                index_label='record_id')
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
-            filepath_without_priors, index=False
+            filepath_without_priors, 
+            index=True,
+            index_label='record_id'
         )
 
         # Create a string of indices for rows with prior knowledge
