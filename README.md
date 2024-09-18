@@ -239,7 +239,7 @@ optional arguments:
 
 Put at least 2 datasets in the data folder. One starting with the `prior_` prefix, and one without this prefix. 
 
-> note: `priors_` will also work, testing showed that users try to use both.
+> note: `priors_` will also work.
 
 ```console
 asreview makita template prior --classifier logistic --feature_extractor tfidf
