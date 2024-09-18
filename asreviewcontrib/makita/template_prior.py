@@ -43,7 +43,7 @@ class TemplatePrior(TemplateBase):
             {
                 "title": asreview_data.title,
                 "abstract": asreview_data.abstract,
-                "label": asreview_data.labels,
+                "label": asreview_data.labels.astype(int),
             }
         )
 
@@ -56,6 +56,12 @@ class TemplatePrior(TemplateBase):
         else:
             dataset["makita_priors"] = 0
             self._non_prior_dataset_count += 1
+
+        if -1 in dataset.label.values:
+            index = dataset.label[dataset.label.values == -1].index[0]
+            raise ValueError(
+                f"Dataset {fp_dataset} contains unlabeled record at row {index}.\nTitle: '{dataset.title[index]}'"
+            )
 
         # Add the dataset to the list
         self.prior_makita_datasets.append(dataset)
