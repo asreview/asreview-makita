@@ -211,7 +211,7 @@ command: `prior`
 
 The prior template is used to evaluate how prior knowledge affects simulation performance. It processes all datasets from the `data` folder, grouping them into two: one containing datasets labeled `prior_[dataset_name]`, and another excluding these datasets. The template runs two simulations: the first includes both the prior and non-prior datasets, and the second uses only the non-prior datasets. This approach helps measure the impact of prior knowledge on simulation outcomes.
 
-Running this template also creates a `generated_data` folder. This folder will contain two datasets; `dataset_with_priors.csv` and `dataset_without_priors.csv`. The simulations specified in the generated jobs file will use these datasets for its simulations.
+Running this template creates a `generated_data` folder. This folder contains two datasets; `dataset_with_priors.csv` and `dataset_without_priors.csv`. The simulations specified in the generated jobs file will use these datasets for their simulations.
 
 optional arguments:
 
