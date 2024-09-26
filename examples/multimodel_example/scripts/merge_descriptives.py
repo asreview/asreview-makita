@@ -18,7 +18,7 @@ Authors
 - De Bruin, Jonathan
 """
 
-# version 0.0.0
+# version 0.9.2
 
 import argparse
 import glob
