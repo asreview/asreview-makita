@@ -18,7 +18,7 @@ Authors
 - De Bruin, Jonathan
 """
 
-# version 0.0.0
+# version 0.9.2
 
 import argparse
 import glob
@@ -55,7 +55,10 @@ if __name__ == "__main__":
         description="Merge metrics of multiple states into single table."
     )
     parser.add_argument(
-        "-s", type=str, default="output/simulation/*/metrics/", help="states location"
+        "-s",
+        type=str,
+        default="output/simulation/*/metrics/",
+        help="states location",
     )
     parser.add_argument(
         "-o",
