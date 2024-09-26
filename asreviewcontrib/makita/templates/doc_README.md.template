@@ -42,12 +42,26 @@ The following files are found in this project:
     ├── 📜README.md
     ├── 📜{{ job_file }}
     ├── 📂data{% for dataset in datasets %}
-    │   ├── 📜{{ dataset.name }}{% endfor %}
+    │   ├── 📜{{ dataset.name }}{% endfor %}{% if template_name == 'prior' %}
+    ├── 📂generated_data
+    │   ├── 📜dataset_with_priors.csv
+    │   ├── 📜dataset_without_priors.csv{%endif %}
     ├── 📂scripts{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
     └── 📂{{ output_folder }}
-        ├── 📂simulation{% for dataset in datasets %}
+        ├── 📂simulation{% if template_name == 'prior' %}
+        |   ├── 📂descriptives
+        |   |   ├── 📜data_stats_dataset_with_priors.json
+        |   |   └── 📜data_stats_dataset_without_priors.json
+        |   ├── 📂state_files
+        |   |   ├── 📜sim_with_priors_`x`.asreview
+        |   |   ├── 📜sim_without_priors_`x`.asreview
+        |   |   └── 📜...
+        |   └── 📂metrics
+        |       ├── 📜metrics_sim_with_priors_`x`.json
+        |       ├── 📜metrics_sim_without_priors_`x`.json
+        |       └── 📜...{% else %}{% for dataset in datasets %}
         |   └── 📂{{ dataset.stem }}
         |       ├── 📂descriptives
         |       |   └── 📜data_stats_{{ dataset.stem }}.json
@@ -56,7 +70,7 @@ The following files are found in this project:
         |       |   └── 📜...
         |       └── 📂metrics
         |           ├── 📜metrics_sim_{{ dataset.stem }}_`x`.json
-        |           └── 📜...{% endfor %}
+        |           └── 📜...{% endfor %}{%endif %}
         ├── 📂tables
         |   ├── 📜data_descriptives.csv
         |   ├── 📜data_descriptives.xlsx{% for dataset in datasets %}
@@ -68,8 +82,15 @@ The following files are found in this project:
         |   ├── 📜metrics_sim_{{ dataset.stem }}_metrics.xlsx{% endfor %}
         |   ├── 📜metrics_summary.csv
         |   └── 📜metrics_summary.xlsx
-        └── 📂figures{% for dataset in datasets %}
+        └── 📂figures{% if template_name == 'prior' %}
+{% if not skip_wordclouds %}            ├── 📈wordcloud_dataset_with_priors.png
+            ├── 📈wordcloud_dataset_without_priors.png
+            ├── 📈wordcloud_irrelevant_dataset_with_priors.png
+            ├── 📈wordcloud_relevant_dataset_with_priors.png
+            ├── 📈wordcloud_irrelevant_dataset_without_priors.png
+            ├── 📈wordcloud_relevant_dataset_without_priors.png{%endif %}
+            └── 📈plot_recall_sim.png{% else %}{% for dataset in datasets %}
             ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
 {% if not skip_wordclouds %}            ├── 📈wordcloud_{{ dataset.stem }}.png
             ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
-            └── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{%endif %}{% endfor %}{%endif %}
+            ├── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{%endif %}{% endfor %}{%endif %}{%endif %}

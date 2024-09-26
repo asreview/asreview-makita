@@ -193,6 +193,8 @@ optional arguments:
   --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
+#### Example usage
+
 If you want to specify certain combinations of classifiers and feature
 extractors that should and should not be used, you can use the `--classifiers`,
 `--feature_extractors`, `--query_strategies`, `--balance_strategies` and `--impossible_models` option. For instance, if you
@@ -201,6 +203,48 @@ want to exclude the combinations of `nb` with `doc2vec` and `logistic` with
 
 ```console
 asreview makita template multimodel --classifiers logistic nb --feature_extractors tfidf doc2vec --query_strategies max max_random max_uncertainty cluster --impossible_models nb,doc2vec logistic,tfidf
+```
+
+### Prior template
+
+command: `prior`
+
+The prior template evaluates how large amounts of prior knowledge might affect simulation performance. It processes two types of data in the data folder: labeled dataset(s) to be simulated and labeled dataset(s) to be used as prior knowledge. The filename(s) of the dataset(s) containing the prior knowledge should use the naming prefix `prior_[dataset_name]`. 
+
+The template runs two simulations: the first simulation uses all records from the `prior_` dataset(s) as prior knowledge, and the second uses a 1+1 randomly chosen set of prior knowledge from the non-prior knowledge dataset. Both runs simulate performance on the combined non-prior dataset(s).
+
+Running this template creates a `generated_data` folder. This folder contains two datasets; `dataset_with_priors.csv` and `dataset_without_priors.csv`. The simulations specified in the generated jobs file will use these datasets for their simulations.
+
+optional arguments:
+
+```console
+  -h, --help                                show this help message and exit
+  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
+  -s DATA_FOLDER                            Dataset folder
+  -o OUTPUT_FOLDER                          Output folder
+  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
+  --template TEMPLATE                       Overwrite template with template file path.
+  --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
+  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
+  --skip_wordclouds                         Disables the generation of wordclouds.
+  --overwrite                               Automatically accepts all overwrite requests.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+```
+
+#### Example usage
+
+Put at least 2 datasets in the data folder. One starting with the `prior_` prefix, and one without this prefix. 
+
+> note: `priors_` will also work.
+
+```console
+asreview makita template prior --classifier logistic --feature_extractor tfidf
 ```
 
 ## Advanced usage

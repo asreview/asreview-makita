@@ -69,78 +69,78 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--instances_per_query",
             type=int,
             default=ASREVIEW_CONFIG.DEFAULT_N_INSTANCES,
-            help="Number of instances per query. ",
+            help="Number of instances per query.",
         )
         parser_template.add_argument(
             "--stop_if",
             type=str,
             default="min",
-            help="The number of label actions to simulate. ",
+            help="The number of label actions to simulate.",
         )
         parser_template.add_argument(
             "--n_runs",
             type=int,
-            help="Number of runs. Only for templates 'basic' and 'multimodel'. ",
+            help="Number of runs.",
         )
         parser_template.add_argument(
             "--n_priors",
             type=int,
-            help="Number of priors. Only for template 'arfi'.",
+            help="Number of priors.",
         )
         parser_template.add_argument(
             "--skip_wordclouds",
             action="store_true",
-            help="Disables the generation of wordclouds. ",
+            help="Disables the generation of wordclouds.",
         )
         parser_template.add_argument(
             "--overwrite",
             action="store_true",
-            help="Overwrite existing files in the output folder. ",
+            help="Overwrite existing files in the output folder.",
         )
         parser_template.add_argument(
             "--classifier",
             type=str,
-            help="Classifier to use. Only for template 'basic' and 'arfi'. ",
+            help="Classifier to use.",
         )
         parser_template.add_argument(
             "--feature_extractor",
             type=str,
-            help="Feature_extractor to use. Only for template 'basic' and 'arfi'. ",
+            help="Feature_extractor to use.",
         )
         parser_template.add_argument(
             "--query_strategy",
             type=str,
-            help="Query strategy to use. Only for template 'basic' and 'arfi'. ",
+            help="Query strategy to use.",
         )
         parser_template.add_argument(
             "--balance_strategy",
             type=str,
-            help="Balance strategy to use. Only for template 'basic' and 'arfi'. ",
+            help="Balance strategy to use.",
         )
         parser_template.add_argument(
             "--classifiers",
             nargs="+",
-            help="Classifiers to use. Only for template 'multimodel'. ",
+            help="Classifiers to use.",
         )
         parser_template.add_argument(
             "--feature_extractors",
             nargs="+",
-            help="Feature extractors to use. Only for template 'multimodel'. ",
+            help="Feature extractors to use.",
         )
         parser_template.add_argument(
             "--query_strategies",
             nargs="+",
-            help="Query strategies to use. Only for template 'multimodel'. ",
+            help="Query strategies to use.",
         )
         parser_template.add_argument(
             "--balance_strategies",
             nargs="+",
-            help="Balancing strategies to use. Only for template 'multimodel'. ",
+            help="Balancing strategies to use.",
         )
         parser_template.add_argument(
             "--impossible_models",
             nargs="+",
-            help="Model combinations to exclude. Only for template 'multimodel'.",
+            help="Model combinations to exclude.",
         )
 
         parser_template.set_defaults(func=self._template_cli)

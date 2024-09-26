@@ -1,0 +1,53 @@
+---
+name: prior
+name_long: Prior comparison simulations template
+
+scripts:
+  - get_plot.py
+  - merge_descriptives.py
+  - merge_metrics.py
+  - merge_tds.py
+docs:
+  - README.md
+
+---
+
+{# This is a template for the priors method #}
+
+# version {{ version }}
+
+# Create folder structure. By default, the folder 'output' is used to store output.
+mkdir {{ output_folder }}
+mkdir {{ output_folder }}/simulation
+mkdir {{ output_folder }}/simulation/metrics
+mkdir {{ output_folder }}/figures
+mkdir {{ output_folder }}/tables/metrics
+mkdir {{ output_folder }}/tables/time_to_discovery
+
+mkdir {{ output_folder }}/simulation/descriptives
+python -m asreview data describe {{ filepath_with_priors }} -o {{ output_folder }}/simulation/descriptives/data_stats_{{ filepath_with_priors_stem }}.json
+python -m asreview data describe {{ filepath_without_priors }} -o {{ output_folder }}/simulation/descriptives/data_stats_{{ filepath_without_priors_stem }}.json
+{% if not skip_wordclouds %}
+
+python -m asreview wordcloud {{ filepath_with_priors }} -o {{ output_folder }}/figures/wordcloud_{{ filepath_with_priors_stem }}.png --width 800 --height 500
+python -m asreview wordcloud {{ filepath_with_priors }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ filepath_with_priors_stem }}.png --width 800 --height 500 --relevant
+python -m asreview wordcloud {{ filepath_with_priors }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ filepath_with_priors_stem }}.png --width 800 --height 500 --irrelevant
+
+python -m asreview wordcloud {{ filepath_without_priors }} -o {{ output_folder }}/figures/wordcloud_{{ filepath_without_priors_stem }}.png --width 800 --height 500
+python -m asreview wordcloud {{ filepath_without_priors }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ filepath_without_priors_stem }}.png --width 800 --height 500 --relevant
+python -m asreview wordcloud {{ filepath_without_priors }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ filepath_without_priors_stem }}.png --width 800 --height 500 --irrelevant
+{% endif %}
+
+{% for run in range(n_runs) %}
+python -m asreview simulate {{ filepath_with_priors }} -s {{ output_folder }}/simulation/state_files/sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }} --prior_idx {{ prior_idx }}
+python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
+
+python -m asreview simulate {{ filepath_without_priors }} -s {{ output_folder }}/simulation/state_files/sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --init_seed {{ init_seed + run }} --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
+python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
+
+{% endfor %}
+# Generate plot and tables for dataset
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/state_files/ -o {{ output_folder }}/figures/plot_recall_sim.png -l filename --hide_random
+python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/metrics/ -o {{ output_folder }}/tables/metrics/metrics_sim.csv
+python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/metrics/ -o {{ output_folder }}/tables/time_to_discovery/tds_sim.csv
+python {{ scripts_folder }}/merge_descriptives.py  -s {{ output_folder }}/simulation/descriptives/
