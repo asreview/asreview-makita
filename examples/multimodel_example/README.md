@@ -1,6 +1,6 @@
 # Simulation study
 
-*This project was rendered with ASReview-Makita version 0.1.dev63+gda829f7.d20240912.*
+*This project was rendered with ASReview-Makita version 0.9.2.*
 
 This project was rendered from the Makita-multimodel template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
 
@@ -91,7 +91,7 @@ The following files are found in this project:
             ├── 📈plot_recall_van_de_Schoot_2018.png
             ├── 📈wordcloud_Smid_2020.png
             ├── 📈wordcloud_relevant_Smid_2020.png
-            ├── 📈wordcloud_irrelevant_Smid_2020.png
+            └── 📈wordcloud_irrelevant_Smid_2020.png
             ├── 📈wordcloud_van_de_Schoot_2018.png
             ├── 📈wordcloud_relevant_van_de_Schoot_2018.png
-            ├── 📈wordcloud_irrelevant_van_de_Schoot_2018.png
+            └── 📈wordcloud_irrelevant_van_de_Schoot_2018.png

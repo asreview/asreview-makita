@@ -1,6 +1,6 @@
 
 
-# version 0.1.dev63+gda829f7.d20240912
+# version 0.9.2
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
