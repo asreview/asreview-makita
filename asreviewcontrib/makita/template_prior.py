@@ -109,7 +109,8 @@ class TemplatePrior(TemplateBase):
             )
 
         # Print the number of datasets with custom and without prior knowledge
-        print(f"\nTotal datasets with custom prior knowledge: {self._prior_dataset_count}")
+        print(
+            f"\nTotal datasets with custom prior knowledge: {self._prior_dataset_count}")
         print(
             f"Total datasets without prior knowledge: {self._non_prior_dataset_count}"
         )
@@ -118,7 +119,9 @@ class TemplatePrior(TemplateBase):
         generated_folder = Path("generated_data")
         generated_folder.mkdir(parents=True, exist_ok=True)
 
-        # Set file paths for datasets with custom records for prior knowledge and without pre-set prior knowledge from which a minimal training set of 2 will be selected
+        # Set file paths for datasets with custom records for prior knowledge
+        # and without pre-set prior knowledge from which a minimal training
+        # set of 2 will be selected
         filepath_with_priors = generated_folder / "dataset_custom_priors.csv"
         filepath_without_priors = generated_folder / "dataset_without_priors.csv"
 
