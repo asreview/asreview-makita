@@ -39,8 +39,8 @@ python -m asreview wordcloud {{ filepath_without_priors }} -o {{ output_folder }
 {% endif %}
 
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ filepath_with_priors }} -s {{ output_folder }}/simulation/state_files/sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }} --prior_idx {{ prior_idx }}
-python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_with_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
+python -m asreview simulate {{ filepath_with_priors }} -s {{ output_folder }}/simulation/state_files/sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }} --prior_idx {{ prior_idx }}
+python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
 
 python -m asreview simulate {{ filepath_without_priors }} -s {{ output_folder }}/simulation/state_files/sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --init_seed {{ init_seed + run }} --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
 python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_without_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
