@@ -110,9 +110,9 @@ class TemplatePrior(TemplateBase):
 
         # Print the number of datasets with custom and without prior knowledge
         print(
-            f"\nTotal datasets with custom prior knowledge: {self._prior_dataset_count}")
+            f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
         print(
-            f"Total datasets without prior knowledge: {self._non_prior_dataset_count}"
+            f"Datasets without prior knowledge: {self._non_prior_dataset_count}"
         )
 
         # Create a directory for generated data if it doesn't already exist
