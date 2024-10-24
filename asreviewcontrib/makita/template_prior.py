@@ -95,10 +95,10 @@ class TemplatePrior(TemplateBase):
         )
         n_runs = self.n_runs if self.n_runs is not None else 1
 
-        # Check if at least one dataset with prior knowledge is present
+        # Check if at least one dataset with custom prior knowledge is present
         if self._prior_dataset_count == 0:
             raise ValueError(
-                "At least one dataset with prior knowledge (prefix 'prior_' or \
+                "At least one dataset with custom prior knowledge (prefix 'prior_' or \
                     'priors_') is required."
             )
 
@@ -108,18 +108,21 @@ class TemplatePrior(TemplateBase):
                 "At least one dataset without prior knowledge is required."
             )
 
-        # Print the number of datasets with and without prior knowledge
-        print(f"\nTotal datasets with prior knowledge: {self._prior_dataset_count}")
+        # Print the number of datasets with custom and without prior knowledge
         print(
-            f"Total datasets without prior knowledge: {self._non_prior_dataset_count}"
+            f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
+        print(
+            f"Datasets without prior knowledge: {self._non_prior_dataset_count}"
         )
 
         # Create a directory for generated data if it doesn't already exist
         generated_folder = Path("generated_data")
         generated_folder.mkdir(parents=True, exist_ok=True)
 
-        # Set file paths for datasets with and without prior knowledge
-        filepath_with_priors = generated_folder / "dataset_with_priors.csv"
+        # Set file paths for datasets with custom records for prior knowledge
+        # and without pre-set prior knowledge from which a minimal training
+        # set of 2 will be selected
+        filepath_with_priors = generated_folder / "dataset_custom_priors.csv"
         filepath_without_priors = generated_folder / "dataset_without_priors.csv"
 
         # Combine all datasets into one DataFrame and remove rows where label is -1
@@ -136,7 +139,7 @@ class TemplatePrior(TemplateBase):
             combined_dataset["makita_priors"] == 0
         ].shape[0]
 
-        # Print the number of rows with and without prior knowledge
+        # Print the number of rows with custom and without prior knowledge
         print(f"Total rows of prior knowledge: {total_rows_with_priors}")
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
@@ -150,7 +153,7 @@ class TemplatePrior(TemplateBase):
             index_label='record_id'
         )
 
-        # Create a string of indices for rows with prior knowledge
+        # Create a string of indices for rows with custom prior knowledge
         prior_idx_list = combined_dataset[
             combined_dataset["makita_priors"] == 1
         ].index.tolist()
