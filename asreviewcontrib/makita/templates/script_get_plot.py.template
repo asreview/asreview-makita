@@ -51,7 +51,7 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random
             raise ValueError(f"Invalid legend setting: '{legend_option}'") from err  # noqa: E501
 
     if label:
-        # plot_recall: series is plotted first, than random and optimal, so adjust index
+        # plot_recall: series is plotted first, then random and optimal, so adjust index
         line_index = -3 + hide_random + hide_optimal
         # add label to line
         if label not in label_to_line:
