@@ -7,9 +7,9 @@ mkdir examples
 
 synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/data -l
 
-asreview makita template arfi -s examples/data -o arfi_example --overwrite --platform linux
-asreview makita template basic -s examples/data -o basic_example --overwrite --platform linux
-asreview makita template multimodel -s examples/data -o multimodel_example --overwrite --platform linux
+asreview makita template arfi -s ./examples/data -o ./examples/arfi_example --overwrite --platform linux
+asreview makita template basic -s ./examples/data -o ./examples/basic_example --overwrite --platform linux
+asreview makita template multimodel -s ./examples/data -o ./examples/multimodel_example --overwrite --platform linux
 ren ./examples/prior_example/data/Smid_2020.csv prior_Smid_2020.csv
-asreview makita template prior -s examples/data -o prior_example --overwrite --platform linux
+asreview makita template prior -s ./examples/data -o ./examples/prior_example --overwrite --platform linux
 ```

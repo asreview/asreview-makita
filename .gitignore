@@ -1,7 +1,3 @@
-
-tmp/
-examples/*/output/
-
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
 
@@ -113,3 +109,5 @@ dmypy.json
 # End of https://www.gitignore.io/api/python
 
 asreviewcontrib/makita/_version.py
+tmp/
+examples/data/
