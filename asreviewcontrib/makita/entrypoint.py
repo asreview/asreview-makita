@@ -1,5 +1,6 @@
 import argparse
 import os
+import shutil
 from pathlib import Path
 
 from asreview import config as ASREVIEW_CONFIG
@@ -39,10 +40,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "-s", type=str, default="data", help="Dataset folder"
+            "-s", type=str, default="data", help="Dataset source folder."
+            "If not set, will use the `data` folder in the current directory as source."
         )
         parser_template.add_argument(
-            "-o", type=str, default="output", help="Output folder"
+            "-o", type=str, default="output", help="Output folder name."
         )
         parser_template.add_argument(
             "--init_seed",
@@ -58,6 +60,13 @@ class MakitaEntryPoint(BaseEntryPoint):
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
+        )
+        parser_template.add_argument(
+            "--project_folder",
+            "-p",
+            type=str, 
+            help="Set project folder path."
+            "If not set, will use current directory."
         )
         parser_template.add_argument(
             "--platform",
@@ -173,12 +182,11 @@ class MakitaEntryPoint(BaseEntryPoint):
     def _template(self, args):
         """Generate a template."""
 
-        # lowercase name
-        args.name = args.name.lower()
+        template_name = args.name.lower()
 
-        # check if args.name is in _entry_points
-        if args.name not in _entry_points(group="asreview.makita.templates").names:
-            raise ValueError(f"Template {args.name} not found.")
+        # check if template is in _entry_points
+        if template_name not in _entry_points(group="asreview.makita.templates").names:
+            raise ValueError(f"Template {template_name} not found.")
 
         # if a custom template is provided, check if it exists
         if args.template:
@@ -186,26 +194,22 @@ class MakitaEntryPoint(BaseEntryPoint):
             if not fp_template.is_file():
                 raise ValueError(f"Custom template {args.template} not found")
             print(
-                f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"  # noqa: E501
+                f"\033[33mRendering custom template {args.template} using {template_name}.\u001b[0m\n"  # noqa: E501
             )
         else:
             fp_template = None
-            print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
+            print(f"\033[33mRendering template {template_name}.\u001b[0m\n")
 
-        # load datasets
+        # get dataset source folder and load data
+        dataset_source = Path(args.s)
         datasets = (
-            list(Path(args.s).glob("*.csv"))
-            + list(Path(args.s).glob("*.ris"))
-            + list(Path(args.s).glob("*.xlsx"))
+            list(dataset_source.glob("*.csv"))
+            + list(dataset_source.glob("*.ris"))
+            + list(dataset_source.glob("*.xlsx"))
         )
-
-        # throw exception if no datasets are found
         if len(datasets) == 0:
             raise ValueError("No datasets found in the selected data folder.")
-
-        # create output folder
-        Path(args.o).parent.mkdir(parents=True, exist_ok=True)
-
+        
         # get job file
         if args.job_file is None:
             if args.platform == "Windows" or (
@@ -215,8 +219,36 @@ class MakitaEntryPoint(BaseEntryPoint):
             else:
                 args.job_file = "jobs.sh"
 
+        # If a project dir is set, use that. Else use current dir.
+        if args.project_folder:
+            project_folder = Path(args.project_folder)
+            output_folder = project_folder / Path(args.o)
+            data_folder = project_folder / Path('data')
+            scripts_folder = project_folder / Path('scripts')
+            job_file_path = project_folder / Path(args.job_file)
+        else:
+            project_folder = args.project_folder
+            output_folder = Path(args.o)
+            data_folder = Path('data')
+            scripts_folder = Path('scripts')
+            job_file_path = Path(args.job_file)
+
+        # Create folders
+        output_folder.mkdir(parents=True, exist_ok=True)
+        data_folder.mkdir(parents=True, exist_ok=True)
+        scripts_folder.mkdir(parents=True, exist_ok=True)
+
+        # Copy data if needed
+        if dataset_source != data_folder:
+            new_datasets = []
+            for dataset in datasets:
+                destination = data_folder / dataset.name
+                shutil.copyfile(dataset, destination)
+                new_datasets.append(destination)
+            datasets = new_datasets
+
         # load template
-        template = _entry_points(group="asreview.makita.templates")[args.name].load()
+        template = _entry_points(group="asreview.makita.templates")[template_name].load()  # noqa
 
         keys_of_interest = [
             "skip_wordclouds",
@@ -236,27 +268,29 @@ class MakitaEntryPoint(BaseEntryPoint):
             "impossible_models",
             "instances_per_query",
             "stop_if",
-            "job_file",
         ]
 
+        # Render the job
         job = template(
             datasets=datasets,
             fp_template=fp_template,
-            output_folder=Path(args.o),
-            scripts_folder=Path("scripts"),
+            project_folder=project_folder,
+            output_folder=output_folder,
+            scripts_folder=scripts_folder,
+            job_file=job_file_path,
             **{key: vars(args)[key] for key in keys_of_interest if key in vars(args)},
         ).render()
 
-        # convert shell to batch if needed
-        if args.job_file.endswith(".bat"):
+        if job_file_path.suffix == ".bat":
             job = f"@ echo off\nCOLOR E0{job}"
             job = job.replace("#", "::")
             job = job.replace("/", "\\")
 
         # store result in output folder
-        with open(args.job_file, "w") as f:
+        # NB: We're not using the file handler here.
+        with open(job_file_path, "w") as f:
             f.write(job)
-        print(f"Rendered template {args.name} and saved to {args.job_file}")
+        print(f"Rendered template {template_name} and saved to {job_file_path}")
 
     def _add_script_cli(self, args):
         try:
