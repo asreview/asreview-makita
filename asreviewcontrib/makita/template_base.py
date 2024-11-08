@@ -89,13 +89,13 @@ class TemplateBase:
         for document in documents:
             t_docs = self.file_handler.render_file_from_template(
                 document, "doc",
-                datasets=[dataset.parent.name / dataset.name for dataset in self.datasets],  # noqa
+                datasets=[Path(dataset.parent.name, dataset.name) for dataset in self.datasets],  # noqa
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
                 skip_wordclouds=self.skip_wordclouds,
                 output_folder=self.output_folder,
-                job_file=self.job_file,
+                job_file=self.job_file.name,
             )
             export_fp = self.project_folder / Path(document) \
                 if self.project_folder else Path(document)
