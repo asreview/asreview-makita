@@ -84,6 +84,17 @@ jobs.bat
 
 The `jobs` script runs all jobs in the project folder.
 
+---
+
+Instead of navigating to the project folder, you can select the source and output directory with arguments. The following code will create a folder `./project` and render the output to this folder. It will copy the dataset(s) from the `./data` folder.
+
+```console
+asreview makita template basic -p project -s data
+```
+```
+asreview makita template basic -p 'C:\file\path\project' -s 'C:\file\path\data_folder'
+```
+
 ### Platform support
 
 By default, ASReview Makita renders job files for the platform of rendering. It is possible to render jobs for other platforms as well. Use the argument `--platform` with values "Windows", "Linux", or "Darwin" (MacOS) to change the output.
