@@ -275,8 +275,8 @@ class MakitaEntryPoint(BaseEntryPoint):
             datasets=datasets,
             fp_template=fp_template,
             project_folder=project_folder,
-            output_folder=output_folder,
-            scripts_folder=scripts_folder,
+            output_folder=Path(args.o),
+            scripts_folder=Path('scripts'),
             job_file=job_file_path,
             **{key: vars(args)[key] for key in keys_of_interest if key in vars(args)},
         ).render()
