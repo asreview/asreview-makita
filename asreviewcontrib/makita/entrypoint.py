@@ -40,11 +40,15 @@ class MakitaEntryPoint(BaseEntryPoint):
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "-s", type=str, default="data", help="Dataset source folder."
+            "--source","-s", type=str, default="data", help="Dataset source folder."
             "If not set, will use the `data` folder in the current directory as source."
         )
         parser_template.add_argument(
-            "-o", type=str, default="output", help="Output folder name."
+            "--project_folder",
+            "-p",
+            type=str, 
+            help="Set project folder path."
+            "If not set, will use current directory."
         )
         parser_template.add_argument(
             "--init_seed",
@@ -60,13 +64,6 @@ class MakitaEntryPoint(BaseEntryPoint):
         )
         parser_template.add_argument(
             "--template", type=str, help="Overwrite template with template file path."
-        )
-        parser_template.add_argument(
-            "--project_folder",
-            "-p",
-            type=str, 
-            help="Set project folder path."
-            "If not set, will use current directory."
         )
         parser_template.add_argument(
             "--platform",
@@ -162,7 +159,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--all", "-a", action="store_true", help="Add all scripts."
         )
         parser_script.add_argument(
-            "-o",
+            "--output","-o",
             type=str,
             default="scripts",
             help="Location of the scripts folder.",
@@ -201,7 +198,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             print(f"\033[33mRendering template {template_name}.\u001b[0m\n")
 
         # get dataset source folder and load data
-        dataset_source = Path(args.s)
+        dataset_source = Path(args.source)
         datasets = (
             list(dataset_source.glob("*.csv"))
             + list(dataset_source.glob("*.ris"))
@@ -222,13 +219,13 @@ class MakitaEntryPoint(BaseEntryPoint):
         # If a project dir is set, use that. Else use current dir.
         if args.project_folder:
             project_folder = Path(args.project_folder)
-            output_folder = project_folder / Path(args.o)
+            output_folder = project_folder / Path('output')
             data_folder = project_folder / Path('data')
             scripts_folder = project_folder / Path('scripts')
             job_file_path = project_folder / Path(args.job_file)
         else:
             project_folder = args.project_folder
-            output_folder = Path(args.o)
+            output_folder = Path('output')
             data_folder = Path('data')
             scripts_folder = Path('scripts')
             job_file_path = Path(args.job_file)
@@ -275,7 +272,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             datasets=datasets,
             fp_template=fp_template,
             project_folder=project_folder,
-            output_folder=Path(args.o),
+            output_folder=Path('output'),
             scripts_folder=Path('scripts'),
             job_file=job_file_path,
             **{key: vars(args)[key] for key in keys_of_interest if key in vars(args)},
@@ -317,6 +314,6 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
             # export script
-            export_fp = Path(args.o, script)
+            export_fp = Path(args.output, script)
             self.file_handler.add_file(new_script, export_fp)
         self.file_handler.print_summary()

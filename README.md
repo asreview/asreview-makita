@@ -128,13 +128,13 @@ The basic template prepares a script for conducting a simulation study with one 
 optional arguments:
 
 ```console
-  -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
-  -s DATA_FOLDER                            Dataset folder
-  -o OUTPUT_FOLDER                          Output folder
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
-  --template TEMPLATE                       Overwrite template with template file path.
+  -h, --help                                Show this help message and exit
+  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
+  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  --init_seed INIT_SEED                     Seed of the priors                              Seed is set to 535 by default.
+  --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
+  --template TEMPLATE                       Overwrite template with template file path 
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --skip_wordclouds                         Disables the generation of wordclouds.
@@ -156,10 +156,10 @@ The ARFI template (All relevant, fixed irrelevant) prepares a script for running
 optional arguments:
 
 ```console
-  -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
-  -s DATA_FOLDER                            Dataset folder
-  -o OUTPUT_FOLDER                          Output folder
+  -h, --help                                Show this help message and exit
+  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
+  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
@@ -184,10 +184,10 @@ The multiple model template prepares a script for running a simulation study com
 optional arguments:
 
 ```console
-  -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
-  -s DATA_FOLDER                            Dataset folder
-  -o OUTPUT_FOLDER                          Output folder
+  -h, --help                                Show this help message and exit
+  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
+  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
@@ -229,10 +229,10 @@ Running this template creates a `generated_data` folder. This folder contains tw
 optional arguments:
 
 ```console
-  -h, --help                                show this help message and exit
-  --job_file JOB_FILE, -f JOB_FILE          The name of the file with jobs.                 Default jobs.bat for Windows, otherwise jobs.sh.
-  -s DATA_FOLDER                            Dataset folder
-  -o OUTPUT_FOLDER                          Output folder
+  -h, --help                                Show this help message and exit
+  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
+  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
