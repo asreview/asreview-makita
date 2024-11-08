@@ -49,9 +49,7 @@ jobs:
     - name: Execute basic template jobs file
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
-        cd tmp/synergy
-        synergy_dataset get -d van_de_Schoot_2018 -o ./data -l
-        asreview makita template basic --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 2
+        asreview makita template basic -s .github/workflows/test_data/ --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 1
         sh jobs.sh
         scitree
     - name: Upload output files
