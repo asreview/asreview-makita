@@ -111,3 +111,4 @@ dmypy.json
 asreviewcontrib/makita/_version.py
 tmp/
 examples/data/
+examples/prior_example/generated_data/*
