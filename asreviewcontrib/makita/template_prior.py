@@ -179,9 +179,11 @@ class TemplatePrior(TemplateBase):
             "version": self.__version__,
             "model_seed": self.model_seed,
             "init_seed": self.init_seed,
-            "filepath_with_priors": filepath_with_priors,
+            "filepath_with_priors": 
+            f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
             "filepath_with_priors_stem": filepath_with_priors.stem,
-            "filepath_without_priors": filepath_without_priors,
+            "filepath_without_priors": 
+            f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }
