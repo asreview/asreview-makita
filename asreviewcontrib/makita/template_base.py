@@ -79,7 +79,8 @@ class TemplateBase:
             t_script = self.file_handler.render_file_from_template(
                 s, "script", 
                 output_folder=self.output_folder)
-            export_fp = Path(self.scripts_folder, s)
+            export_fp = self.project_folder / Path(self.scripts_folder, s) \
+                if self.project_folder else Path(s)
             self.file_handler.add_file(t_script, export_fp)
 
     def render_docs(self, documents: list):
