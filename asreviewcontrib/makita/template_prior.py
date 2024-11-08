@@ -116,7 +116,7 @@ class TemplatePrior(TemplateBase):
         )
 
         # Create a directory for generated data if it doesn't already exist
-        generated_folder = Path("generated_data")
+        generated_folder = Path(self.project_folder, "generated_data")
         generated_folder.mkdir(parents=True, exist_ok=True)
 
         # Set file paths for datasets with custom records for prior knowledge
@@ -179,9 +179,11 @@ class TemplatePrior(TemplateBase):
             "version": self.__version__,
             "model_seed": self.model_seed,
             "init_seed": self.init_seed,
-            "filepath_with_priors": filepath_with_priors,
+            "filepath_with_priors": 
+            f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
             "filepath_with_priors_stem": filepath_with_priors.stem,
-            "filepath_without_priors": filepath_without_priors,
+            "filepath_without_priors": 
+            f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }

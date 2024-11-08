@@ -16,6 +16,7 @@ class TemplateBase:
         self,
         datasets,
         fp_template,
+        project_folder,
         output_folder,
         scripts_folder,
         skip_wordclouds,
@@ -29,6 +30,7 @@ class TemplateBase:
         **kwargs,
     ):
         self.datasets = datasets
+        self.project_folder = project_folder
         self.output_folder = output_folder
         self.scripts_folder = scripts_folder
         self.skip_wordclouds = skip_wordclouds
@@ -75,27 +77,29 @@ class TemplateBase:
 
         for s in scripts:
             t_script = self.file_handler.render_file_from_template(
-                s, "script", output_folder=self.output_folder
-            )
-            export_fp = Path(self.scripts_folder, s)
+                s, "script", 
+                output_folder=self.output_folder)
+            export_fp = self.project_folder / Path(self.scripts_folder, s) \
+                if self.project_folder else Path(s)
             self.file_handler.add_file(t_script, export_fp)
 
-    def render_docs(self, docs: list):
+    def render_docs(self, documents: list):
         """Render docs."""
 
-        for s in docs:
+        for document in documents:
             t_docs = self.file_handler.render_file_from_template(
-                s,
-                "doc",
-                datasets=self.datasets,
+                document, "doc",
+                datasets=[Path(dataset.parent.name, dataset.name) for dataset in self.datasets],  # noqa
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
                 skip_wordclouds=self.skip_wordclouds,
                 output_folder=self.output_folder,
-                job_file=self.job_file,
+                job_file=self.job_file.name,
             )
-            self.file_handler.add_file(t_docs, s)
+            export_fp = self.project_folder / Path(document) \
+                if self.project_folder else Path(document)
+            self.file_handler.add_file(t_docs, export_fp)
 
     def render(self):
         """Render template."""
