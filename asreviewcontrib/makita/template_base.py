@@ -89,7 +89,7 @@ class TemplateBase:
         for document in documents:
             t_docs = self.file_handler.render_file_from_template(
                 document, "doc",
-                datasets=self.datasets,
+                datasets=[dataset.parent.name / dataset.name for dataset in self.datasets],  # noqa
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,

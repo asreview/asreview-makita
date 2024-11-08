@@ -32,7 +32,7 @@ class TemplateMultiModel(TemplateBase):
         template once for each dataset."""
 
         return {
-            "input_file": fp_dataset.as_posix(),
+            "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "model_seed": self.model_seed + index,
             "init_seed": self.init_seed,

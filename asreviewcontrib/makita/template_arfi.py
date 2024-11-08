@@ -34,7 +34,7 @@ class TemplateARFI(TemplateBase):
             fp_dataset, init_seed=self.init_seed + index, n_priors=n_priors
         )
         return {
-            "input_file": fp_dataset.as_posix(),
+            "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "priors": priors,
             "model_seed": self.model_seed + index,
