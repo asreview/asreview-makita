@@ -237,12 +237,9 @@ class MakitaEntryPoint(BaseEntryPoint):
 
         # Copy data if needed
         if dataset_source != data_folder:
-            new_datasets = []
             for dataset in datasets:
                 destination = data_folder / dataset.name
                 shutil.copyfile(dataset, destination)
-                new_datasets.append(destination)
-            datasets = new_datasets
 
         # load template
         template = _entry_points(group="asreview.makita.templates")[template_name].load()  # noqa
