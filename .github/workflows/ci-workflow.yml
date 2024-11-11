@@ -49,6 +49,8 @@ jobs:
     - name: Execute basic template jobs file
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
+        mkdir basic_run
+        cd basic_run
         asreview makita template basic -s .github/workflows/test_data/ --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 1
         scitree
         sh jobs.sh
