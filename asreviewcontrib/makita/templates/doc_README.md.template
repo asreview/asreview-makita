@@ -49,7 +49,7 @@ The following files are found in this project:
     ├── 📂scripts{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
-    └── 📂{{ output_folder }}
+    └── 📂output
         ├── 📂simulation{% if template_name == 'prior' %}
         |   ├── 📂descriptives
         |   |   ├── 📜data_stats_dataset_with_priors.json
