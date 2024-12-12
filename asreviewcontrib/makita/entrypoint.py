@@ -219,11 +219,10 @@ class TemplateRenderer:
 
     def render_template(self):
         """Main function to render the template."""
-        template_name = self.args.name.lower()
-        template = self._get_template(template_name)
+        template_class = self._get_template_class(self.args.name.lower())
         fp_custom_template = self._get_custom_template(self.args.template)
-
-        job = template(
+        print(self.paths.output_folder)
+        job = template_class(
             datasets=self.datasets,
             fp_template=fp_custom_template,
             project_folder=self.paths.project_folder,
@@ -235,7 +234,7 @@ class TemplateRenderer:
 
         self._save_job(job)
 
-    def _get_template(self, template_name):
+    def _get_template_class(self, template_name):
         """Validate and load the template."""
         entry_points = _entry_points(group="asreview.makita.templates")
         if template_name not in entry_points.names:
