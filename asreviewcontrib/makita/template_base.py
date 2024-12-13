@@ -6,7 +6,6 @@ from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
-from asreviewcontrib.makita.utils import FileHandler
 
 
 class TemplateBase:
@@ -16,11 +15,11 @@ class TemplateBase:
         self,
         datasets,
         fp_template,
+        file_handler,
         project_folder,
         output_folder,
         scripts_folder,
         skip_wordclouds,
-        overwrite,
         init_seed,
         model_seed,
         balance_strategy,
@@ -40,7 +39,7 @@ class TemplateBase:
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
         self.job_file = job_file
-        self.file_handler = FileHandler(overwrite)
+        self.file_handler = file_handler
         self.__version__ = __version__
 
         self.template = ConfigTemplate(
@@ -137,5 +136,4 @@ class TemplateBase:
             else:
                 raise e
 
-        self.file_handler.print_summary()
         return rendered_output

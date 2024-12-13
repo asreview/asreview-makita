@@ -221,10 +221,12 @@ class TemplateRenderer:
         """Main function to render the template."""
         template_class = self._get_template_class(self.args.name.lower())
         fp_custom_template = self._get_custom_template(self.args.template)
-        print(self.paths.output_folder)
+        fileHandler = FileHandler(self.args.overwrite)
+
         job = template_class(
             datasets=self.datasets,
             fp_template=fp_custom_template,
+            file_handler=fileHandler,
             project_folder=self.paths.project_folder,
             output_folder=self.paths.output_folder,
             scripts_folder=self.paths.scripts_folder,
@@ -232,7 +234,15 @@ class TemplateRenderer:
             **self._get_template_args(),
         ).render()
 
-        self._save_job(job)
+        job = self._convert_job_for_platform(job)
+
+        fileHandler.add_file(content=job, export_fp=self.paths.job_file_path)
+        fileHandler.print_summary()
+
+    def _convert_job_for_platform(self, job):
+        if self.paths.job_file_path.suffix == ".bat":
+            job = f"@ echo off\nCOLOR E0{job}".replace("#", "::").replace("/", "\\")
+        return job
 
     def _get_template_class(self, template_name):
         """Validate and load the template."""
@@ -301,7 +311,6 @@ class TemplateRenderer:
         """Extract relevant arguments for the template."""
         args_to_pass = [
             "skip_wordclouds",
-            "overwrite",
             "n_runs",
             "n_priors",
             "init_seed",
@@ -323,15 +332,6 @@ class TemplateRenderer:
             for key in args_to_pass
             if key in vars(self.args)
         }
-
-    def _save_job(self, job: str):
-        """Save the rendered job file."""
-        job_file_path = self.paths.job_file_path
-        if job_file_path.suffix == ".bat":
-            job = f"@ echo off\nCOLOR E0{job}".replace("#", "::").replace("/", "\\")
-        with open(job_file_path, "w") as f:
-            f.write(job)
-        print(f"Saved rendered job to: {job_file_path}")
 
 
 @dataclass
