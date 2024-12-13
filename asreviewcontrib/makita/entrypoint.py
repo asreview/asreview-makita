@@ -266,7 +266,7 @@ class TemplateRenderer:
         paths = ProjectPaths(
             project_folder=project_folder,
             job_file=self.args.job_file,
-            platform=self.args.platform
+            platform=self.args.platform,
         )
 
         paths.output_folder_path.mkdir(parents=True, exist_ok=True)
@@ -333,6 +333,15 @@ class ProjectPaths:
     job_file: str = None
     platform: str = None
 
+    def __post_init__(self):
+        if self.job_file is None:
+            if self.platform == "Windows" or (
+                self.platform is None and os.name == "nt"
+            ):
+                self.job_file = "jobs.bat"
+            else:
+                self.job_file = "jobs.sh"
+
     @property
     def output_folder_path(self):
         return self.project_folder / self.output_folder
@@ -347,12 +356,4 @@ class ProjectPaths:
 
     @property
     def job_file_path(self):
-        return self.project_folder / (self.job_file or self._get_job_file_name())
-
-    def _get_job_file_name(self):
-        """Determine the job file name based on the platform."""
-        if self.platform == "Windows" or (
-            self.platform is None and os.name == "nt"
-        ):
-            return "jobs.bat"
-        return "jobs.sh"
+        return self.project_folder / self.job_file
