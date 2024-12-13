@@ -72,7 +72,7 @@ class TemplateBase:
 
         for s in scripts:
             t_script = self.file_handler.render_file_from_template(
-                s, "script", output_folder=self.paths.output_folder_path
+                s, "script", output_folder=self.paths.output_folder
             )
             self.file_handler.add_file(
                 t_script, Path(self.paths.scripts_folder_path, s)
