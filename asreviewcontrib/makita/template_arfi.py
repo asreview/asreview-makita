@@ -60,8 +60,8 @@ class TemplateARFI(TemplateBase):
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "init_seed": self.init_seed,
-            "output_folder": self.output_folder.name,
-            "scripts_folder": self.scripts_folder.name,
+            "output_folder": self.paths.output_folder,
+            "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
         }
 

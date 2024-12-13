@@ -227,10 +227,7 @@ class TemplateRenderer:
             datasets=self.datasets,
             fp_template=fp_custom_template,
             file_handler=fileHandler,
-            project_folder=self.paths.project_folder,
-            output_folder=self.paths.output_folder,
-            scripts_folder=self.paths.scripts_folder,
-            job_file=self.paths.job_file_path,
+            paths=self.paths,
             **self._get_template_args(),
         ).render()
 
@@ -265,25 +262,22 @@ class TemplateRenderer:
     def _setup_project_folder(self):
         """Set up project folder paths."""
         project_folder = Path(self.args.project_folder or Path.cwd())
-        output_folder = project_folder / "output"
-        data_folder = project_folder / "data"
-        scripts_folder = project_folder / "scripts"
-        job_file_path = project_folder / (
-            self.args.job_file or self._get_job_file_name()
+
+        paths = ProjectPaths(
+            project_folder=project_folder,
+            job_file=self.args.job_file,
+            platform=self.args.platform
         )
 
-        output_folder.mkdir(parents=True, exist_ok=True)
-        data_folder.mkdir(parents=True, exist_ok=True)
-        scripts_folder.mkdir(parents=True, exist_ok=True)
+        paths.output_folder_path.mkdir(parents=True, exist_ok=True)
+        paths.data_folder_path.mkdir(parents=True, exist_ok=True)
+        paths.scripts_folder_path.mkdir(parents=True, exist_ok=True)
 
-        return ProjectFolders(
-            project_folder, output_folder, data_folder, scripts_folder, job_file_path
-        )
-    
+        return paths
+
     def _load_datasets(self):
         """Load and validate datasets, returning files from the new location."""
         source_path = Path(self.args.source)
-        data_folder = self.paths.data_folder
 
         datasets = (
             list(source_path.glob("*.csv"))
@@ -296,20 +290,12 @@ class TemplateRenderer:
 
         copied_files = []
         for dataset in datasets:
-            target_path = data_folder / dataset.name
-            if source_path != data_folder:
+            target_path = self.paths.data_folder_path / dataset.name
+            if source_path != self.paths.data_folder_path:
                 shutil.copyfile(dataset, target_path)
             copied_files.append(target_path)
 
         return copied_files
-
-    def _get_job_file_name(self):
-        """Determine the job file name based on the platform."""
-        if self.args.platform == "Windows" or (
-            self.args.platform is None and os.name == "nt"
-        ):
-            return "jobs.bat"
-        return "jobs.sh"
 
     def _get_template_args(self):
         """Extract relevant arguments for the template."""
@@ -339,9 +325,34 @@ class TemplateRenderer:
 
 
 @dataclass
-class ProjectFolders:
+class ProjectPaths:
     project_folder: Path
-    output_folder: Path
-    data_folder: Path
-    scripts_folder: Path
-    job_file_path: Path
+    output_folder: str = "output"
+    data_folder: str = "data"
+    scripts_folder: str = "scripts"
+    job_file: str = None
+    platform: str = None
+
+    @property
+    def output_folder_path(self):
+        return self.project_folder / self.output_folder
+
+    @property
+    def data_folder_path(self):
+        return self.project_folder / self.data_folder
+
+    @property
+    def scripts_folder_path(self):
+        return self.project_folder / self.scripts_folder
+
+    @property
+    def job_file_path(self):
+        return self.project_folder / (self.job_file or self._get_job_file_name())
+
+    def _get_job_file_name(self):
+        """Determine the job file name based on the platform."""
+        if self.platform == "Windows" or (
+            self.platform is None and os.name == "nt"
+        ):
+            return "jobs.bat"
+        return "jobs.sh"

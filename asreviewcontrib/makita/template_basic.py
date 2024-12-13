@@ -38,10 +38,26 @@ class TemplateBasic(TemplateBase):
         template only once."""
 
         # set default values if not provided
-        classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.DEFAULT_MODEL # noqa: E501
-        feature_extractor = self.feature_extractor if self.feature_extractor is not None else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION # noqa: E501
-        query_strategy = self.query_strategy if self.query_strategy is not None else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY # noqa: E501
-        balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY # noqa: E501
+        classifier = (
+            self.classifier
+            if self.classifier is not None
+            else ASREVIEW_CONFIG.DEFAULT_MODEL
+        )
+        feature_extractor = (
+            self.feature_extractor
+            if self.feature_extractor is not None
+            else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION
+        )
+        query_strategy = (
+            self.query_strategy
+            if self.query_strategy is not None
+            else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY
+        )
+        balance_strategy = (
+            self.balance_strategy
+            if self.balance_strategy is not None
+            else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
+        )
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {
@@ -54,7 +70,7 @@ class TemplateBasic(TemplateBase):
             "skip_wordclouds": self.skip_wordclouds,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
-            "output_folder": self.output_folder.name,
-            "scripts_folder": self.scripts_folder.name,
+            "output_folder": self.paths.output_folder,
+            "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
         }
