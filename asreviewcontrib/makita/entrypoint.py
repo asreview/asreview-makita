@@ -45,13 +45,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             type=str,
             default="data",
             help="Dataset source folder. "
-            "If not set, will use the `data` folder in the current directory as source.",
+            "Default will use the `data` folder in the current directory as source.",
         )
         parser_template.add_argument(
             "--project_folder",
             "-p",
             type=str,
-            help="Set project folder path." "If not set, will use current directory.",
+            help="Set project folder path." "Default will use current directory.",
         )
         parser_template.add_argument(
             "--init_seed",
