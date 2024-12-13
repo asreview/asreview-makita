@@ -279,9 +279,9 @@ class TemplateRenderer:
         return ProjectFolders(
             project_folder, output_folder, data_folder, scripts_folder, job_file_path
         )
-
+    
     def _load_datasets(self):
-        """Load and validate datasets."""
+        """Load and validate datasets, returning files from the new location."""
         source_path = Path(self.args.source)
         data_folder = self.paths.data_folder
 
@@ -290,14 +290,18 @@ class TemplateRenderer:
             + list(source_path.glob("*.ris"))
             + list(source_path.glob("*.xlsx"))
         )
+
         if not datasets:
             raise ValueError("No datasets found in the selected data folder.")
 
-        if source_path != data_folder:
-            for dataset in datasets:
-                shutil.copyfile(dataset, data_folder / dataset.name)
+        copied_files = []
+        for dataset in datasets:
+            target_path = data_folder / dataset.name
+            if source_path != data_folder:
+                shutil.copyfile(dataset, target_path)
+            copied_files.append(target_path)
 
-        return datasets
+        return copied_files
 
     def _get_job_file_name(self):
         """Determine the job file name based on the platform."""
