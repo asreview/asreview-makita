@@ -221,20 +221,20 @@ class TemplateRenderer:
         """Main function to render the template."""
         template_class = self._get_template_class(self.args.name.lower())
         fp_custom_template = self._get_custom_template(self.args.template)
-        fileHandler = FileHandler(self.args.overwrite)
+        file_handler = FileHandler(self.args.overwrite)
 
         job = template_class(
             datasets=self.datasets,
             fp_template=fp_custom_template,
-            file_handler=fileHandler,
+            file_handler=file_handler,
             paths=self.paths,
             **self._get_template_args(),
         ).render()
 
         job = self._convert_job_for_platform(job)
 
-        fileHandler.add_file(content=job, export_fp=self.paths.job_file_path)
-        fileHandler.print_summary()
+        file_handler.add_file(content=job, export_fp=self.paths.job_file_path)
+        file_handler.print_summary()
 
     def _convert_job_for_platform(self, job):
         if self.paths.job_file_path.suffix == ".bat":
