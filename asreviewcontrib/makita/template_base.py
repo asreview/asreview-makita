@@ -115,7 +115,7 @@ class TemplateBase:
             if " " in Path(fp_dataset).stem:
                 raise ValueError(
                     f"Dataset filename '{fp_dataset}' cannot contain whitespace."
-                )  # noqa
+                )
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dataset_specific_params(i, fp_dataset))
 
