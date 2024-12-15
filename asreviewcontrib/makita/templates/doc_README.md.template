@@ -46,10 +46,10 @@ The following files are found in this project:
     ├── 📂generated_data
     │   ├── 📜dataset_with_priors.csv
     │   ├── 📜dataset_without_priors.csv{%endif %}
-    ├── {{ paths.scripts_folder }}{% for script in template_scripts %}
+    ├── 📂{{ paths.scripts_folder }}{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
-    └── {{ paths.output_folder }}
+    └── 📂{{ paths.output_folder }}
         ├── 📂simulation{% if template_name == 'prior' %}
         |   ├── 📂descriptives
         |   |   ├── 📜data_stats_dataset_with_priors.json
