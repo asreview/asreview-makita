@@ -28,11 +28,11 @@ The performance on the following datasets is evaluated:
 {% endfor %}
 ## Run simulation
 
-{% if job_file == 'jobs.sh' %}To start the simulation, run the following command in the project directory.
+To start the simulation, run the following command in the project directory.
 
-```sh
-sh jobs.sh
-```{% else %}To start the simulation, run the `{{ job_file }}` file.{% endif %}
+```{% if paths.job_file.endswith('.sh') %}sh {% endif %}
+{% if paths.job_file.endswith('.sh') %}sh {% endif %}{{ paths.job_file }}
+```
 
 {% if template_name != 'custom' %}## Structure
 
@@ -40,16 +40,16 @@ The following files are found in this project:
 
     📦Makita
     ├── 📜README.md
-    ├── 📜{{ job_file }}
-    ├── 📂data{% for dataset in datasets %}
+    ├── 📜{{ paths.job_file }}
+    ├── 📂{{ paths.data_folder }}{% for dataset in datasets %}
     │   ├── 📜{{ dataset.name }}{% endfor %}{% if template_name == 'prior' %}
     ├── 📂generated_data
     │   ├── 📜dataset_with_priors.csv
     │   ├── 📜dataset_without_priors.csv{%endif %}
-    ├── 📂scripts{% for script in template_scripts %}
+    ├── {{ paths.scripts_folder }}{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
-    └── 📂output
+    └── {{ paths.output_folder }}
         ├── 📂simulation{% if template_name == 'prior' %}
         |   ├── 📂descriptives
         |   |   ├── 📜data_stats_dataset_with_priors.json

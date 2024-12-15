@@ -92,7 +92,7 @@ class TemplateBase:
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
                 skip_wordclouds=self.skip_wordclouds,
-                job_file=self.paths.job_file,
+                paths=self.paths,
             )
             self.file_handler.add_file(
                 t_docs, Path(self.paths.project_folder, document)
