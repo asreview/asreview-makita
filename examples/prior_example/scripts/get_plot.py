@@ -15,7 +15,7 @@ Authors
 - Teijema, Jelle
 """
 
-# version 0.11.dev2+gb5cefd6.d20241108
+# version 0.9.3.dev33+g89c72db
 
 import argparse
 from pathlib import Path
@@ -26,8 +26,7 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random, 
-    hide_optimal):
+def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random):
     metadata = state.settings_metadata
     label = None
 
@@ -51,8 +50,7 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random
             raise ValueError(f"Invalid legend setting: '{legend_option}'") from err  # noqa: E501
 
     if label:
-        # plot_recall: series is plotted first, then random and optimal, so adjust index
-        line_index = -3 + hide_random + hide_optimal
+        line_index = -2 if not hide_random else -1
         # add label to line
         if label not in label_to_line:
             ax.lines[line_index].set_label(label)
@@ -62,8 +60,7 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random
             ax.lines[line_index].set_color(label_to_line[label].get_color())
             ax.lines[line_index].set_label("_no_legend_")
 
-def get_plot_from_states(states, filename, legend=None, hide_random=False, 
-    hide_optimal=False):
+def get_plot_from_states(states, filename, legend=None, hide_random=False):
     """Generate an ASReview plot from state files.
 
     Arguments
@@ -83,11 +80,9 @@ def get_plot_from_states(states, filename, legend=None, hide_random=False,
 
     for state_file in states:
         with open_state(state_file) as state:
-            plot_recall(ax, state, show_random = not hide_random, 
-                show_optimal = not hide_optimal)
+            plot_recall(ax, state, show_random = not hide_random)
             if legend:
-                _set_legend(ax, state, legend, label_to_line, state_file, 
-                    hide_random, hide_optimal)
+                _set_legend(ax, state, legend, label_to_line, state_file, hide_random)
 
     if legend:
         ax.legend(loc=4, prop={"size": 8})
@@ -111,11 +106,6 @@ if __name__ == "__main__":
         action="store_true",
         help="Hide the random line.",
     )
-    parser.add_argument(
-        "--hide_optimal",
-        action="store_true",
-        help="Hide the optimal line.",
-    )
     args = parser.parse_args()
 
     # load states
@@ -126,5 +116,4 @@ if __name__ == "__main__":
         raise FileNotFoundError(f"No state files found in {args.s}")
 
     # generate plot and save results
-    get_plot_from_states(states, args.o, args.show_legend, args.hide_random, 
-        args.hide_optimal)
+    get_plot_from_states(states, args.o, args.show_legend, args.hide_random)

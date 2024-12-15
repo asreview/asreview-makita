@@ -1,6 +1,6 @@
 # Simulation study
 
-*This project was rendered with ASReview-Makita version 0.11.dev2+gb5cefd6.d20241108.*
+*This project was rendered with ASReview-Makita version 0.9.3.dev33+g89c72db.*
 
 This project was rendered from the Makita-prior template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
 
@@ -11,7 +11,7 @@ The template is described as: 'Prior comparison simulations template'.
 This project depends on Python 3.7 or later (python.org/download), and [ASReview](https://asreview.nl/download/). Install the following dependencies to run the simulation and analysis in this project.
 
 ```sh
-pip install asreview>=1.0 asreview-insights>=1.3 asreview-datatools
+pip install asreview>=1.0 asreview-insights>=1.1.2 asreview-datatools
 ```
 
 For generating wordclouds, install the following dependencies.
