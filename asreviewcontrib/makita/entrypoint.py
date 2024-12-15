@@ -3,6 +3,7 @@ import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 from asreview import config as ASREVIEW_CONFIG
 from asreview.entry_points import BaseEntryPoint
@@ -261,10 +262,12 @@ class TemplateRenderer:
 
     def _setup_project_folder(self):
         """Set up project folder paths."""
-        project_folder = Path(self.args.project_folder or Path.cwd())
 
         paths = ProjectPaths(
-            project_folder=project_folder,
+            project_folder=Path(self.args.project_folder or Path.cwd()),
+            output_folder="output",
+            data_folder="data",
+            scripts_folder="scripts",
             job_file=self.args.job_file,
             platform=self.args.platform,
         )
@@ -326,12 +329,12 @@ class TemplateRenderer:
 
 @dataclass
 class ProjectPaths:
-    project_folder: Path
+    project_folder: Path = Path.cwd()
     output_folder: str = "output"
     data_folder: str = "data"
     scripts_folder: str = "scripts"
-    job_file: str = None
-    platform: str = None
+    job_file: Optional[str] = None
+    platform: Optional[str] = None
 
     def __post_init__(self):
         if self.job_file is None:
