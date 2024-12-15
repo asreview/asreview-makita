@@ -335,7 +335,7 @@ class ProjectPaths:
 
     def __post_init__(self):
         if self.job_file is None:
-            if self.platform.lower() == "windows" or (
+            if (self.platform and self.platform.lower() == "windows") or (
                 self.platform is None and os.name == "nt"
             ):
                 self.job_file = "jobs.bat"
