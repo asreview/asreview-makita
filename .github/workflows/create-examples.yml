@@ -1,0 +1,55 @@
+name: Update Examples
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-examples:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install asreview asreview-makita
+
+      # Generate examples
+      - name: Generate examples
+        run: |
+          synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/data -l
+          asreview makita template arfi -s ./examples/data -p ./examples/arfi_example --overwrite --platform linux
+          asreview makita template basic -s ./examples/data -p ./examples/basic_example --overwrite --platform linux
+          asreview makita template multimodel -s ./examples/data -p ./examples/multimodel_example --overwrite --platform linux
+          mv ./examples/data/Smid_2020.csv prior_Smid_2020.csv
+          asreview makita template prior -s ./examples/data -p ./examples/prior_example --overwrite --platform linux
+
+      # Clean up data files (e.g., CSV, XLSX) to avoid committing them
+      - name: Clean up data files
+        run: |
+          find ./examples -type f -name "*.csv" -delete
+
+      # Check if there are changes
+      - name: Check for changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet || echo "Changes detected"
+
+      # Commit and push changes
+      - name: Commit and push changes
+        if: ${{ success() && (steps.check-for-changes.outputs.changes == 'true') }}
+        run: |
+          git add -A
+          git commit -m "Update examples"
+          git push
