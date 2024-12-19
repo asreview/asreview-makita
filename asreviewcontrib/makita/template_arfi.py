@@ -34,7 +34,7 @@ class TemplateARFI(TemplateBase):
             fp_dataset, init_seed=self.init_seed + index, n_priors=n_priors
         )
         return {
-            "input_file": fp_dataset.as_posix(),
+            "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "priors": priors,
             "model_seed": self.model_seed + index,
@@ -60,8 +60,8 @@ class TemplateARFI(TemplateBase):
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
             "init_seed": self.init_seed,
-            "output_folder": self.output_folder,
-            "scripts_folder": self.scripts_folder,
+            "output_folder": self.paths.output_folder,
+            "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
         }
 

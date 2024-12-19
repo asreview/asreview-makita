@@ -1,6 +1,9 @@
 import argparse
 import os
+import shutil
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 from asreview import config as ASREVIEW_CONFIG
 from asreview.entry_points import BaseEntryPoint
@@ -12,7 +15,6 @@ from asreviewcontrib.makita.utils import FileHandler
 
 
 class MakitaEntryPoint(BaseEntryPoint):
-    # backward compat?
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
@@ -39,10 +41,18 @@ class MakitaEntryPoint(BaseEntryPoint):
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "-s", type=str, default="data", help="Dataset folder"
+            "--source",
+            "-s",
+            type=str,
+            default="data",
+            help="Dataset source folder. "
+            "Default will use the `data` folder in the current directory as source.",
         )
         parser_template.add_argument(
-            "-o", type=str, default="output", help="Output folder"
+            "--project_folder",
+            "-p",
+            type=str,
+            help="Set project folder path." "Default will use current directory.",
         )
         parser_template.add_argument(
             "--init_seed",
@@ -153,6 +163,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--all", "-a", action="store_true", help="Add all scripts."
         )
         parser_script.add_argument(
+            "--output",
             "-o",
             type=str,
             default="scripts",
@@ -166,97 +177,10 @@ class MakitaEntryPoint(BaseEntryPoint):
 
     def _template_cli(self, args):
         try:
-            self._template(args)
+            template_renderer = TemplateRenderer(args)
+            template_renderer.render_template()
         except Exception as err:
             print(f"\u001b[31mERROR: {err}\u001b[0m")
-
-    def _template(self, args):
-        """Generate a template."""
-
-        # lowercase name
-        args.name = args.name.lower()
-
-        # check if args.name is in _entry_points
-        if args.name not in _entry_points(group="asreview.makita.templates").names:
-            raise ValueError(f"Template {args.name} not found.")
-
-        # if a custom template is provided, check if it exists
-        if args.template:
-            fp_template = Path(args.template)
-            if not fp_template.is_file():
-                raise ValueError(f"Custom template {args.template} not found")
-            print(
-                f"\033[33mRendering custom template {args.template} using {args.name}.\u001b[0m\n"  # noqa: E501
-            )
-        else:
-            fp_template = None
-            print(f"\033[33mRendering template {args.name}.\u001b[0m\n")
-
-        # load datasets
-        datasets = (
-            list(Path(args.s).glob("*.csv"))
-            + list(Path(args.s).glob("*.ris"))
-            + list(Path(args.s).glob("*.xlsx"))
-        )
-
-        # throw exception if no datasets are found
-        if len(datasets) == 0:
-            raise ValueError("No datasets found in the selected data folder.")
-
-        # create output folder
-        Path(args.o).parent.mkdir(parents=True, exist_ok=True)
-
-        # get job file
-        if args.job_file is None:
-            if args.platform == "Windows" or (
-                args.platform is None and os.name == "nt"
-            ):  # noqa: E501
-                args.job_file = "jobs.bat"
-            else:
-                args.job_file = "jobs.sh"
-
-        # load template
-        template = _entry_points(group="asreview.makita.templates")[args.name].load()
-
-        keys_of_interest = [
-            "skip_wordclouds",
-            "overwrite",
-            "n_runs",
-            "n_priors",
-            "init_seed",
-            "model_seed",
-            "classifier",
-            "feature_extractor",
-            "query_strategy",
-            "balance_strategy",
-            "classifiers",
-            "feature_extractors",
-            "query_strategies",
-            "balance_strategies",
-            "impossible_models",
-            "instances_per_query",
-            "stop_if",
-            "job_file",
-        ]
-
-        job = template(
-            datasets=datasets,
-            fp_template=fp_template,
-            output_folder=Path(args.o),
-            scripts_folder=Path("scripts"),
-            **{key: vars(args)[key] for key in keys_of_interest if key in vars(args)},
-        ).render()
-
-        # convert shell to batch if needed
-        if args.job_file.endswith(".bat"):
-            job = f"@ echo off\nCOLOR E0{job}"
-            job = job.replace("#", "::")
-            job = job.replace("/", "\\")
-
-        # store result in output folder
-        with open(args.job_file, "w") as f:
-            f.write(job)
-        print(f"Rendered template {args.name} and saved to {args.job_file}")
 
     def _add_script_cli(self, args):
         try:
@@ -283,6 +207,156 @@ class MakitaEntryPoint(BaseEntryPoint):
             )
 
             # export script
-            export_fp = Path(args.o, script)
+            export_fp = Path(args.output, script)
             self.file_handler.add_file(new_script, export_fp)
         self.file_handler.print_summary()
+
+
+class TemplateRenderer:
+    def __init__(self, args):
+        self.args = args
+        self.paths = self._setup_project_folder()
+        self.datasets = self._load_datasets()
+
+    def render_template(self):
+        """Main function to render the template."""
+        template_class = self._get_template_class(self.args.name.lower())
+        fp_custom_template = self._get_custom_template(self.args.template)
+        file_handler = FileHandler(self.args.overwrite)
+
+        job = template_class(
+            datasets=self.datasets,
+            fp_template=fp_custom_template,
+            file_handler=file_handler,
+            paths=self.paths,
+            **self._get_template_args(),
+        ).render()
+
+        job = self._convert_job_for_platform(job)
+
+        file_handler.add_file(content=job, export_fp=self.paths.job_file_path)
+        file_handler.print_summary()
+
+    def _convert_job_for_platform(self, job):
+        if self.paths.job_file_path.suffix == ".bat":
+            job = f"@ echo off\nCOLOR E0{job}".replace("#", "::").replace("/", "\\")
+        return job
+
+    def _get_template_class(self, template_name):
+        """Validate and load the template."""
+        entry_points = _entry_points(group="asreview.makita.templates")
+        if template_name not in entry_points.names:
+            raise ValueError(f"Template {template_name} not found.")
+        return entry_points[template_name].load()
+
+    def _get_custom_template(self, template_path):
+        """Check for a custom template file."""
+        if template_path:
+            fp_template = Path(template_path)
+            if not fp_template.is_file():
+                raise ValueError(f"Custom template {template_path} not found.")
+            print(f"Using custom template: {fp_template}")
+            return fp_template
+        print("Using default template.")
+        return None
+
+    def _setup_project_folder(self):
+        """Set up project folder paths."""
+
+        paths = ProjectPaths(
+            project_folder=Path(self.args.project_folder or Path.cwd()),
+            output_folder="output",
+            data_folder="data",
+            scripts_folder="scripts",
+            job_file=self.args.job_file,
+            platform=self.args.platform,
+        )
+
+        paths.output_folder_path.mkdir(parents=True, exist_ok=True)
+        paths.data_folder_path.mkdir(parents=True, exist_ok=True)
+        paths.scripts_folder_path.mkdir(parents=True, exist_ok=True)
+
+        return paths
+
+    def _load_datasets(self):
+        """Load and validate datasets, returning files from the new location."""
+        source_path = Path(self.args.source)
+
+        datasets = (
+            list(source_path.glob("*.csv"))
+            + list(source_path.glob("*.ris"))
+            + list(source_path.glob("*.xlsx"))
+        )
+
+        if not datasets:
+            raise ValueError("No datasets found in the selected data folder.")
+
+        copied_files = []
+        for dataset in datasets:
+            target_path = self.paths.data_folder_path / dataset.name
+            if source_path != self.paths.data_folder_path:
+                shutil.copyfile(dataset, target_path)
+            copied_files.append(target_path)
+
+        return copied_files
+
+    def _get_template_args(self):
+        """Extract relevant arguments for the template."""
+        args_to_pass = [
+            "skip_wordclouds",
+            "n_runs",
+            "n_priors",
+            "init_seed",
+            "model_seed",
+            "classifier",
+            "feature_extractor",
+            "query_strategy",
+            "balance_strategy",
+            "classifiers",
+            "feature_extractors",
+            "query_strategies",
+            "balance_strategies",
+            "impossible_models",
+            "instances_per_query",
+            "stop_if",
+        ]
+        return {
+            key: vars(self.args).get(key)
+            for key in args_to_pass
+            if key in vars(self.args)
+        }
+
+
+@dataclass
+class ProjectPaths:
+    project_folder: Path = Path.cwd()
+    output_folder: str = "output"
+    data_folder: str = "data"
+    scripts_folder: str = "scripts"
+    job_file: Optional[str] = None
+    platform: Optional[str] = None
+
+    def __post_init__(self):
+        if self.job_file is None:
+            if (self.platform and self.platform.lower() == "windows") or (
+                self.platform is None and os.name == "nt"
+            ):
+                self.job_file = "jobs.bat"
+            else:
+                self.job_file = "jobs.sh"
+
+    @property
+    def output_folder_path(self):
+        return self.project_folder / self.output_folder
+
+    @property
+    def data_folder_path(self):
+        return self.project_folder / self.data_folder
+
+    @property
+    def scripts_folder_path(self):
+        return self.project_folder / self.scripts_folder
+
+    @property
+    def job_file_path(self):
+        return self.project_folder / self.job_file
