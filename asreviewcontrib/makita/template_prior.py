@@ -56,7 +56,7 @@ class TemplatePrior(TemplateBase):
             or len(asreview_data.labels) == 0
         ):
             raise ValueError(
-                f"Error: {fp_dataset} has no labels. The dataset cannot be processed."
+                f"{fp_dataset} has no labels. The dataset cannot be processed."
             )
 
         # Create a DataFrame with the desired columns: label, abstract, and title
