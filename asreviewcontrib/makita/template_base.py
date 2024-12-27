@@ -6,6 +6,7 @@ from cfgtemplater.config_template import ConfigTemplate
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
+from asreviewcontrib.makita.entrypoint import ProjectPaths
 from asreviewcontrib.makita.utils import FileHandler
 
 
@@ -16,29 +17,25 @@ class TemplateBase:
         self,
         datasets,
         fp_template,
-        output_folder,
-        scripts_folder,
+        file_handler: FileHandler,
+        paths: ProjectPaths,
         skip_wordclouds,
-        overwrite,
         init_seed,
         model_seed,
         balance_strategy,
         instances_per_query,
         stop_if,
-        job_file,
         **kwargs,
     ):
         self.datasets = datasets
-        self.output_folder = output_folder
-        self.scripts_folder = scripts_folder
+        self.paths = paths
         self.skip_wordclouds = skip_wordclouds
         self.init_seed = init_seed
         self.model_seed = model_seed
         self.balance_strategy = balance_strategy
         self.instances_per_query = instances_per_query
         self.stop_if = stop_if
-        self.job_file = job_file
-        self.file_handler = FileHandler(overwrite)
+        self.file_handler = file_handler
         self.__version__ = __version__
 
         self.template = ConfigTemplate(
@@ -75,27 +72,31 @@ class TemplateBase:
 
         for s in scripts:
             t_script = self.file_handler.render_file_from_template(
-                s, "script", output_folder=self.output_folder
+                s, "script", output_folder=self.paths.output_folder
             )
-            export_fp = Path(self.scripts_folder, s)
-            self.file_handler.add_file(t_script, export_fp)
+            self.file_handler.add_file(
+                t_script, Path(self.paths.scripts_folder_path, s)
+            )
 
-    def render_docs(self, docs: list):
+    def render_docs(self, documents: list):
         """Render docs."""
 
-        for s in docs:
+        for document in documents:
             t_docs = self.file_handler.render_file_from_template(
-                s,
+                document,
                 "doc",
-                datasets=self.datasets,
+                datasets=[
+                    Path(dataset.parent.name, dataset.name) for dataset in self.datasets
+                ],
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
                 skip_wordclouds=self.skip_wordclouds,
-                output_folder=self.output_folder,
-                job_file=self.job_file,
+                paths=self.paths,
             )
-            self.file_handler.add_file(t_docs, s)
+            self.file_handler.add_file(
+                t_docs, Path(self.paths.project_folder, document)
+            )
 
     def render(self):
         """Render template."""
@@ -114,7 +115,7 @@ class TemplateBase:
             if " " in Path(fp_dataset).stem:
                 raise ValueError(
                     f"Dataset filename '{fp_dataset}' cannot contain whitespace."
-                )  # noqa
+                )
             fp_dataset = Path(fp_dataset)
             params.append(self.get_dataset_specific_params(i, fp_dataset))
 
@@ -135,5 +136,4 @@ class TemplateBase:
             else:
                 raise e
 
-        self.file_handler.print_summary()
         return rendered_output
