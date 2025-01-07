@@ -12,7 +12,7 @@ from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.utils import FileHandler
 
 
-class MakitaEntryPoint():
+class MakitaEntryPoint:
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
