@@ -63,7 +63,7 @@ Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
 ### Prerequisites:
 
 ```
-Requires Python 3.8 or higher.
+Requires Python 3.10 or higher.
 ```
 
 ### Install the Makita extension with pip:
