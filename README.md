@@ -5,6 +5,7 @@ version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py
 [![Downloads](https://static.pepy.tech/badge/asreview-makita)](https://pepy.tech/project/asreview-makita)
 ![PyPI - License](https://img.shields.io/pypi/l/asreview-makita)
 [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.simpa.2024.100663-blue)](https://doi.org/10.1016/j.simpa.2024.100663)
 
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT**
 **A**utomatic) is a workflow generator for simulation studies using the command
@@ -81,35 +82,59 @@ installed correctly, `asreview --help` should list Makita as an option.
 
 ## Getting started
 
-You can create the framework and code for your own simulation study in 4 steps.
+Follow these steps to set up the framework and code for your simulation study:
 
-1. Create an project folder on your computer.
-2. Create a subfolder named `data` and fill it using one or more datasets.
-3. Using your preferred command line tool, `cd` into the project folder.
-4. Create a simulation study from a template found in the [list of
-   templates](#templates) via
+1. Prepare Your Datasets  
+   Place all your datasets in a single folder.
 
+2. Choose a Project Folder  
+   Decide on a path for your project folder. You don't need to create the folder manually; `makita` will handle it for you.
+
+3. Install ASReview Makita  
+   Use your preferred command-line tool to install Makita:
 ```console
-asreview makita template NAME_OF_TEMPLATE
+pip install asreview-makita
+```
+
+4. Generate a Simulation Study  
+   Select a template from the [list of templates](#templates) and create your study using:  
+```console
+asreview makita template NAME_OF_TEMPLATE -d 'path/to/your/datasets' -p 'path/to/your/project-folder'
 ```
 
 where `NAME_OF_TEMPLATE` is one of the templates (e.g. `asreview makita template
 arfi`).
 
-Your simulation study is now properly set up and ready for use. To start the
-simulations, execute the following shell script in the project folder:
+To start the simulations, run the appropriate script in your project folder:
 
 ```console
+# On Unix-based systems (e.g., macOS, Linux)
 sh jobs.sh
-```
 
-Or on Windows:
-
-```console
+# On Windows
 jobs.bat
 ```
 
 The `jobs` script runs all jobs in the project folder.
+
+---
+
+If you run the makita command in the directory where you want to generate your
+project, you don't need to specify the project folder using the -p flag.
+Similarly, if your datasets are stored in a folder named data within the same
+location, you can omit the -d flag.
+
+For example:
+
+```console
+asreview makita template basic
+```
+
+is equivalent to:
+
+```console
+asreview makita template basic -p 'current/working/directory' -d 'current/working/directory/data'
+```
 
 ---
 
@@ -167,8 +192,8 @@ optional arguments:
 ```console
   -h, --help                                Show this help message and exit
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
-  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors                              Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path 
@@ -199,8 +224,8 @@ optional arguments:
 ```console
   -h, --help                                Show this help message and exit
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
-  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
@@ -229,8 +254,8 @@ optional arguments:
 ```console
   -h, --help                                Show this help message and exit
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
-  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
@@ -286,8 +311,8 @@ optional arguments:
 ```console
   -h, --help                                Show this help message and exit
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -s, --source DATA_FOLDER                  The dataset source folder                       Default: `Data` folder in working directory
-  -f, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
