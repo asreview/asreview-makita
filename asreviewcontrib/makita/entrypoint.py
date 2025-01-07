@@ -35,14 +35,14 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument("name", type=str, help="The name of the template.")
         parser_template.add_argument(
             "--job_file",
-            "-f",
+            "-j",
             type=str,
             help="The name of the file with jobs. Default "
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "--source",
-            "-s",
+            "--data_folder",
+            "-d",
             type=str,
             default="data",
             help="Dataset source folder. "
@@ -280,7 +280,7 @@ class TemplateRenderer:
 
     def _load_datasets(self):
         """Load and validate datasets, returning files from the new location."""
-        source_path = Path(self.args.source)
+        source_path = Path(self.args.data_folder)
 
         datasets = (
             list(source_path.glob("*.csv"))
