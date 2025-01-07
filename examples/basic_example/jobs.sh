@@ -1,6 +1,6 @@
 
 
-# version 0.1.dev1+gd662348
+# version 0.1.dev1+g755f664
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
@@ -30,7 +30,7 @@ python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordclou
 
 # Simulate runs
 mkdir output/simulation/prior_Smid_2020/state_files
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --init_seed 535 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --init_seed 535 --seed 165 -m nb -e tfidf -q max -b balanced --n_instances 1 --stop_if min
 python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020.json
 
 # Generate plot and tables for dataset
@@ -57,7 +57,7 @@ python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordc
 
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --init_seed 535 --seed 166 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --init_seed 535 --seed 166 -m nb -e tfidf -q max -b balanced --n_instances 1 --stop_if min
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018.json
 
 # Generate plot and tables for dataset
