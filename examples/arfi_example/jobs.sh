@@ -1,6 +1,6 @@
 
 
-# version 0.9.2
+# version 0.1.dev1+g8d2c849
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
@@ -11,82 +11,82 @@ mkdir output/tables/time_to_discovery
 mkdir output/figures
 
 ##################################
-### DATASET: Smid_2020
+### DATASET: prior_Smid_2020
 ##################################
 # Create output folder
-mkdir output/simulation/Smid_2020/
-mkdir output/simulation/Smid_2020/metrics
+mkdir output/simulation/prior_Smid_2020/
+mkdir output/simulation/prior_Smid_2020/metrics
 
 # Collect descriptives about the dataset
-mkdir output/simulation/Smid_2020/descriptives
-python -m asreview data describe data/Smid_2020.csv -o output/simulation/Smid_2020/descriptives/data_stats_Smid_2020.json
+mkdir output/simulation/prior_Smid_2020/descriptives
+python -m asreview data describe data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
 
 # Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_Smid_2020.png --width 800 --height 500
-python -m asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_relevant_Smid_2020.png --width 800 --height 500 --relevant
-python -m asreview wordcloud data/Smid_2020.csv -o output/figures/wordcloud_irrelevant_Smid_2020.png --width 800 --height 500 --irrelevant
+python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_prior_Smid_2020.png --width 800 --height 500
+python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_relevant_prior_Smid_2020.png --width 800 --height 500 --relevant
+python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_irrelevant_prior_Smid_2020.png --width 800 --height 500 --irrelevant
 
 # Simulate runs, collect metrics and create plots
-mkdir output/simulation/Smid_2020/state_files
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_31.asreview --prior_record_id 31 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_31.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_31.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_121.asreview --prior_record_id 121 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_121.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_121.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_122.asreview --prior_record_id 122 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_122.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_122.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_216.asreview --prior_record_id 216 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_216.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_216.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_520.asreview --prior_record_id 520 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_520.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_520.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_526.asreview --prior_record_id 526 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_526.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_526.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_672.asreview --prior_record_id 672 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_672.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_672.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_763.asreview --prior_record_id 763 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_763.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_763.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_810.asreview --prior_record_id 810 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_810.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_810.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1000.asreview --prior_record_id 1000 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1000.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1000.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1063.asreview --prior_record_id 1063 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1063.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1063.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1195.asreview --prior_record_id 1195 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1195.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1195.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1203.asreview --prior_record_id 1203 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1203.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1203.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1257.asreview --prior_record_id 1257 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1257.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1257.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1429.asreview --prior_record_id 1429 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1429.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1429.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1534.asreview --prior_record_id 1534 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1534.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1534.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1809.asreview --prior_record_id 1809 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1809.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1809.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1820.asreview --prior_record_id 1820 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1820.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1820.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1876.asreview --prior_record_id 1876 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1876.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1876.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_1877.asreview --prior_record_id 1877 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1877.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1877.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2067.asreview --prior_record_id 2067 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2067.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2067.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2070.asreview --prior_record_id 2070 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2070.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2070.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2241.asreview --prior_record_id 2241 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2241.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2241.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2276.asreview --prior_record_id 2276 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2276.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2276.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2279.asreview --prior_record_id 2279 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2279.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2279.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2307.asreview --prior_record_id 2307 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2307.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2307.json
-python -m asreview simulate data/Smid_2020.csv -s output/simulation/Smid_2020/state_files/sim_Smid_2020_2452.asreview --prior_record_id 2452 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2452.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2452.json
+mkdir output/simulation/prior_Smid_2020/state_files
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_31.asreview --prior_record_id 31 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_31.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_31.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_121.asreview --prior_record_id 121 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_121.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_121.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_122.asreview --prior_record_id 122 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_122.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_122.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_216.asreview --prior_record_id 216 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_216.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_216.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_520.asreview --prior_record_id 520 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_520.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_520.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_526.asreview --prior_record_id 526 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_526.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_526.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_672.asreview --prior_record_id 672 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_672.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_672.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_763.asreview --prior_record_id 763 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_763.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_763.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_810.asreview --prior_record_id 810 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_810.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_810.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1000.asreview --prior_record_id 1000 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1000.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1000.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1063.asreview --prior_record_id 1063 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1063.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1063.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1195.asreview --prior_record_id 1195 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1195.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1195.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1203.asreview --prior_record_id 1203 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1203.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1203.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1257.asreview --prior_record_id 1257 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1257.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1257.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1429.asreview --prior_record_id 1429 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1429.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1429.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1534.asreview --prior_record_id 1534 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1534.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1534.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1809.asreview --prior_record_id 1809 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1809.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1809.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1820.asreview --prior_record_id 1820 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1820.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1820.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1876.asreview --prior_record_id 1876 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1876.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1876.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1877.asreview --prior_record_id 1877 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1877.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1877.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2067.asreview --prior_record_id 2067 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2067.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2067.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2070.asreview --prior_record_id 2070 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2070.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2070.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2241.asreview --prior_record_id 2241 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2241.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2241.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2276.asreview --prior_record_id 2276 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2276.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2276.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2279.asreview --prior_record_id 2279 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2279.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2279.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2307.asreview --prior_record_id 2307 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2307.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2307.json
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2452.asreview --prior_record_id 2452 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -m nb -e tfidf -q max -b double --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2452.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2452.json
 
 # Generate plot and tables for dataset
-python scripts/get_plot.py -s output/simulation/Smid_2020/state_files/ -o output/figures/plot_recall_sim_Smid_2020.png --show_legend model
-python scripts/merge_metrics.py -s output/simulation/Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_Smid_2020.csv
-python scripts/merge_tds.py -s output/simulation/Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_Smid_2020.csv
+python scripts/get_plot.py -s output/simulation/prior_Smid_2020/state_files/ -o output/figures/plot_recall_sim_prior_Smid_2020.png --show_legend model
+python scripts/merge_metrics.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_prior_Smid_2020.csv
+python scripts/merge_tds.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_prior_Smid_2020.csv
 
 ##################################
 ### DATASET: van_de_Schoot_2018
@@ -191,3 +191,4 @@ python scripts/merge_tds.py -s output/simulation/van_de_Schoot_2018/metrics/ -o 
 # Merge descriptives and metrics
 python scripts/merge_descriptives.py
 python scripts/merge_metrics.py
+
