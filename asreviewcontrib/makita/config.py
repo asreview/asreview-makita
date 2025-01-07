@@ -3,7 +3,7 @@ from pathlib import Path
 
 TEMPLATES_FP = Path(Path(__file__).parent, "templates")
 
-@dataclass
+@dataclass(frozen=True)
 class ASReviewConfig:
     DEFAULT_MODEL: str = "nb"
     DEFAULT_FEATURE_EXTRACTION: str = "tfidf"
