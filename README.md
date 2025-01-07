@@ -7,6 +7,7 @@ version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py
 [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.simpa.2024.100663-blue)](https://doi.org/10.1016/j.simpa.2024.100663)
 
+
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT**
 **A**utomatic) is a workflow generator for simulation studies using the command
 line interface of [ASReview
@@ -134,20 +135,6 @@ is equivalent to:
 
 ```console
 asreview makita template basic -p 'current/working/directory' -d 'current/working/directory/data'
-```
-
----
-
-Instead of navigating to the project folder, you can select the project and data
-source directory with arguments. The following code will create a folder
-`./project` and render the template to this folder. It will copy the dataset(s)
-from the `./data` folder.
-
-```console
-asreview makita template basic -p project -s data
-```
-```
-asreview makita template basic -p 'C:\file\path\project' -s 'C:\file\path\data_folder'
 ```
 
 ### Platform support
