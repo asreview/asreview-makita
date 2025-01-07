@@ -137,7 +137,7 @@ class TemplatePrior(TemplateBase):
         )
 
         # Create a directory for generated data if it doesn't already exist
-        generated_folder = Path("generated_data")
+        generated_folder = Path(self.paths.project_folder, "generated_data")
         generated_folder.mkdir(parents=True, exist_ok=True)
 
         # Set file paths for datasets with custom records for prior knowledge
@@ -195,14 +195,16 @@ class TemplatePrior(TemplateBase):
             "skip_wordclouds": self.skip_wordclouds,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
-            "output_folder": self.output_folder,
-            "scripts_folder": self.scripts_folder,
+            "output_folder": self.paths.output_folder,
+            "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
             "model_seed": self.model_seed,
             "init_seed": self.init_seed,
-            "filepath_with_priors": filepath_with_priors,
+            "filepath_with_priors": 
+            f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
             "filepath_with_priors_stem": filepath_with_priors.stem,
-            "filepath_without_priors": filepath_without_priors,
+            "filepath_without_priors": 
+            f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }

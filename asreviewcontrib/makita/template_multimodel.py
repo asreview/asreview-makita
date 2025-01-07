@@ -32,7 +32,7 @@ class TemplateMultiModel(TemplateBase):
         template once for each dataset."""
 
         return {
-            "input_file": fp_dataset.as_posix(),
+            "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "model_seed": self.model_seed + index,
             "init_seed": self.init_seed,
@@ -54,9 +54,9 @@ class TemplateMultiModel(TemplateBase):
             "skip_wordclouds": self.skip_wordclouds,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
-            "output_folder": self.output_folder,
+            "output_folder": self.paths.output_folder,
+            "scripts_folder": self.paths.scripts_folder,
             "n_runs": n_runs,
-            "scripts_folder": self.scripts_folder,
             "version": self.__version__,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
