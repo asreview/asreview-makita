@@ -25,15 +25,11 @@ jobs:
       - name: Generate examples
         run: |
           synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/data -l
+          mv ./examples/data/Smid_2020.csv ./examples/data/prior_Smid_2020.csv
+          ls ./example/data
           asreview makita template arfi -d ./examples/data -p ./examples/arfi_example --overwrite --platform linux
           asreview makita template basic -d ./examples/data -p ./examples/basic_example --overwrite --platform linux
           asreview makita template multimodel -d./examples/data -p ./examples/multimodel_example --overwrite --platform linux
-          if [ -f ./examples/data/Smid_2020.csv ]; then
-            mv ./examples/data/Smid_2020.csv prior_Smid_2020.csv
-          else
-            echo "File Smid_2020.csv not found in ./examples/data/"
-            exit 1
-          fi
           asreview makita template prior -d./examples/data -p ./examples/prior_example --overwrite --platform linux
 
       # Clean up data files (e.g., CSV, XLSX) to avoid committing them
