@@ -23,7 +23,7 @@ jobs:
           ${{ runner.os }}-pip-
     - name: Install dependencies
       run: |
-        pip install . ruff scitree asreview-datatools asreview-insights synergy-dataset
+        pip install . ruff scitree synergy-dataset
     - name: Lint python with ruff
       run: |
         ruff check .
@@ -49,6 +49,7 @@ jobs:
     - name: Execute basic template jobs file
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
+        pip install asreview-datatools asreview-insights
         mkdir basic_run
         cd basic_run
         asreview makita template basic -d ../.github/workflows/test_data/ --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 1
