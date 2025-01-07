@@ -1,9 +1,9 @@
 """Render ARFI template."""
 
 import numpy as np
-from asreview import config as ASREVIEW_CONFIG
 from asreview.data import ASReviewData
 
+from asreviewcontrib.makita.config import ASReviewConfig as ASREVIEW_CONFIG
 from asreviewcontrib.makita.template_base import TemplateBase
 
 

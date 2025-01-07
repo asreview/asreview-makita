@@ -2,9 +2,9 @@ import warnings
 from pathlib import Path
 
 import pandas as pd
-from asreview import config as ASREVIEW_CONFIG
 from asreview.data import load_data
 
+from asreviewcontrib.makita.config import ASReviewConfig as ASREVIEW_CONFIG
 from asreviewcontrib.makita.template_base import TemplateBase
 
 # Suppress FutureWarning messages
