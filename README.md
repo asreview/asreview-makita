@@ -5,6 +5,8 @@ version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py
 [![Downloads](https://static.pepy.tech/badge/asreview-makita)](https://pepy.tech/project/asreview-makita)
 ![PyPI - License](https://img.shields.io/pypi/l/asreview-makita)
 [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
+[![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.simpa.2024.100663-blue)](https://doi.org/10.1016/j.simpa.2024.100663)
+
 
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT**
 **A**utomatic) is a workflow generator for simulation studies using the command

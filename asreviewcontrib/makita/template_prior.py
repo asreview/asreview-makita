@@ -38,6 +38,27 @@ class TemplatePrior(TemplateBase):
         # Load the dataset using load_data
         asreview_data = load_data(fp_dataset)
 
+        if (
+            not hasattr(asreview_data, "title")
+            or asreview_data.title is None
+            or len(asreview_data.title) == 0
+        ):
+            print(f"Warning: {fp_dataset} has no title.")
+        if (
+            not hasattr(asreview_data, "abstract")
+            or asreview_data.abstract is None
+            or len(asreview_data.abstract) == 0
+        ):
+            print(f"Warning: {fp_dataset} has no abstract.")
+        if (
+            not hasattr(asreview_data, "labels")
+            or asreview_data.labels is None
+            or len(asreview_data.labels) == 0
+        ):
+            raise ValueError(
+                f"{fp_dataset} has no labels. The dataset cannot be processed."
+            )
+
         # Create a DataFrame with the desired columns: label, abstract, and title
         dataset = pd.DataFrame(
             {
