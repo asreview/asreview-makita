@@ -5,16 +5,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from asreview import config as ASREVIEW_CONFIG
-from asreview.entry_points import BaseEntryPoint
-from asreview.utils import _entry_points
+from asreview.extensions import extensions
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.utils import FileHandler
 
 
-class MakitaEntryPoint(BaseEntryPoint):
+class MakitaEntryPoint():
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
@@ -78,7 +76,7 @@ class MakitaEntryPoint(BaseEntryPoint):
         parser_template.add_argument(
             "--instances_per_query",
             type=int,
-            default=ASREVIEW_CONFIG.DEFAULT_N_INSTANCES,
+            default=1,
             help="Number of instances per query.",
         )
         parser_template.add_argument(
@@ -244,7 +242,7 @@ class TemplateRenderer:
 
     def _get_template_class(self, template_name):
         """Validate and load the template."""
-        entry_points = _entry_points(group="asreview.makita.templates")
+        entry_points = extensions(group="makita.templates")
         if template_name not in entry_points.names:
             raise ValueError(f"Template {template_name} not found.")
         return entry_points[template_name].load()
