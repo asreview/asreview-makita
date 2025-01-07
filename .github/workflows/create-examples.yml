@@ -37,17 +37,16 @@ jobs:
         run: |
           find ./examples -type f -name "*.csv" -delete
 
-      # Check if there are changes
-      - name: Check for changes
+      # Check for changes, commit, and push
+      - name: Commit and push changes if any
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet || echo "Changes detected"
-
-      # Commit and push changes
-      - name: Commit and push changes
-        if: ${{ success() && (steps.check-for-changes.outputs.changes == 'true') }}
-        run: |
-          git add -A
-          git commit -m "Update examples"
-          git push
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing and pushing."
+            git add -A
+            git commit -m "Update examples"
+            git push
+          else
+            echo "No changes detected. Skipping commit and push."
+          fi
