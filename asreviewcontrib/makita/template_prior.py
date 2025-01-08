@@ -125,7 +125,7 @@ class TemplatePrior(TemplateBase):
         # Combine all datasets into one DataFrame and remove rows where label is -1
         combined_dataset = pd.concat(self.prior_makita_datasets, ignore_index=True)
         combined_dataset.drop(
-            combined_dataset[combined_dataset.label == -1].index, inplace=True
+            combined_dataset[combined_dataset.included == -1].index, inplace=True
         )
 
         # Calculate the total number of rows with and without prior knowledge
