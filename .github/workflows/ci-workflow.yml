@@ -50,6 +50,16 @@ jobs:
       if: ${{ matrix.os != 'windows-latest' }}
       run: |
         pip install asreview-datatools asreview-insights
+
+        CURRENT_ASREVIEW_VERSION=$(python -c "import asreview; print(asreview.__version__)")
+
+        if [[ $CURRENT_ASREVIEW_VERSION == 2* || $CURRENT_ASREVIEW_VERSION > 2 ]]; then
+          echo "Using asreview version $CURRENT_ASREVIEW_VERSION"
+        else
+          echo "Skipping step: incompatible asreview version $CURRENT_ASREVIEW_VERSION"
+          exit 0
+        fi
+
         mkdir basic_run
         cd basic_run
         asreview makita template basic -d ../.github/workflows/test_data/ --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 1
