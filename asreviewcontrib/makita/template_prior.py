@@ -2,7 +2,8 @@ import warnings
 from pathlib import Path
 
 import pandas as pd
-from asreview.data import load_data
+from asreview import load_dataset
+from asreview.data import DataStore
 
 from asreviewcontrib.makita.config import ASReviewConfig as ASREVIEW_CONFIG
 from asreviewcontrib.makita.template_base import TemplateBase
@@ -35,58 +36,33 @@ class TemplatePrior(TemplateBase):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
-        # Load the dataset using load_data
-        asreview_data = load_data(fp_dataset)
+        records = load_dataset(fp_dataset, dataset_id=Path(fp_dataset).name)
+        data_store = DataStore(":memory:")
+        data_store.create_tables()
+        data_store.add_records(records)
+        df = data_store.get_df()
 
-        if (
-            not hasattr(asreview_data, "title")
-            or asreview_data.title is None
-            or len(asreview_data.title) == 0
-        ):
-            print(f"Warning: {fp_dataset} has no title.")
-        if (
-            not hasattr(asreview_data, "abstract")
-            or asreview_data.abstract is None
-            or len(asreview_data.abstract) == 0
-        ):
-            print(f"Warning: {fp_dataset} has no abstract.")
-        if (
-            not hasattr(asreview_data, "labels")
-            or asreview_data.labels is None
-            or len(asreview_data.labels) == 0
-        ):
-            raise ValueError(
-                f"{fp_dataset} has no labels. The dataset cannot be processed."
-            )
+        if df['title'].fillna('').apply(lambda x: x.strip()).eq('').all():
+            print(f"Warning: {fp_dataset} has no titles.")
 
-        # Create a DataFrame with the desired columns: label, abstract, and title
-        dataset = pd.DataFrame(
-            {
-                "title": asreview_data.title,
-                "abstract": asreview_data.abstract,
-                "label": asreview_data.labels.astype(int),
-            }
-        )
+        if df['abstract'].fillna('').apply(lambda x: x.strip()).eq('').all():
+            print(f"Warning: {fp_dataset} has no abstracts.")
+
+        if not df['included'].isin([None, 1, 0]).all():
+            print(f"Warning: {fp_dataset} has 'included' column with None values or non-binary values.")
 
         # Add the 'makita_priors' column
         if fp_dataset.name.startswith("prior_") or fp_dataset.name.startswith(
             "priors_"
         ):
-            dataset["makita_priors"] = 1
+            df["makita_priors"] = 1
             self._prior_dataset_count += 1
         else:
-            dataset["makita_priors"] = 0
+            df["makita_priors"] = 0
             self._non_prior_dataset_count += 1
 
-        if -1 in dataset.label.values:
-            index = dataset.label[dataset.label.values == -1].index[0]
-            raise ValueError(
-                f"Dataset {fp_dataset} contains unlabeled record at row {index}.\
-                    \nTitle: '{dataset.title[index]}'"
-            )
-
         # Add the dataset to the list
-        self.prior_makita_datasets.append(dataset)
+        self.prior_makita_datasets.append(df)
 
         return {}
 
