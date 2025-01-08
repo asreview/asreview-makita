@@ -49,7 +49,7 @@ class TemplatePrior(TemplateBase):
             print(f"Warning: {fp_dataset} has no abstracts.")
 
         if not df['included'].isin([None, 1, 0]).all():
-            print(f"Warning: {fp_dataset} has 'included' column with None values or non-binary values.")
+            print(f"Warning: {fp_dataset} has 'included' column with None values or non-binary values.")  # noqa: E501
 
         # Add the 'makita_priors' column
         if fp_dataset.name.startswith("prior_") or fp_dataset.name.startswith(
