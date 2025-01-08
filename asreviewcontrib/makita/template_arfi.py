@@ -1,7 +1,10 @@
 """Render ARFI template."""
 
+from pathlib import Path
+
 import numpy as np
-from asreview.data import ASReviewData
+from asreview import load_dataset
+from asreview.data import DataStore
 
 from asreviewcontrib.makita.config import ASReviewConfig as ASREVIEW_CONFIG
 from asreviewcontrib.makita.template_base import TemplateBase
@@ -68,18 +71,23 @@ class TemplateARFI(TemplateBase):
 
 def _get_priors(dataset, init_seed, n_priors):
     """Sample priors."""
-    asdata = ASReviewData.from_file(dataset)
-    relevant_record_ids = asdata.record_ids[asdata.labels == 1]
-    relevant_irrecord_ids = asdata.record_ids[asdata.labels == 0]
+
+    records = load_dataset(dataset, dataset_id=Path(dataset).name)
+    data_store = DataStore(":memory:")
+    data_store.create_tables()
+    data_store.add_records(records)
+    df = data_store.get_df()
+
+    relevant_record_ids = df.record_id[df.included == 1]
+    relevant_irrecord_ids = df.record_id[df.included == 0]
 
     if len(relevant_record_ids) == 0:
-        raise ValueError("Not enough relevant records found.")
+        raise ValueError("No relevant records found.")
     if len(relevant_irrecord_ids) == 0:
-        raise ValueError("Not enough irrelevant records found.")
+        raise ValueError("No irrelevant records found.")
 
     np.random.seed(init_seed)
 
-    # sample n_priors irrelevant records
     prior_irrelevant = list(
         np.random.choice(relevant_irrecord_ids, n_priors, replace=False)
     )
