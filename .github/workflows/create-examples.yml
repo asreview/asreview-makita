@@ -1,6 +1,10 @@
 name: Update Examples
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - v.1.0.x
+      - main
 
 jobs:
   update-examples:
