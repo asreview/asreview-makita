@@ -250,8 +250,8 @@ a:hover {
             <span class="tooltip-text">Choose a template to use for rendering. Options include 'multimodel' for running multiple models, 'arfi' for ARFI configurations, 'basic', or 'prior'.</span>
         </div>
         <div class="form-group tooltip">
-            <label for="source">Source Folder<span class="required">*</span>:</label>
-            <input id="source" type="text" placeholder="path/to/data">
+            <label for="data-folder">Data Folder<span class="required">*</span>:</label>
+            <input id="data-folder" type="text" placeholder="path/to/data">
             <span class="tooltip-text">Specify the path to the dataset folder containing your input data.</span>
         </div>
         <div class="form-group tooltip">
@@ -471,7 +471,7 @@ function generateCommand() {
 
     if (currentTask === "rendering") {
         const template = document.getElementById("template").value;
-        const source = document.getElementById("source").value;
+        const dataFolder = document.getElementById("data-folder").value;
         const project = document.getElementById("project").value;
         const jobFile = document.getElementById("job-file").value;
         const customTemplate = document.getElementById("custom-template").value;
@@ -485,7 +485,7 @@ function generateCommand() {
         const stopCondition = document.getElementById("stop-condition").value.trim();
 
         command = `asreview makita template ${template}`;
-        if (source) command += ` --source "${source}"`;
+        if (dataFolder) command += ` --data_folder "${dataFolder}"`;
         if (project) command += ` --project_folder "${project}"`;
         if (jobFile) command += ` --job_file "${jobFile}"`;
         if (customTemplate) command += ` --template "${customTemplate}"`;
