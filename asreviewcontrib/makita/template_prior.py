@@ -154,8 +154,7 @@ class TemplatePrior(TemplateBase):
                                 index_label='record_id')
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
             filepath_without_priors, 
-            index=True,
-            index_label='record_id'
+            index=False
         )
 
         # Create a string of indices for rows with custom prior knowledge
