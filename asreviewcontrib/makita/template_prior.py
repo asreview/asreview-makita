@@ -128,7 +128,7 @@ class TemplatePrior(TemplateBase):
             combined_dataset[combined_dataset.included == -1].index, inplace=True
         )
 
-        combined_dataset = combined_dataset[['record_id',
+        combined_dataset = combined_dataset[['dataset_id',
                                              'title', 
                                              'abstract', 
                                              'included', 
