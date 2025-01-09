@@ -181,7 +181,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors                              Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors                              Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path 
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -213,7 +213,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -243,7 +243,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -300,7 +300,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.

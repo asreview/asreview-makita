@@ -34,7 +34,7 @@ class TemplateMultiModel(TemplateBase):
             "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "model_seed": self.model_seed + index,
-            "init_seed": self.init_seed,
+            "prior_seed": self.prior_seed,
         }
 
     def get_template_specific_params(self, params):

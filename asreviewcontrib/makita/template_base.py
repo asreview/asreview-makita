@@ -20,7 +20,7 @@ class TemplateBase:
         file_handler: FileHandler,
         paths: ProjectPaths,
         skip_wordclouds,
-        init_seed,
+        prior_seed,
         model_seed,
         balance_strategy,
         instances_per_query,
@@ -30,7 +30,7 @@ class TemplateBase:
         self.datasets = datasets
         self.paths = paths
         self.skip_wordclouds = skip_wordclouds
-        self.init_seed = init_seed
+        self.prior_seed = prior_seed
         self.model_seed = model_seed
         self.balance_strategy = balance_strategy
         self.instances_per_query = instances_per_query

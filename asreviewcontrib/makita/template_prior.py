@@ -175,7 +175,7 @@ class TemplatePrior(TemplateBase):
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
             "model_seed": self.model_seed,
-            "init_seed": self.init_seed,
+            "prior_seed": self.prior_seed,
             "filepath_with_priors": 
             f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
             "filepath_with_priors_stem": filepath_with_priors.stem,

@@ -34,7 +34,7 @@ class TemplateARFI(TemplateBase):
         n_priors = self.n_priors if self.n_priors is not None else 10
 
         priors = _get_priors(
-            fp_dataset, init_seed=self.init_seed + index, n_priors=n_priors
+            fp_dataset, prior_seed=self.prior_seed + index, n_priors=n_priors
         )
         return {
             "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
@@ -62,14 +62,14 @@ class TemplateARFI(TemplateBase):
             "balance_strategy": balance_strategy,
             "instances_per_query": self.instances_per_query,
             "stop_if": self.stop_if,
-            "init_seed": self.init_seed,
+            "prior_seed": self.prior_seed,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
         }
 
 
-def _get_priors(dataset, init_seed, n_priors):
+def _get_priors(dataset, prior_seed, n_priors):
     """Sample priors."""
 
     records = load_dataset(dataset, dataset_id=Path(dataset).name)
@@ -86,7 +86,7 @@ def _get_priors(dataset, init_seed, n_priors):
     if len(relevant_irrecord_ids) == 0:
         raise ValueError("No irrelevant records found.")
 
-    np.random.seed(init_seed)
+    np.random.seed(prior_seed)
 
     prior_irrelevant = list(
         np.random.choice(relevant_irrecord_ids, n_priors, replace=False)

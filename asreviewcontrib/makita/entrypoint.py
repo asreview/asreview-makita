@@ -53,7 +53,7 @@ class MakitaEntryPoint:
             help="Set project folder path." "Default will use current directory.",
         )
         parser_template.add_argument(
-            "--init_seed",
+            "--prior_seed",
             type=int,
             default=535,
             help="Seed of the priors. 535 by default.",
@@ -304,7 +304,7 @@ class TemplateRenderer:
             "skip_wordclouds",
             "n_runs",
             "n_priors",
-            "init_seed",
+            "prior_seed",
             "model_seed",
             "classifier",
             "feature_extractor",
