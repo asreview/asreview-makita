@@ -156,6 +156,14 @@ with
 asreview makita template basic --job_file my_jobs_file.my_ext
 ```
 
+### ASReview Makita Helper Tool
+For users of ASReview Makita, there's a handy helper tool available. This tool
+simplifies the process of formulating your Makita commands, ensuring
+compatibility and ease of use. It's designed to work with ASReview Makita
+version 1.0 and above.
+
+[Makita helper Tool](https://asreview.github.io/asreview-makita/)
+
 ## Templates
 
 The following table gives an overview of the available templates. See [Getting
