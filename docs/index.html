@@ -512,7 +512,7 @@ function generateCommand() {
         if (skipWordclouds) command += ` --skip_wordclouds`;
         if (overwrite) command += ` --overwrite`;
         if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
-            command += ` --stop_if ${stopCondition}`;
+            command += ` --n-stop ${stopCondition}`;
         } else if (stopCondition) {
             alert("Invalid Stop Condition. Use 'min' or a valid number.");
             return;
