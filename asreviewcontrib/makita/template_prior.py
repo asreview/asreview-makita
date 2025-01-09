@@ -4,8 +4,8 @@ from pathlib import Path
 import pandas as pd
 from asreview import load_dataset
 from asreview.data import DataStore
+from asreview.models import default_model
 
-from asreviewcontrib.makita.config import ASReviewConfig as ASREVIEW_CONFIG
 from asreviewcontrib.makita.template_base import TemplateBase
 
 # Suppress FutureWarning messages
@@ -72,25 +72,27 @@ class TemplatePrior(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
+        ASREVIEW_CONFIG = default_model()
+
         classifier = (
             self.classifier
             if self.classifier is not None
-            else ASREVIEW_CONFIG.DEFAULT_MODEL
+            else ASREVIEW_CONFIG.classifier
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION
+            else ASREVIEW_CONFIG.feature_extraction
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY
+            else ASREVIEW_CONFIG.query_strategy
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
+            else ASREVIEW_CONFIG.balance_strategy
         )
         n_runs = self.n_runs if self.n_runs is not None else 1
 
