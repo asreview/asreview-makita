@@ -49,7 +49,7 @@ python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/fig
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n-query {{ n_query }} --n-stop {{ n_stop }}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed + run }} -c {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n-query {{ n_query }} --n-stop {{ n_stop }}
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json
 {% endfor %}
 
