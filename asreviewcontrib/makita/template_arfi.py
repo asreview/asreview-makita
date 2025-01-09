@@ -61,7 +61,7 @@ class TemplateARFI(TemplateBase):
             "query_strategy": query_strategy,
             "balance_strategy": balance_strategy,
             "instances_per_query": self.instances_per_query,
-            "stop_if": self.stop_if,
+            "n-stop": self.n-stop,
             "prior_seed": self.prior_seed,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
