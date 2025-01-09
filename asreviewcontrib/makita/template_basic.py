@@ -67,7 +67,7 @@ class TemplateBasic(TemplateBase):
             "n_runs": n_runs,
             "datasets": params,
             "skip_wordclouds": self.skip_wordclouds,
-            "instances_per_query": self.instances_per_query,
+            "n_query": self.n_query,
             "n-stop": self.n-stop,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,

@@ -74,7 +74,7 @@ class MakitaEntryPoint:
             "Default: the system of rendering templates.",
         )
         parser_template.add_argument(
-            "--instances_per_query",
+            "--n_query",
             type=int,
             default=1,
             help="Number of instances per query.",
@@ -320,7 +320,7 @@ class TemplateRenderer:
             "query_strategies",
             "balance_strategies",
             "impossible_models",
-            "instances_per_query",
+            "n_query",
             "n-stop",
         ]
         return {

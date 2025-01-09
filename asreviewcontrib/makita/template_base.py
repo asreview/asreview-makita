@@ -23,7 +23,7 @@ class TemplateBase:
         prior_seed,
         model_seed,
         balance_strategy,
-        instances_per_query,
+        n_query,
         n-stop,
         **kwargs,
     ):
@@ -33,7 +33,7 @@ class TemplateBase:
         self.prior_seed = prior_seed
         self.model_seed = model_seed
         self.balance_strategy = balance_strategy
-        self.instances_per_query = instances_per_query
+        self.n_query = n_query
         self.n-stop = n-stop
         self.file_handler = file_handler
         self.__version__ = '.'.join(

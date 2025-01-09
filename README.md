@@ -192,7 +192,7 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --n_query n_query                          Number of instances per query.                  Default: 1.
   --n-stop n-stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
@@ -224,7 +224,7 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --n_query n_query                         Number of instances per query.                  Default: 1.
   --n-stop n-stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
@@ -250,7 +250,7 @@ optional arguments:
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --n_query n_query                          Number of instances per query.                  Default: 1.
   --n-stop n-stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
@@ -311,7 +311,7 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
+  --n_query n_query                          Number of instances per query.                  Default: 1.
   --n-stop n-stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
@@ -381,7 +381,7 @@ use it, use `-s` (source) and `-o` (output) to tweak paths.
 
 Adding a legend to the plot can be done with the `-l` or `--show_legend` flag,
 with the labels clustered on any of the following: `'filename', 'model',
-'query_strategy', 'balance_strategy', 'feature_extraction', 'n_instances',
+'query_strategy', 'balance_strategy', 'feature_extraction', 'n-query',
 'n-stop', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param',
 'feature_param', 'balance_param'`
 

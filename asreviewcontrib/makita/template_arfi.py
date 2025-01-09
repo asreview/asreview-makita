@@ -60,7 +60,7 @@ class TemplateARFI(TemplateBase):
             "feature_extractor": feature_extractor,
             "query_strategy": query_strategy,
             "balance_strategy": balance_strategy,
-            "instances_per_query": self.instances_per_query,
+            "n_query": self.n_query,
             "n-stop": self.n-stop,
             "prior_seed": self.prior_seed,
             "output_folder": self.paths.output_folder,
