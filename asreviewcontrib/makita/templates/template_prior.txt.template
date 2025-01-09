@@ -39,10 +39,10 @@ python -m asreview wordcloud {{ filepath_without_priors }} -o {{ output_folder }
 {% endif %}
 
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ filepath_with_priors }} -s {{ output_folder }}/simulation/state_files/sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --n-stop {{ n-stop }} --prior_idx {{ prior_idx }}
+python -m asreview simulate {{ filepath_with_priors }} -o{{ output_folder }}/simulation/state_files/sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --n-stop {{ n-stop }} --prior_idx {{ prior_idx }}
 python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_custom_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
 
-python -m asreview simulate {{ filepath_without_priors }} -s {{ output_folder }}/simulation/state_files/sim_minimal_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --prior_seed {{ prior_seed + run }} --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --n-stop {{ n-stop }}
+python -m asreview simulate {{ filepath_without_priors }} -o{{ output_folder }}/simulation/state_files/sim_minimal_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --prior_seed {{ prior_seed + run }} --seed {{ model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --n-stop {{ n-stop }}
 python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_minimal_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/metrics/metrics_sim_minimal_priors{{ "_{}".format(run) if n_runs > 1 else "" }}.json
 
 {% endfor %}
