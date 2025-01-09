@@ -1,0 +1,56 @@
+name: Update Examples
+
+on:
+  push:
+    branches:
+      - v.1.0.x
+      - main
+
+jobs:
+  update-examples:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install .
+
+      # Generate examples
+      - name: Generate examples
+        run: |
+          synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/data -l
+          mv ./examples/data/Smid_2020.csv ./examples/data/prior_Smid_2020.csv
+          ls ./examples/data
+          asreview makita template arfi -d ./examples/data -p ./examples/arfi_example --overwrite --platform linux
+          asreview makita template basic -d ./examples/data -p ./examples/basic_example --overwrite --platform linux
+          asreview makita template multimodel -d./examples/data -p ./examples/multimodel_example --overwrite --platform linux
+          asreview makita template prior -d./examples/data -p ./examples/prior_example --overwrite --platform linux
+
+      # Clean up data files (e.g., CSV, XLSX) to avoid committing them
+      - name: Clean up data files
+        run: |
+          find ./examples -type f -name "*.csv" -delete
+
+      # Check for changes, commit, and push
+      - name: Commit and push changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing and pushing."
+            git add -A
+            git commit -m "Update examples"
+            git push
+          else
+            echo "No changes detected. Skipping commit and push."
+          fi
