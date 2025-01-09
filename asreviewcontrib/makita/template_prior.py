@@ -128,6 +128,12 @@ class TemplatePrior(TemplateBase):
             combined_dataset[combined_dataset.included == -1].index, inplace=True
         )
 
+        combined_dataset = combined_dataset[['record_id',
+                                             'title', 
+                                             'abstract', 
+                                             'included', 
+                                             'makita_priors']]
+
         # Calculate the total number of rows with and without prior knowledge
         total_rows_with_priors = combined_dataset[
             combined_dataset["makita_priors"] == 1
