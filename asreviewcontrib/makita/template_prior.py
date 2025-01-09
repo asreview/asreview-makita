@@ -42,14 +42,16 @@ class TemplatePrior(TemplateBase):
         data_store.add_records(records)
         df = data_store.get_df()
 
-        if df['title'].fillna('').apply(lambda x: x.strip()).eq('').all():
+        if df["title"].fillna("").apply(lambda x: x.strip()).eq("").all():
             print(f"Warning: {fp_dataset} has no titles.")
 
-        if df['abstract'].fillna('').apply(lambda x: x.strip()).eq('').all():
+        if df["abstract"].fillna("").apply(lambda x: x.strip()).eq("").all():
             print(f"Warning: {fp_dataset} has no abstracts.")
 
-        if not df['included'].isin([None, 1, 0]).all():
-            print(f"Warning: {fp_dataset} has 'included' column with None values or non-binary values.")  # noqa: E501
+        if not df["included"].isin([None, 1, 0]).all():
+            print(
+                f"Warning: {fp_dataset} has 'included' column with None values or non-binary values."  # noqa: E501
+            )
 
         # Add the 'makita_priors' column
         if fp_dataset.name.startswith("prior_") or fp_dataset.name.startswith(
@@ -106,11 +108,8 @@ class TemplatePrior(TemplateBase):
             )
 
         # Print the number of datasets with custom and without prior knowledge
-        print(
-            f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
-        print(
-            f"Datasets without prior knowledge: {self._non_prior_dataset_count}"
-        )
+        print(f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
+        print(f"Datasets without prior knowledge: {self._non_prior_dataset_count}")
 
         # Create a directory for generated data if it doesn't already exist
         generated_folder = Path(self.paths.project_folder, "generated_data")
@@ -128,13 +127,13 @@ class TemplatePrior(TemplateBase):
             combined_dataset[combined_dataset.included == -1].index, inplace=True
         )
 
-        combined_dataset = combined_dataset[['dataset_id',
-                                             'title', 
-                                             'abstract', 
-                                             'included', 
-                                             'makita_priors']]
-        
-        combined_dataset.rename(columns={'dataset_id': 'original_dataset'}, inplace=True)
+        combined_dataset = combined_dataset[
+            ["dataset_id", "title", "abstract", "included", "makita_priors"]
+        ]
+
+        combined_dataset.rename(
+            columns={"dataset_id": "original_dataset"}, inplace=True
+        )
 
         # Calculate the total number of rows with and without prior knowledge
         total_rows_with_priors = combined_dataset[
@@ -149,12 +148,11 @@ class TemplatePrior(TemplateBase):
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
         # Save the combined dataset to the appropriate file paths
-        combined_dataset.to_csv(filepath_with_priors, 
-                                index=True, 
-                                index_label='record_id')
+        combined_dataset.to_csv(
+            filepath_with_priors, index=True, index_label="record_id"
+        )
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
-            filepath_without_priors, 
-            index=False
+            filepath_without_priors, index=False
         )
 
         # Create a string of indices for rows with custom prior knowledge
@@ -183,11 +181,9 @@ class TemplatePrior(TemplateBase):
             "version": self.__version__,
             "model_seed": self.model_seed,
             "prior_seed": self.prior_seed,
-            "filepath_with_priors": 
-            f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
+            "filepath_with_priors": f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",  # noqa: E501
             "filepath_with_priors_stem": filepath_with_priors.stem,
-            "filepath_without_priors": 
-            f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",
+            "filepath_without_priors": f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",  # noqa: E501
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }
