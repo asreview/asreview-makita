@@ -149,7 +149,7 @@ class TemplatePrior(TemplateBase):
 
         # Save the combined dataset to the appropriate file paths
         combined_dataset.to_csv(
-            filepath_with_priors, index=True, index_label="record_id"
+            filepath_with_priors, index=False
         )
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
             filepath_without_priors, index=False
