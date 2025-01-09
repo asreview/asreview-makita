@@ -133,6 +133,8 @@ class TemplatePrior(TemplateBase):
                                              'abstract', 
                                              'included', 
                                              'makita_priors']]
+        
+        combined_dataset.rename(columns={'dataset_id': 'original_dataset'}, inplace=True)
 
         # Calculate the total number of rows with and without prior knowledge
         total_rows_with_priors = combined_dataset[
