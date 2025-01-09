@@ -170,7 +170,7 @@ class TemplatePrior(TemplateBase):
             "datasets": params,
             "skip_wordclouds": self.skip_wordclouds,
             "n_query": self.n_query,
-            "n-stop": self.n-stop,
+            "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,

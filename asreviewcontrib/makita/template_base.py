@@ -24,7 +24,7 @@ class TemplateBase:
         model_seed,
         balance_strategy,
         n_query,
-        n-stop,
+        n_stop,
         **kwargs,
     ):
         self.datasets = datasets
@@ -34,7 +34,7 @@ class TemplateBase:
         self.model_seed = model_seed
         self.balance_strategy = balance_strategy
         self.n_query = n_query
-        self.n-stop = n-stop
+        self.n_stop = n_stop
         self.file_handler = file_handler
         self.__version__ = '.'.join(
             str(part)

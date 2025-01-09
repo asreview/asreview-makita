@@ -80,7 +80,7 @@ class MakitaEntryPoint:
             help="Number of instances per query.",
         )
         parser_template.add_argument(
-            "--n-stop",
+            "--n_stop",
             type=str,
             default="min",
             help="The number of label actions to simulate.",
@@ -321,7 +321,7 @@ class TemplateRenderer:
             "balance_strategies",
             "impossible_models",
             "n_query",
-            "n-stop",
+            "n_stop",
         ]
         return {
             key: vars(self.args).get(key)

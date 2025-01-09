@@ -52,7 +52,7 @@ class TemplateMultiModel(TemplateBase):
             "datasets": params,
             "skip_wordclouds": self.skip_wordclouds,
             "n_query": self.n_query,
-            "n-stop": self.n-stop,
+            "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "n_runs": n_runs,
