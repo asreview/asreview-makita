@@ -39,27 +39,27 @@ class TemplateBasic(TemplateBase):
 
         ASREVIEW_CONFIG = default_model()  
 
-        # set default values if not provided
         classifier = (
             self.classifier
             if self.classifier is not None
-            else ASREVIEW_CONFIG.classifier
+            else ASREVIEW_CONFIG["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG.feature_extraction
+            else ASREVIEW_CONFIG['feature_extraction']
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG.query_strategy
+            else ASREVIEW_CONFIG['query_strategy']
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG.balance_strategy
+            else ASREVIEW_CONFIG['balance_strategy']
         )
+
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {

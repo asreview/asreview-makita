@@ -49,10 +49,26 @@ class TemplateARFI(TemplateBase):
 
         ASREVIEW_CONFIG = default_model()
 
-        classifier = self.classifier if self.classifier is not None else ASREVIEW_CONFIG.classifier # noqa: E501
-        feature_extractor = self.feature_extractor if self.feature_extractor is not None else ASREVIEW_CONFIG.feature_extraction # noqa: E501
-        query_strategy = self.query_strategy if self.query_strategy is not None else ASREVIEW_CONFIG.query_strategy # noqa: E501
-        balance_strategy = self.balance_strategy if self.balance_strategy is not None else ASREVIEW_CONFIG.balance_strategy # noqa: E501
+        classifier = (
+            self.classifier
+            if self.classifier is not None
+            else ASREVIEW_CONFIG["classifier"]
+        )
+        feature_extractor = (
+            self.feature_extractor
+            if self.feature_extractor is not None
+            else ASREVIEW_CONFIG['feature_extraction']
+        )
+        query_strategy = (
+            self.query_strategy
+            if self.query_strategy is not None
+            else ASREVIEW_CONFIG['query_strategy']
+        )
+        balance_strategy = (
+            self.balance_strategy
+            if self.balance_strategy is not None
+            else ASREVIEW_CONFIG['balance_strategy']
+        )
 
         return {
             "datasets": params,

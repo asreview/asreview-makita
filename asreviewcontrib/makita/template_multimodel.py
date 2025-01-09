@@ -57,12 +57,12 @@ class TemplateMultiModel(TemplateBase):
         all_query_strategies = (
             self.all_query_strategies
             if self.all_query_strategies is not None
-            else [ASREVIEW_CONFIG.query_strategy]
+            else [ASREVIEW_CONFIG['query_strategy']]
         )
         all_balance_strategies = (
             self.all_balance_strategies
             if self.all_balance_strategies is not None
-            else [ASREVIEW_CONFIG.balance_strategy]
+            else [ASREVIEW_CONFIG['balance_strategy']]
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]
