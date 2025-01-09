@@ -280,9 +280,9 @@ a:hover {
             <span class="tooltip-text">Select the platform to render jobs for (e.g., Windows, macOS, Linux). If not selected, the current platform will be used by default.</span>
         </div>
         <div class="form-group tooltip">
-            <label for="init-seed">Initial Seed:</label>
-            <input id="init-seed" type="number" value="535">
-            <span class="tooltip-text">Set the seed for the initial priors. This helps ensure reproducibility of the starting set of papers.</span>
+            <label for="prior-seed">Prior Seed:</label>
+            <input id="prior-seed" type="number" value="535">
+            <span class="tooltip-text">Set the seed for the random selection of priors. This helps ensure reproducibility of the starting set of papers.</span>
         </div>
         <div class="form-group tooltip">
             <label for="model-seed">Model Seed:</label>
@@ -476,7 +476,7 @@ function generateCommand() {
         const jobFile = document.getElementById("job-file").value;
         const customTemplate = document.getElementById("custom-template").value;
         const platform = document.getElementById("platform").value;
-        const initSeed = document.getElementById("init-seed").value;
+        const priorSeed = document.getElementById("prior-seed").value;
         const modelSeed = document.getElementById("model-seed").value;
         const nRuns = document.getElementById("n-runs").value;
         const instancesPerQuery = document.getElementById("instances-per-query").value;
@@ -490,7 +490,7 @@ function generateCommand() {
         if (jobFile) command += ` --job_file "${jobFile}"`;
         if (customTemplate) command += ` --template "${customTemplate}"`;
         if (platform) command += ` --platform "${platform}"`;
-        if (initSeed != 535) command += ` --init_seed ${initSeed}`;
+        if (priorSeed != 535) command += ` --prior_seed ${priorSeed}`;
         if (modelSeed != 165) command += ` --model_seed ${modelSeed}`;
         if (nRuns != 1) command += ` --n_runs ${nRuns}`;
         if (instancesPerQuery != 1) command += ` --instances_per_query ${instancesPerQuery}`;
