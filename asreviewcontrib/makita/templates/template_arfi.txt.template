@@ -47,7 +47,7 @@ python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/fig
 # Simulate runs, collect metrics and create plots
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for prior in dataset.priors %}
-python -m asreview simulate {{ dataset.input_file }} -o{{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior_record_id {{ " ".join(prior) }} --seed {{ dataset.model_seed }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n-query {{ n_query }} --n-stop {{ n_stop }}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior_record_id {{ " ".join(prior) }} --seed {{ dataset.model_seed }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n-query {{ n_query }} --n-stop {{ n_stop }}
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.json
 {% endfor %}
 
