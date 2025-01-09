@@ -508,11 +508,11 @@ function generateCommand() {
         if (priorSeed) command += ` --prior_seed ${priorSeed}`;
         if (modelSeed) command += ` --seed ${modelSeed}`;
         if (nRuns != 1) command += ` --n_runs ${nRuns}`;
-        if (nQuery != 1) command += ` --n-query ${nQuery}`;
+        if (nQuery != 1) command += ` --n_query ${nQuery}`;
         if (skipWordclouds) command += ` --skip_wordclouds`;
         if (overwrite) command += ` --overwrite`;
         if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
-            command += ` --n-stop ${stopCondition}`;
+            command += ` --n_stop ${stopCondition}`;
         } else if (stopCondition) {
             alert("Invalid Stop Condition. Use 'min' or a valid number.");
             return;
