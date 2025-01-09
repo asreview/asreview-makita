@@ -1,6 +1,7 @@
 """Render multimodel template."""
 
 from asreview.models import default_model
+
 from asreviewcontrib.makita.template_base import TemplateBase
 
 
@@ -41,13 +42,33 @@ class TemplateMultiModel(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        ASREVIEW_CONFIG = default_model()  
+        ASREVIEW_CONFIG = default_model()
 
-        all_classifiers = self.all_classifiers if self.all_classifiers is not None else ["logistic", "nb", "rf"] # noqa: E501
-        all_feature_extractors = self.all_feature_extractors if self.all_feature_extractors is not None else ["doc2vec", "sbert", "tfidf"] # noqa: E501
-        all_query_strategies = self.all_query_strategies if self.all_query_strategies is not None else [ASREVIEW_CONFIG.query_strategy] # noqa: E501
-        all_balance_strategies = self.all_balance_strategies if self.all_balance_strategies is not None else [ASREVIEW_CONFIG.balance_strategy] # noqa: E501
-        impossible_models = [i.split(",") for i in self.impossible_models] if self.impossible_models is not None else [['nb', 'doc2vec'], ['nb', 'sbert']] # noqa: E501
+        all_classifiers = (
+            self.all_classifiers
+            if self.all_classifiers is not None
+            else ["logistic", "nb", "rf"]
+        )
+        all_feature_extractors = (
+            self.all_feature_extractors
+            if self.all_feature_extractors is not None
+            else ["doc2vec", "sbert", "tfidf"]
+        )
+        all_query_strategies = (
+            self.all_query_strategies
+            if self.all_query_strategies is not None
+            else [ASREVIEW_CONFIG.query_strategy]
+        )
+        all_balance_strategies = (
+            self.all_balance_strategies
+            if self.all_balance_strategies is not None
+            else [ASREVIEW_CONFIG.balance_strategy]
+        )
+        impossible_models = (
+            [i.split(",") for i in self.impossible_models]
+            if self.impossible_models is not None
+            else [["nb", "doc2vec"], ["nb", "sbert"]]
+        )
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {
