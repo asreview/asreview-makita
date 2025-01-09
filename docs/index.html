@@ -295,9 +295,9 @@ a:hover {
             <span class="tooltip-text">Set the number of simulation runs to execute. Each run will simulate the same setup with random variations.</span>
         </div>
         <div class="form-group tooltip">
-            <label for="instances-per-query">Instances Per Query:</label>
-            <input id="instances-per-query" type="number" value="1">
-            <span class="tooltip-text">Define the number of records to label before retraining the model. Increasing this value can significantly speed up the simulation.</span>
+            <label for="number-per-query">Number per Query:</label>
+            <input id="number-per-query" type="number" value="1">
+            <span class="tooltip-text">The number of records to label before retraining the model. Increasing this value can significantly speed up the simulation.</span>
         </div>
         <div class="form-group tooltip">
             <label for="skip-wordclouds">Skip Wordclouds:</label>
@@ -351,7 +351,14 @@ a:hover {
                 </label>
                 <textarea id="query-strategies" placeholder="e.g., uncertainty&#10;simple"></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group tooltip">
+                <label for="no-balance-strategy-multi">
+                    No Balance Strategy:
+                </label>
+                <input id="no-balance-strategy-multi" type="checkbox" onclick="toggleBalanceStrategy(true)">
+                <span class="tooltip-text">Disable the balance strategy for multi-model configurations.</span>
+            </div>
+            <div class="form-group" id="balance-strategy-group-multi">
                 <label for="balance-strategies">
                     <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
                         Balance Strategies (one per line):
@@ -359,6 +366,7 @@ a:hover {
                 </label>
                 <textarea id="balance-strategies" placeholder="e.g., double&#10;triple"></textarea>
             </div>
+            
             <div class="form-group tooltip">
                 <label for="impossible-models">
                     <a href="https://github.com/asreview/asreview-makita#example-usage" target="_blank">
@@ -396,7 +404,14 @@ a:hover {
                 </label>
                 <input id="query-strategy" type="text" placeholder="e.g., uncertainty">
             </div>
-            <div class="form-group">
+            <div class="form-group tooltip">
+                <label for="no-balance-strategy-single">
+                    No Balance Strategy:
+                </label>
+                <input id="no-balance-strategy-single" type="checkbox" onclick="toggleBalanceStrategy(false)">
+                <span class="tooltip-text">Disable the balance strategy for single-model configurations.</span>
+            </div>
+            <div class="form-group" id="balance-strategy-group-single">
                 <label for="balance-strategy">
                     <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
                         Balance Strategy:
@@ -479,7 +494,7 @@ function generateCommand() {
         const priorSeed = document.getElementById("prior-seed").value;
         const modelSeed = document.getElementById("model-seed").value;
         const nRuns = document.getElementById("n-runs").value;
-        const instancesPerQuery = document.getElementById("instances-per-query").value;
+        const nQuery = document.getElementById("number-per-query").value;
         const skipWordclouds = document.getElementById("skip-wordclouds").checked;
         const overwrite = document.getElementById("overwrite").checked;
         const stopCondition = document.getElementById("stop-condition").value.trim();
@@ -490,10 +505,10 @@ function generateCommand() {
         if (jobFile) command += ` --job_file "${jobFile}"`;
         if (customTemplate) command += ` --template "${customTemplate}"`;
         if (platform) command += ` --platform "${platform}"`;
-        if (priorSeed != 535) command += ` --prior_seed ${priorSeed}`;
-        if (modelSeed != 165) command += ` --model_seed ${modelSeed}`;
+        if (priorSeed) command += ` --prior_seed ${priorSeed}`;
+        if (modelSeed) command += ` --seed ${modelSeed}`;
         if (nRuns != 1) command += ` --n_runs ${nRuns}`;
-        if (instancesPerQuery != 1) command += ` --instances_per_query ${instancesPerQuery}`;
+        if (nQuery != 1) command += ` --n-query ${nQuery}`;
         if (skipWordclouds) command += ` --skip_wordclouds`;
         if (overwrite) command += ` --overwrite`;
         if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
@@ -511,24 +526,36 @@ function generateCommand() {
             const featureExtractors = document.getElementById("feature-extractors").value.split("\n").filter(Boolean);
             const classifiers = document.getElementById("classifiers").value.split("\n").filter(Boolean);
             const queryStrategies = document.getElementById("query-strategies").value.split("\n").filter(Boolean);
-            const balanceStrategies = document.getElementById("balance-strategies").value.split("\n").filter(Boolean);
             const impossibleModels = document.getElementById("impossible-models").value.split("\n").filter(Boolean);
+            const noBalanceStrategyMulti = document.getElementById("no-balance-strategy-multi").checked;
 
             if (featureExtractors.length) command += ` --feature_extractors ${featureExtractors.join(" ")}`;
             if (classifiers.length) command += ` --classifiers ${classifiers.join(" ")}`;
             if (queryStrategies.length) command += ` --query_strategies ${queryStrategies.join(" ")}`;
-            if (balanceStrategies.length) command += ` --balance_strategies ${balanceStrategies.join(" ")}`;
+            if (noBalanceStrategyMulti) {
+                    command += " --no-balance-strategy";
+                } else {
+                    const balanceStrategies = document.getElementById("balance-strategies").value.split("\n").filter(Boolean);
+                    if (balanceStrategies.length) {
+                        command += ` --balance_strategies ${balanceStrategies.join(" ")}`;
+                    }
+                }
             if (impossibleModels.length) command += ` --impossible_models ${impossibleModels.join(" ")}`;
         } else {
             const featureExtractor = document.getElementById("feature-extractor").value;
             const classifier = document.getElementById("classifier").value;
             const queryStrategy = document.getElementById("query-strategy").value;
-            const balanceStrategy = document.getElementById("balance-strategy").value;
+            const noBalanceStrategySingle = document.getElementById("no-balance-strategy-single").checked;
 
             if (featureExtractor) command += ` --feature_extractor ${featureExtractor}`;
             if (classifier) command += ` --classifier ${classifier}`;
             if (queryStrategy) command += ` --query_strategy ${queryStrategy}`;
-            if (balanceStrategy) command += ` --balance_strategy ${balanceStrategy}`;
+            if (noBalanceStrategySingle) {
+                command += " --no-balance-strategy";
+            } else {
+                const balanceStrategy = document.getElementById("balance-strategy").value;
+                if (balanceStrategy) command += ` --balance_strategy ${balanceStrategy}`;
+            }
         }
     } else if (currentTask === "scripts") {
         const addAll = document.getElementById("add-all").checked;
@@ -574,5 +601,13 @@ function showTask(task) {
     const buttons = document.querySelectorAll('.tab-button');
     buttons.forEach(button => button.classList.remove('active'));
     document.querySelector(`button[onclick="showTask('${task}')"]`).classList.add('active');
+}
+
+function toggleBalanceStrategy(isMultiModel) {
+    const noBalanceStrategyId = isMultiModel ? "no-balance-strategy-multi" : "no-balance-strategy-single";
+    const balanceStrategyGroupId = isMultiModel ? "balance-strategy-group-multi" : "balance-strategy-group-single";
+    const noBalanceStrategy = document.getElementById(noBalanceStrategyId).checked;
+
+    document.getElementById(balanceStrategyGroupId).style.display = noBalanceStrategy ? "none" : "flex";
 }
 </script>
