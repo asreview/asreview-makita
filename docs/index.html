@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASReview Makita Tool</title>
+    <link rel="icon" href="https://asreview.nl/wp-content/uploads/2020/04/Favicon.png" sizes="32x32">
+    <link rel="icon" href="https://asreview.nl/wp-content/uploads/2020/04/Favicon.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://asreview.nl/wp-content/uploads/2020/04/Favicon.png">
+    <meta name="msapplication-TileImage" content="https://asreview.nl/wp-content/uploads/2020/04/Favicon.png">
+    <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    background-color: #1f1f1f;
+    padding: 0.5rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    height: 3.5rem;
+}
+.header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+.tabs {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+.tab-button {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.875rem;
+}
+.tab-button:hover {
+    background-color: #007bff;
+    color: white;
+}
+.tab-button.active {
+    background-color: #0056b3;
+    color: white;
+}
+h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #e0e0e0;
+}
+h2 {
+    margin-top: 0rem;
+}
+footer {
+    background-color: #1f1f1f;
+    padding: 0.5rem;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: auto;
+}
+.container {
+    padding: 2rem;
+    max-width: 80%;
+    margin: auto;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    min-width: 50%;
+}
+.form-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap
+}
+label {
+    font-weight: bold;
+    color: #ffffff;
+    flex: 1;
+}
+input, select, textarea, button {
+    flex: 2;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 3px #007bff;
+}
+input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    margin: 1rem;
+    cursor: pointer;
+    accent-color: #007bff;
+}
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width:100%;
+}
+button:hover {
+    background-color: #0056b3;
+}
+pre {
+    background-color: #2c2c2c;
+    padding: 1rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #0056b3;
+}
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+.tooltip-text {
+    visibility: hidden;
+    width: 250px;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    text-align: left;
+    padding: 0.5rem;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+}
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #2c2c2c transparent transparent transparent;
+}
+.command-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #2c2c2c;
+    padding: 0.5rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+#output {
+    flex: 1;
+    margin: 0;
+    padding: 0.5rem;
+    overflow-x: auto;
+    color: #e0e0e0;
+    font-family: 'Courier New', Courier, monospace;
+    background: none;
+    border: none;
+}
+#copy-icon {
+    cursor: pointer;
+    display: contents;
+    color: #888;
+    transition: color 0.3s;
+}
+#copy-icon:hover {
+    color: #fff;
+}
+#copy-icon svg {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.required {
+    color: red;
+    font-weight: bold;
+    margin-left: 0.2rem;
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="tabs">
+        <button class="tab-button active" onclick="showTask('rendering')">Template Rendering</button>
+        <button class="tab-button" onclick="showTask('scripts')">Add Scripts</button>
+    </div>
+    <div class="header-center">
+        <h1>ASReview Makita Tool</h1>
+        <a href="https://github.com/asreview/asreview-makita" target="_blank" style="flex-direction: column">GitHub</a>
+    </div>
+    
+</header>
+
+<div id="task-renderer" class="container">
+    <div id="rendering" class="task">
+        <h2>Template Rendering</h2>
+        <div class="form-group tooltip">
+            <label for="template">Template Name<span class="required">*</span>:</label></label>
+            <select id="template" onchange="toggleTemplateOptions()">
+                <option value="multimodel">multimodel</option>
+                <option value="arfi">arfi</option>
+                <option value="basic" selected>basic</option>
+                <option value="prior">prior</option>
+            </select>
+            <span class="tooltip-text">Choose a template to use for rendering. Options include 'multimodel' for running multiple models, 'arfi' for ARFI configurations, 'basic', or 'prior'.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="data-folder">Data Folder<span class="required">*</span>:</label>
+            <input id="data-folder" type="text" placeholder="path/to/data">
+            <span class="tooltip-text">Specify the path to the dataset folder containing your input data.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="project">Project Folder<span class="required">*</span>:</label>
+            <input id="project" type="text" placeholder="path/to/project-folder">
+            <span class="tooltip-text">Specify the output folder where the project files will be saved. If the data folder is not in the project-folder, a new data folder will be created and the data will be copied.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="job-file">Job File Name:</label>
+            <input id="job-file" type="text" placeholder="job_file.bat">
+            <span class="tooltip-text">Specify the name of the file for managing jobs. By default, this is 'jobs.bat' on Windows and 'jobs.sh' on other platforms.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="custom-template">Custom Template:</label>
+            <input id="custom-template" type="text" placeholder="path/to/template_custom.txt.template">
+            <span class="tooltip-text">Provide the file path to a custom template for rendering, if needed.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="platform">Platform:</label>
+            <select id="platform">
+                <option value="">Current Platform</option>
+                <option value="Windows">Windows</option>
+                <option value="Darwin">macOS</option>
+                <option value="Linux">Linux</option>
+            </select>
+            <span class="tooltip-text">Select the platform to render jobs for (e.g., Windows, macOS, Linux). If not selected, the current platform will be used by default.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="prior-seed">Prior Seed:</label>
+            <input id="prior-seed" type="number" value="535">
+            <span class="tooltip-text">Set the seed for the random selection of priors. This helps ensure reproducibility of the starting set of papers.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="model-seed">Model Seed:</label>
+            <input id="model-seed" type="number" value="165">
+            <span class="tooltip-text">Set the seed for the models to control the random number generation used after initialization. Ensures reproducibility.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="n-runs">Number of Runs:</label>
+            <input id="n-runs" type="number" value="1">
+            <span class="tooltip-text">Set the number of simulation runs to execute. Each run will simulate the same setup with random variations.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="number-per-query">Number per Query:</label>
+            <input id="number-per-query" type="number" value="1">
+            <span class="tooltip-text">The number of records to label before retraining the model. Increasing this value can significantly speed up the simulation.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="skip-wordclouds">Skip Wordclouds:</label>
+            <input id="skip-wordclouds" type="checkbox">
+            <span class="tooltip-text">Skip the generation of dataset wordclouds.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="overwrite">Overwrite:</label>
+            <input id="overwrite" type="checkbox">
+            <span class="tooltip-text">Allow the automatic overwriting of old makita files.</span>
+        </div>
+        <div class="form-group tooltip">
+            <label for="stop-condition">Stop Condition:</label>
+            <input id="stop-condition" type="text" placeholder="min or a number">
+            <span class="tooltip-text">
+                Specify when to stop simulating label actions. Use <strong>'min'</strong> to stop when all relevant records are found. 
+                Set <strong>-1</strong> to simulate all label actions. Any positive number represents the number of retrainings of the model.
+            </span>
+        </div>
+        
+        <div id="arfi-options" style="display: none;">
+            <div class="form-group tooltip">
+                <label for="n-priors">Number of Priors<span class="required">*</span>:</label>
+                <input id="n-priors" type="number" value="1">
+                <span class="tooltip-text">For ARFI templates, set the number of prior records to include. Defaults to 10.</span>
+            </div>
+        </div>
+        <div id="multimodel-options" style="display: none;">
+            <h3>Multi-Model Configurations</h3>
+            <div class="form-group">
+                <label for="feature-extractors">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.feature_extraction" target="_blank">
+                        Feature Extractors (one per line):
+                    </a>
+                </label>
+                <textarea id="feature-extractors" placeholder="e.g., tfidf&#10;doc2vec"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="classifiers">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.classifiers" target="_blank">
+                        Classifiers (one per line):
+                    </a>
+                </label>
+                <textarea id="classifiers" placeholder="e.g., SVM&#10;rf"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="query-strategies">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.query" target="_blank">
+                        Query Strategies (one per line):
+                    </a>
+                </label>
+                <textarea id="query-strategies" placeholder="e.g., uncertainty&#10;simple"></textarea>
+            </div>
+            <div class="form-group tooltip">
+                <label for="no-balance-strategy-multi">
+                    No Balance Strategy:
+                </label>
+                <input id="no-balance-strategy-multi" type="checkbox" onclick="toggleBalanceStrategy(true)">
+                <span class="tooltip-text">Disable the balance strategy for multi-model configurations.</span>
+            </div>
+            <div class="form-group" id="balance-strategy-group-multi">
+                <label for="balance-strategies">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
+                        Balance Strategies (one per line):
+                    </a>
+                </label>
+                <textarea id="balance-strategies" placeholder="e.g., double&#10;triple"></textarea>
+            </div>
+            
+            <div class="form-group tooltip">
+                <label for="impossible-models">
+                    <a href="https://github.com/asreview/asreview-makita#example-usage" target="_blank">
+                        Impossible Models (one per line):
+                    </a>
+                </label>
+                <textarea id="impossible-models" placeholder="e.g., SVM,sbert&#10;NB,doc2vec"></textarea>
+                <span class="tooltip-text">Certain combinations of classifiers and feature extractors do not work in conjunction. Specifying them here will exclude them from the simulations.</span>
+            </div>
+        </div>
+        
+        <div id="singlemodel-options">
+            <h3>Model Configuration</h3>
+            <div class="form-group">
+                <label for="feature-extractor">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.feature_extraction" target="_blank">
+                        Feature Extractor:
+                    </a>
+                </label>
+                <input id="feature-extractor" type="text" placeholder="e.g., tfidf">
+            </div>
+            <div class="form-group">
+                <label for="classifier">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.classifiers" target="_blank">
+                        Classifier:
+                    </a>
+                </label>
+                <input id="classifier" type="text" placeholder="e.g., SVM">
+            </div>
+            <div class="form-group">
+                <label for="query-strategy">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.query" target="_blank">
+                        Query Strategy:
+                    </a>
+                </label>
+                <input id="query-strategy" type="text" placeholder="e.g., uncertainty">
+            </div>
+            <div class="form-group tooltip">
+                <label for="no-balance-strategy-single">
+                    No Balance Strategy:
+                </label>
+                <input id="no-balance-strategy-single" type="checkbox" onclick="toggleBalanceStrategy(false)">
+                <span class="tooltip-text">Disable the balance strategy for single-model configurations.</span>
+            </div>
+            <div class="form-group" id="balance-strategy-group-single">
+                <label for="balance-strategy">
+                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
+                        Balance Strategy:
+                    </a>
+                </label>
+                <input id="balance-strategy" type="text" placeholder="e.g., double">
+            </div>
+        </div>
+        
+    </div>
+    <div id="scripts" class="task" style="display: none;">
+        <h2>Add Scripts</h2>
+        <div class="form-group">
+            <label for="add-all">Add All Scripts:</label>
+            <input id="add-all" type="checkbox" onclick="toggleScriptInput()">
+        </div>
+        <div class="form-group" id="script-name-group">
+            <label for="script-name">Script Name<span class="required">*</span>:</label>
+            <select id="script-name">
+                <option value="" disabled selected>Select a script</option>
+                <option value="merge_descriptives.py">merge_descriptives.py</option>
+                <option value="merge_tds.py">merge_tds.py</option>
+                <option value="get_plot.py">get_plot.py</option>
+                <option value="split_data_with_multiple_labels.py">split_data_with_multiple_labels.py</option>
+                <option value="get_settings_from_state.py">get_settings_from_state.py</option>
+                <option value="merge_metrics.py">merge_metrics.py</option>
+            </select>
+        </div>        
+        <div class="form-group">
+            <label for="scripts-folder">Project Folder path:</label>
+            <input id="scripts-folder" type="text" placeholder="Enter folder path">
+        </div>
+    </div>
+</div>
+
+<div id="generate" class="container">
+    <button onclick="generateCommand()">Generate Command</button>
+    <h3>Makita (Make It Automatic) Command:</h3>
+    <div class="command-container">
+        <pre id="output">No command generated yet</pre>
+        <button id="copy-icon" onclick="copyCommand()" aria-label="Copy Command">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+        </button>
+    </div>
+</div>
+
+
+<footer>
+    <p>&copy; 2025 ASReview</p>
+</footer>
+
+<script>
+let currentTask = 'rendering';
+
+function toggleScriptInput() {
+    const addAll = document.getElementById("add-all").checked;
+    document.getElementById("script-name-group").style.display = addAll ? "none" : "flex";
+}
+
+function toggleTemplateOptions() {
+    const template = document.getElementById("template").value;
+    document.getElementById("arfi-options").style.display = template === "arfi" ? "block" : "none";
+    document.getElementById("multimodel-options").style.display = template === "multimodel" ? "block" : "none";
+    document.getElementById("singlemodel-options").style.display = template !== "multimodel" ? "block" : "none";
+}
+
+function generateCommand() {
+    let command = "";
+
+    if (currentTask === "rendering") {
+        const template = document.getElementById("template").value;
+        const dataFolder = document.getElementById("data-folder").value;
+        const project = document.getElementById("project").value;
+        const jobFile = document.getElementById("job-file").value;
+        const customTemplate = document.getElementById("custom-template").value;
+        const platform = document.getElementById("platform").value;
+        const priorSeed = document.getElementById("prior-seed").value;
+        const modelSeed = document.getElementById("model-seed").value;
+        const nRuns = document.getElementById("n-runs").value;
+        const nQuery = document.getElementById("number-per-query").value;
+        const skipWordclouds = document.getElementById("skip-wordclouds").checked;
+        const overwrite = document.getElementById("overwrite").checked;
+        const stopCondition = document.getElementById("stop-condition").value.trim();
+
+        command = `asreview makita template ${template}`;
+        if (dataFolder) command += ` --data_folder "${dataFolder}"`;
+        if (project) command += ` --project_folder "${project}"`;
+        if (jobFile) command += ` --job_file "${jobFile}"`;
+        if (customTemplate) command += ` --template "${customTemplate}"`;
+        if (platform) command += ` --platform "${platform}"`;
+        if (priorSeed) command += ` --prior_seed ${priorSeed}`;
+        if (modelSeed) command += ` --model_seed ${modelSeed}`;
+        if (nRuns != 1) command += ` --n_runs ${nRuns}`;
+        if (nQuery != 1) command += ` --n_query ${nQuery}`;
+        if (skipWordclouds) command += ` --skip_wordclouds`;
+        if (overwrite) command += ` --overwrite`;
+        if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
+            command += ` --n_stop ${stopCondition}`;
+        } else if (stopCondition) {
+            alert("Invalid Stop Condition. Use 'min' or a valid number.");
+            return;
+        }
+
+        if (template === "arfi") {
+            const nPriors = document.getElementById("n-priors").value;
+            if (nPriors) command += ` --n_priors ${nPriors}`;
+        } 
+        if (template === "multimodel") {
+            const featureExtractors = document.getElementById("feature-extractors").value.split("\n").filter(Boolean);
+            const classifiers = document.getElementById("classifiers").value.split("\n").filter(Boolean);
+            const queryStrategies = document.getElementById("query-strategies").value.split("\n").filter(Boolean);
+            const impossibleModels = document.getElementById("impossible-models").value.split("\n").filter(Boolean);
+            const noBalanceStrategyMulti = document.getElementById("no-balance-strategy-multi").checked;
+
+            if (featureExtractors.length) command += ` --feature_extractors ${featureExtractors.join(" ")}`;
+            if (classifiers.length) command += ` --classifiers ${classifiers.join(" ")}`;
+            if (queryStrategies.length) command += ` --query_strategies ${queryStrategies.join(" ")}`;
+            if (noBalanceStrategyMulti) {
+                    command += " --no-balance-strategy";
+                } else {
+                    const balanceStrategies = document.getElementById("balance-strategies").value.split("\n").filter(Boolean);
+                    if (balanceStrategies.length) {
+                        command += ` --balance_strategies ${balanceStrategies.join(" ")}`;
+                    }
+                }
+            if (impossibleModels.length) command += ` --impossible_models ${impossibleModels.join(" ")}`;
+        } else {
+            const featureExtractor = document.getElementById("feature-extractor").value;
+            const classifier = document.getElementById("classifier").value;
+            const queryStrategy = document.getElementById("query-strategy").value;
+            const noBalanceStrategySingle = document.getElementById("no-balance-strategy-single").checked;
+
+            if (featureExtractor) command += ` --feature_extractor ${featureExtractor}`;
+            if (classifier) command += ` --classifier ${classifier}`;
+            if (queryStrategy) command += ` --query_strategy ${queryStrategy}`;
+            if (noBalanceStrategySingle) {
+                command += " --no-balance-strategy";
+            } else {
+                const balanceStrategy = document.getElementById("balance-strategy").value;
+                if (balanceStrategy) command += ` --balance_strategy ${balanceStrategy}`;
+            }
+        }
+    } else if (currentTask === "scripts") {
+        const addAll = document.getElementById("add-all").checked;
+        const scriptName = document.getElementById("script-name").value;
+        const scriptsFolder = document.getElementById("scripts-folder").value;
+
+        command = "asreview makita add-script";
+        if (addAll) {
+            command += " --all";
+        } else if (scriptName) {
+            command += ` ${scriptName}`;
+        }
+        if (scriptsFolder) {
+            command += ` --output \"${scriptsFolder}/scripts\"`;
+        }
+    }
+
+    document.getElementById("output").textContent = command || "No command generated yet";
+}
+
+function copyCommand() {
+    const output = document.getElementById("output").textContent;
+    if (output.trim() === "No command generated yet") {
+        alert("Nothing to copy! Generate a command first.");
+        return;
+    }
+    navigator.clipboard.writeText(output).then(() => {
+        alert("Command copied to clipboard!");
+    }).catch(err => {
+        console.error("Failed to copy text: ", err);
+        alert("Failed to copy the command.");
+    });
+}
+
+function showTask(task) {
+    currentTask = task;
+
+    const sections = document.querySelectorAll('.task');
+    sections.forEach(section => {
+        section.style.display = section.id === task ? 'block' : 'none';
+    });
+
+    const buttons = document.querySelectorAll('.tab-button');
+    buttons.forEach(button => button.classList.remove('active'));
+    document.querySelector(`button[onclick="showTask('${task}')"]`).classList.add('active');
+}
+
+function toggleBalanceStrategy(isMultiModel) {
+    const noBalanceStrategyId = isMultiModel ? "no-balance-strategy-multi" : "no-balance-strategy-single";
+    const balanceStrategyGroupId = isMultiModel ? "balance-strategy-group-multi" : "balance-strategy-group-single";
+    const noBalanceStrategy = document.getElementById(noBalanceStrategyId).checked;
+
+    document.getElementById(balanceStrategyGroupId).style.display = noBalanceStrategy ? "none" : "flex";
+}
+</script>
