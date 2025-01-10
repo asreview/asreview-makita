@@ -5,16 +5,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
-from asreview import config as ASREVIEW_CONFIG
-from asreview.entry_points import BaseEntryPoint
-from asreview.utils import _entry_points
+from asreview.extensions import extensions
 
 from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.utils import FileHandler
 
 
-class MakitaEntryPoint(BaseEntryPoint):
+class MakitaEntryPoint:
     description = "Makita functionality for ASReview datasets."
     extension_name = "asreview-makita"
 
@@ -55,7 +53,7 @@ class MakitaEntryPoint(BaseEntryPoint):
             help="Set project folder path." "Default will use current directory.",
         )
         parser_template.add_argument(
-            "--init_seed",
+            "--prior_seed",
             type=int,
             default=535,
             help="Seed of the priors. 535 by default.",
@@ -76,13 +74,13 @@ class MakitaEntryPoint(BaseEntryPoint):
             "Default: the system of rendering templates.",
         )
         parser_template.add_argument(
-            "--instances_per_query",
+            "--n_query",
             type=int,
-            default=ASREVIEW_CONFIG.DEFAULT_N_INSTANCES,
+            default=1,
             help="Number of instances per query.",
         )
         parser_template.add_argument(
-            "--stop_if",
+            "--n_stop",
             type=str,
             default="min",
             help="The number of label actions to simulate.",
@@ -151,6 +149,11 @@ class MakitaEntryPoint(BaseEntryPoint):
             "--impossible_models",
             nargs="+",
             help="Model combinations to exclude.",
+        )
+        parser_template.add_argument(
+            "--no-balance-strategy",
+            nargs="+",
+            help="Do not use a balance strategy.",
         )
 
         parser_template.set_defaults(func=self._template_cli)
@@ -244,7 +247,7 @@ class TemplateRenderer:
 
     def _get_template_class(self, template_name):
         """Validate and load the template."""
-        entry_points = _entry_points(group="asreview.makita.templates")
+        entry_points = extensions(group="makita.templates")
         if template_name not in entry_points.names:
             raise ValueError(f"Template {template_name} not found.")
         return entry_points[template_name].load()
@@ -294,7 +297,7 @@ class TemplateRenderer:
         copied_files = []
         for dataset in datasets:
             target_path = self.paths.data_folder_path / dataset.name
-            if source_path != self.paths.data_folder_path:
+            if source_path.resolve() != self.paths.data_folder_path.resolve():
                 shutil.copyfile(dataset, target_path)
             copied_files.append(target_path)
 
@@ -306,7 +309,7 @@ class TemplateRenderer:
             "skip_wordclouds",
             "n_runs",
             "n_priors",
-            "init_seed",
+            "prior_seed",
             "model_seed",
             "classifier",
             "feature_extractor",
@@ -317,8 +320,8 @@ class TemplateRenderer:
             "query_strategies",
             "balance_strategies",
             "impossible_models",
-            "instances_per_query",
-            "stop_if",
+            "n_query",
+            "n_stop",
         ]
         return {
             key: vars(self.args).get(key)
