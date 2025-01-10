@@ -297,7 +297,7 @@ class TemplateRenderer:
         copied_files = []
         for dataset in datasets:
             target_path = self.paths.data_folder_path / dataset.name
-            if source_path != self.paths.data_folder_path:
+            if source_path.resolve() != self.paths.data_folder_path.resolve():
                 shutil.copyfile(dataset, target_path)
             copied_files.append(target_path)
 
