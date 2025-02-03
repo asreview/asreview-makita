@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
     
       # Set up Python environment
       - name: Set up Python
@@ -45,6 +43,8 @@ jobs:
 
       # Check for changes, commit, and push
       - name: Commit and push changes if any
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -52,7 +52,7 @@ jobs:
             echo "Changes detected. Committing and pushing."
             git add -A
             git commit -m "Update examples"
-            git push
+            git push origin HEAD:${{ github.head_ref }}
           else
             echo "No changes detected. Skipping commit and push."
           fi
