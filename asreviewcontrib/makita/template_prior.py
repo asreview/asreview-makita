@@ -32,8 +32,8 @@ class TemplatePrior(TemplateBase):
         self._prior_dataset_count = self._non_prior_dataset_count = 0
 
     def get_dataset_specific_params(self, index, fp_dataset):
-        """Prepare dataset-specific parameters. These parameters are provided to the
-        template once for each dataset."""
+        """Prepare dataset-specific parameters. These parameters are provided to
+        the template once for each dataset."""
 
         # Load the dataset using load_data
         asreview_data = load_data(fp_dataset)
@@ -119,8 +119,7 @@ class TemplatePrior(TemplateBase):
         # Check if at least one dataset with custom prior knowledge is present
         if self._prior_dataset_count == 0:
             raise ValueError(
-                "At least one dataset with custom prior knowledge (prefix 'prior_' or \
-                    'priors_') is required."
+                "At least one dataset with custom prior knowledge (prefix 'prior_' or 'priors_') is required."  # noqa: E501
             )
 
         # Check if at least one dataset without prior knowledge is present
@@ -130,11 +129,8 @@ class TemplatePrior(TemplateBase):
             )
 
         # Print the number of datasets with custom and without prior knowledge
-        print(
-            f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
-        print(
-            f"Datasets without prior knowledge: {self._non_prior_dataset_count}"
-        )
+        print(f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
+        print(f"Datasets without prior knowledge: {self._non_prior_dataset_count}")
 
         # Create a directory for generated data if it doesn't already exist
         generated_folder = Path("generated_data")
@@ -165,13 +161,11 @@ class TemplatePrior(TemplateBase):
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
         # Save the combined dataset to the appropriate file paths
-        combined_dataset.to_csv(filepath_with_priors, 
-                                index=True, 
-                                index_label='record_id')
+        combined_dataset.to_csv(
+            filepath_with_priors, index=True, index_label="record_id"
+        )
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
-            filepath_without_priors, 
-            index=True,
-            index_label='record_id'
+            filepath_without_priors, index=True, index_label="record_id"
         )
 
         # Create a string of indices for rows with custom prior knowledge
@@ -180,8 +174,7 @@ class TemplatePrior(TemplateBase):
         ].index.tolist()
         if len(prior_idx_list) != total_rows_with_priors:
             raise ValueError(
-                "prior_idx list is not equal in length to rows of prior \
-                             knowledge"
+                "prior_idx list is not equal in length to rows of prior knowledge"
             )
         prior_idx = " ".join(map(str, prior_idx_list))
 
