@@ -26,8 +26,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install . ruff pytest scitree asreview==2.0b0 synergy-dataset 
-        # asreview-datatools asreview-insights
+        pip install . ruff pytest scitree 
+        pip install --pre asreview synergy-dataset
 
     - name: Lint python with ruff
       run: |
