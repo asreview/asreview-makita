@@ -26,7 +26,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install . ruff pytest scitree 
+        pip install . ruff pytest
         pip install --pre asreview
 
     - name: Lint python with ruff
@@ -36,4 +36,3 @@ jobs:
     - name: Run Pytest
       run: |
         pytest --tb=short --disable-warnings
-        scitree
