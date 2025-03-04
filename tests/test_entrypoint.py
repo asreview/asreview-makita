@@ -2,7 +2,7 @@ from pathlib import Path
 
 from asreviewcontrib.makita.entrypoint import MakitaEntryPoint
 
-datasets_location = str(Path(r"examples\data"))
+datasets_location = str(Path(r".github\workflows\test_data"))
 
 def get_job_file(project_path):
     """
