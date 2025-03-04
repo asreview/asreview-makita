@@ -1,8 +1,7 @@
 """Render basic template."""
 
-from asreview.models import default_model
-
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateBasic(TemplateBase):
@@ -37,27 +36,27 @@ class TemplateBasic(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        ASREVIEW_CONFIG = default_model()  
+        defaults = get_default_settings()
 
         classifier = (
             self.classifier
-            if self.classifier is not None
-            else ASREVIEW_CONFIG["classifier"]
+            if self.classifier is not None 
+            else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG['feature_extraction']
+            else defaults["feature_extractor"]
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG['query_strategy']
+            else defaults["query_strategy"]
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG['balance_strategy']
+            else defaults["balance_strategy"]
         )
 
         n_runs = self.n_runs if self.n_runs is not None else 1

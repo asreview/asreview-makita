@@ -4,10 +4,9 @@ from pathlib import Path
 
 import numpy as np
 from asreview import load_dataset
-from asreview.data import DataStore
-from asreview.models import default_model
 
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateARFI(TemplateBase):
@@ -47,27 +46,27 @@ class TemplateARFI(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        ASREVIEW_CONFIG = default_model()
+        defaults = get_default_settings()
 
         classifier = (
             self.classifier
-            if self.classifier is not None
-            else ASREVIEW_CONFIG["classifier"]
+            if self.classifier is not None 
+            else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG['feature_extraction']
+            else defaults["feature_extractor"]
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG['query_strategy']
+            else defaults["query_strategy"]
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG['balance_strategy']
+            else defaults["balance_strategy"]
         )
 
         return {
@@ -89,11 +88,7 @@ class TemplateARFI(TemplateBase):
 def _get_priors(dataset, prior_seed, n_priors):
     """Sample priors."""
 
-    records = load_dataset(dataset, dataset_id=Path(dataset).name)
-    data_store = DataStore(":memory:")
-    data_store.create_tables()
-    data_store.add_records(records)
-    df = data_store.get_df()
+    df = load_dataset(dataset, dataset_id=Path(dataset).name).get_df()
 
     relevant_record_ids = df.record_id[df.included == 1]
     relevant_irrecord_ids = df.record_id[df.included == 0]

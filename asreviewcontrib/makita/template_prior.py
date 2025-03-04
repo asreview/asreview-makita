@@ -3,10 +3,9 @@ from pathlib import Path
 
 import pandas as pd
 from asreview import load_dataset
-from asreview.data import DataStore
-from asreview.models import default_model
 
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 # Suppress FutureWarning messages
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -36,11 +35,7 @@ class TemplatePrior(TemplateBase):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
-        records = load_dataset(fp_dataset, dataset_id=Path(fp_dataset).name)
-        data_store = DataStore(":memory:")
-        data_store.create_tables()
-        data_store.add_records(records)
-        df = data_store.get_df()
+        df = load_dataset(fp_dataset, dataset_id=Path(fp_dataset).name).get_df()
 
         if df["title"].fillna("").apply(lambda x: x.strip()).eq("").all():
             print(f"Warning: {fp_dataset} has no titles.")
@@ -72,27 +67,27 @@ class TemplatePrior(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        ASREVIEW_CONFIG = default_model()
+        defaults = get_default_settings()
 
         classifier = (
             self.classifier
-            if self.classifier is not None
-            else ASREVIEW_CONFIG["classifier"]
+            if self.classifier is not None 
+            else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG['feature_extraction']
+            else defaults["feature_extractor"]
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG['query_strategy']
+            else defaults["query_strategy"]
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG['balance_strategy']
+            else defaults["balance_strategy"]
         )
 
         n_runs = self.n_runs if self.n_runs is not None else 1

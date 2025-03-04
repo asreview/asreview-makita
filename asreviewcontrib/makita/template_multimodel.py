@@ -1,8 +1,7 @@
 """Render multimodel template."""
 
-from asreview.models import default_model
-
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateMultiModel(TemplateBase):
@@ -42,27 +41,27 @@ class TemplateMultiModel(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        ASREVIEW_CONFIG = default_model()
+        defaults = get_default_settings()
 
         all_classifiers = (
             self.all_classifiers
             if self.all_classifiers is not None
-            else ["logistic", "nb", "rf"]
+            else ["nb", "svm"]
         )
         all_feature_extractors = (
             self.all_feature_extractors
             if self.all_feature_extractors is not None
-            else ["doc2vec", "sbert", "tfidf"]
+            else ["onehot", "tfidf"]
         )
         all_query_strategies = (
             self.all_query_strategies
             if self.all_query_strategies is not None
-            else [ASREVIEW_CONFIG['query_strategy']]
+            else [defaults["query_strategy"]]
         )
         all_balance_strategies = (
             self.all_balance_strategies
             if self.all_balance_strategies is not None
-            else [ASREVIEW_CONFIG['balance_strategy']]
+            else [defaults["balance_strategy"]]
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]

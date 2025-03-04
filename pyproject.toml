@@ -53,3 +53,7 @@ include = ["**/*.py", "**/*.py.template"]
 
 [tool.ruff.lint.isort]
 force-single-line = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = ["tests"]
