@@ -1,5 +1,6 @@
 name: test-suite
 on: [push, pull_request]
+
 jobs:
   test-template-and-lint:
     strategy:
@@ -13,6 +14,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
+
     - name: Cache Python packages
       uses: actions/cache@v4
       with:
@@ -21,59 +23,15 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
-        pip install . ruff scitree synergy-dataset
+        pip install . ruff pytest scitree asreview synergy-dataset asreview-datatools asreview-insights
+
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Render makita templates
-      run: |
-        asreview makita template basic -p basic -d .github/workflows/test_data/ --classifier nb --feature_extractor tfidf --query_strategy max --n_runs 1 --prior_seed 1 --model_seed 2 --skip_wordclouds --overwrite --n_query 2 --n_stop min --balance_strategy double | tee output_basic.txt
-        grep -q "ERROR" output_basic.txt && exit 1 || true
-        asreview makita template arfi -p arfi -d .github/workflows/test_data/ | tee output_arfi.txt
-        grep -q "ERROR" output_arfi.txt && exit 1 || true
-        asreview makita template prior -p prior -d .github/workflows/test_data/ | tee output_prior.txt
-        grep -q "ERROR" output_prior.txt && exit 1 || true
-        asreview makita template multimodel -p multimodel -d .github/workflows/test_data/ | tee output_multimodel.txt
-        grep -q "ERROR" output_multimodel.txt && exit 1 || true
-    - name: Render makita scripts
-      run: |
-        asreview makita add-script --all -o ./tmp/scripts | tee output_scripts.txt
-        grep -q "ERROR" output_scripts.txt && exit 1 || true
-    - name: Run SciTree
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: |
-        cd ./tmp/
-        scitree
-    - name: Execute basic template jobs file
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: |
-        pip install asreview-datatools asreview-insights
 
-        CURRENT_ASREVIEW_VERSION=$(python -c "import asreview; print(asreview.__version__)")
-
-        if [[ $CURRENT_ASREVIEW_VERSION == 2* || $CURRENT_ASREVIEW_VERSION > 2 ]]; then
-          echo "Using asreview version $CURRENT_ASREVIEW_VERSION"
-        else
-          echo "Skipping step: incompatible asreview version $CURRENT_ASREVIEW_VERSION"
-          exit 0
-        fi
-
-        mkdir basic_run
-        cd basic_run
-        asreview makita template basic -d ../.github/workflows/test_data/ --n_query 100 --skip_wordclouds --overwrite --n_runs 1
-        scitree
-        sh jobs.sh
-        scitree
-    - name: Upload output files
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: output-files
-        path: |
-          output_basic.txt
-          output_arfi.txt
-          output_prior.txt
-          output_multimodel.txt
-          output_scripts.txt
+    - name: Run Pytest
+      run: |
+        pytest --tb=short --disable-warnings
