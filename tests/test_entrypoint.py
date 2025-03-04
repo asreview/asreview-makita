@@ -2,8 +2,7 @@ from pathlib import Path
 
 from asreviewcontrib.makita.entrypoint import MakitaEntryPoint
 
-TEST_DATA = str(Path(r"examples\data"))
-
+datasets_location = str(Path(r"examples\data"))
 
 def get_job_file(project_path):
     """
@@ -26,7 +25,7 @@ def test_basic_template(tmp_path):
         "--project_folder",
         str(project_folder),
         "--data_folder",
-        TEST_DATA,
+        datasets_location,
         "--skip_wordclouds",
         "--overwrite",
         "--n_runs",
@@ -55,7 +54,7 @@ def test_arfi_template(tmp_path):
         "--project_folder",
         str(project_folder),
         "--data_folder",
-        TEST_DATA,
+        datasets_location,
         "--skip_wordclouds",
         "--overwrite",
         "--n_priors",
@@ -88,7 +87,7 @@ def test_prior_template(tmp_path):
         "--project_folder",
         str(project_folder),
         "--data_folder",
-        TEST_DATA,
+        datasets_location,
         "--skip_wordclouds",
         "--overwrite",
         "--n_runs",
@@ -119,7 +118,7 @@ def test_multimodel_template(tmp_path):
         "--project_folder",
         str(project_folder),
         "--data_folder",
-        TEST_DATA,
+        datasets_location,
         "--skip_wordclouds",
         "--overwrite",
         "--n_runs",

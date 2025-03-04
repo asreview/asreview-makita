@@ -36,4 +36,5 @@ jobs:
     - name: Run Pytest
       run: |
         synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o examples/data -l
+        scitree
         pytest --tb=short --disable-warnings
