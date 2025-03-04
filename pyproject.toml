@@ -8,7 +8,6 @@ readme = "README.md"
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -16,9 +15,9 @@ classifiers = [
     "Programming Language :: Python :: 3.12"
 ]
 license = {text = "MIT"}
-dependencies = ["asreview>=v2.0a8", "jinja2", "cfgtemplater"]
+dependencies = ["asreview>=v2.0b0", "jinja2", "cfgtemplater"]
 dynamic = ["version"]
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 
 [project.urls]
 homepage = "https://asreview.ai"
