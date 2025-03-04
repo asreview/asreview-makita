@@ -1,5 +1,5 @@
 
-# version 0.1.dev1+gd662348
+# version 0.1.dev1+ge58021b
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
@@ -29,17 +29,17 @@ python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordclou
 # Simulate runs
 mkdir output/simulation/prior_Smid_2020/state_files
 
-# Classifier = logistic, Feature extractor = doc2vec, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_doc2vec_max_double.asreview --model logistic --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_doc2vec_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_doc2vec_max_double.json
+# Classifier = logistic, Feature extractor = doc2vec, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_doc2vec_max_balanced.asreview --model logistic --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_doc2vec_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_doc2vec_max_balanced.json
 
-# Classifier = logistic, Feature extractor = sbert, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_sbert_max_double.asreview --model logistic --query_strategy max --feature_extraction sbert --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_sbert_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_sbert_max_double.json
+# Classifier = logistic, Feature extractor = sbert, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_sbert_max_balanced.asreview --model logistic --query_strategy max --feature_extraction sbert --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_sbert_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_sbert_max_balanced.json
 
-# Classifier = logistic, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_tfidf_max_double.asreview --model logistic --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_tfidf_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_tfidf_max_double.json
+# Classifier = logistic, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_tfidf_max_balanced.asreview --model logistic --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_logistic_tfidf_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_logistic_tfidf_max_balanced.json
 
 
 # Skipped nb + doc2vec + max model
@@ -47,21 +47,21 @@ python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_pri
 
 # Skipped nb + sbert + max model
 
-# Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_nb_tfidf_max_double.asreview --model nb --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_nb_tfidf_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_nb_tfidf_max_double.json
+# Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_nb_tfidf_max_balanced.asreview --model nb --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_nb_tfidf_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_nb_tfidf_max_balanced.json
 
-# Classifier = rf, Feature extractor = doc2vec, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_doc2vec_max_double.asreview --model rf --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_doc2vec_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_doc2vec_max_double.json
+# Classifier = rf, Feature extractor = doc2vec, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_doc2vec_max_balanced.asreview --model rf --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_doc2vec_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_doc2vec_max_balanced.json
 
-# Classifier = rf, Feature extractor = sbert, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_sbert_max_double.asreview --model rf --query_strategy max --feature_extraction sbert --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_sbert_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_sbert_max_double.json
+# Classifier = rf, Feature extractor = sbert, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_sbert_max_balanced.asreview --model rf --query_strategy max --feature_extraction sbert --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_sbert_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_sbert_max_balanced.json
 
-# Classifier = rf, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_tfidf_max_double.asreview --model rf --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_tfidf_max_double.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_tfidf_max_double.json
+# Classifier = rf, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_tfidf_max_balanced.asreview --model rf --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 165 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_rf_tfidf_max_balanced.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_rf_tfidf_max_balanced.json
 
 # Generate plot and tables for dataset
 python scripts/get_plot.py -s output/simulation/prior_Smid_2020/state_files/ -o output/figures/plot_recall_sim_prior_Smid_2020.png --show_legend model
@@ -88,17 +88,17 @@ python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordc
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files
 
-# Classifier = logistic, Feature extractor = doc2vec, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_doc2vec_max_double.asreview --model logistic --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_doc2vec_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_doc2vec_max_double.json
+# Classifier = logistic, Feature extractor = doc2vec, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_doc2vec_max_balanced.asreview --model logistic --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_doc2vec_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_doc2vec_max_balanced.json
 
-# Classifier = logistic, Feature extractor = sbert, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_sbert_max_double.asreview --model logistic --query_strategy max --feature_extraction sbert --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_sbert_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_sbert_max_double.json
+# Classifier = logistic, Feature extractor = sbert, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_sbert_max_balanced.asreview --model logistic --query_strategy max --feature_extraction sbert --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_sbert_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_sbert_max_balanced.json
 
-# Classifier = logistic, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_tfidf_max_double.asreview --model logistic --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_tfidf_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_tfidf_max_double.json
+# Classifier = logistic, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_tfidf_max_balanced.asreview --model logistic --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_logistic_tfidf_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_logistic_tfidf_max_balanced.json
 
 
 # Skipped nb + doc2vec + max model
@@ -106,21 +106,21 @@ python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_
 
 # Skipped nb + sbert + max model
 
-# Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_double.asreview --model nb --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_tfidf_max_double.json
+# Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_balanced.asreview --model nb --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_tfidf_max_balanced.json
 
-# Classifier = rf, Feature extractor = doc2vec, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_doc2vec_max_double.asreview --model rf --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_doc2vec_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_doc2vec_max_double.json
+# Classifier = rf, Feature extractor = doc2vec, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_doc2vec_max_balanced.asreview --model rf --query_strategy max --feature_extraction doc2vec --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_doc2vec_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_doc2vec_max_balanced.json
 
-# Classifier = rf, Feature extractor = sbert, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_sbert_max_double.asreview --model rf --query_strategy max --feature_extraction sbert --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_sbert_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_sbert_max_double.json
+# Classifier = rf, Feature extractor = sbert, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_sbert_max_balanced.asreview --model rf --query_strategy max --feature_extraction sbert --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_sbert_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_sbert_max_balanced.json
 
-# Classifier = rf, Feature extractor = tfidf, Query strategy = max, Balance strategy = double
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_tfidf_max_double.asreview --model rf --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b double --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_tfidf_max_double.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_tfidf_max_double.json
+# Classifier = rf, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
+python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_tfidf_max_balanced.asreview --model rf --query_strategy max --feature_extraction tfidf --init_seed 535 --seed 166 -q max -b balanced --n_instances 1 --stop_if min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_rf_tfidf_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_rf_tfidf_max_balanced.json
 
 # Generate plot and tables for dataset
 python scripts/get_plot.py -s output/simulation/van_de_Schoot_2018/state_files/ -o output/figures/plot_recall_sim_van_de_Schoot_2018.png --show_legend model

@@ -2,10 +2,10 @@ import warnings
 from pathlib import Path
 
 import pandas as pd
-from asreview import config as ASREVIEW_CONFIG
-from asreview.data import load_data
+from asreview import load_dataset
 
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 # Suppress FutureWarning messages
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -35,58 +35,31 @@ class TemplatePrior(TemplateBase):
         """Prepare dataset-specific parameters. These parameters are provided to the
         template once for each dataset."""
 
-        # Load the dataset using load_data
-        asreview_data = load_data(fp_dataset)
+        df = load_dataset(fp_dataset, dataset_id=Path(fp_dataset).name).get_df()
 
-        if (
-            not hasattr(asreview_data, "title")
-            or asreview_data.title is None
-            or len(asreview_data.title) == 0
-        ):
-            print(f"Warning: {fp_dataset} has no title.")
-        if (
-            not hasattr(asreview_data, "abstract")
-            or asreview_data.abstract is None
-            or len(asreview_data.abstract) == 0
-        ):
-            print(f"Warning: {fp_dataset} has no abstract.")
-        if (
-            not hasattr(asreview_data, "labels")
-            or asreview_data.labels is None
-            or len(asreview_data.labels) == 0
-        ):
-            raise ValueError(
-                f"{fp_dataset} has no labels. The dataset cannot be processed."
+        if df["title"].fillna("").apply(lambda x: x.strip()).eq("").all():
+            print(f"Warning: {fp_dataset} has no titles.")
+
+        if df["abstract"].fillna("").apply(lambda x: x.strip()).eq("").all():
+            print(f"Warning: {fp_dataset} has no abstracts.")
+
+        if not df["included"].isin([None, 1, 0]).all():
+            print(
+                f"Warning: {fp_dataset} has 'included' column with None values or non-binary values."  # noqa: E501
             )
-
-        # Create a DataFrame with the desired columns: label, abstract, and title
-        dataset = pd.DataFrame(
-            {
-                "title": asreview_data.title,
-                "abstract": asreview_data.abstract,
-                "label": asreview_data.labels.astype(int),
-            }
-        )
 
         # Add the 'makita_priors' column
         if fp_dataset.name.startswith("prior_") or fp_dataset.name.startswith(
             "priors_"
         ):
-            dataset["makita_priors"] = 1
+            df["makita_priors"] = 1
             self._prior_dataset_count += 1
         else:
-            dataset["makita_priors"] = 0
+            df["makita_priors"] = 0
             self._non_prior_dataset_count += 1
 
-        if -1 in dataset.label.values:
-            index = dataset.label[dataset.label.values == -1].index[0]
-            raise ValueError(
-                f"Dataset {fp_dataset} contains unlabeled record at row {index}.\
-                    \nTitle: '{dataset.title[index]}'"
-            )
-
         # Add the dataset to the list
-        self.prior_makita_datasets.append(dataset)
+        self.prior_makita_datasets.append(df)
 
         return {}
 
@@ -94,26 +67,29 @@ class TemplatePrior(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
+        defaults = get_default_settings()
+
         classifier = (
             self.classifier
-            if self.classifier is not None
-            else ASREVIEW_CONFIG.DEFAULT_MODEL
+            if self.classifier is not None 
+            else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION
+            else defaults["feature_extractor"]
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY
+            else defaults["query_strategy"]
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
+            else defaults["balance_strategy"]
         )
+
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         # Check if at least one dataset with custom prior knowledge is present
@@ -130,11 +106,8 @@ class TemplatePrior(TemplateBase):
             )
 
         # Print the number of datasets with custom and without prior knowledge
-        print(
-            f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
-        print(
-            f"Datasets without prior knowledge: {self._non_prior_dataset_count}"
-        )
+        print(f"\nDatasets with custom prior knowledge: {self._prior_dataset_count}")
+        print(f"Datasets without prior knowledge: {self._non_prior_dataset_count}")
 
         # Create a directory for generated data if it doesn't already exist
         generated_folder = Path(self.paths.project_folder, "generated_data")
@@ -149,7 +122,15 @@ class TemplatePrior(TemplateBase):
         # Combine all datasets into one DataFrame and remove rows where label is -1
         combined_dataset = pd.concat(self.prior_makita_datasets, ignore_index=True)
         combined_dataset.drop(
-            combined_dataset[combined_dataset.label == -1].index, inplace=True
+            combined_dataset[combined_dataset.included == -1].index, inplace=True
+        )
+
+        combined_dataset = combined_dataset[
+            ["dataset_id", "title", "abstract", "included", "makita_priors"]
+        ]
+
+        combined_dataset.rename(
+            columns={"dataset_id": "original_dataset"}, inplace=True
         )
 
         # Calculate the total number of rows with and without prior knowledge
@@ -165,13 +146,11 @@ class TemplatePrior(TemplateBase):
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
         # Save the combined dataset to the appropriate file paths
-        combined_dataset.to_csv(filepath_with_priors, 
-                                index=True, 
-                                index_label='record_id')
+        combined_dataset.to_csv(
+            filepath_with_priors, index=False
+        )
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
-            filepath_without_priors, 
-            index=True,
-            index_label='record_id'
+            filepath_without_priors, index=False
         )
 
         # Create a string of indices for rows with custom prior knowledge
@@ -193,18 +172,16 @@ class TemplatePrior(TemplateBase):
             "n_runs": n_runs,
             "datasets": params,
             "skip_wordclouds": self.skip_wordclouds,
-            "instances_per_query": self.instances_per_query,
-            "stop_if": self.stop_if,
+            "n_query": self.n_query,
+            "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
             "model_seed": self.model_seed,
-            "init_seed": self.init_seed,
-            "filepath_with_priors": 
-            f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",
+            "prior_seed": self.prior_seed,
+            "filepath_with_priors": f"{filepath_with_priors.parent.name}/{filepath_with_priors.name}",  # noqa: E501
             "filepath_with_priors_stem": filepath_with_priors.stem,
-            "filepath_without_priors": 
-            f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",
+            "filepath_without_priors": f"{filepath_without_priors.parent.name}/{filepath_without_priors.name}",  # noqa: E501
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }

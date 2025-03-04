@@ -63,7 +63,7 @@ Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
 ### Prerequisites:
 
 ```
-Requires Python 3.8 or higher.
+Requires Python 3.10 or higher.
 ```
 
 ### Install the Makita extension with pip:
@@ -156,6 +156,14 @@ with
 asreview makita template basic --job_file my_jobs_file.my_ext
 ```
 
+### ASReview Makita Helper Tool
+For users of ASReview Makita, there's a handy helper tool available. This tool
+simplifies the process of formulating your Makita commands, ensuring
+compatibility and ease of use. It's designed to work with ASReview Makita
+version 1.0 and above.
+
+[Makita helper Tool](https://asreview.github.io/asreview-makita/)
+
 ## Templates
 
 The following table gives an overview of the available templates. See [Getting
@@ -181,7 +189,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors                              Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors                              Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path 
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -192,8 +200,8 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_query n_query                         Number of instances per query.                  Default: 1.
+  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
 ### ARFI template
@@ -213,7 +221,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -224,8 +232,8 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_query n_query                         Number of instances per query.                  Default: 1.
+  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
 ### Multimodel template
@@ -243,15 +251,15 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_query n_query                         Number of instances per query.                  Default: 1.
+  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
   --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max']
@@ -300,7 +308,7 @@ optional arguments:
   -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
   -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --init_seed INIT_SEED                     Seed of the priors.                             Seed is set to 535 by default.
+  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
@@ -311,8 +319,8 @@ optional arguments:
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --instances_per_query INSTANCES_PER_QUERY Number of instances per query.                  Default: 1.
-  --stop_if STOP_IF                         The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_query n_query                         Number of instances per query.                  Default: 1.
+  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
 ```
 
 #### Example usage
@@ -381,8 +389,8 @@ use it, use `-s` (source) and `-o` (output) to tweak paths.
 
 Adding a legend to the plot can be done with the `-l` or `--show_legend` flag,
 with the labels clustered on any of the following: `'filename', 'model',
-'query_strategy', 'balance_strategy', 'feature_extraction', 'n_instances',
-'stop_if', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param',
+'query_strategy', 'balance_strategy', 'feature_extraction', 'n-query',
+'n_stop', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param',
 'feature_param', 'balance_param'`
 
 #### Available scripts

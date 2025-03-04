@@ -1,8 +1,7 @@
 """Render basic template."""
 
-from asreview import config as ASREVIEW_CONFIG
-
 from asreviewcontrib.makita.template_base import TemplateBase
+from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateBasic(TemplateBase):
@@ -30,34 +29,36 @@ class TemplateBasic(TemplateBase):
             "input_file": f"{fp_dataset.parent.name}/{fp_dataset.name}",
             "input_file_stem": fp_dataset.stem,
             "model_seed": self.model_seed + index,
-            "init_seed": self.init_seed,
+            "prior_seed": self.prior_seed,
         }
 
     def get_template_specific_params(self, params):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        # set default values if not provided
+        defaults = get_default_settings()
+
         classifier = (
             self.classifier
-            if self.classifier is not None
-            else ASREVIEW_CONFIG.DEFAULT_MODEL
+            if self.classifier is not None 
+            else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
             if self.feature_extractor is not None
-            else ASREVIEW_CONFIG.DEFAULT_FEATURE_EXTRACTION
+            else defaults["feature_extractor"]
         )
         query_strategy = (
             self.query_strategy
             if self.query_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_QUERY_STRATEGY
+            else defaults["query_strategy"]
         )
         balance_strategy = (
             self.balance_strategy
             if self.balance_strategy is not None
-            else ASREVIEW_CONFIG.DEFAULT_BALANCE_STRATEGY
+            else defaults["balance_strategy"]
         )
+
         n_runs = self.n_runs if self.n_runs is not None else 1
 
         return {
@@ -68,8 +69,8 @@ class TemplateBasic(TemplateBase):
             "n_runs": n_runs,
             "datasets": params,
             "skip_wordclouds": self.skip_wordclouds,
-            "instances_per_query": self.instances_per_query,
-            "stop_if": self.stop_if,
+            "n_query": self.n_query,
+            "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,

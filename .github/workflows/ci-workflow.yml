@@ -1,11 +1,12 @@
 name: test-suite
 on: [push, pull_request]
+
 jobs:
   test-template-and-lint:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        python-version: ['3.8', '3.12'] 
+        python-version: ['3.10', '3.12', '3.13'] 
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
@@ -13,6 +14,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
+
     - name: Cache Python packages
       uses: actions/cache@v4
       with:
@@ -21,48 +23,16 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
-        pip install . ruff scitree asreview-datatools asreview-insights synergy-dataset
+        pip install . ruff pytest
+        pip install --pre asreview
+
     - name: Lint python with ruff
       run: |
         ruff check .
-    - name: Render makita templates
+
+    - name: Run Pytest
       run: |
-        asreview makita template basic -p basic -d .github/workflows/test_data/ --classifier nb --feature_extractor tfidf --query_strategy max --n_runs 1 --init_seed 1 --model_seed 2 --skip_wordclouds --overwrite --instances_per_query 2 --stop_if min --balance_strategy double | tee output_basic.txt
-        grep -q "ERROR" output_basic.txt && exit 1 || true
-        asreview makita template arfi -p arfi -d .github/workflows/test_data/ | tee output_arfi.txt
-        grep -q "ERROR" output_arfi.txt && exit 1 || true
-        asreview makita template prior -p prior -d .github/workflows/test_data/ | tee output_prior.txt
-        grep -q "ERROR" output_prior.txt && exit 1 || true
-        asreview makita template multimodel -p multimodel -d .github/workflows/test_data/ | tee output_multimodel.txt
-        grep -q "ERROR" output_multimodel.txt && exit 1 || true
-    - name: Render makita scripts
-      run: |
-        asreview makita add-script --all -o ./tmp/scripts | tee output_scripts.txt
-        grep -q "ERROR" output_scripts.txt && exit 1 || true
-    - name: Run SciTree
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: |
-        cd ./tmp/
-        scitree
-    - name: Execute basic template jobs file
-      if: ${{ matrix.os != 'windows-latest' }}
-      run: |
-        mkdir basic_run
-        cd basic_run
-        asreview makita template basic -d ../.github/workflows/test_data/ --instances_per_query 100 --skip_wordclouds --overwrite --n_runs 1
-        scitree
-        sh jobs.sh
-        scitree
-    - name: Upload output files
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: output-files
-        path: |
-          output_basic.txt
-          output_arfi.txt
-          output_prior.txt
-          output_multimodel.txt
-          output_scripts.txt
+        pytest --tb=short --disable-warnings
