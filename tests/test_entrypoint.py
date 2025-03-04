@@ -1,10 +1,8 @@
 from pathlib import Path
 
-import pytest
-
 from asreviewcontrib.makita.entrypoint import MakitaEntryPoint
 
-TEST_DATA = str(Path(r'examples\data'))
+TEST_DATA = str(Path(r"examples\data"))
 
 
 def get_job_file(project_path):
@@ -25,13 +23,18 @@ def test_basic_template(tmp_path):
     argv = [
         "template",
         "basic",
-        "--project_folder", str(project_folder),
-        "--data_folder", TEST_DATA,
+        "--project_folder",
+        str(project_folder),
+        "--data_folder",
+        TEST_DATA,
         "--skip_wordclouds",
         "--overwrite",
-        "--n_runs", "1",
-        "--n_query", "10",
-        "--n_stop", "min",
+        "--n_runs",
+        "1",
+        "--n_query",
+        "10",
+        "--n_stop",
+        "min",
     ]
     mep.execute(argv)
 
@@ -49,13 +52,18 @@ def test_arfi_template(tmp_path):
     argv = [
         "template",
         "arfi",
-        "--project_folder", str(project_folder),
-        "--data_folder", TEST_DATA,
+        "--project_folder",
+        str(project_folder),
+        "--data_folder",
+        TEST_DATA,
         "--skip_wordclouds",
         "--overwrite",
-        "--n_priors", "5",
-        "--n_query", "10",
-        "--n_stop", "min",
+        "--n_priors",
+        "5",
+        "--n_query",
+        "10",
+        "--n_stop",
+        "min",
     ]
     mep.execute(argv)
 
@@ -67,8 +75,8 @@ def test_arfi_template(tmp_path):
 
 def test_prior_template(tmp_path):
     """
-    Test 'prior' template. 
-    This requires at least one dataset whose filename begins with 
+    Test 'prior' template.
+    This requires at least one dataset whose filename begins with
     'prior_' or 'priors_'. Otherwise, it may raise an exception.
     """
     mep = MakitaEntryPoint()
@@ -77,18 +85,25 @@ def test_prior_template(tmp_path):
     argv = [
         "template",
         "prior",
-        "--project_folder", str(project_folder),
-        "--data_folder", TEST_DATA,
+        "--project_folder",
+        str(project_folder),
+        "--data_folder",
+        TEST_DATA,
         "--skip_wordclouds",
         "--overwrite",
-        "--n_runs", "1",
-        "--n_query", "10",
-        "--n_stop", "min",
+        "--n_runs",
+        "1",
+        "--n_query",
+        "10",
+        "--n_stop",
+        "min",
     ]
     mep.execute(argv)
 
     jobs_file = get_job_file(project_folder)
-    assert jobs_file.exists(), "Makita did not produce the expected jobs file for prior."
+    assert jobs_file.exists(), (
+        "Makita did not produce the expected jobs file for prior."
+    )
     content = jobs_file.read_text()
     assert "ERROR" not in content
 
@@ -101,18 +116,25 @@ def test_multimodel_template(tmp_path):
     argv = [
         "template",
         "multimodel",
-        "--project_folder", str(project_folder),
-        "--data_folder", TEST_DATA,
+        "--project_folder",
+        str(project_folder),
+        "--data_folder",
+        TEST_DATA,
         "--skip_wordclouds",
         "--overwrite",
-        "--n_runs", "1",
-        "--n_query", "10",
-        "--n_stop", "min",
+        "--n_runs",
+        "1",
+        "--n_query",
+        "10",
+        "--n_stop",
+        "min",
     ]
     mep.execute(argv)
 
     jobs_file = get_job_file(project_folder)
-    assert jobs_file.exists(), "Makita did not produce the expected jobs file for multimodel."
+    assert jobs_file.exists(), (
+        "Makita did not produce the expected jobs file for multimodel."
+    )
     content = jobs_file.read_text()
     assert "ERROR" not in content
 
@@ -128,7 +150,8 @@ def test_add_script(tmp_path):
     argv = [
         "add-script",
         "--all",
-        "--output", str(scripts_folder),
+        "--output",
+        str(scripts_folder),
     ]
     mep.execute(argv)
 
