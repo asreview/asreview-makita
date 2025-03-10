@@ -88,8 +88,10 @@ class TemplateARFI(TemplateBase):
 
 def _get_priors(dataset, prior_seed, n_priors):
     """Sample priors."""
-
-    df = load_dataset(dataset, dataset_id=Path(dataset).name).get_df()
+    try:
+        df = load_dataset(dataset, dataset_id=Path(dataset).name).get_df()
+    except Exception as e:
+        raise RuntimeError(f"Failed importing the dataset using asreview: {e}")
 
     relevant_record_ids = df.record_id[df.included == 1]
     relevant_irrecord_ids = df.record_id[df.included == 0]
