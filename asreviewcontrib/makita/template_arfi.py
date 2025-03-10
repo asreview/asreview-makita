@@ -51,9 +51,7 @@ class TemplateARFI(TemplateBase):
         defaults = get_default_settings()
 
         classifier = (
-            self.classifier
-            if self.classifier is not None 
-            else defaults["classifier"]
+            self.classifier if self.classifier is not None else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
@@ -66,7 +64,8 @@ class TemplateARFI(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
-            None if self.balance_strategy and self.balance_strategy.lower() == "none"
+            None
+            if self.balance_strategy and self.balance_strategy.lower() == "none"
             else self.balance_strategy or defaults["balance_strategy"]
         )
 
@@ -91,7 +90,7 @@ def _get_priors(dataset, prior_seed, n_priors):
     try:
         df = load_dataset(dataset, dataset_id=Path(dataset).name).get_df()
     except Exception as e:
-        raise RuntimeError(f"Failed importing the dataset using asreview: {e}")
+        raise RuntimeError(f"Failed importing the dataset using asreview: {e}") from e
 
     relevant_record_ids = df.record_id[df.included == 1]
     relevant_irrecord_ids = df.record_id[df.included == 0]
