@@ -72,6 +72,14 @@ Requires Python 3.10 or higher.
 pip install asreview-makita
 ```
 
+This project requires additional Python packages. You can install them using the following command:
+
+```bash
+pip install asreview-datatools asreview-insights
+```
+
+Alternatively, check the README.md file in your Makita project folder for specific dependencies.
+
 ### For upgrading, use:
 
 ```bash

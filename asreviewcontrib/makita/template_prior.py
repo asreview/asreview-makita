@@ -95,8 +95,7 @@ class TemplatePrior(TemplateBase):
         # Check if at least one dataset with custom prior knowledge is present
         if self._prior_dataset_count == 0:
             raise ValueError(
-                "At least one dataset with custom prior knowledge (prefix 'prior_' or \
-                    'priors_') is required."
+                "At least one dataset with custom prior knowledge (prefix 'prior_' or 'priors_') is required."  # noqa: E501
             )
 
         # Check if at least one dataset without prior knowledge is present
