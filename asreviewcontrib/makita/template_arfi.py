@@ -66,13 +66,8 @@ class TemplateARFI(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
-            None
-            if self.balance_strategy.lower() == "none"
-            else (
-            self.balance_strategy
-            if self.balance_strategy is not None
-            else defaults["balance_strategy"]
-            )
+            None if self.balance_strategy and self.balance_strategy.lower() == "none"
+            else self.balance_strategy or defaults["balance_strategy"]
         )
 
         return {
