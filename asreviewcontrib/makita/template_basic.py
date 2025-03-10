@@ -56,13 +56,8 @@ class TemplateBasic(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
-            None
-            if self.balance_strategy.lower() == "none"
-            else (
-            self.balance_strategy
-            if self.balance_strategy is not None
-            else defaults["balance_strategy"]
-            )
+            None if self.balance_strategy and self.balance_strategy.lower() == "none"
+            else self.balance_strategy or defaults["balance_strategy"]
         )
 
         n_runs = self.n_runs if self.n_runs is not None else 1
