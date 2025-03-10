@@ -58,6 +58,14 @@ What Makita does not do:
 For a tutorial on using Makita we refer to the [Exercise on Using the ASReview
 Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
 
+### ASReview Makita Helper Tool
+For users of ASReview Makita, there's a handy helper tool available. This tool
+simplifies the process of formulating your Makita commands, ensuring
+compatibility and ease of use. It's designed to work with ASReview Makita
+version 1.0 and above.
+
+[Makita helper Tool](https://asreview.github.io/asreview-makita/)
+
 ## Installation
 
 ### Prerequisites:
@@ -164,13 +172,20 @@ with
 asreview makita template basic --job_file my_jobs_file.my_ext
 ```
 
-### ASReview Makita Helper Tool
-For users of ASReview Makita, there's a handy helper tool available. This tool
-simplifies the process of formulating your Makita commands, ensuring
-compatibility and ease of use. It's designed to work with ASReview Makita
-version 1.0 and above.
+### No Balancing
+To disable balancing in your simulation study, you can use the `none` option for the `--balance_strategy` argument. This will ensure that no balancing strategy is applied during the simulation.
 
-[Makita helper Tool](https://asreview.github.io/asreview-makita/)
+Example usage:
+
+```console
+asreview makita template basic --balance_strategy none
+
+or 
+
+asreview makita template multimodel --balance_strategies none balanced
+```
+
+This command will generate a simulation study using the basic template without applying any balancing strategy.
 
 ## Templates
 

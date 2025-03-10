@@ -22,7 +22,6 @@ class TemplateBase:
         skip_wordclouds,
         prior_seed,
         model_seed,
-        balance_strategy,
         n_query,
         n_stop,
         **kwargs,
@@ -32,7 +31,6 @@ class TemplateBase:
         self.skip_wordclouds = skip_wordclouds
         self.prior_seed = prior_seed
         self.model_seed = model_seed
-        self.balance_strategy = balance_strategy
         self.n_query = n_query
         self.n_stop = n_stop
         self.file_handler = file_handler

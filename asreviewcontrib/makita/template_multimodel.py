@@ -59,8 +59,12 @@ class TemplateMultiModel(TemplateBase):
             else [defaults["query_strategy"]]
         )
         all_balance_strategies = (
-            self.all_balance_strategies
+            [
+                None if strategy.lower() == "none" else strategy
+                for strategy in self.all_balance_strategies
+            ]
             if self.all_balance_strategies is not None
+            and len(self.all_balance_strategies) > 0
             else [defaults["balance_strategy"]]
         )
         impossible_models = (
