@@ -533,7 +533,7 @@ function generateCommand() {
             if (classifiers.length) command += ` --classifiers ${classifiers.join(" ")}`;
             if (queryStrategies.length) command += ` --query_strategies ${queryStrategies.join(" ")}`;
             if (noBalanceStrategyMulti) {
-                    command += " balance_strategies none";
+                    command += " --balance_strategies none";
                 } else {
                     const balanceStrategies = document.getElementById("balance-strategies").value.split("\n").filter(Boolean);
                     if (balanceStrategies.length) {
