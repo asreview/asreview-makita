@@ -533,7 +533,7 @@ function generateCommand() {
             if (classifiers.length) command += ` --classifiers ${classifiers.join(" ")}`;
             if (queryStrategies.length) command += ` --query_strategies ${queryStrategies.join(" ")}`;
             if (noBalanceStrategyMulti) {
-                    command += " --no-balance-strategy";
+                    command += " balance_strategies none";
                 } else {
                     const balanceStrategies = document.getElementById("balance-strategies").value.split("\n").filter(Boolean);
                     if (balanceStrategies.length) {
@@ -551,7 +551,7 @@ function generateCommand() {
             if (classifier) command += ` --classifier ${classifier}`;
             if (queryStrategy) command += ` --query_strategy ${queryStrategy}`;
             if (noBalanceStrategySingle) {
-                command += " --no-balance-strategy";
+                command += " --balance_strategy none";
             } else {
                 const balanceStrategy = document.getElementById("balance-strategy").value;
                 if (balanceStrategy) command += ` --balance_strategy ${balanceStrategy}`;

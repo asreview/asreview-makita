@@ -44,9 +44,7 @@ class TemplateMultiModel(TemplateBase):
         defaults = get_default_settings()
 
         all_classifiers = (
-            self.all_classifiers
-            if self.all_classifiers is not None
-            else ["nb", "svm"]
+            self.all_classifiers if self.all_classifiers is not None else ["nb", "svm"]
         )
         all_feature_extractors = (
             self.all_feature_extractors
@@ -59,8 +57,12 @@ class TemplateMultiModel(TemplateBase):
             else [defaults["query_strategy"]]
         )
         all_balance_strategies = (
-            self.all_balance_strategies
+            [
+                None if strategy.lower() == "none" else strategy
+                for strategy in self.all_balance_strategies
+            ]
             if self.all_balance_strategies is not None
+            and len(self.all_balance_strategies) > 0
             else [defaults["balance_strategy"]]
         )
         impossible_models = (

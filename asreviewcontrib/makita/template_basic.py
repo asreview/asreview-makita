@@ -12,12 +12,14 @@ class TemplateBasic(TemplateBase):
         classifier,
         feature_extractor,
         query_strategy,
+        balance_strategy,
         n_runs,
         **kwargs,
     ):
         self.classifier = classifier
         self.feature_extractor = feature_extractor
         self.query_strategy = query_strategy
+        self.balance_strategy = balance_strategy
         self.n_runs = n_runs
         super().__init__(**kwargs)
 
@@ -54,9 +56,13 @@ class TemplateBasic(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
+            None
+            if self.balance_strategy.lower() == "none"
+            else (
             self.balance_strategy
             if self.balance_strategy is not None
             else defaults["balance_strategy"]
+            )
         )
 
         n_runs = self.n_runs if self.n_runs is not None else 1
