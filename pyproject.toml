@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12"
 ]
 license = {text = "MIT"}
-dependencies = ["asreview>=v2.0b0", "jinja2", "cfgtemplater"]
+dependencies = ["asreview>=2,<3", "jinja2", "cfgtemplater"]
 dynamic = ["version"]
 requires-python = ">=3.8"
 
