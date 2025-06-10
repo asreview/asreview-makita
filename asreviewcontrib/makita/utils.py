@@ -87,9 +87,10 @@ class FileHandler:
 
         return template.render({**params, **kwargs})
 
+
 def get_default_settings():
     """Retrieve default settings from ASREVIEW configuration."""
-    ASREVIEW_CONFIG = AI_MODEL_CONFIGURATIONS[0]['value']
+    ASREVIEW_CONFIG = AI_MODEL_CONFIGURATIONS[0]["value"]
 
     return {
         "classifier": ASREVIEW_CONFIG.classifier,
