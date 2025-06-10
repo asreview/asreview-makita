@@ -3,7 +3,6 @@ import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 from asreview.extensions import extensions
 
@@ -336,8 +335,8 @@ class ProjectPaths:
     output_folder: str = "output"
     data_folder: str = "data"
     scripts_folder: str = "scripts"
-    job_file: Optional[str] = None
-    platform: Optional[str] = None
+    job_file: str | None = None
+    platform: str | None = None
 
     def __post_init__(self):
         if self.job_file is None:
