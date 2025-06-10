@@ -27,8 +27,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install . ruff pytest
-        pip install --pre asreview
-
     - name: Lint python with ruff
       run: |
         ruff check .
