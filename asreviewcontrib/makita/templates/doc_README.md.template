@@ -30,7 +30,7 @@ The performance on the following datasets is evaluated:
 
 To start the simulation, run the following command in the project directory.
 
-```{% if paths.job_file.endswith('.sh') %}sh {% endif %}
+```{% if paths.job_file.endswith('.sh') %}sh{% endif %}
 {% if paths.job_file.endswith('.sh') %}sh {% endif %}{{ paths.job_file }}
 ```
 
