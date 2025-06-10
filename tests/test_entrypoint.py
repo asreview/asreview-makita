@@ -32,8 +32,6 @@ def test_basic_template(tmp_path):
         "1",
         "--n_query",
         "10",
-        "--n_stop",
-        "min",
     ]
     mep.execute(argv)
 
@@ -60,8 +58,6 @@ def test_arfi_template(tmp_path):
         "5",
         "--n_query",
         "10",
-        "--n_stop",
-        "min",
     ]
     mep.execute(argv)
 
@@ -92,8 +88,6 @@ def test_prior_template(tmp_path):
         "1",
         "--n_query",
         "10",
-        "--n_stop",
-        "min",
     ]
     mep.execute(argv)
 
@@ -122,8 +116,6 @@ def test_multimodel_template(tmp_path):
         "1",
         "--n_query",
         "10",
-        "--n_stop",
-        "min",
     ]
     mep.execute(argv)
 

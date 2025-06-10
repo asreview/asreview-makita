@@ -223,7 +223,7 @@ optional arguments:
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 ### ARFI template
@@ -254,7 +254,7 @@ optional arguments:
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 ### Multimodel template
@@ -279,7 +279,7 @@ optional arguments:
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
   --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
   --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max']
@@ -339,7 +339,7 @@ optional arguments:
   --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
+  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 #### Example usage

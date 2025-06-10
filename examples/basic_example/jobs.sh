@@ -25,7 +25,7 @@ python -m asreview data describe data/prior_Smid_2020.csv -o output/simulation/p
 
 # Simulate runs
 mkdir output/simulation/prior_Smid_2020/state_files
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --prior-seed 535 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1 --n-stop min
+python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --prior-seed 535 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1
 python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020.json --quiet
 
 # Generate plot and tables for dataset
@@ -47,7 +47,7 @@ python -m asreview data describe data/van_de_Schoot_2018.csv -o output/simulatio
 
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --prior-seed 535 --seed 166 -c svm -e tfidf -q max -b balanced --n-query 1 --n-stop min
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --prior-seed 535 --seed 166 -c svm -e tfidf -q max -b balanced --n-query 1
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018.json --quiet
 
 # Generate plot and tables for dataset
