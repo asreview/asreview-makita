@@ -118,4 +118,4 @@ examples/prior_example/generated_data/*
 # Python venv
 venv/
 .vscode/settings.json
-examples/prior_example/data/*
+examples/*/data/*
