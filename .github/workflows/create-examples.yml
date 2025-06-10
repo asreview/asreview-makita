@@ -30,10 +30,13 @@ jobs:
         run: |
           sh scripts/generate_examples.sh
 
-      # Clean up data files (e.g., CSV, XLSX) to avoid committing them
-      - name: Clean up data files
+      - name: Ruff check on examples
         run: |
-          find ./examples -type f -name "*.csv" -delete
+          ruff check examples
+
+      - name: Ruff format examples
+        run: |
+          ruff format examples
 
       # Check for changes, commit, and push
       - name: Commit and push changes if any
