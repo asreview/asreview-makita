@@ -17,7 +17,7 @@ classifiers = [
 license = {text = "MIT"}
 dependencies = ["asreview>=2,<3", "jinja2", "cfgtemplater"]
 dynamic = ["version"]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 
 [project.urls]
 homepage = "https://asreview.ai"
