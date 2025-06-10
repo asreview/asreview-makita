@@ -4,7 +4,7 @@ from pathlib import Path
 
 from cfgtemplater.config_template import ConfigTemplate
 
-from asreviewcontrib.makita import __version_tuple__
+from asreviewcontrib.makita import __version__
 from asreviewcontrib.makita.config import TEMPLATES_FP
 from asreviewcontrib.makita.entrypoint import ProjectPaths
 from asreviewcontrib.makita.utils import FileHandler
@@ -34,11 +34,7 @@ class TemplateBase:
         self.n_query = n_query
         self.n_stop = n_stop
         self.file_handler = file_handler
-        self.__version__ = '.'.join(
-            str(part)
-            for part in __version_tuple__
-            if isinstance(part, int)
-        )
+        self.__version__ = __version__
 
         self.template = ConfigTemplate(
             fp_template if fp_template is not None else self.get_template_file()
