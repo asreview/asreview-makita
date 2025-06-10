@@ -72,9 +72,7 @@ class TemplatePrior(TemplateBase):
         defaults = get_default_settings()
 
         classifier = (
-            self.classifier
-            if self.classifier is not None 
-            else defaults["classifier"]
+            self.classifier if self.classifier is not None else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
@@ -87,7 +85,8 @@ class TemplatePrior(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
-            None if self.balance_strategy and self.balance_strategy.lower() == "none"
+            None
+            if self.balance_strategy and self.balance_strategy.lower() == "none"
             else self.balance_strategy or defaults["balance_strategy"]
         )
 
@@ -146,9 +145,7 @@ class TemplatePrior(TemplateBase):
         print(f"Total rows of non-prior knowledge: {total_rows_without_priors}")
 
         # Save the combined dataset to the appropriate file paths
-        combined_dataset.to_csv(
-            filepath_with_priors, index=False
-        )
+        combined_dataset.to_csv(filepath_with_priors, index=False)
         combined_dataset[combined_dataset["makita_priors"] != 1].to_csv(
             filepath_without_priors, index=False
         )
@@ -171,7 +168,6 @@ class TemplatePrior(TemplateBase):
             "balance_strategy": balance_strategy,
             "n_runs": n_runs,
             "datasets": params,
-            "skip_wordclouds": self.skip_wordclouds,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,

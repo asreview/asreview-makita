@@ -49,7 +49,7 @@ class MakitaEntryPoint:
             "--project_folder",
             "-p",
             type=str,
-            help="Set project folder path." "Default will use current directory.",
+            help="Set project folder path. Default will use current directory.",
         )
         parser_template.add_argument(
             "--prior_seed",
@@ -93,11 +93,6 @@ class MakitaEntryPoint:
             "--n_priors",
             type=int,
             help="Number of priors.",
-        )
-        parser_template.add_argument(
-            "--skip_wordclouds",
-            action="store_true",
-            help="Disables the generation of wordclouds.",
         )
         parser_template.add_argument(
             "--overwrite",
@@ -305,7 +300,6 @@ class TemplateRenderer:
     def _get_template_args(self):
         """Extract relevant arguments for the template."""
         args_to_pass = [
-            "skip_wordclouds",
             "n_runs",
             "n_priors",
             "prior_seed",

@@ -21,11 +21,6 @@ mkdir output/simulation/prior_Smid_2020/metrics
 mkdir output/simulation/prior_Smid_2020/descriptives
 python -m asreview data describe data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
 
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_prior_Smid_2020.png --width 800 --height 500
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_relevant_prior_Smid_2020.png --width 800 --height 500 --relevant
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_irrelevant_prior_Smid_2020.png --width 800 --height 500 --irrelevant
-
 # Simulate runs, collect metrics and create plots
 mkdir output/simulation/prior_Smid_2020/state_files
 python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_31.asreview --prior_record_id 31 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1 --n-stop min
@@ -98,11 +93,6 @@ mkdir output/simulation/van_de_Schoot_2018/metrics
 # Collect descriptives about the dataset
 mkdir output/simulation/van_de_Schoot_2018/descriptives
 python -m asreview data describe data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/descriptives/data_stats_van_de_Schoot_2018.json
-
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_van_de_Schoot_2018.png --width 800 --height 500
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_relevant_van_de_Schoot_2018.png --width 800 --height 500 --relevant
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_irrelevant_van_de_Schoot_2018.png --width 800 --height 500 --irrelevant
 
 # Simulate runs, collect metrics and create plots
 mkdir output/simulation/van_de_Schoot_2018/state_files

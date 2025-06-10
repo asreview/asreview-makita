@@ -38,13 +38,6 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics
 # Collect descriptives about the dataset {{ dataset.input_file_stem }}
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
 python -m asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
-{% if not skip_wordclouds %}
-
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
-{% endif %}
 
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files

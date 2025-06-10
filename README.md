@@ -101,20 +101,20 @@ installed correctly, `asreview --help` should list Makita as an option.
 
 Follow these steps to set up the framework and code for your simulation study:
 
-1. Prepare Your Datasets  
+1. Prepare Your Datasets
    Place all your datasets in a single folder.
 
-2. Choose a Project Folder  
+2. Choose a Project Folder
    Decide on a path for your project folder. You don't need to create the folder manually; `makita` will handle it for you.
 
-3. Install ASReview Makita  
+3. Install ASReview Makita
    Use your preferred command-line tool to install Makita:
 ```console
 pip install asreview-makita
 ```
 
-4. Generate a Simulation Study  
-   Select a template from the [list of templates](#templates) and create your study using:  
+4. Generate a Simulation Study
+   Select a template from the [list of templates](#templates) and create your study using:
 ```console
 asreview makita template NAME_OF_TEMPLATE -d 'path/to/your/datasets' -p 'path/to/your/project-folder'
 ```
@@ -180,7 +180,7 @@ Example usage:
 ```console
 asreview makita template basic --balance_strategy none
 
-or 
+or
 
 asreview makita template multimodel --balance_strategies none balanced
 ```
@@ -214,10 +214,9 @@ optional arguments:
   -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
   --prior_seed prior_seed                   Seed of the priors                              Seed is set to 535 by default.
   --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
-  --template TEMPLATE                       Overwrite template with template file path 
+  --template TEMPLATE                       Overwrite template with template file path
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
-  --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
@@ -249,7 +248,6 @@ optional arguments:
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_priors N_PRIORS                       Number of priors.                               Default: 10.
-  --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
@@ -279,7 +277,6 @@ optional arguments:
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
-  --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
   --n_query n_query                         Number of instances per query.                  Default: 1.
   --n_stop n_stop                           The number of label actions to simulate.        Default 'min' will stop simulating when all relevant records are found.
@@ -336,7 +333,6 @@ optional arguments:
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
-  --skip_wordclouds                         Disables the generation of wordclouds.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
@@ -349,7 +345,7 @@ optional arguments:
 #### Example usage
 
 Put at least 2 datasets in the data folder. One starting with the `prior_`
-prefix, and one without this prefix. 
+prefix, and one without this prefix.
 
 > note: `priors_` will also work.
 

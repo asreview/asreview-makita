@@ -44,9 +44,7 @@ class TemplateMultiModel(TemplateBase):
         defaults = get_default_settings()
 
         all_classifiers = (
-            self.all_classifiers
-            if self.all_classifiers is not None
-            else ["nb", "svm"]
+            self.all_classifiers if self.all_classifiers is not None else ["nb", "svm"]
         )
         all_feature_extractors = (
             self.all_feature_extractors
@@ -76,7 +74,6 @@ class TemplateMultiModel(TemplateBase):
 
         return {
             "datasets": params,
-            "skip_wordclouds": self.skip_wordclouds,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,

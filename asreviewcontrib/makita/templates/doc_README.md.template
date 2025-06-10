@@ -13,13 +13,7 @@ This project depends on Python 3.7 or later (python.org/download), and [ASReview
 ```sh
 pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
 ```
-{% if not skip_wordclouds %}
-For generating wordclouds, install the following dependencies.
 
-```sh
-pip install asreview-wordcloud
-```
-{% endif %}
 ## Data
 
 The performance on the following datasets is evaluated:
@@ -83,14 +77,5 @@ The following files are found in this project:
         |   ├── 📜metrics_summary.csv
         |   └── 📜metrics_summary.xlsx
         └── 📂figures{% if template_name == 'prior' %}
-{% if not skip_wordclouds %}            ├── 📈wordcloud_dataset_with_priors.png
-            ├── 📈wordcloud_dataset_without_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_with_priors.png
-            ├── 📈wordcloud_relevant_dataset_with_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_without_priors.png
-            ├── 📈wordcloud_relevant_dataset_without_priors.png{%endif %}
             └── 📈plot_recall_sim.png{% else %}{% for dataset in datasets %}
-            ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
-{% if not skip_wordclouds %}            ├── 📈wordcloud_{{ dataset.stem }}.png
-            ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
-            ├── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{%endif %}{% endfor %}{%endif %}{%endif %}
+            ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{%endif %}{%endif %}

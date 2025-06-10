@@ -19,7 +19,6 @@ class TemplateBase:
         fp_template,
         file_handler: FileHandler,
         paths: ProjectPaths,
-        skip_wordclouds,
         prior_seed,
         model_seed,
         n_query,
@@ -28,7 +27,6 @@ class TemplateBase:
     ):
         self.datasets = datasets
         self.paths = paths
-        self.skip_wordclouds = skip_wordclouds
         self.prior_seed = prior_seed
         self.model_seed = model_seed
         self.n_query = n_query
@@ -89,7 +87,6 @@ class TemplateBase:
                 template_name=self.template.name,
                 template_name_long=self.template.name_long,
                 template_scripts=self.template.scripts,
-                skip_wordclouds=self.skip_wordclouds,
                 paths=self.paths,
             )
             self.file_handler.add_file(

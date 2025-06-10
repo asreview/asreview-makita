@@ -2,7 +2,8 @@ from pathlib import Path
 
 from asreviewcontrib.makita.entrypoint import MakitaEntryPoint
 
-datasets_location = str(Path('.github','workflows','test_data').resolve())
+datasets_location = str(Path(".github", "workflows", "test_data").resolve())
+
 
 def get_job_file(project_path):
     """
@@ -26,7 +27,6 @@ def test_basic_template(tmp_path):
         str(project_folder),
         "--data_folder",
         datasets_location,
-        "--skip_wordclouds",
         "--overwrite",
         "--n_runs",
         "1",
@@ -55,7 +55,6 @@ def test_arfi_template(tmp_path):
         str(project_folder),
         "--data_folder",
         datasets_location,
-        "--skip_wordclouds",
         "--overwrite",
         "--n_priors",
         "5",
@@ -88,7 +87,6 @@ def test_prior_template(tmp_path):
         str(project_folder),
         "--data_folder",
         datasets_location,
-        "--skip_wordclouds",
         "--overwrite",
         "--n_runs",
         "1",
@@ -119,7 +117,6 @@ def test_multimodel_template(tmp_path):
         str(project_folder),
         "--data_folder",
         datasets_location,
-        "--skip_wordclouds",
         "--overwrite",
         "--n_runs",
         "1",

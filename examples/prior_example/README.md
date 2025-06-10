@@ -14,12 +14,6 @@ This project depends on Python 3.7 or later (python.org/download), and [ASReview
 pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
 ```
 
-For generating wordclouds, install the following dependencies.
-
-```sh
-pip install asreview-wordcloud
-```
-
 ## Data
 
 The performance on the following datasets is evaluated:
@@ -83,10 +77,4 @@ The following files are found in this project:
         |   ├── 📜metrics_summary.csv
         |   └── 📜metrics_summary.xlsx
         └── 📂figures
-            ├── 📈wordcloud_dataset_with_priors.png
-            ├── 📈wordcloud_dataset_without_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_with_priors.png
-            ├── 📈wordcloud_relevant_dataset_with_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_without_priors.png
-            ├── 📈wordcloud_relevant_dataset_without_priors.png
             └── 📈plot_recall_sim.png

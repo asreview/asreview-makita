@@ -21,11 +21,6 @@ mkdir output/simulation/prior_Smid_2020/metrics
 mkdir output/simulation/prior_Smid_2020/descriptives
 python -m asreview data describe data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
 
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_prior_Smid_2020.png --width 800 --height 500
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_relevant_prior_Smid_2020.png --width 800 --height 500 --relevant
-python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordcloud_irrelevant_prior_Smid_2020.png --width 800 --height 500 --irrelevant
-
 # Simulate runs
 mkdir output/simulation/prior_Smid_2020/state_files
 
@@ -61,11 +56,6 @@ mkdir output/simulation/van_de_Schoot_2018/metrics
 # Collect descriptives about the dataset van_de_Schoot_2018
 mkdir output/simulation/van_de_Schoot_2018/descriptives
 python -m asreview data describe data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/descriptives/data_stats_van_de_Schoot_2018.json
-
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_van_de_Schoot_2018.png --width 800 --height 500
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_relevant_van_de_Schoot_2018.png --width 800 --height 500 --relevant
-python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordcloud_irrelevant_van_de_Schoot_2018.png --width 800 --height 500 --irrelevant
 
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files

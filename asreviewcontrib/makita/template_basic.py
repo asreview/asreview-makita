@@ -41,9 +41,7 @@ class TemplateBasic(TemplateBase):
         defaults = get_default_settings()
 
         classifier = (
-            self.classifier
-            if self.classifier is not None 
-            else defaults["classifier"]
+            self.classifier if self.classifier is not None else defaults["classifier"]
         )
         feature_extractor = (
             self.feature_extractor
@@ -56,7 +54,8 @@ class TemplateBasic(TemplateBase):
             else defaults["query_strategy"]
         )
         balance_strategy = (
-            None if self.balance_strategy and self.balance_strategy.lower() == "none"
+            None
+            if self.balance_strategy and self.balance_strategy.lower() == "none"
             else self.balance_strategy or defaults["balance_strategy"]
         )
 
@@ -69,7 +68,6 @@ class TemplateBasic(TemplateBase):
             "balance_strategy": balance_strategy,
             "n_runs": n_runs,
             "datasets": params,
-            "skip_wordclouds": self.skip_wordclouds,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
             "output_folder": self.paths.output_folder,
