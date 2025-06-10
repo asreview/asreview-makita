@@ -1,6 +1,6 @@
 # Simulation study
 
-*This project was rendered with ASReview-Makita version 0.1.dev1+ge58021b.*
+*This project was rendered with ASReview-Makita version 1.0b1.dev11+g9257235.*
 
 This project was rendered from the Makita-basic template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
 
@@ -11,7 +11,7 @@ The template is described as: 'Basic simulation for N runs'.
 This project depends on Python 3.7 or later (python.org/download), and [ASReview](https://asreview.nl/download/). Install the following dependencies to run the simulation and analysis in this project.
 
 ```sh
-pip install asreview>=1.0 asreview-insights>=1.3 asreview-datatools
+pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
 ```
 
 For generating wordclouds, install the following dependencies.
@@ -31,7 +31,7 @@ The performance on the following datasets is evaluated:
 
 To start the simulation, run the following command in the project directory.
 
-```sh 
+```sh
 sh jobs.sh
 ```
 

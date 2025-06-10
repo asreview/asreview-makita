@@ -1,6 +1,6 @@
 
 
-# version 0.1.dev1+ge58021b
+# version 1.0b1.dev11+g9257235
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
@@ -30,8 +30,8 @@ python -m asreview wordcloud data/prior_Smid_2020.csv -o output/figures/wordclou
 
 # Simulate runs
 mkdir output/simulation/prior_Smid_2020/state_files
-python -m asreview simulate data/prior_Smid_2020.csv -s output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --init_seed 535 --seed 165 -m nb -e tfidf -q max -b balanced --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020.json
+python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --prior-seed 535 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1 --n-stop min
+python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020.json --quiet
 
 # Generate plot and tables for dataset
 python scripts/get_plot.py -s output/simulation/prior_Smid_2020/state_files/ -o output/figures/plot_recall_sim_prior_Smid_2020.png
@@ -57,8 +57,8 @@ python -m asreview wordcloud data/van_de_Schoot_2018.csv -o output/figures/wordc
 
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files
-python -m asreview simulate data/van_de_Schoot_2018.csv -s output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --init_seed 535 --seed 166 -m nb -e tfidf -q max -b balanced --n_instances 1 --stop_if min
-python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018.json
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview --prior-seed 535 --seed 166 -c svm -e tfidf -q max -b balanced --n-query 1 --n-stop min
+python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018.json --quiet
 
 # Generate plot and tables for dataset
 python scripts/get_plot.py -s output/simulation/van_de_Schoot_2018/state_files/ -o output/figures/plot_recall_sim_van_de_Schoot_2018.png
@@ -68,4 +68,3 @@ python scripts/merge_tds.py -s output/simulation/van_de_Schoot_2018/metrics/ -o 
 # Merge descriptives and metrics
 python scripts/merge_descriptives.py
 python scripts/merge_metrics.py
-

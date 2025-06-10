@@ -15,7 +15,7 @@ Authors
 - Teijema, Jelle
 """
 
-# version 0.1.dev1+ge58021b
+# version 1.0b1.dev11+g9257235
 
 import argparse
 from pathlib import Path
@@ -26,8 +26,9 @@ from asreview import open_state
 from asreviewcontrib.insights.plot import plot_recall
 
 
-def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random, 
-    hide_optimal):
+def _set_legend(
+    ax, state, legend_option, label_to_line, state_file, hide_random, hide_optimal
+):
     metadata = state.settings_metadata
     label = None
 
@@ -62,8 +63,10 @@ def _set_legend(ax, state, legend_option, label_to_line, state_file, hide_random
             ax.lines[line_index].set_color(label_to_line[label].get_color())
             ax.lines[line_index].set_label("_no_legend_")
 
-def get_plot_from_states(states, filename, legend=None, hide_random=False, 
-    hide_optimal=False):
+
+def get_plot_from_states(
+    states, filename, legend=None, hide_random=False, hide_optimal=False
+):
     """Generate an ASReview plot from state files.
 
     Arguments
@@ -83,11 +86,19 @@ def get_plot_from_states(states, filename, legend=None, hide_random=False,
 
     for state_file in states:
         with open_state(state_file) as state:
-            plot_recall(ax, state, show_random = not hide_random, 
-                show_optimal = not hide_optimal)
+            plot_recall(
+                ax, state, show_random=not hide_random, show_optimal=not hide_optimal
+            )
             if legend:
-                _set_legend(ax, state, legend, label_to_line, state_file, 
-                    hide_random, hide_optimal)
+                _set_legend(
+                    ax,
+                    state,
+                    legend,
+                    label_to_line,
+                    state_file,
+                    hide_random,
+                    hide_optimal,
+                )
 
     if legend:
         ax.legend(loc=4, prop={"size": 8})
@@ -126,5 +137,6 @@ if __name__ == "__main__":
         raise FileNotFoundError(f"No state files found in {args.s}")
 
     # generate plot and save results
-    get_plot_from_states(states, args.o, args.show_legend, args.hide_random, 
-        args.hide_optimal)
+    get_plot_from_states(
+        states, args.o, args.show_legend, args.hide_random, args.hide_optimal
+    )
