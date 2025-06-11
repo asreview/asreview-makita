@@ -105,12 +105,12 @@ class MakitaEntryPoint:
             help="Classifier to use.",
         )
         parser_template.add_argument(
-            "--feature_extractor",
+            "--feature-extractor",
             type=str,
             help="Feature_extractor to use.",
         )
         parser_template.add_argument(
-            "--query_strategy",
+            "--querier",
             type=str,
             help="Query strategy to use.",
         )
@@ -125,7 +125,7 @@ class MakitaEntryPoint:
             help="Classifiers to use.",
         )
         parser_template.add_argument(
-            "--feature_extractors",
+            "--feature-extractors",
             nargs="+",
             help="Feature extractors to use.",
         )

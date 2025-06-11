@@ -219,8 +219,8 @@ optional arguments:
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
-  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --querier QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
   --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
@@ -250,8 +250,8 @@ optional arguments:
   --n_priors N_PRIORS                       Number of priors.                               Default: 10.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
-  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --querier QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
   --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
@@ -281,7 +281,7 @@ optional arguments:
   --n_query n_query                         Number of instances per query.                  Default: 1.
   --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
-  --feature_extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
+  --feature-extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
   --query_strategies QUERY_STRATEGY         Query strategies to use                         Default: ['max']
   --balance_strategies BALANCE_STRATEGY     Balance strategies to use                       Default: ['double']
   --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
@@ -291,13 +291,13 @@ optional arguments:
 
 If you want to specify certain combinations of classifiers and feature
 extractors that should and should not be used, you can use the `--classifiers`,
-`--feature_extractors`, `--query_strategies`, `--balance_strategies` and
+`--feature-extractors`, `--query_strategies`, `--balance_strategies` and
 `--impossible_models` option. For instance, if you want to exclude the
 combinations of `nb` with `doc2vec` and `logistic` with `tfidf`, use the
 following command:
 
 ```console
-asreview makita template multimodel --classifiers logistic nb --feature_extractors tfidf doc2vec --query_strategies max max_random max_uncertainty cluster --impossible_models nb,doc2vec logistic,tfidf
+asreview makita template multimodel --classifiers logistic nb --feature-extractors tfidf doc2vec --query_strategies max max_random max_uncertainty cluster --impossible_models nb,doc2vec logistic,tfidf
 ```
 
 ### Prior template
@@ -335,8 +335,8 @@ optional arguments:
   --n_runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
-  --feature_extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --query_strategy QUERY_STRATEGY           Query strategy to use.                          Default: max.
+  --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
+  --querier QUERY_STRATEGY           Query strategy to use.                          Default: max.
   --balance_strategy BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
   --n_query n_query                         Number of instances per query.                  Default: 1.
   --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
@@ -350,7 +350,7 @@ prefix, and one without this prefix.
 > note: `priors_` will also work.
 
 ```console
-asreview makita template prior --classifier logistic --feature_extractor tfidf
+asreview makita template prior --classifier logistic --feature-extractor tfidf
 ```
 
 ## Advanced usage
