@@ -85,11 +85,11 @@ def get_plot_from_states(
     label_to_line = {}
 
     for state_file in states:
-        with open_state(state_file) as state:
-            plot_recall(
-                ax, state, show_random=not hide_random, show_optimal=not hide_optimal
-            )
-            if legend:
+        plot_recall(
+            ax, state_file, show_random=not hide_random, show_optimal=not hide_optimal
+        )
+        if legend:
+            with open_state(state_file) as state:
                 _set_legend(
                     ax,
                     state,
