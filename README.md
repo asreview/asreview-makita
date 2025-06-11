@@ -390,7 +390,7 @@ postprocessing scripts. These scripts are not (yet) available in any existing
 ASReview software. Therefore, they can be added manually with `asreview makita
 add-script NAME_OF_SCRIPT`.
 
-For example, the results from _ASReview datatools_ are merged via the script
+For example, the results from data describe are merged via the script
 `merge_descriptives.py` (or `merge_metrics.py` for _ASReview insights_), using:
 
 1. Collect statistics (with template)

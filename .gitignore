@@ -119,3 +119,5 @@ examples/prior_example/generated_data/*
 venv/
 .vscode/settings.json
 examples/*/data/*
+
+examples/*/output/*

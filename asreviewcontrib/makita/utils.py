@@ -50,8 +50,7 @@ class FileHandler:
             Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
 
             with open(export_fp, "w") as f:
-                f.write(content)
-                f.write("\n")
+                f.write(content + "\n")
 
             print(f"Created {export_fp}")
 

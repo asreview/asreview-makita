@@ -19,7 +19,7 @@ mkdir output/simulation/prior_Smid_2020/metrics
 
 # Collect descriptives about the dataset
 mkdir output/simulation/prior_Smid_2020/descriptives
-python -m asreview data describe data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
+python scripts/data_describe.py data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
 
 # Simulate runs, collect metrics and create plots
 mkdir output/simulation/prior_Smid_2020/state_files
@@ -92,7 +92,7 @@ mkdir output/simulation/van_de_Schoot_2018/metrics
 
 # Collect descriptives about the dataset
 mkdir output/simulation/van_de_Schoot_2018/descriptives
-python -m asreview data describe data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/descriptives/data_stats_van_de_Schoot_2018.json
+python scripts/data_describe.py data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/descriptives/data_stats_van_de_Schoot_2018.json
 
 # Simulate runs, collect metrics and create plots
 mkdir output/simulation/van_de_Schoot_2018/state_files
