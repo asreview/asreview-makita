@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Remove all output folders from examples
+rm -rf ./examples/*/output
+
 # Use a temporary folder for examples/data
 DATA_DIR=$(mktemp -d)
 
