@@ -3,6 +3,7 @@ name: basic
 name_long: Basic simulation for N runs
 
 scripts:
+  - data_describe.py
   - get_plot.py
   - merge_descriptives.py
   - merge_metrics.py
@@ -37,19 +38,13 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics
 
 # Collect descriptives about the dataset {{ dataset.input_file_stem }}
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
-python -m asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
-{% if not skip_wordclouds %}
-
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
-{% endif %}
+python {{ scripts_folder }}/data_describe.py {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
 
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed + run }} -m {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed + run }} -c {{ classifier }} -e {{ feature_extractor }} -q {{ querier }} {% if balancer %}-b {{ balancer }} {% endif %}--n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
+
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json --quiet
 {% endfor %}
 
@@ -62,4 +57,3 @@ python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ da
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py
 python {{ scripts_folder }}/merge_metrics.py
-

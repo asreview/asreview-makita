@@ -3,6 +3,7 @@ name: multimodel
 name_long: Basic simulation for every possible combination of selected models
 
 scripts:
+  - data_describe.py
   - get_plot.py
   - merge_descriptives.py
   - merge_metrics.py
@@ -34,29 +35,23 @@ mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics
 
 # Collect descriptives about the dataset {{ dataset.input_file_stem }}
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives
-python -m asreview data describe {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
-{% if not skip_wordclouds %}
-
-# Generate wordcloud visualizations of all datasets
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_{{ dataset.input_file_stem }}.png --width 800 --height 500
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_relevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --relevant
-python -m asreview wordcloud {{ dataset.input_file }} -o {{ output_folder }}/figures/wordcloud_irrelevant_{{ dataset.input_file_stem }}.png --width 800 --height 500 --irrelevant
-{% endif %}
+python {{ scripts_folder }}/data_describe.py {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/descriptives/data_stats_{{ dataset.input_file_stem }}.json
 
 # Simulate runs
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
 {% for feature_extraction in all_feature_extractors %}
-{% for query_strategy in all_query_strategies %}
-{% for balance_strategy in all_balance_strategies %}
+{% for querier in all_queriers %}
+{% for balancer in all_balancers %}
 {% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
 
-# Skipped {{ classifier }} + {{ feature_extraction }} + {{ query_strategy}} model
-{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ query_strategy }}, Balance strategy = {{balance_strategy}}
+# Skipped {{ classifier }} + {{ feature_extraction }} + {{ querier}} model
+{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ querier }}, Balance strategy = {{balancer}}
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ dataset.input_file }} -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --model {{ classifier }} --query_strategy {{query_strategy}} --feature_extraction {{ feature_extraction }} --init_seed {{ dataset.init_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} -b {{ balance_strategy }} --n_instances {{ instances_per_query }} --stop_if {{ stop_if }}
-python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json --quiet
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --classifier {{ classifier }} --querier {{querier}} --feature-extractor {{ feature_extraction }} --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed }} -q {{ querier }} {% if balancer %}-b {{ balancer }} {% endif %}--n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
+
+python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json --quiet
 {% endfor %}{% endif %}
 {% endfor %}
 {% endfor %}
@@ -64,7 +59,7 @@ python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_
 {% endfor %}
 
 # Generate plot and tables for dataset
-python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png --show_legend model
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/ -o {{ output_folder }}/figures/plot_recall_sim_{{ dataset.input_file_stem }}.png --show-legend model
 python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/metrics/metrics_sim_{{ dataset.input_file_stem }}.csv
 python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/ -o {{ output_folder }}/tables/time_to_discovery/tds_sim_{{ dataset.input_file_stem }}.csv
 {% endfor %}
@@ -72,4 +67,3 @@ python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/{{ da
 # Merge descriptives and metrics
 python {{ scripts_folder }}/merge_descriptives.py
 python {{ scripts_folder }}/merge_metrics.py
-

@@ -11,15 +11,9 @@ The template is described as: '{{ template_name_long }}'.
 This project depends on Python 3.7 or later (python.org/download), and [ASReview](https://asreview.nl/download/). Install the following dependencies to run the simulation and analysis in this project.
 
 ```sh
-pip install asreview>=1.0 asreview-insights>=1.5 asreview-datatools
+pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
 ```
-{% if not skip_wordclouds %}
-For generating wordclouds, install the following dependencies.
 
-```sh
-pip install asreview-wordcloud
-```
-{% endif %}
 ## Data
 
 The performance on the following datasets is evaluated:
@@ -28,11 +22,11 @@ The performance on the following datasets is evaluated:
 {% endfor %}
 ## Run simulation
 
-{% if job_file == 'jobs.sh' %}To start the simulation, run the following command in the project directory.
+To start the simulation, run the following command in the project directory.
 
-```sh
-sh jobs.sh
-```{% else %}To start the simulation, run the `{{ job_file }}` file.{% endif %}
+```{% if paths.job_file.endswith('.sh') %}sh{% endif %}
+{% if paths.job_file.endswith('.sh') %}sh {% endif %}{{ paths.job_file }}
+```
 
 {% if template_name != 'custom' %}## Structure
 
@@ -40,16 +34,16 @@ The following files are found in this project:
 
     📦Makita
     ├── 📜README.md
-    ├── 📜{{ job_file }}
-    ├── 📂data{% for dataset in datasets %}
+    ├── 📜{{ paths.job_file }}
+    ├── 📂{{ paths.data_folder }}{% for dataset in datasets %}
     │   ├── 📜{{ dataset.name }}{% endfor %}{% if template_name == 'prior' %}
     ├── 📂generated_data
     │   ├── 📜dataset_with_priors.csv
     │   ├── 📜dataset_without_priors.csv{%endif %}
-    ├── 📂scripts{% for script in template_scripts %}
+    ├── 📂{{ paths.scripts_folder }}{% for script in template_scripts %}
     │   ├── 📜{{ script }}{% endfor %}
     │   └── 📜...
-    └── 📂{{ output_folder }}
+    └── 📂{{ paths.output_folder }}
         ├── 📂simulation{% if template_name == 'prior' %}
         |   ├── 📂descriptives
         |   |   ├── 📜data_stats_dataset_with_priors.json
@@ -83,14 +77,5 @@ The following files are found in this project:
         |   ├── 📜metrics_summary.csv
         |   └── 📜metrics_summary.xlsx
         └── 📂figures{% if template_name == 'prior' %}
-{% if not skip_wordclouds %}            ├── 📈wordcloud_dataset_with_priors.png
-            ├── 📈wordcloud_dataset_without_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_with_priors.png
-            ├── 📈wordcloud_relevant_dataset_with_priors.png
-            ├── 📈wordcloud_irrelevant_dataset_without_priors.png
-            ├── 📈wordcloud_relevant_dataset_without_priors.png{%endif %}
             └── 📈plot_recall_sim.png{% else %}{% for dataset in datasets %}
-            ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{% for dataset in datasets %}
-{% if not skip_wordclouds %}            ├── 📈wordcloud_{{ dataset.stem }}.png
-            ├── 📈wordcloud_relevant_{{ dataset.stem }}.png
-            ├── 📈wordcloud_irrelevant_{{ dataset.stem }}.png{%endif %}{% endfor %}{%endif %}{%endif %}
+            ├── 📈plot_recall_{{ dataset.stem }}.png{% endfor %}{%endif %}{%endif %}

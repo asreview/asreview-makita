@@ -1,0 +1,55 @@
+name: Update Examples
+
+on:
+  push:
+    branches:
+      - v1.0.x
+      - main
+
+jobs:
+  update-examples:
+    runs-on: ubuntu-latest
+    env:
+      ASREVIEW_MAKITA_VERSION_OVERRIDE: "1.generated.example"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          pip install .[lint,dev]
+
+      # Generate examples
+      - name: Generate examples
+        run: |
+          sh scripts/generate_examples.sh
+
+      - name: Ruff check on examples
+        run: |
+          ruff check examples
+
+      - name: Ruff format examples
+        run: |
+          ruff format examples
+
+      # Check for changes, commit, and push
+      - name: Commit and push changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            echo "Changes detected. Committing and pushing."
+            git add -A
+            git commit -m "Update examples"
+            git push
+          else
+            echo "No changes detected. Skipping commit and push."
+          fi

@@ -19,7 +19,7 @@ Authors
 - De Bruin, Jonathan
 """
 
-# version 0.9.3.dev33+g89c72db
+# version 1.generated.example
 
 import argparse
 import glob

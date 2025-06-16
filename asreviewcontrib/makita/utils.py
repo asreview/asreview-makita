@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from asreview.models.models import AI_MODEL_CONFIGURATIONS
 from jinja2 import Template
 
 from asreviewcontrib.makita import __version__
@@ -49,8 +50,7 @@ class FileHandler:
             Path(export_fp).parent.mkdir(parents=True, exist_ok=True)
 
             with open(export_fp, "w") as f:
-                f.write(content)
-                f.write("\n")
+                f.write(content + "\n")
 
             print(f"Created {export_fp}")
 
@@ -85,3 +85,15 @@ class FileHandler:
             template = Template(f.read())
 
         return template.render({**params, **kwargs})
+
+
+def get_default_settings():
+    """Retrieve default settings from ASREVIEW configuration."""
+    ASREVIEW_CONFIG = AI_MODEL_CONFIGURATIONS[0]["value"]
+
+    return {
+        "classifier": ASREVIEW_CONFIG.classifier,
+        "feature_extractor": ASREVIEW_CONFIG.feature_extractor,
+        "querier": ASREVIEW_CONFIG.querier,
+        "balancer": ASREVIEW_CONFIG.balancer,
+    }
