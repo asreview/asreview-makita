@@ -169,7 +169,7 @@ By default, the job file depends on the platform. Windows users will see a
 with
 
 ```console
-asreview makita template basic --job_file my_jobs_file.my_ext
+asreview makita template basic --job-file my_jobs_file.my_ext
 ```
 
 ### No Balancing
@@ -209,21 +209,21 @@ optional arguments:
 
 ```console
   -h, --help                                Show this help message and exit
-  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
-  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --prior_seed prior_seed                   Seed of the priors                              Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
+  -p, --project-folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -d, --data-folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job-file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  --prior-seed prior_seed                   Seed of the priors                              Seed is set to 535 by default.
+  --model-seed MODEL_SEED                   Seed of the models                              Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
-  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
+  --n-runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --querier QUERIER           Query strategy to use.                          Default: max.
   --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
+  --n-query n_query                         Number of instances per query.                  Default: 1.
+  --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 ### ARFI template
@@ -240,21 +240,21 @@ optional arguments:
 
 ```console
   -h, --help                                Show this help message and exit
-  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
-  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
+  -p, --project-folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -d, --data-folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job-file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  --prior-seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
+  --model-seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
-  --n_priors N_PRIORS                       Number of priors.                               Default: 10.
+  --n-priors N_PRIORS                       Number of priors.                               Default: 10.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --querier QUERIER           Query strategy to use.                          Default: max.
   --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
+  --n-query n_query                         Number of instances per query.                  Default: 1.
+  --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 ### Multimodel template
@@ -269,22 +269,22 @@ optional arguments:
 
 ```console
   -h, --help                                Show this help message and exit
-  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
-  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
+  -p, --project-folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -d, --data-folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job-file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  --prior-seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
+  --model-seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
-  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
+  --n-runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
-  --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
+  --n-query n_query                         Number of instances per query.                  Default: 1.
+  --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature-extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
   --queriers QUERIER         Query strategies to use                         Default: ['max']
   --balancers BALANCE_STRATEGY     Balance strategies to use                       Default: ['double']
-  --impossible_models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
+  --impossible-models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
 #### Example usage
@@ -292,12 +292,12 @@ optional arguments:
 If you want to specify certain combinations of classifiers and feature
 extractors that should and should not be used, you can use the `--classifiers`,
 `--feature-extractors`, `--queriers`, `--balancers` and
-`--impossible_models` option. For instance, if you want to exclude the
+`--impossible-models` option. For instance, if you want to exclude the
 combinations of `nb` with `doc2vec` and `logistic` with `tfidf`, use the
 following command:
 
 ```console
-asreview makita template multimodel --classifiers logistic nb --feature-extractors tfidf doc2vec --queriers max max_random max_uncertainty cluster --impossible_models nb,doc2vec logistic,tfidf
+asreview makita template multimodel --classifiers logistic nb --feature-extractors tfidf doc2vec --queriers max max_random max_uncertainty cluster --impossible-models nb,doc2vec logistic,tfidf
 ```
 
 ### Prior template
@@ -325,21 +325,21 @@ optional arguments:
 
 ```console
   -h, --help                                Show this help message and exit
-  -p, --project_folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
-  -d, --data_folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
-  -j, --job_file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
-  --prior_seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
-  --model_seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
+  -p, --project-folder PROJECT_FOLDER       The folder the project will be rendered too     Default: The current working directory
+  -d, --data-folder DATA_FOLDER             The dataset source folder                       Default: `Data` folder in working directory
+  -j, --job-file JOB_FILE                   The name of the file with jobs                  Default: jobs.bat for Windows, otherwise jobs.sh.
+  --prior-seed prior_seed                   Seed of the priors.                             Seed is set to 535 by default.
+  --model-seed MODEL_SEED                   Seed of the models.                             Seed is set to 165 by default.
   --template TEMPLATE                       Overwrite template with template file path.
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
-  --n_runs N_RUNS                           Number of runs.                                 Default: 1.
+  --n-runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
   --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
   --querier QUERIER           Query strategy to use.                          Default: max.
   --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
-  --n_query n_query                         Number of instances per query.                  Default: 1.
-  --n_stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
+  --n-query n_query                         Number of instances per query.                  Default: 1.
+  --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
 
 #### Example usage
@@ -406,7 +406,7 @@ when using any template, as it is used to generate the plots.
 Still, `get_plot.py` can be used on its own, as it is a standalone script. To
 use it, use `-s` (source) and `-o` (output) to tweak paths.
 
-Adding a legend to the plot can be done with the `-l` or `--show_legend` flag,
+Adding a legend to the plot can be done with the `-l` or `--show-legend` flag,
 with the labels clustered on any of the following: `'filename', 'model',
 'querier', 'balancer', 'feature_extraction', 'n-query',
 'n_stop', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param',

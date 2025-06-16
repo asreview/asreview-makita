@@ -39,7 +39,7 @@ python -m asreview metrics {{ output_folder }}/simulation/state_files/sim_minima
 
 {% endfor %}
 # Generate plot and tables for dataset
-python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/state_files/ -o {{ output_folder }}/figures/plot_recall_sim.png -l filename --hide_random
+python {{ scripts_folder }}/get_plot.py -s {{ output_folder }}/simulation/state_files/ -o {{ output_folder }}/figures/plot_recall_sim.png -l filename --hide-random
 python {{ scripts_folder }}/merge_metrics.py -s {{ output_folder }}/simulation/metrics/ -o {{ output_folder }}/tables/metrics/metrics_sim.csv
 python {{ scripts_folder }}/merge_tds.py -s {{ output_folder }}/simulation/metrics/ -o {{ output_folder }}/tables/time_to_discovery/tds_sim.csv
 python {{ scripts_folder }}/merge_descriptives.py  -s {{ output_folder }}/simulation/descriptives/

@@ -31,14 +31,14 @@ class MakitaEntryPoint:
         parser_template = subparsers.add_parser("template")
         parser_template.add_argument("name", type=str, help="The name of the template.")
         parser_template.add_argument(
-            "--job_file",
+            "--job-file",
             "-j",
             type=str,
             help="The name of the file with jobs. Default "
             "jobs.bat for Windows, otherwise jobs.sh.",
         )
         parser_template.add_argument(
-            "--data_folder",
+            "--data-folder",
             "-d",
             type=str,
             default="data",
@@ -46,19 +46,19 @@ class MakitaEntryPoint:
             "Default will use the `data` folder in the current directory as source.",
         )
         parser_template.add_argument(
-            "--project_folder",
+            "--project-folder",
             "-p",
             type=str,
             help="Set project folder path. Default will use current directory.",
         )
         parser_template.add_argument(
-            "--prior_seed",
+            "--prior-seed",
             type=int,
             default=535,
             help="Seed of the priors. 535 by default.",
         )
         parser_template.add_argument(
-            "--model_seed",
+            "--model-seed",
             type=int,
             default=165,
             help="Seed of the models. 165 by default.",
@@ -73,24 +73,24 @@ class MakitaEntryPoint:
             "Default: the system of rendering templates.",
         )
         parser_template.add_argument(
-            "--n_query",
+            "--n-query",
             type=int,
             default=1,
             help="Number of instances per query.",
         )
         parser_template.add_argument(
-            "--n_stop",
+            "--n-stop",
             type=str,
             default=None,
             help="The number of label actions to simulate.",
         )
         parser_template.add_argument(
-            "--n_runs",
+            "--n-runs",
             type=int,
             help="Number of runs.",
         )
         parser_template.add_argument(
-            "--n_priors",
+            "--n-priors",
             type=int,
             help="Number of priors.",
         )
@@ -140,7 +140,7 @@ class MakitaEntryPoint:
             help="Balancing strategies to use.",
         )
         parser_template.add_argument(
-            "--impossible_models",
+            "--impossible-models",
             nargs="+",
             help="Model combinations to exclude.",
         )

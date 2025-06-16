@@ -21,7 +21,7 @@ python -m asreview simulate generated_data/dataset_without_priors.csv -o output/
 python -m asreview metrics output/simulation/state_files/sim_minimal_priors.asreview -o output/simulation/metrics/metrics_sim_minimal_priors.json --quiet
 
 # Generate plot and tables for dataset
-python scripts/get_plot.py -s output/simulation/state_files/ -o output/figures/plot_recall_sim.png -l filename --hide_random
+python scripts/get_plot.py -s output/simulation/state_files/ -o output/figures/plot_recall_sim.png -l filename --hide-random
 python scripts/merge_metrics.py -s output/simulation/metrics/ -o output/tables/metrics/metrics_sim.csv
 python scripts/merge_tds.py -s output/simulation/metrics/ -o output/tables/time_to_discovery/tds_sim.csv
 python scripts/merge_descriptives.py  -s output/simulation/descriptives/

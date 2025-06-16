@@ -114,18 +114,18 @@ if __name__ == "__main__":
     parser.add_argument("-s", type=str, help="States location")
     parser.add_argument("-o", type=str, help="Output location")
     parser.add_argument(
-        "--show_legend",
+        "--show-legend",
         "-l",
         type=str,
         help="Add a legend to the plot, based on the given parameter.",
     )
     parser.add_argument(
-        "--hide_random",
+        "--hide-random",
         action="store_true",
         help="Hide the random line.",
     )
     parser.add_argument(
-        "--hide_optimal",
+        "--hide-optimal",
         action="store_true",
         help="Hide the optimal line.",
     )

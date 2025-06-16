@@ -23,14 +23,14 @@ def test_basic_template(tmp_path):
     argv = [
         "template",
         "basic",
-        "--project_folder",
+        "--project-folder",
         str(project_folder),
-        "--data_folder",
+        "--data-folder",
         datasets_location,
         "--overwrite",
-        "--n_runs",
+        "--n-runs",
         "1",
-        "--n_query",
+        "--n-query",
         "10",
     ]
     mep.execute(argv)
@@ -49,14 +49,14 @@ def test_arfi_template(tmp_path):
     argv = [
         "template",
         "arfi",
-        "--project_folder",
+        "--project-folder",
         str(project_folder),
-        "--data_folder",
+        "--data-folder",
         datasets_location,
         "--overwrite",
-        "--n_priors",
+        "--n-priors",
         "5",
-        "--n_query",
+        "--n-query",
         "10",
     ]
     mep.execute(argv)
@@ -79,14 +79,14 @@ def test_prior_template(tmp_path):
     argv = [
         "template",
         "prior",
-        "--project_folder",
+        "--project-folder",
         str(project_folder),
-        "--data_folder",
+        "--data-folder",
         datasets_location,
         "--overwrite",
-        "--n_runs",
+        "--n-runs",
         "1",
-        "--n_query",
+        "--n-query",
         "10",
     ]
     mep.execute(argv)
@@ -107,14 +107,14 @@ def test_multimodel_template(tmp_path):
     argv = [
         "template",
         "multimodel",
-        "--project_folder",
+        "--project-folder",
         str(project_folder),
-        "--data_folder",
+        "--data-folder",
         datasets_location,
         "--overwrite",
-        "--n_runs",
+        "--n-runs",
         "1",
-        "--n_query",
+        "--n-query",
         "10",
     ]
     mep.execute(argv)
