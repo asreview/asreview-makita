@@ -15,7 +15,7 @@ Authors
 - Teijema, Jelle
 """
 
-# version 0.1.dev1+g8a54d40
+# version 0.1.dev1+ga065407
 
 import argparse
 from pathlib import Path
