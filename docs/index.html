@@ -323,26 +323,27 @@ a:hover {
         <div id="multimodel-options" style="display: none;">
             <h3>Multi-Model Configurations</h3>
             <div class="form-group">
-                <label for="feature-extractors">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.feature_extraction" target="_blank">
-                        Feature Extractors (one per line):
+                <label>
+                    <a href="https://asreview.readthedocs.io/en/latest/lab/models.html" target="_blank">
+                        ASReview Model Documentation
                     </a>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="feature-extractors">
+                    Feature Extractors (one per line):
                 </label>
                 <textarea id="feature-extractors" placeholder="e.g., tfidf&#10;doc2vec"></textarea>
             </div>
             <div class="form-group">
                 <label for="classifiers">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.classifiers" target="_blank">
-                        Classifiers (one per line):
-                    </a>
+                    Classifiers (one per line):
                 </label>
                 <textarea id="classifiers" placeholder="e.g., SVM&#10;rf"></textarea>
             </div>
             <div class="form-group">
                 <label for="query-strategies">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.query" target="_blank">
-                        Query Strategies (one per line):
-                    </a>
+                    Query Strategies (one per line):
                 </label>
                 <textarea id="query-strategies" placeholder="e.g., uncertainty&#10;simple"></textarea>
             </div>
@@ -354,10 +355,8 @@ a:hover {
                 <span class="tooltip-text">Disable the balance strategy for multi-model configurations.</span>
             </div>
             <div class="form-group" id="balance-strategy-group-multi">
-                <label for="balance-strategies">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
-                        Balance Strategies (one per line):
-                    </a>
+                <label for="balance-strategies">=
+                        Balance Strategies (one per line):=
                 </label>
                 <textarea id="balance-strategies" placeholder="e.g., double&#10;triple"></textarea>
             </div>
@@ -376,26 +375,27 @@ a:hover {
         <div id="singlemodel-options">
             <h3>Model Configuration</h3>
             <div class="form-group">
-                <label for="feature-extractor">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.feature_extraction" target="_blank">
-                        Feature Extractor:
+                <label>
+                    <a href="https://asreview.readthedocs.io/en/latest/lab/models.html" target="_blank">
+                        ASReview Model Documentation
                     </a>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="feature-extractor">
+                        Feature Extractor:
                 </label>
                 <input id="feature-extractor" type="text" placeholder="e.g., tfidf">
             </div>
             <div class="form-group">
                 <label for="classifier">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.classifiers" target="_blank">
                         Classifier:
-                    </a>
                 </label>
                 <input id="classifier" type="text" placeholder="e.g., SVM">
             </div>
             <div class="form-group">
                 <label for="query-strategy">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.query" target="_blank">
                         Query Strategy:
-                    </a>
                 </label>
                 <input id="query-strategy" type="text" placeholder="e.g., uncertainty">
             </div>
@@ -408,9 +408,7 @@ a:hover {
             </div>
             <div class="form-group" id="balance-strategy-group-single">
                 <label for="balance-strategy">
-                    <a href="https://asreview.readthedocs.io/en/stable/reference.html#module-asreview.models.balance" target="_blank">
                         Balance Strategy:
-                    </a>
                 </label>
                 <input id="balance-strategy" type="text" placeholder="e.g., double">
             </div>
