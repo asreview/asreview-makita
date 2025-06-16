@@ -19,7 +19,7 @@ pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
 The performance on the following datasets is evaluated:
 
 - data/van_de_Schoot_2018.csv
-- data/prior_Smid_2020.csv
+- data/Smid_2020.csv
 
 ## Run simulation
 
@@ -38,7 +38,7 @@ The following files are found in this project:
     ├── 📜jobs.sh
     ├── 📂data
     │   ├── 📜van_de_Schoot_2018.csv
-    │   ├── 📜prior_Smid_2020.csv
+    │   ├── 📜Smid_2020.csv
     ├── 📂scripts
     │   ├── 📜data_describe.py
     │   ├── 📜get_plot.py
@@ -57,30 +57,30 @@ The following files are found in this project:
         |       └── 📂metrics
         |           ├── 📜metrics_sim_van_de_Schoot_2018_`x`.json
         |           └── 📜...
-        |   └── 📂prior_Smid_2020
+        |   └── 📂Smid_2020
         |       ├── 📂descriptives
-        |       |   └── 📜data_stats_prior_Smid_2020.json
+        |       |   └── 📜data_stats_Smid_2020.json
         |       ├── 📂state_files
-        |       |   ├── 📜sim_prior_Smid_2020_`x`.asreview
+        |       |   ├── 📜sim_Smid_2020_`x`.asreview
         |       |   └── 📜...
         |       └── 📂metrics
-        |           ├── 📜metrics_sim_prior_Smid_2020_`x`.json
+        |           ├── 📜metrics_sim_Smid_2020_`x`.json
         |           └── 📜...
         ├── 📂tables
         |   ├── 📜data_descriptives.csv
         |   ├── 📜data_descriptives.xlsx
         |   ├── 📜tds_sim_van_de_Schoot_2018.csv
         |   ├── 📜tds_sim_van_de_Schoot_2018.xlsx
-        |   ├── 📜tds_sim_prior_Smid_2020.csv
-        |   ├── 📜tds_sim_prior_Smid_2020.xlsx
+        |   ├── 📜tds_sim_Smid_2020.csv
+        |   ├── 📜tds_sim_Smid_2020.xlsx
         |   ├── 📜tds_summary.csv
         |   ├── 📜tds_summary.xlsx
         |   ├── 📜metrics_sim_van_de_Schoot_2018_metrics.csv
         |   ├── 📜metrics_sim_van_de_Schoot_2018_metrics.xlsx
-        |   ├── 📜metrics_sim_prior_Smid_2020_metrics.csv
-        |   ├── 📜metrics_sim_prior_Smid_2020_metrics.xlsx
+        |   ├── 📜metrics_sim_Smid_2020_metrics.csv
+        |   ├── 📜metrics_sim_Smid_2020_metrics.xlsx
         |   ├── 📜metrics_summary.csv
         |   └── 📜metrics_summary.xlsx
         └── 📂figures
             ├── 📈plot_recall_van_de_Schoot_2018.png
-            ├── 📈plot_recall_prior_Smid_2020.png
+            ├── 📈plot_recall_Smid_2020.png

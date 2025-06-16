@@ -12,26 +12,26 @@ mkdir output/figures
 
 
 ##################################
-### DATASET: prior_Smid_2020
+### DATASET: Smid_2020
 ##################################
 
 # Create output folder
-mkdir output/simulation/prior_Smid_2020/
-mkdir output/simulation/prior_Smid_2020/metrics
+mkdir output/simulation/Smid_2020/
+mkdir output/simulation/Smid_2020/metrics
 
-# Collect descriptives about the dataset prior_Smid_2020
-mkdir output/simulation/prior_Smid_2020/descriptives
-python scripts/data_describe.py data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
+# Collect descriptives about the dataset Smid_2020
+mkdir output/simulation/Smid_2020/descriptives
+python scripts/data_describe.py data/Smid_2020.csv -o output/simulation/Smid_2020/descriptives/data_stats_Smid_2020.json
 
 # Simulate runs
-mkdir output/simulation/prior_Smid_2020/state_files
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview --prior-seed 535 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020.json --quiet
+mkdir output/simulation/Smid_2020/state_files
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020.asreview --prior-seed 535 --seed 165 -c svm -e tfidf -q max -b balanced --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020.json --quiet
 
 # Generate plot and tables for dataset
-python scripts/get_plot.py -s output/simulation/prior_Smid_2020/state_files/ -o output/figures/plot_recall_sim_prior_Smid_2020.png
-python scripts/merge_metrics.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_prior_Smid_2020.csv
-python scripts/merge_tds.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_prior_Smid_2020.csv
+python scripts/get_plot.py -s output/simulation/Smid_2020/state_files/ -o output/figures/plot_recall_sim_Smid_2020.png
+python scripts/merge_metrics.py -s output/simulation/Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_Smid_2020.csv
+python scripts/merge_tds.py -s output/simulation/Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_Smid_2020.csv
 
 ##################################
 ### DATASET: van_de_Schoot_2018

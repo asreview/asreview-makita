@@ -11,77 +11,77 @@ mkdir output/tables/time_to_discovery
 mkdir output/figures
 
 ##################################
-### DATASET: prior_Smid_2020
+### DATASET: Smid_2020
 ##################################
 # Create output folder
-mkdir output/simulation/prior_Smid_2020/
-mkdir output/simulation/prior_Smid_2020/metrics
+mkdir output/simulation/Smid_2020/
+mkdir output/simulation/Smid_2020/metrics
 
 # Collect descriptives about the dataset
-mkdir output/simulation/prior_Smid_2020/descriptives
-python scripts/data_describe.py data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/descriptives/data_stats_prior_Smid_2020.json
+mkdir output/simulation/Smid_2020/descriptives
+python scripts/data_describe.py data/Smid_2020.csv -o output/simulation/Smid_2020/descriptives/data_stats_Smid_2020.json
 
 # Simulate runs, collect metrics and create plots
-mkdir output/simulation/prior_Smid_2020/state_files
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_31.asreview --prior-idx 31 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_31.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_31.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_121.asreview --prior-idx 121 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_121.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_121.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_122.asreview --prior-idx 122 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_122.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_122.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_216.asreview --prior-idx 216 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_216.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_216.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_520.asreview --prior-idx 520 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_520.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_520.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_526.asreview --prior-idx 526 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_526.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_526.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_672.asreview --prior-idx 672 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_672.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_672.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_763.asreview --prior-idx 763 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_763.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_763.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_810.asreview --prior-idx 810 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_810.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_810.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1000.asreview --prior-idx 1000 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1000.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1000.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1063.asreview --prior-idx 1063 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1063.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1063.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1195.asreview --prior-idx 1195 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1195.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1195.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1203.asreview --prior-idx 1203 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1203.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1203.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1257.asreview --prior-idx 1257 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1257.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1257.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1429.asreview --prior-idx 1429 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1429.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1429.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1534.asreview --prior-idx 1534 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1534.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1534.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1809.asreview --prior-idx 1809 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1809.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1809.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1820.asreview --prior-idx 1820 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1820.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1820.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1876.asreview --prior-idx 1876 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1876.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1876.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1877.asreview --prior-idx 1877 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_1877.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_1877.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2067.asreview --prior-idx 2067 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2067.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2067.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2070.asreview --prior-idx 2070 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2070.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2070.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2241.asreview --prior-idx 2241 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2241.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2241.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2276.asreview --prior-idx 2276 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2276.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2276.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2279.asreview --prior-idx 2279 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2279.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2279.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2307.asreview --prior-idx 2307 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2307.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2307.json --quiet
-python -m asreview simulate data/prior_Smid_2020.csv -o output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2452.asreview --prior-idx 2452 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
-python -m asreview metrics output/simulation/prior_Smid_2020/state_files/sim_prior_Smid_2020_2452.asreview -o output/simulation/prior_Smid_2020/metrics/metrics_sim_prior_Smid_2020_2452.json --quiet
+mkdir output/simulation/Smid_2020/state_files
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_31.asreview --prior-idx 31 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_31.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_31.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_121.asreview --prior-idx 121 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_121.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_121.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_122.asreview --prior-idx 122 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_122.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_122.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_216.asreview --prior-idx 216 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_216.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_216.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_520.asreview --prior-idx 520 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_520.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_520.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_526.asreview --prior-idx 526 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_526.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_526.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_672.asreview --prior-idx 672 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_672.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_672.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_763.asreview --prior-idx 763 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_763.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_763.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_810.asreview --prior-idx 810 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_810.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_810.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1000.asreview --prior-idx 1000 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1000.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1000.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1063.asreview --prior-idx 1063 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1063.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1063.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1195.asreview --prior-idx 1195 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1195.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1195.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1203.asreview --prior-idx 1203 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1203.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1203.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1257.asreview --prior-idx 1257 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1257.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1257.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1429.asreview --prior-idx 1429 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1429.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1429.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1534.asreview --prior-idx 1534 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1534.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1534.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1809.asreview --prior-idx 1809 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1809.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1809.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1820.asreview --prior-idx 1820 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1820.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1820.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1876.asreview --prior-idx 1876 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1876.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1876.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_1877.asreview --prior-idx 1877 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_1877.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_1877.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2067.asreview --prior-idx 2067 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2067.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2067.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2070.asreview --prior-idx 2070 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2070.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2070.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2241.asreview --prior-idx 2241 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2241.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2241.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2276.asreview --prior-idx 2276 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2276.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2276.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2279.asreview --prior-idx 2279 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2279.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2279.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2307.asreview --prior-idx 2307 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2307.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2307.json --quiet
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_2452.asreview --prior-idx 2452 1225 1252 425 2568 1010 2053 1836 1716 1873 261 --seed 165 -c svm -e tfidf -q max -b balanced  --n-query 1
+python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_2452.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_2452.json --quiet
 
 # Generate plot and tables for dataset
-python scripts/get_plot.py -s output/simulation/prior_Smid_2020/state_files/ -o output/figures/plot_recall_sim_prior_Smid_2020.png --show-legend model
-python scripts/merge_metrics.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_prior_Smid_2020.csv
-python scripts/merge_tds.py -s output/simulation/prior_Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_prior_Smid_2020.csv
+python scripts/get_plot.py -s output/simulation/Smid_2020/state_files/ -o output/figures/plot_recall_sim_Smid_2020.png --show-legend model
+python scripts/merge_metrics.py -s output/simulation/Smid_2020/metrics/ -o output/tables/metrics/metrics_sim_Smid_2020.csv
+python scripts/merge_tds.py -s output/simulation/Smid_2020/metrics/ -o output/tables/time_to_discovery/tds_sim_Smid_2020.csv
 
 ##################################
 ### DATASET: van_de_Schoot_2018
