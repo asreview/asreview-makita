@@ -4,7 +4,7 @@ env_version = os.environ.get("ASREVIEW_MAKITA_VERSION_OVERRIDE")
 if env_version is not None:
     __version__ = env_version
     try:
-        __version_tuple__ = tuple(int(x) for x in env_version.split("."))
+        __version_tuple__ = tuple(env_version.split("."))
     except Exception:
         __version_tuple__ = (0, 0, 0)
 else:

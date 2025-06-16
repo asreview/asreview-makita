@@ -9,6 +9,8 @@ on:
 jobs:
   update-examples:
     runs-on: ubuntu-latest
+    env:
+      ASREVIEW_MAKITA_VERSION_OVERRIDE: "1.generated.example"
 
     steps:
       - name: Checkout repository
