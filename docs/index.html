@@ -300,11 +300,6 @@ a:hover {
             <span class="tooltip-text">The number of records to label before retraining the model. Increasing this value can significantly speed up the simulation.</span>
         </div>
         <div class="form-group tooltip">
-            <label for="skip-wordclouds">Skip Wordclouds:</label>
-            <input id="skip-wordclouds" type="checkbox">
-            <span class="tooltip-text">Skip the generation of dataset wordclouds.</span>
-        </div>
-        <div class="form-group tooltip">
             <label for="overwrite">Overwrite:</label>
             <input id="overwrite" type="checkbox">
             <span class="tooltip-text">Allow the automatic overwriting of old makita files.</span>
@@ -495,7 +490,6 @@ function generateCommand() {
         const modelSeed = document.getElementById("model-seed").value;
         const nRuns = document.getElementById("n-runs").value;
         const nQuery = document.getElementById("number-per-query").value;
-        const skipWordclouds = document.getElementById("skip-wordclouds").checked;
         const overwrite = document.getElementById("overwrite").checked;
         const stopCondition = document.getElementById("stop-condition").value.trim();
 
@@ -509,7 +503,6 @@ function generateCommand() {
         if (modelSeed) command += ` --model_seed ${modelSeed}`;
         if (nRuns != 1) command += ` --n_runs ${nRuns}`;
         if (nQuery != 1) command += ` --n_query ${nQuery}`;
-        if (skipWordclouds) command += ` --skip_wordclouds`;
         if (overwrite) command += ` --overwrite`;
         if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
             command += ` --n_stop ${stopCondition}`;
