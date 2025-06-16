@@ -23,7 +23,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
-          pip install .
+          pip install .[lint,dev]
 
       # Generate examples
       - name: Generate examples
