@@ -11,8 +11,8 @@ class TemplateMultiModel(TemplateBase):
         self,
         classifiers,
         feature_extractors,
-        query_strategies,
-        balance_strategies,
+        queriers,
+        balancers,
         impossible_models,
         n_runs,
         **kwargs,
@@ -20,8 +20,8 @@ class TemplateMultiModel(TemplateBase):
         self.n_runs = n_runs
         self.all_classifiers = classifiers
         self.all_feature_extractors = feature_extractors
-        self.all_query_strategies = query_strategies
-        self.all_balance_strategies = balance_strategies
+        self.all_queriers = queriers
+        self.all_balancers = balancers
         self.impossible_models = impossible_models
 
         super().__init__(**kwargs)
@@ -51,19 +51,18 @@ class TemplateMultiModel(TemplateBase):
             if self.all_feature_extractors is not None
             else ["onehot", "tfidf"]
         )
-        all_query_strategies = (
-            self.all_query_strategies
-            if self.all_query_strategies is not None
-            else [defaults["query_strategy"]]
+        all_queriers = (
+            self.all_queriers
+            if self.all_queriers is not None
+            else [defaults["querier"]]
         )
-        all_balance_strategies = (
+        all_balancers = (
             [
                 None if strategy.lower() == "none" else strategy
-                for strategy in self.all_balance_strategies
+                for strategy in self.all_balancers
             ]
-            if self.all_balance_strategies is not None
-            and len(self.all_balance_strategies) > 0
-            else [defaults["balance_strategy"]]
+            if self.all_balancers is not None and len(self.all_balancers) > 0
+            else [defaults["balancer"]]
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]
@@ -82,7 +81,7 @@ class TemplateMultiModel(TemplateBase):
             "version": self.__version__,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
-            "all_query_strategies": all_query_strategies,
-            "all_balance_strategies": all_balance_strategies,
+            "all_queriers": all_queriers,
+            "all_balancers": all_balancers,
             "impossible_models": impossible_models,
         }

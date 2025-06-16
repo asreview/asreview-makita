@@ -41,17 +41,17 @@ python {{ scripts_folder }}/data_describe.py {{ dataset.input_file }} -o {{ outp
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for classifier in all_classifiers %}
 {% for feature_extraction in all_feature_extractors %}
-{% for query_strategy in all_query_strategies %}
-{% for balance_strategy in all_balance_strategies %}
+{% for querier in all_queriers %}
+{% for balancer in all_balancers %}
 {% set temp = [] %}{{ temp.append(classifier)|default("", True) }}{{ temp.append(feature_extraction)|default("", True) }}
 {% if temp in impossible_models %}
 
-# Skipped {{ classifier }} + {{ feature_extraction }} + {{ query_strategy}} model
-{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ query_strategy }}, Balance strategy = {{balance_strategy}}
+# Skipped {{ classifier }} + {{ feature_extraction }} + {{ querier}} model
+{% else %}# Classifier = {{ classifier }}, Feature extractor = {{ feature_extraction }}, Query strategy = {{ querier }}, Balance strategy = {{balancer}}
 {% for run in range(n_runs) %}
-python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --classifier {{ classifier }} --querier {{query_strategy}} --feature-extractor {{ feature_extraction }} --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed }} -q {{ query_strategy }} {% if balance_strategy %}-b {{ balance_strategy }} {% endif %}--n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview --classifier {{ classifier }} --querier {{querier}} --feature-extractor {{ feature_extraction }} --prior-seed {{ dataset.prior_seed + run }} --seed {{ dataset.model_seed }} -q {{ querier }} {% if balancer %}-b {{ balancer }} {% endif %}--n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
 
-python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ query_strategy }}_{{ balance_strategy }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json --quiet
+python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ classifier }}_{{ feature_extraction }}_{{ querier }}_{{ balancer }}{{ "_{}".format(run) if n_runs > 1 else "" }}.json --quiet
 {% endfor %}{% endif %}
 {% endfor %}
 {% endfor %}

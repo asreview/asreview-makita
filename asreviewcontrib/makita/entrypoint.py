@@ -115,7 +115,7 @@ class MakitaEntryPoint:
             help="Query strategy to use.",
         )
         parser_template.add_argument(
-            "--balance_strategy",
+            "--balancer",
             type=str,
             help="Balance strategy to use.",
         )
@@ -130,12 +130,12 @@ class MakitaEntryPoint:
             help="Feature extractors to use.",
         )
         parser_template.add_argument(
-            "--query_strategies",
+            "--queriers",
             nargs="+",
             help="Query strategies to use.",
         )
         parser_template.add_argument(
-            "--balance_strategies",
+            "--balancers",
             nargs="+",
             help="Balancing strategies to use.",
         )
@@ -306,12 +306,12 @@ class TemplateRenderer:
             "model_seed",
             "classifier",
             "feature_extractor",
-            "query_strategy",
-            "balance_strategy",
+            "querier",
+            "balancer",
             "classifiers",
             "feature_extractors",
-            "query_strategies",
-            "balance_strategies",
+            "queriers",
+            "balancers",
             "impossible_models",
             "n_query",
             "n_stop",

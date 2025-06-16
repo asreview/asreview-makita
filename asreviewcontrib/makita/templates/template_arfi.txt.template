@@ -41,7 +41,7 @@ python {{ scripts_folder }}/data_describe.py {{ dataset.input_file }} -o {{ outp
 # Simulate runs, collect metrics and create plots
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for prior in dataset.priors %}
-python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior-record-id {{ " ".join(prior) }} --seed {{ dataset.model_seed }} -c {{ classifier }} -e {{ feature_extractor }} -q {{ query_strategy }} {% if balance_strategy %}-b {{ balance_strategy }} {% endif %} --n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior-idx {{ " ".join(prior) }} --seed {{ dataset.model_seed }} -c {{ classifier }} -e {{ feature_extractor }} -q {{ querier }} {% if balancer %}-b {{ balancer }} {% endif %} --n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
 
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.json --quiet
 {% endfor %}

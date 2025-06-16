@@ -16,15 +16,15 @@ class TemplateARFI(TemplateBase):
         self,
         classifier,
         feature_extractor,
-        query_strategy,
-        balance_strategy,
+        querier,
+        balancer,
         n_priors,
         **kwargs,
     ):
         self.classifier = classifier
         self.feature_extractor = feature_extractor
-        self.query_strategy = query_strategy
-        self.balance_strategy = balance_strategy
+        self.querier = querier
+        self.balancer = balancer
         self.n_priors = n_priors
         super().__init__(**kwargs)
 
@@ -58,23 +58,19 @@ class TemplateARFI(TemplateBase):
             if self.feature_extractor is not None
             else defaults["feature_extractor"]
         )
-        query_strategy = (
-            self.query_strategy
-            if self.query_strategy is not None
-            else defaults["query_strategy"]
-        )
-        balance_strategy = (
+        querier = self.querier if self.querier is not None else defaults["querier"]
+        balancer = (
             None
-            if self.balance_strategy and self.balance_strategy.lower() == "none"
-            else self.balance_strategy or defaults["balance_strategy"]
+            if self.balancer and self.balancer.lower() == "none"
+            else self.balancer or defaults["balancer"]
         )
 
         return {
             "datasets": params,
             "classifier": classifier,
             "feature_extractor": feature_extractor,
-            "query_strategy": query_strategy,
-            "balance_strategy": balance_strategy,
+            "querier": querier,
+            "balancer": balancer,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
             "prior_seed": self.prior_seed,

@@ -29,25 +29,27 @@ from asreviewcontrib.insights.plot import plot_recall
 def _set_legend(
     ax, state, legend_option, label_to_line, state_file, hide_random, hide_optimal
 ):
-    metadata = state.settings_metadata
     label = None
 
     if legend_option == "filename":
         label = state_file.stem
     elif legend_option == "model":
+        metadata = state.get_results_table().tail(1).to_dict(orient="records")[0]
         label = " - ".join(
             [
-                metadata["settings"]["model"],
-                metadata["settings"]["feature_extraction"],
-                metadata["settings"]["balance_strategy"],
-                metadata["settings"]["query_strategy"],
+                metadata["classifier"],
+                metadata["feature_extractor"],
+                metadata["balancer"],
+                metadata["querier"],
             ]
         )
     elif legend_option == "classifier":
-        label = metadata["settings"]["model"]
+        metadata = state.get_results_table().tail(1).to_dict(orient="records")[0]
+        label = metadata["classifier"]
     else:
         try:
-            label = metadata["settings"][legend_option]
+            metadata = state.get_results_table().tail(1).to_dict(orient="records")[0]
+            label = metadata[legend_option]
         except KeyError as err:
             raise ValueError(f"Invalid legend setting: '{legend_option}'") from err  # noqa: E501
 
@@ -78,7 +80,7 @@ def get_plot_from_states(
     legend: str
         Add a legend to the plot, based on the given parameter.
         Possible values: "filename", "model", "feature_extraction",
-        "balance_strategy", "query_strategy", "classifier".
+        "balancer", "querier", "classifier".
     """
     states = sorted(states)
     fig, ax = plt.subplots()

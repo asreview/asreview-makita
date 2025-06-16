@@ -18,15 +18,15 @@ class TemplatePrior(TemplateBase):
         self,
         classifier,
         feature_extractor,
-        query_strategy,
-        balance_strategy,
+        querier,
+        balancer,
         n_runs,
         **kwargs,
     ):
         self.classifier = classifier
         self.feature_extractor = feature_extractor
-        self.query_strategy = query_strategy
-        self.balance_strategy = balance_strategy
+        self.querier = querier
+        self.balancer = balancer
         self.n_runs = n_runs
         self.prior_makita_datasets = []
         super().__init__(**kwargs)
@@ -79,15 +79,11 @@ class TemplatePrior(TemplateBase):
             if self.feature_extractor is not None
             else defaults["feature_extractor"]
         )
-        query_strategy = (
-            self.query_strategy
-            if self.query_strategy is not None
-            else defaults["query_strategy"]
-        )
-        balance_strategy = (
+        querier = self.querier if self.querier is not None else defaults["querier"]
+        balancer = (
             None
-            if self.balance_strategy and self.balance_strategy.lower() == "none"
-            else self.balance_strategy or defaults["balance_strategy"]
+            if self.balancer and self.balancer.lower() == "none"
+            else self.balancer or defaults["balancer"]
         )
 
         n_runs = self.n_runs if self.n_runs is not None else 1
@@ -164,8 +160,8 @@ class TemplatePrior(TemplateBase):
         return {
             "classifier": classifier,
             "feature_extractor": feature_extractor,
-            "query_strategy": query_strategy,
-            "balance_strategy": balance_strategy,
+            "querier": querier,
+            "balancer": balancer,
             "n_runs": n_runs,
             "datasets": params,
             "n_query": self.n_query,

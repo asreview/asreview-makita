@@ -19,6 +19,7 @@ Authors
 
 import argparse
 import json
+from pathlib import Path
 
 import asreview
 import numpy as np
@@ -94,6 +95,7 @@ def describe(input_path, output_path=None):
     }  # noqa
 
     if output_path:
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         with open(output_path, "w") as f:
             json.dump(stats, f, indent=2)
     else:
