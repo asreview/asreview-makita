@@ -3,7 +3,7 @@ name: Update Examples
 on:
   push:
     branches:
-      - v.1.0.x
+      - v1.0.x
       - main
 
 jobs:
