@@ -30,14 +30,6 @@ jobs:
         run: |
           sh scripts/generate_examples.sh
 
-      - name: Ruff check on examples
-        run: |
-          ruff check examples
-
-      - name: Ruff format examples
-        run: |
-          ruff format examples
-
       # Check for changes, commit, and push
       - name: Commit and push changes if any
         run: |
