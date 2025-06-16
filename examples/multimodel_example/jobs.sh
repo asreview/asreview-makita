@@ -1,5 +1,5 @@
 
-# version 0.1.dev1+g5d83519
+# version 1.generated.example
 
 # Create folder structure. By default, the folder 'output' is used to store output.
 mkdir output
