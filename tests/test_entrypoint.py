@@ -147,3 +147,64 @@ def test_add_script(tmp_path):
     assert scripts_folder.exists() and any(scripts_folder.iterdir()), (
         "No scripts were created by add-script."
     )
+
+def test_no_balancer_set(tmp_path):
+    """
+    Test that the 'balancer' parameter can be set to None.
+    This should not raise an error and should produce a valid job file.
+    """
+    mep = MakitaEntryPoint()
+    project_folder = tmp_path / "no_balancer_project"
+
+    argv = [
+        "template",
+        "basic",
+        "--project-folder",
+        str(project_folder),
+        "--data-folder",
+        datasets_location,
+        "--overwrite",
+        "--n-runs",
+        "1",
+        "--n-query",
+        "10",
+    ]
+    mep.execute(argv)
+
+    jobs_file = get_job_file(project_folder)
+    assert jobs_file.exists(), (
+        "Makita did not produce the expected jobs file with no balancer."
+    )
+    content = jobs_file.read_text()
+    assert "ERROR" not in content
+
+def test_no_balancer_for_multimodel(tmp_path):
+    """
+    Test that the 'balancer' parameter can be set to None for the multimodel template.
+    This should not raise an error and should produce a valid job file.
+    """
+    mep = MakitaEntryPoint()
+    project_folder = tmp_path / "no_balancer_multimodel_project"
+
+    argv = [
+        "template",
+        "multimodel",
+        "--project-folder",
+        str(project_folder),
+        "--data-folder",
+        datasets_location,
+        "--overwrite",
+        "--n-runs",
+        "1",
+        "--n-query",
+        "10",
+    ]
+    mep.execute(argv)
+
+    jobs_file = get_job_file(project_folder)
+    assert jobs_file.exists(), (
+        "Makita did not produce the expected jobs file with no balancer for multimodel."
+    )
+    content = jobs_file.read_text()
+    assert "ERROR" not in content
+

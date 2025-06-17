@@ -80,11 +80,7 @@ class TemplatePrior(TemplateBase):
             else defaults["feature_extractor"]
         )
         querier = self.querier if self.querier is not None else defaults["querier"]
-        balancer = (
-            None
-            if self.balancer and self.balancer.lower() == "none"
-            else self.balancer or defaults["balancer"]
-        )
+        balancer = self.balancer
 
         n_runs = self.n_runs if self.n_runs is not None else 1
 

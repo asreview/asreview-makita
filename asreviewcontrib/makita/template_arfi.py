@@ -59,11 +59,7 @@ class TemplateARFI(TemplateBase):
             else defaults["feature_extractor"]
         )
         querier = self.querier if self.querier is not None else defaults["querier"]
-        balancer = (
-            None
-            if self.balancer and self.balancer.lower() == "none"
-            else self.balancer or defaults["balancer"]
-        )
+        balancer = self.balancer
 
         return {
             "datasets": params,

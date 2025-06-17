@@ -57,12 +57,8 @@ class TemplateMultiModel(TemplateBase):
             else [defaults["querier"]]
         )
         all_balancers = (
-            [
-                None if strategy.lower() == "none" else strategy
-                for strategy in self.all_balancers
-            ]
-            if self.all_balancers is not None and len(self.all_balancers) > 0
-            else [defaults["balancer"]]
+            [None] if self.all_balancers is None
+            else self.all_balancers
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]

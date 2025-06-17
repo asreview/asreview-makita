@@ -95,5 +95,4 @@ def get_default_settings():
         "classifier": ASREVIEW_CONFIG.classifier,
         "feature_extractor": ASREVIEW_CONFIG.feature_extractor,
         "querier": ASREVIEW_CONFIG.querier,
-        "balancer": ASREVIEW_CONFIG.balancer,
     }
