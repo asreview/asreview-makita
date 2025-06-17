@@ -218,10 +218,10 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n-runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
-  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: svm.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --querier QUERIER           Query strategy to use.                          Default: max.
-  --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --querier QUERIER                         Query strategy to use.                          Default: max.
+  --balancer BALANCE_STRATEGY               Balance strategy to use.                        Default: balanced.
   --n-query n_query                         Number of instances per query.                  Default: 1.
   --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
@@ -249,10 +249,10 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n-priors N_PRIORS                       Number of priors.                               Default: 10.
   --overwrite                               Automatically accepts all overwrite requests.
-  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: svm.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --querier QUERIER           Query strategy to use.                          Default: max.
-  --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --querier QUERIER                         Query strategy to use.                          Default: max.
+  --balancer BALANCE_STRATEGY               Balance strategy to use.                        Default: balanced.
   --n-query n_query                         Number of instances per query.                  Default: 1.
   --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
@@ -282,8 +282,8 @@ optional arguments:
   --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
   --classifiers CLASSIFIERS                 Classifiers to use                              Default: ['logistic', 'nb', 'rf', 'svm']
   --feature-extractors FEATURE_EXTRACTOR    Feature extractors to use                       Default: ['doc2vec', 'sbert', 'tfidf']
-  --queriers QUERIER         Query strategies to use                         Default: ['max']
-  --balancers BALANCE_STRATEGY     Balance strategies to use                       Default: ['double']
+  --queriers QUERIER                        Query strategies to use                         Default: ['max']
+  --balancers BALANCE_STRATEGY              Balance strategies to use                       Default: ['double']
   --impossible-models IMPOSSIBLE_MODELS     Model combinations to exclude                   Default: ['nb,doc2vec', 'nb,sbert']
 ```
 
@@ -334,10 +334,10 @@ optional arguments:
   --platform PLATFORM                       Platform to run jobs: Windows, Darwin, Linux.   Default: the system of rendering templates.
   --n-runs N_RUNS                           Number of runs.                                 Default: 1.
   --overwrite                               Automatically accepts all overwrite requests.
-  --classifier CLASSIFIER                   Classifier to use.                              Default: nb.
+  --classifier CLASSIFIER                   Classifier to use.                              Default: svm.
   --feature-extractor FEATURE_EXTRACTOR     Feature_extractor to use.                       Default: tfidf.
-  --querier QUERIER           Query strategy to use.                          Default: max.
-  --balancer BALANCE_STRATEGY       Balance strategy to use.                        Default: double.
+  --querier QUERIER                         Query strategy to use.                          Default: max.
+  --balancer BALANCE_STRATEGY               Balance strategy to use.                        Default: balanced.
   --n-query n_query                         Number of instances per query.                  Default: 1.
   --n-stop n_stop                           The number of label actions to simulate.        Default will stop simulating when all relevant records are found.
 ```
