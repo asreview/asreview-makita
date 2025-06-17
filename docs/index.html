@@ -343,7 +343,7 @@ a:hover {
             </div>
             <div class="form-group">
                 <label for="query-strategies">
-                    Query Strategies (one per line):
+                    Queriers (one per line):
                 </label>
                 <textarea id="query-strategies" placeholder="e.g., uncertainty&#10;simple"></textarea>
             </div>
@@ -395,7 +395,7 @@ a:hover {
             </div>
             <div class="form-group">
                 <label for="query-strategy">
-                        Query Strategy:
+                        Querier:
                 </label>
                 <input id="query-strategy" type="text" placeholder="e.g., uncertainty">
             </div>
@@ -492,18 +492,18 @@ function generateCommand() {
         const stopCondition = document.getElementById("stop-condition").value.trim();
 
         command = `asreview makita template ${template}`;
-        if (dataFolder) command += ` --data_folder "${dataFolder}"`;
-        if (project) command += ` --project_folder "${project}"`;
-        if (jobFile) command += ` --job_file "${jobFile}"`;
+        if (dataFolder) command += ` --data-folder "${dataFolder}"`;
+        if (project) command += ` --project-folder "${project}"`;
+        if (jobFile) command += ` --job-file "${jobFile}"`;
         if (customTemplate) command += ` --template "${customTemplate}"`;
         if (platform) command += ` --platform "${platform}"`;
-        if (priorSeed) command += ` --prior_seed ${priorSeed}`;
-        if (modelSeed) command += ` --model_seed ${modelSeed}`;
-        if (nRuns != 1) command += ` --n_runs ${nRuns}`;
-        if (nQuery != 1) command += ` --n_query ${nQuery}`;
+        if (priorSeed) command += ` --prior-seed ${priorSeed}`;
+        if (modelSeed) command += ` --model-seed ${modelSeed}`;
+        if (nRuns != 1) command += ` --n-runs ${nRuns}`;
+        if (nQuery != 1) command += ` --n-query ${nQuery}`;
         if (overwrite) command += ` --overwrite`;
         if (stopCondition && (stopCondition === 'min' || !isNaN(stopCondition))) {
-            command += ` --n_stop ${stopCondition}`;
+            command += ` --n-stop ${stopCondition}`;
         } else if (stopCondition) {
             alert("Invalid Stop Condition. Use 'min' or a valid number.");
             return;
@@ -522,7 +522,7 @@ function generateCommand() {
 
             if (featureExtractors.length) command += ` --feature_extractors ${featureExtractors.join(" ")}`;
             if (classifiers.length) command += ` --classifiers ${classifiers.join(" ")}`;
-            if (queryStrategies.length) command += ` --query_strategies ${queryStrategies.join(" ")}`;
+            if (queryStrategies.length) command += ` --queriers ${queryStrategies.join(" ")}`;
             if (noBalanceStrategyMulti) {
                     command += " --balance_strategies none";
                 } else {
@@ -540,7 +540,7 @@ function generateCommand() {
 
             if (featureExtractor) command += ` --feature_extractor ${featureExtractor}`;
             if (classifier) command += ` --classifier ${classifier}`;
-            if (queryStrategy) command += ` --query_strategy ${queryStrategy}`;
+            if (queryStrategy) command += ` --querier ${queryStrategy}`;
             if (noBalanceStrategySingle) {
                 command += " --balance_strategy none";
             } else {
