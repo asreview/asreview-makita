@@ -41,7 +41,7 @@ python {{ scripts_folder }}/data_describe.py {{ dataset.input_file }} -o {{ outp
 # Simulate runs, collect metrics and create plots
 mkdir {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files
 {% for prior in dataset.priors %}
-python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior-idx {{ " ".join(prior) }} --seed {{ dataset.model_seed }} -c {{ classifier }} -e {{ feature_extractor }} -q {{ querier }} {% if balancer %}-b {{ balancer }} {% endif %} --n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
+python -m asreview simulate {{ dataset.input_file }} -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview --prior-idx {{ " ".join(prior) }} --seed {{ dataset.model_seed }}{% if ai is defined and ai %} --ai {{ ai }}{% endif %}{% if classifier is defined and classifier %} -c {{ classifier }}{% endif %}{% if feature_extractor is defined and feature_extractor %} -e {{ feature_extractor }}{% endif %}{% if querier is defined and querier %} -q {{ querier }}{% endif %}{% if balancer is defined and balancer %} -b {{ balancer }}{% endif %} --n-query {{ n_query }}{% if n_stop %} --n-stop {{ n_stop }}{% endif %}
 
 python -m asreview metrics {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/state_files/sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.asreview -o {{ output_folder }}/simulation/{{ dataset.input_file_stem }}/metrics/metrics_sim_{{ dataset.input_file_stem }}_{{ prior[0] }}.json --quiet
 {% endfor %}

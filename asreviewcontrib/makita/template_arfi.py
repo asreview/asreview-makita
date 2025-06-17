@@ -6,7 +6,6 @@ import numpy as np
 from asreview import load_dataset
 
 from asreviewcontrib.makita.template_base import TemplateBase
-from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateARFI(TemplateBase):
@@ -14,6 +13,7 @@ class TemplateARFI(TemplateBase):
 
     def __init__(
         self,
+        ai,
         classifier,
         feature_extractor,
         querier,
@@ -21,6 +21,7 @@ class TemplateARFI(TemplateBase):
         n_priors,
         **kwargs,
     ):
+        self.ai = ai
         self.classifier = classifier
         self.feature_extractor = feature_extractor
         self.querier = querier
@@ -48,29 +49,8 @@ class TemplateARFI(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        defaults = get_default_settings()
-
-        classifier = (
-            self.classifier if self.classifier is not None else defaults["classifier"]
-        )
-        feature_extractor = (
-            self.feature_extractor
-            if self.feature_extractor is not None
-            else defaults["feature_extractor"]
-        )
-        querier = self.querier if self.querier is not None else defaults["querier"]
-        balancer = (
-            None
-            if self.balancer and self.balancer.lower() == "none"
-            else self.balancer or defaults["balancer"]
-        )
-
-        return {
+        base_params = {
             "datasets": params,
-            "classifier": classifier,
-            "feature_extractor": feature_extractor,
-            "querier": querier,
-            "balancer": balancer,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
             "prior_seed": self.prior_seed,
@@ -78,6 +58,24 @@ class TemplateARFI(TemplateBase):
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,
         }
+
+        if self.classifier or self.querier or self.balancer or self.feature_extractor:
+            base_params.update(
+                {
+                    "classifier": self.classifier,
+                    "feature_extractor": self.feature_extractor,
+                    "querier": self.querier,
+                    "balancer": self.balancer,
+                }
+            )
+        else:
+            base_params.update(
+                {
+                    "ai": self.ai,
+                }
+            )
+
+        return base_params
 
 
 def _get_priors(dataset, prior_seed, n_priors):
