@@ -144,11 +144,6 @@ class MakitaEntryPoint:
             nargs="+",
             help="Model combinations to exclude.",
         )
-        parser_template.add_argument(
-            "--no-balance-strategy",
-            nargs="+",
-            help="Do not use a balance strategy.",
-        )
 
         parser_template.set_defaults(func=self._template_cli)
 
