@@ -5,7 +5,6 @@ import pandas as pd
 from asreview import load_dataset
 
 from asreviewcontrib.makita.template_base import TemplateBase
-from asreviewcontrib.makita.utils import get_default_settings
 
 # Suppress FutureWarning messages
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -16,6 +15,7 @@ class TemplatePrior(TemplateBase):
 
     def __init__(
         self,
+        ai,
         classifier,
         feature_extractor,
         querier,
@@ -23,6 +23,7 @@ class TemplatePrior(TemplateBase):
         n_runs,
         **kwargs,
     ):
+        self.ai = ai
         self.classifier = classifier
         self.feature_extractor = feature_extractor
         self.querier = querier
@@ -68,23 +69,6 @@ class TemplatePrior(TemplateBase):
     def get_template_specific_params(self, params):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
-
-        defaults = get_default_settings()
-
-        classifier = (
-            self.classifier if self.classifier is not None else defaults["classifier"]
-        )
-        feature_extractor = (
-            self.feature_extractor
-            if self.feature_extractor is not None
-            else defaults["feature_extractor"]
-        )
-        querier = self.querier if self.querier is not None else defaults["querier"]
-        balancer = (
-            None
-            if self.balancer and self.balancer.lower() == "none"
-            else self.balancer or defaults["balancer"]
-        )
 
         n_runs = self.n_runs if self.n_runs is not None else 1
 
@@ -157,11 +141,7 @@ class TemplatePrior(TemplateBase):
             )
         prior_idx = " ".join(map(str, prior_idx_list))
 
-        return {
-            "classifier": classifier,
-            "feature_extractor": feature_extractor,
-            "querier": querier,
-            "balancer": balancer,
+        base_params = {
             "n_runs": n_runs,
             "datasets": params,
             "n_query": self.n_query,
@@ -177,3 +157,21 @@ class TemplatePrior(TemplateBase):
             "filepath_without_priors_stem": filepath_without_priors.stem,
             "prior_idx": prior_idx,
         }
+
+        if self.classifier or self.querier or self.balancer or self.feature_extractor:
+            base_params.update(
+                {
+                    "classifier": self.classifier,
+                    "feature_extractor": self.feature_extractor,
+                    "querier": self.querier,
+                    "balancer": self.balancer,
+                }
+            )
+        else:
+            base_params.update(
+                {
+                    "ai": self.ai,
+                }
+            )
+
+        return base_params
