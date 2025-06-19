@@ -398,9 +398,7 @@ use it, use `-s` (source) and `-o` (output) to tweak paths.
 
 Adding a legend to the plot can be done with the `-l` or `--show-legend` flag,
 with the labels clustered on any of the following: `'filename', 'model',
-'querier', 'balancer', 'feature_extraction', 'n-query',
-'n_stop', 'n_prior_included', 'n_prior_excluded', 'model_param', 'query_param',
-'feature_param', 'balance_param'`
+'classifier', 'querier', 'balancer', 'feature_extraction'`
 
 #### Available scripts
 
