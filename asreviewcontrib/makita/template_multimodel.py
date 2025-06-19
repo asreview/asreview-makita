@@ -1,7 +1,6 @@
 """Render multimodel template."""
 
 from asreviewcontrib.makita.template_base import TemplateBase
-from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateMultiModel(TemplateBase):
@@ -41,8 +40,6 @@ class TemplateMultiModel(TemplateBase):
         """Prepare template-specific parameters. These parameters are provided to the
         template only once."""
 
-        defaults = get_default_settings()
-
         all_classifiers = (
             self.all_classifiers if self.all_classifiers is not None else ["nb", "svm"]
         )
@@ -54,7 +51,7 @@ class TemplateMultiModel(TemplateBase):
         all_queriers = (
             self.all_queriers
             if self.all_queriers is not None
-            else [defaults["querier"]]
+            else ["max"]
         )
         all_balancers = (
             [
@@ -62,7 +59,7 @@ class TemplateMultiModel(TemplateBase):
                 for strategy in self.all_balancers
             ]
             if self.all_balancers is not None and len(self.all_balancers) > 0
-            else [defaults["balancer"]]
+            else [None, 'balanced']
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]
