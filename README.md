@@ -270,10 +270,10 @@ optional arguments:
 | `--ai AI`                             | AI to use                                                                   | Latest Ultra model of ASReview            |
 | `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
 | `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
-| `--classifiers CLASSIFIERS`           | Classifiers to use                                                          | ['logistic', 'nb', 'rf', 'svm']           |
-| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                                                  | ['doc2vec', 'sbert', 'tfidf']             |
+| `--classifiers CLASSIFIERS`           | Classifiers to use                                                          | ['nb', 'svm']           |
+| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                                                  | ['tfidf', 'onehot']             |
 | `--queriers QUERIER`                  | Query strategies to use                                                     | ['max']                                   |
-| `--balancers BALANCE_STRATEGY`        | Balance strategies to use                                                   | ['double']                                |
+| `--balancers BALANCE_STRATEGY`        | Balance strategies to use                                                   | ['none', 'balanced'] |                                |
 | `--impossible-models IMPOSSIBLE_MODELS` | Model combinations to exclude                                              | ['nb,doc2vec', 'nb,sbert']                |
 
 #### Example usage
