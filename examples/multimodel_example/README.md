@@ -11,7 +11,7 @@ The template is described as: 'Basic simulation for every possible combination o
 This project depends on Python 3.7 or later (python.org/download), and [ASReview](https://asreview.nl/download/). Install the following dependencies to run the simulation and analysis in this project.
 
 ```sh
-pip install asreview>=2.0 asreview-insights>=1.5 asreview-datatools
+pip install asreview>=2.0 asreview-insights>=1.6
 ```
 
 ## Data
