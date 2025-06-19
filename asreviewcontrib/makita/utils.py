@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from asreview.models.models import AI_MODEL_CONFIGURATIONS
 from jinja2 import Template
 
 from asreviewcontrib.makita import __version__
