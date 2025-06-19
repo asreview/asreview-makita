@@ -29,13 +29,13 @@ needs of your very own study. If your study requires a unique template, you can
 create a new one and use it instead.
 
 With [ASReview LAB](https://github.com/asreview/asreview), you can
-[simulate](https://asreview.readthedocs.io/en/latest/simulation_overview.html#overview)
+[simulate](https://asreview.readthedocs.io/en/latest/lab/about.html#term-Simulation)
 with the [web
-interface](https://asreview.readthedocs.io/en/latest/simulation_overview.html#simulating-with-asreview-lab),
+interface](https://asreview.readthedocs.io/en/latest/lab/index.html),
 the [Python
-API](https://asreview.readthedocs.io/en/latest/simulation_api_example.html), or
+API](https://asreview.readthedocs.io/en/latest/technical/overview_development.html#api), or
 the [Command Line Interface
-(CLI)](https://asreview.readthedocs.io/en/latest/simulation_cli.html). Makita
+(CLI)](https://asreview.readthedocs.io/en/latest/technical/overview_development.html#cli). Makita
 makes use of the CLI.
 
 What Makita does:
