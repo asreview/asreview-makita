@@ -29,7 +29,7 @@ needs of your very own study. If your study requires a unique template, you can
 create a new one and use it instead.
 
 With [ASReview LAB](https://github.com/asreview/asreview), you can
-[simulate](https://asreview.readthedocs.io/en/latest/lab/about.html#term-Simulation)
+[simulate](https://asreview.readthedocs.io/en/latest/lab/simulation_overview.html)
 with the [web
 interface](https://asreview.readthedocs.io/en/latest/lab/index.html),
 the [Python
