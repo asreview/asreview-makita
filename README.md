@@ -58,6 +58,11 @@ What Makita does not do:
 For a tutorial on using Makita we refer to the [Exercise on Using the ASReview
 Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
 
+### Compatibility:
+
+    ASReview Makita v0.x requires asreview version 1
+    ASReview Makita v1.x and later requires asreview version 2
+
 ### ASReview Makita Helper Tool
 For users of ASReview Makita, there's a handy helper tool available. This tool
 simplifies the process of formulating your Makita commands, ensuring
