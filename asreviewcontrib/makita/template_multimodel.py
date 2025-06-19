@@ -1,7 +1,6 @@
 """Render multimodel template."""
 
 from asreviewcontrib.makita.template_base import TemplateBase
-from asreviewcontrib.makita.utils import get_default_settings
 
 
 class TemplateMultiModel(TemplateBase):
