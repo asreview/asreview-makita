@@ -99,14 +99,14 @@ def test_prior_template(tmp_path):
     assert "ERROR" not in content
 
 
-def test_multimodel_template(tmp_path):
-    """Test 'multimodel' template with an existing data folder."""
+def test_modelmatrix_template(tmp_path):
+    """Test 'modelmatrix' template with an existing data folder."""
     mep = MakitaEntryPoint()
-    project_folder = tmp_path / "multimodel_project"
+    project_folder = tmp_path / "modelmatrix_project"
 
     argv = [
         "template",
-        "multimodel",
+        "modelmatrix",
         "--project-folder",
         str(project_folder),
         "--data-folder",
@@ -121,7 +121,7 @@ def test_multimodel_template(tmp_path):
 
     jobs_file = get_job_file(project_folder)
     assert jobs_file.exists(), (
-        "Makita did not produce the expected jobs file for multimodel."
+        "Makita did not produce the expected jobs file for modelmatrix."
     )
     content = jobs_file.read_text()
     assert "ERROR" not in content

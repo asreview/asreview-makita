@@ -1,10 +1,10 @@
-"""Render multimodel template."""
+"""Render modelmatrix template."""
 
 from asreviewcontrib.makita.template_base import TemplateBase
 
 
-class TemplateMultiModel(TemplateBase):
-    template_file = "template_multimodel.txt.template"
+class TemplateModelMatrix(TemplateBase):
+    template_file = "template_modelmatrix.txt.template"
 
     def __init__(
         self,
@@ -48,18 +48,14 @@ class TemplateMultiModel(TemplateBase):
             if self.all_feature_extractors is not None
             else ["onehot", "tfidf"]
         )
-        all_queriers = (
-            self.all_queriers
-            if self.all_queriers is not None
-            else ["max"]
-        )
+        all_queriers = self.all_queriers if self.all_queriers is not None else ["max"]
         all_balancers = (
             [
                 None if strategy.lower() == "none" else strategy
                 for strategy in self.all_balancers
             ]
             if self.all_balancers is not None and len(self.all_balancers) > 0
-            else [None, 'balanced']
+            else [None, "balanced"]
         )
         impossible_models = (
             [i.split(",") for i in self.impossible_models]

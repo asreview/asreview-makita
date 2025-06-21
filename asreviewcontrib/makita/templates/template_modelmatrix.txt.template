@@ -1,5 +1,5 @@
 ---
-name: multimodel
+name: modelmatrix
 name_long: Basic simulation for every possible combination of selected models
 
 scripts:
@@ -13,7 +13,7 @@ docs:
   - README.md
 ---
 
-{# This is a template for the multimodel method #}
+{# This is a template for the modelmatrix method #}
 # version {{ version }}
 
 # Create folder structure. By default, the folder 'output' is used to store output.

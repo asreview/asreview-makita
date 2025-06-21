@@ -233,7 +233,7 @@ a:hover {
         <h1>ASReview Makita Tool</h1>
         <a href="https://github.com/asreview/asreview-makita" target="_blank" style="flex-direction: column">GitHub</a>
     </div>
-    
+
 </header>
 
 <div id="task-renderer" class="container">
@@ -242,12 +242,12 @@ a:hover {
         <div class="form-group tooltip">
             <label for="template">Template Name<span class="required">*</span>:</label></label>
             <select id="template" onchange="toggleTemplateOptions()">
-                <option value="multimodel">multimodel</option>
+                <option value="modelmatrix">modelmatrix</option>
                 <option value="arfi">arfi</option>
                 <option value="basic" selected>basic</option>
                 <option value="prior">prior</option>
             </select>
-            <span class="tooltip-text">Choose a template to use for rendering. Options include 'multimodel' for running multiple models, 'arfi' for ARFI configurations, 'basic', or 'prior'.</span>
+            <span class="tooltip-text">Choose a template to use for rendering. Options include 'modelmatrix' for running a matrix of models, 'arfi' for ARFI configurations, 'basic', or 'prior'.</span>
         </div>
         <div class="form-group tooltip">
             <label for="data-folder">Data Folder<span class="required">*</span>:</label>
@@ -308,11 +308,11 @@ a:hover {
             <label for="stop-condition">Stop Condition:</label>
             <input id="stop-condition" type="text" placeholder="min or a number">
             <span class="tooltip-text">
-                Specify when to stop simulating label actions. Use <strong>'min'</strong> to stop when all relevant records are found. 
+                Specify when to stop simulating label actions. Use <strong>'min'</strong> to stop when all relevant records are found.
                 Set <strong>-1</strong> to simulate all label actions. Any positive number represents the number of retrainings of the model.
             </span>
         </div>
-        
+
         <div id="arfi-options" style="display: none;">
             <div class="form-group tooltip">
                 <label for="n-priors">Number of Priors<span class="required">*</span>:</label>
@@ -320,7 +320,7 @@ a:hover {
                 <span class="tooltip-text">For ARFI templates, set the number of prior records to include. Defaults to 10.</span>
             </div>
         </div>
-        <div id="multimodel-options" style="display: none;">
+        <div id="modelmatrix-options" style="display: none;">
             <h3>Multi-Model Configurations</h3>
             <div class="form-group">
                 <label>
@@ -360,7 +360,7 @@ a:hover {
                 </label>
                 <textarea id="balance-strategies" placeholder="e.g., double&#10;triple"></textarea>
             </div>
-            
+
             <div class="form-group tooltip">
                 <label for="impossible-models">
                     <a href="https://github.com/asreview/asreview-makita#example-usage" target="_blank">
@@ -371,7 +371,7 @@ a:hover {
                 <span class="tooltip-text">Certain combinations of classifiers and feature extractors do not work in conjunction. Specifying them here will exclude them from the simulations.</span>
             </div>
         </div>
-        
+
         <div id="singlemodel-options">
             <h3>Model Configuration</h3>
             <div class="form-group">
@@ -413,7 +413,7 @@ a:hover {
                 <input id="balance-strategy" type="text" placeholder="e.g., double">
             </div>
         </div>
-        
+
     </div>
     <div id="scripts" class="task" style="display: none;">
         <h2>Add Scripts</h2>
@@ -433,7 +433,7 @@ a:hover {
                 <option value="get_settings_from_state.py">get_settings_from_state.py</option>
                 <option value="merge_metrics.py">merge_metrics.py</option>
             </select>
-        </div>        
+        </div>
         <div class="form-group">
             <label for="scripts-folder">Project Folder path:</label>
             <input id="scripts-folder" type="text" placeholder="Enter folder path">
@@ -471,8 +471,8 @@ function toggleScriptInput() {
 function toggleTemplateOptions() {
     const template = document.getElementById("template").value;
     document.getElementById("arfi-options").style.display = template === "arfi" ? "block" : "none";
-    document.getElementById("multimodel-options").style.display = template === "multimodel" ? "block" : "none";
-    document.getElementById("singlemodel-options").style.display = template !== "multimodel" ? "block" : "none";
+    document.getElementById("modelmatrix-options").style.display = template === "modelmatrix" ? "block" : "none";
+    document.getElementById("singlemodel-options").style.display = template !== "modelmatrix" ? "block" : "none";
 }
 
 function generateCommand() {
@@ -513,8 +513,8 @@ function generateCommand() {
         if (template === "arfi") {
             const nPriors = document.getElementById("n-priors").value;
             if (nPriors) command += ` --n_priors ${nPriors}`;
-        } 
-        if (template === "multimodel") {
+        }
+        if (template === "modelmatrix") {
             const featureExtractors = document.getElementById("feature-extractors").value.split("\n").filter(Boolean);
             const classifiers = document.getElementById("classifiers").value.split("\n").filter(Boolean);
             const queryStrategies = document.getElementById("query-strategies").value.split("\n").filter(Boolean);
@@ -595,9 +595,9 @@ function showTask(task) {
     document.querySelector(`button[onclick="showTask('${task}')"]`).classList.add('active');
 }
 
-function toggleBalanceStrategy(isMultiModel) {
-    const noBalanceStrategyId = isMultiModel ? "no-balance-strategy-multi" : "no-balance-strategy-single";
-    const balanceStrategyGroupId = isMultiModel ? "balance-strategy-group-multi" : "balance-strategy-group-single";
+function toggleBalanceStrategy(isModelMatrix) {
+    const noBalanceStrategyId = isModelMatrix ? "no-balance-strategy-multi" : "no-balance-strategy-single";
+    const balanceStrategyGroupId = isModelMatrix ? "balance-strategy-group-multi" : "balance-strategy-group-single";
     const noBalanceStrategy = document.getElementById(noBalanceStrategyId).checked;
 
     document.getElementById(balanceStrategyGroupId).style.display = noBalanceStrategy ? "none" : "flex";
