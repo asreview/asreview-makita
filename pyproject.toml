@@ -29,8 +29,9 @@ makita = "asreviewcontrib.makita.entrypoint:MakitaEntryPoint"
 [project.entry-points."asreview.makita.templates"]
 basic = "asreviewcontrib.makita.template_basic:TemplateBasic"
 arfi = "asreviewcontrib.makita.template_arfi:TemplateARFI"
-multimodel = "asreviewcontrib.makita.template_multimodel:TemplateMultiModel"
-multiple_models = "asreviewcontrib.makita.template_multimodel:TemplateMultiModel"
+modelmatrix = "asreviewcontrib.makita.template_modelmatrix:TemplateModelMatrix"
+multimodel = "asreviewcontrib.makita.template_modelmatrix:TemplateModelMatrix"
+multiple_models = "asreviewcontrib.makita.template_modelmatrix:TemplateModelMatrix"
 prior = "asreviewcontrib.makita.template_prior:TemplatePrior"
 
 [project.optional-dependencies]

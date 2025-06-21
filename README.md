@@ -188,7 +188,7 @@ started](#getting-started) for instructions on usage.
 
 ### Basic template
 
-command: `basic`
+Template name: `basic`
 
 The basic template prepares a script for conducting a simulation study with one
 run using the default model settings, and two randomly chosen priors (one
@@ -218,7 +218,7 @@ optional arguments:
 
 ### ARFI template
 
-command: `arfi`
+Template name: `arfi`
 
 The ARFI template (All relevant, fixed irrelevant) prepares a script for running
 a simulation study in such a way that for every relevant record 1 run will be
@@ -248,13 +248,13 @@ optional arguments:
 | `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
 | `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
 
-### Multimodel template
+### Model matrix template
 
-command: `multimodel`
+Template name: `modelmatrix` (formerly `multimodel`)
 
-The multiple model template prepares a script for running a simulation study
-comparing multiple models for one dataset and a fixed set of priors (one
-relevant and one irrelevant record; identical across models).
+The  model matrix template prepares a simulation study comparing a matrix of
+model components for one dataset and fixes the set of priors (one relevant and
+one irrelevant record; identical across models).
 
 optional arguments:
 
@@ -288,12 +288,12 @@ combinations of `nb` with `doc2vec` and `logistic` with `tfidf`, use the
 following command:
 
 ```console
-asreview makita template multimodel --classifiers logistic nb --feature-extractors tfidf doc2vec --queriers max max_random max_uncertainty cluster --impossible-models nb,doc2vec logistic,tfidf
+asreview makita template modelmatrix --classifiers logistic nb --feature-extractors tfidf doc2vec --queriers max max_random max_uncertainty cluster --impossible-models nb,doc2vec logistic,tfidf
 ```
 
 ### Prior template
 
-command: `prior`
+Template name: `prior`
 
 The prior template evaluates how a set of custom prior knowledge might affect
 simulation performance. It processes two types of data in the data folder:
@@ -418,7 +418,7 @@ The following scripts are available:
 The 'merge_tds.py' script creates a table of the time to discovery (TD) values
 for each dataset, with each row corresponding to each record ID of the relevant
 records in a dataset, and the columns correspond to each simulation run (e.g,
-for the Multimodel template each column corresponds to a simualtion run with
+for the `modelmatrix` template each column corresponds to a simualtion run with
 each active learning model). Additionally, the tables includes the
 average-record-TD values (the average of the TD values for a record across
 multiple simulation runs), and the average-simulation-TD values (the average of
