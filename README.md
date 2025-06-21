@@ -73,73 +73,71 @@ version 1.0 and above.
 
 ## Installation
 
-### Prerequisites:
-
-```
-Requires Python 3.10 or higher.
-```
-
-### Install the Makita extension with pip:
+ASReview Makita requires Python 3.10 or later. Install the extension using pip:
 
 ```bash
 pip install asreview-makita
 ```
 
-This project requires additional Python packages. You can install them using the following command:
-
-```bash
-pip install asreview-datatools asreview-insights
-```
-
-Alternatively, check the README.md file in your Makita project folder for specific dependencies.
-
-### For upgrading, use:
+To upgrade to the latest version, use:
 
 ```bash
 pip install --upgrade asreview-makita
 ```
 
-After installing the extension, ASReview should automatically detect Makita. If
-installed correctly, `asreview --help` should list Makita as an option.
+Once installed, ASReview should automatically detect Makita. To verify the installation, run:
 
-## Getting started
+```bash
+asreview --help
+```
+
+If installed correctly, Makita will appear as an available option.
+
+## Getting Started
+
+### Render a Study
 
 Follow these steps to set up the framework and code for your simulation study:
 
-1. Prepare Your Datasets
+1. **Install ASReview Makita**
+   Follow the [Installation](#installation) instructions to set up ASReview Makita.
+
+2. **Prepare Your Datasets**
    Place all your datasets in a single folder.
 
-2. Choose a Project Folder
+3. **Choose a Project Folder**
    Decide on a path for your project folder. You don't need to create the folder manually; `makita` will handle it for you.
 
-3. Install ASReview Makita
-   Use your preferred command-line tool to install Makita:
-```console
-pip install asreview-makita
-```
-
-4. Generate a Simulation Study
+4. **Generate a Simulation Study**
    Select a template from the [list of templates](#templates) and create your study using:
-```console
-asreview makita template NAME_OF_TEMPLATE -d 'path/to/your/datasets' -p 'path/to/your/project-folder'
-```
+   ```bash
+   asreview makita template NAME_OF_TEMPLATE -d 'path/to/your/datasets' -p 'path/to/your/project-folder'
+   ```
+   Replace `NAME_OF_TEMPLATE` with the desired template name (e.g., `arfi` for the ARFI template).
 
-where `NAME_OF_TEMPLATE` is one of the templates (e.g. `asreview makita template
-arfi`).
+### Run a Study
 
-To start the simulations, run the appropriate script in your project folder:
+Follow these steps to execute the simulation study:
 
-```console
-# On Unix-based systems (e.g., macOS, Linux)
-sh jobs.sh
+1. **Install Dependencies**
+   Ensure all dependencies mentioned in the rendered `README.md` file are installed.
 
-# On Windows
-jobs.bat
-```
+2. **Run the Simulation Study**
+   Execute the jobs script to run all tasks in the project folder:
 
-The `jobs` script runs all jobs in the project folder.
+   #### On Unix-based systems (e.g., macOS, Linux)
+   ```bash
+   sh jobs.sh
+   ```
 
----
+   #### On Windows
+   ```cmd
+   jobs.bat
+   ```
+
+   The `jobs` script will process all jobs in the project folder.
+
+### Alternative rendering
 
 If you run the makita command in the directory where you want to generate your
 project, you don't need to specify the project folder using the -p flag.
@@ -158,7 +156,7 @@ is equivalent to:
 asreview makita template basic -p 'current/working/directory' -d 'current/working/directory/data'
 ```
 
-### Platform support
+## Platform support
 
 By default, ASReview Makita renders job files for the platform of rendering. It
 is possible to render jobs for other platforms as well. Use the argument
