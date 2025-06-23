@@ -7,6 +7,9 @@ version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py
 [![DOI](https://zenodo.org/badge/530642619.svg)](https://zenodo.org/badge/latestdoi/530642619)
 [![DOI](https://img.shields.io/badge/DOI-10.1016%2Fj.simpa.2024.100663-blue)](https://doi.org/10.1016/j.simpa.2024.100663)
 
+> [!IMPORTANT]
+> **ASReview Makita v1.x** and later requires ASReview version 2 (`asreview>=2`). For ASReview version 1, use **ASReview Makita v0.x**. 
+
 
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT**
 **A**utomatic) is a workflow generator for simulation studies using the command
@@ -57,11 +60,6 @@ What Makita does not do:
 
 For a tutorial on using Makita we refer to the [Exercise on Using the ASReview
 Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
-
-### Compatibility:
-
-- **ASReview Makita v0.x** requires asreview version 1
-- **ASReview Makita v1.x** and later requires asreview version 2
 
 ### ASReview Makita Helper Tool
 For users of ASReview Makita, there's a handy helper tool available. This tool
