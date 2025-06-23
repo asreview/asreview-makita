@@ -59,10 +59,6 @@ class TemplateBasic(TemplateBase):
                 }
             )
         else:
-            base_params.update(
-                {
-                    "ai": self.ai,
-                }
-            )
+            base_params["ais"] = [self.ai] if not isinstance(self.ai, list) else self.ai
 
         return base_params

@@ -208,7 +208,7 @@ optional arguments:
 | `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
 | `--n-runs N_RUNS`                     | Number of runs                                                              | 1                                         |
 | `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI to use                                                                   | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
+| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
 | `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                                   |
 | `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                                  |
 | `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                                   |
@@ -240,7 +240,7 @@ optional arguments:
 | `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
 | `--n-priors N_PRIORS`                 | Number of priors                                                            | 10                                        |
 | `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI to use                                                                   | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
+| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
 | `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                   |
 | `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                 |
 | `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                   |
@@ -326,7 +326,7 @@ optional arguments:
 | `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
 | `--n-runs N_RUNS`                     | Number of runs                                                              | 1                                         |
 | `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI to use                                                                   | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
+| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
 | `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                   |
 | `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                 |
 | `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                   |

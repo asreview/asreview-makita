@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export ASREVIEW_MAKITA_VERSION_OVERRIDE="1.generated.example"
+
 # Remove all output folders from examples
 rm -rf ./examples/*/output
 
@@ -11,8 +13,10 @@ DATA_DIR=$(mktemp -d)
 synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o "$DATA_DIR" -l
 
 # Generate arfi, basic, and modelmatrix examples
-asreview makita template arfi -d "$DATA_DIR" -p ./examples/arfi_example --overwrite --platform linux
 asreview makita template basic -d "$DATA_DIR" -p ./examples/basic_example --overwrite --platform linux
+asreview makita template basic -d "$DATA_DIR" -p ./examples/basic_multi_ai_example --overwrite --platform linux --ai elas_u3 elas_u4
+asreview makita template arfi -d "$DATA_DIR" -p ./examples/arfi_example --overwrite --platform linux
+asreview makita template arfi -d "$DATA_DIR" -p ./examples/arfi_multi_ai_example --overwrite --platform linux --ai elas_u3 elas_u4
 asreview makita template modelmatrix -d "$DATA_DIR" -p ./examples/modelmatrix_example --overwrite --platform linux
 
 # Copy data for prior template example

@@ -102,7 +102,8 @@ class MakitaEntryPoint:
         parser_template.add_argument(
             "--ai",
             type=str,
-            help="AI to use for the template. E.g., 'elas_u4' or 'elas_h2'. ",
+            nargs="+",
+            help="AI(s) to use for the template. E.g., 'elas_u4' or 'elas_h2'. ",
         )
         parser_template.add_argument(
             "--classifier",
