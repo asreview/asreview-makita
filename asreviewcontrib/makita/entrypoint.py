@@ -75,8 +75,8 @@ class MakitaEntryPoint:
         parser_template.add_argument(
             "--n-query",
             type=int,
-            default=1,
-            help="Number of instances per query.",
+            help="Number of instances per query. If not set, the "
+            "default value of ASReview will be used.",
         )
         parser_template.add_argument(
             "--n-stop",
@@ -98,6 +98,18 @@ class MakitaEntryPoint:
             "--overwrite",
             action="store_true",
             help="Overwrite existing files in the output folder.",
+        )
+        parser_template.add_argument(
+            "--n-prior-included",
+            type=int,
+            help="Sample n prior included records. Only for basic and "
+            "multimodel templates. Default is 0",
+        )
+        parser_template.add_argument(
+            "--n-prior-excluded",
+            type=int,
+            help="Sample n prior excluded records. Only for basic and "
+            "multimodel templates. Default is 0",
         )
         parser_template.add_argument(
             "--ai",

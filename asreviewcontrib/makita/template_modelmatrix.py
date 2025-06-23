@@ -14,6 +14,8 @@ class TemplateModelMatrix(TemplateBase):
         balancers,
         impossible_models,
         n_runs,
+        n_prior_included=0,
+        n_prior_excluded=0,
         **kwargs,
     ):
         self.n_runs = n_runs
@@ -22,6 +24,8 @@ class TemplateModelMatrix(TemplateBase):
         self.all_queriers = queriers
         self.all_balancers = balancers
         self.impossible_models = impossible_models
+        self.n_prior_included = n_prior_included
+        self.n_prior_excluded = n_prior_excluded
 
         super().__init__(**kwargs)
 
@@ -72,6 +76,8 @@ class TemplateModelMatrix(TemplateBase):
             "scripts_folder": self.paths.scripts_folder,
             "n_runs": n_runs,
             "version": self.__version__,
+            "n_prior_included": self.n_prior_included,
+            "n_prior_excluded": self.n_prior_excluded,
             "all_classifiers": all_classifiers,
             "all_feature_extractors": all_feature_extractors,
             "all_queriers": all_queriers,

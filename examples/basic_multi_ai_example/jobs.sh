@@ -25,9 +25,9 @@ python scripts/data_describe.py data/Smid_2020.csv -o output/simulation/Smid_202
 
 # Simulate runs
 mkdir output/simulation/Smid_2020/state_files
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u3.asreview --prior-seed 535 --seed 165 --ai elas_u3 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u3.asreview --prior-seed 535 --seed 165 --ai elas_u3
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u3.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_elas_u3.json --quiet
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u4.asreview --prior-seed 535 --seed 165 --ai elas_u4 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u4.asreview --prior-seed 535 --seed 165 --ai elas_u4
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_elas_u4.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_elas_u4.json --quiet
 
 # Generate plot and tables for dataset
@@ -49,9 +49,9 @@ python scripts/data_describe.py data/van_de_Schoot_2018.csv -o output/simulation
 
 # Simulate runs
 mkdir output/simulation/van_de_Schoot_2018/state_files
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u3.asreview --prior-seed 535 --seed 166 --ai elas_u3 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u3.asreview --prior-seed 535 --seed 166 --ai elas_u3
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u3.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_elas_u3.json --quiet
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u4.asreview --prior-seed 535 --seed 166 --ai elas_u4 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u4.asreview --prior-seed 535 --seed 166 --ai elas_u4
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_elas_u4.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_elas_u4.json --quiet
 
 # Generate plot and tables for dataset

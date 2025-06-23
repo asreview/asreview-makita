@@ -25,35 +25,35 @@ python scripts/data_describe.py data/Smid_2020.csv -o output/simulation/Smid_202
 mkdir output/simulation/Smid_2020/state_files
 
 # Classifier = nb, Feature extractor = onehot, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_None.asreview -c nb -q max -e onehot -b None  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_None.asreview -c nb -q max -e onehot -b None  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_None.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_nb_onehot_max_None.json --quiet
 
 # Classifier = nb, Feature extractor = onehot, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_balanced.asreview -c nb -q max -e onehot -b balanced  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_balanced.asreview -c nb -q max -e onehot -b balanced  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_onehot_max_balanced.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_nb_onehot_max_balanced.json --quiet
 
 # Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_None.asreview -c nb -q max -e tfidf -b None  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_None.asreview -c nb -q max -e tfidf -b None  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_None.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_nb_tfidf_max_None.json --quiet
 
 # Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_balanced.asreview -c nb -q max -e tfidf -b balanced  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_balanced.asreview -c nb -q max -e tfidf -b balanced  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_nb_tfidf_max_balanced.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_nb_tfidf_max_balanced.json --quiet
 
 # Classifier = svm, Feature extractor = onehot, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_None.asreview -c svm -q max -e onehot -b None  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_None.asreview -c svm -q max -e onehot -b None  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_None.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_svm_onehot_max_None.json --quiet
 
 # Classifier = svm, Feature extractor = onehot, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_balanced.asreview -c svm -q max -e onehot -b balanced  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_balanced.asreview -c svm -q max -e onehot -b balanced  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_onehot_max_balanced.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_svm_onehot_max_balanced.json --quiet
 
 # Classifier = svm, Feature extractor = tfidf, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_None.asreview -c svm -q max -e tfidf -b None  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_None.asreview -c svm -q max -e tfidf -b None  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_None.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_svm_tfidf_max_None.json --quiet
 
 # Classifier = svm, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_balanced.asreview -c svm -q max -e tfidf -b balanced  --prior-seed 535 --seed 165 --n-query 1
+python -m asreview simulate data/Smid_2020.csv -o output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_balanced.asreview -c svm -q max -e tfidf -b balanced  --prior-seed 535 --seed 165
 python -m asreview metrics output/simulation/Smid_2020/state_files/sim_Smid_2020_svm_tfidf_max_balanced.asreview -o output/simulation/Smid_2020/metrics/metrics_sim_Smid_2020_svm_tfidf_max_balanced.json --quiet
 
 # Generate plot and tables for dataset
@@ -77,35 +77,35 @@ python scripts/data_describe.py data/van_de_Schoot_2018.csv -o output/simulation
 mkdir output/simulation/van_de_Schoot_2018/state_files
 
 # Classifier = nb, Feature extractor = onehot, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_None.asreview -c nb -q max -e onehot -b None  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_None.asreview -c nb -q max -e onehot -b None  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_None.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_onehot_max_None.json --quiet
 
 # Classifier = nb, Feature extractor = onehot, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_balanced.asreview -c nb -q max -e onehot -b balanced  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_balanced.asreview -c nb -q max -e onehot -b balanced  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_onehot_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_onehot_max_balanced.json --quiet
 
 # Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_None.asreview -c nb -q max -e tfidf -b None  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_None.asreview -c nb -q max -e tfidf -b None  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_None.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_tfidf_max_None.json --quiet
 
 # Classifier = nb, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_balanced.asreview -c nb -q max -e tfidf -b balanced  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_balanced.asreview -c nb -q max -e tfidf -b balanced  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_nb_tfidf_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_nb_tfidf_max_balanced.json --quiet
 
 # Classifier = svm, Feature extractor = onehot, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_None.asreview -c svm -q max -e onehot -b None  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_None.asreview -c svm -q max -e onehot -b None  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_None.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_svm_onehot_max_None.json --quiet
 
 # Classifier = svm, Feature extractor = onehot, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_balanced.asreview -c svm -q max -e onehot -b balanced  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_balanced.asreview -c svm -q max -e onehot -b balanced  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_onehot_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_svm_onehot_max_balanced.json --quiet
 
 # Classifier = svm, Feature extractor = tfidf, Query strategy = max, Balance strategy = None
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_None.asreview -c svm -q max -e tfidf -b None  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_None.asreview -c svm -q max -e tfidf -b None  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_None.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_svm_tfidf_max_None.json --quiet
 
 # Classifier = svm, Feature extractor = tfidf, Query strategy = max, Balance strategy = balanced
-python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_balanced.asreview -c svm -q max -e tfidf -b balanced  --prior-seed 535 --seed 166 --n-query 1
+python -m asreview simulate data/van_de_Schoot_2018.csv -o output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_balanced.asreview -c svm -q max -e tfidf -b balanced  --prior-seed 535 --seed 166
 python -m asreview metrics output/simulation/van_de_Schoot_2018/state_files/sim_van_de_Schoot_2018_svm_tfidf_max_balanced.asreview -o output/simulation/van_de_Schoot_2018/metrics/metrics_sim_van_de_Schoot_2018_svm_tfidf_max_balanced.json --quiet
 
 # Generate plot and tables for dataset
