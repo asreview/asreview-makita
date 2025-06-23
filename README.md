@@ -273,7 +273,7 @@ parameters](https://asreview.readthedocs.io/en/stable/lab/simulation_cli.html).
 optional arguments:
 
 | Argument                                 | Description                                  | Default Value                                            |
-| ---------------------------------------- | -------------------------------------------- | -------------------------------------------------------- | --- |
+| ---------------------------------------- | -------------------------------------------- | -------------------------------------------------------- |
 | `-h`, `--help`                           | Show this help message and exit              |                                                          |
 | `-p`, `--project-folder PROJECT_FOLDER`  | The folder the project will be rendered to   | The current working directory                            |
 | `-d`, `--data-folder DATA_FOLDER`        | The dataset source folder                    | `Data` folder in working directory                       |
@@ -286,11 +286,11 @@ optional arguments:
 | `--overwrite`                            | Automatically accepts all overwrite requests |                                                          |
 | `--n-query n_query`                      | Number of instances per query                | 1                                                        |
 | `--n-stop n_stop`                        | The number of label actions to simulate      | Will stop simulating when all relevant records are found |
-| `--classifiers CLASSIFIERS`              | Classifiers to use                           | ['nb', 'svm']                                            |
-| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                    | ['tfidf', 'onehot']                                      |
-| `--queriers QUERIER`                     | Query strategies to use                      | ['max']                                                  |
-| `--balancers BALANCE_STRATEGY`           | Balance strategies to use                    | ['none', 'balanced']                                     |     |
-| `--impossible-models IMPOSSIBLE_MODELS`  | Model combinations to exclude                | ['nb,doc2vec', 'nb,sbert']                               |
+| `--classifiers CLASSIFIERS`              | Classifiers to use                           | `nb svm`                                          |
+| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                    | `tfidf onehot`                                    |
+| `--queriers QUERIER`                     | Query strategies to use                      | `max`                                                |
+| `--balancers BALANCE_STRATEGY`           | Balance strategies to use                    | `none balanced`                                   |
+| `--impossible-models IMPOSSIBLE_MODELS`  | Model combinations to exclude                | `nb,doc2vec nb,sbert`                             |
 
 #### Example usage
 
