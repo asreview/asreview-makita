@@ -222,6 +222,8 @@ optional arguments:
 | `--balancer BALANCE_STRATEGY`           | Balance strategy to use                                             | `balanced` if `--ai` not set                                                                |
 | `--n-query n_query`                     | Number of instances per query                                       | 1                                                                                           |
 | `--n-stop n_stop`                       | The number of label actions to simulate                             | Will stop simulating when all relevant records are found                                    |
+| `--n-prior-included N_PRIOR_INCLUDED`   | Sample n prior included records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                                                                |
+| `--n-prior-excluded N_PRIOR_EXCLUDED`   | Sample n prior excluded records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                                                                |
 
 ### ARFI template
 
@@ -286,6 +288,8 @@ optional arguments:
 | `--overwrite`                            | Automatically accepts all overwrite requests |                                                          |
 | `--n-query n_query`                      | Number of instances per query                | 1                                                        |
 | `--n-stop n_stop`                        | The number of label actions to simulate      | Will stop simulating when all relevant records are found |
+| `--n-prior-included N_PRIOR_INCLUDED`    | Sample n prior included records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                            |
+| `--n-prior-excluded N_PRIOR_EXCLUDED`    | Sample n prior excluded records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                            |
 | `--classifiers CLASSIFIERS`              | Classifiers to use                           | `nb svm`                                          |
 | `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                    | `tfidf onehot`                                    |
 | `--queriers QUERIER`                     | Query strategies to use                      | `max`                                                |
