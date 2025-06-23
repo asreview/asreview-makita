@@ -103,13 +103,13 @@ class MakitaEntryPoint:
             "--n-prior-included",
             type=int,
             help="Sample n prior included records. Only for basic and "
-            "multimodel templates. Default is 0",
+            "multimodel templates. Default is 0 (just as in ASReview)",
         )
         parser_template.add_argument(
             "--n-prior-excluded",
             type=int,
             help="Sample n prior excluded records. Only for basic and "
-            "multimodel templates. Default is 0",
+            "multimodel templates. Default is 0 (just as in ASReview)",
         )
         parser_template.add_argument(
             "--ai",
@@ -327,6 +327,8 @@ class TemplateRenderer:
             "queriers",
             "balancers",
             "impossible_models",
+            "n_prior_included",
+            "n_prior_excluded",
             "n_query",
             "n_stop",
         ]

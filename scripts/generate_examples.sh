@@ -13,7 +13,7 @@ DATA_DIR=$(mktemp -d)
 synergy_dataset get -d van_de_Schoot_2018 Smid_2020 -o "$DATA_DIR" -l
 
 # Generate basic, arfi, and modelmatrix examples
-asreview makita template basic -d "$DATA_DIR" -p ./examples/basic_example --overwrite --platform linux --n-prior-included 1 --n-prior-excluded 1
+asreview makita template basic -d "$DATA_DIR" -p ./examples/basic_example --overwrite --platform linux
 asreview makita template basic -d "$DATA_DIR" -p ./examples/basic_multi_ai_example --overwrite --platform linux --ai elas_u3 elas_u4
 asreview makita template arfi -d "$DATA_DIR" -p ./examples/arfi_example --overwrite --platform linux
 asreview makita template arfi -d "$DATA_DIR" -p ./examples/arfi_multi_ai_example --overwrite --platform linux --ai elas_u3 elas_u4

@@ -14,8 +14,8 @@ class TemplateModelMatrix(TemplateBase):
         balancers,
         impossible_models,
         n_runs,
-        n_prior_included=0,
-        n_prior_excluded=0,
+        n_prior_included=None,
+        n_prior_excluded=None,
         **kwargs,
     ):
         self.n_runs = n_runs
