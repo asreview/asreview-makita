@@ -1,6 +1,6 @@
 # Simulation study
 
-*This project was rendered with ASReview-Makita version 1.1.dev6+g6fc29b7.d20250621.*
+*This project was rendered with ASReview-Makita version 1.generated.example.*
 
 This project was rendered from the Makita-modelmatrix template. See [asreview/asreview-makita#templates](https://github.com/asreview/asreview-makita#templates) for template rules and formats.
 
