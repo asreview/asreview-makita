@@ -14,6 +14,8 @@ class TemplateBasic(TemplateBase):
         querier,
         balancer,
         n_runs,
+        n_prior_included=None,
+        n_prior_excluded=None,
         **kwargs,
     ):
         self.ai = ai
@@ -21,6 +23,8 @@ class TemplateBasic(TemplateBase):
         self.feature_extractor = feature_extractor
         self.querier = querier
         self.balancer = balancer
+        self.n_prior_included = n_prior_included
+        self.n_prior_excluded = n_prior_excluded
         self.n_runs = n_runs
         super().__init__(**kwargs)
 
@@ -44,6 +48,8 @@ class TemplateBasic(TemplateBase):
             "datasets": params,
             "n_query": self.n_query,
             "n_stop": self.n_stop,
+            "n_prior_included": self.n_prior_included,
+            "n_prior_excluded": self.n_prior_excluded,
             "output_folder": self.paths.output_folder,
             "scripts_folder": self.paths.scripts_folder,
             "version": self.__version__,

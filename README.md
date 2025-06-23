@@ -10,7 +10,6 @@ version](https://badge.fury.io/py/asreview-makita.svg)](https://badge.fury.io/py
 > [!IMPORTANT]
 > **ASReview Makita v1.x** and later requires ASReview version 2 (`asreview>=2`). For ASReview version 1, use **ASReview Makita v0.x**. 
 
-
 [ASReviews](https://github.com/asreview/asreview)' Makita (**MAK**e **IT**
 **A**utomatic) is a workflow generator for simulation studies using the command
 line interface of [ASReview
@@ -62,6 +61,7 @@ For a tutorial on using Makita we refer to the [Exercise on Using the ASReview
 Simulation Mode](https://asreview.github.io/asreview-academy/simulation.html).
 
 ### ASReview Makita Helper Tool
+
 For users of ASReview Makita, there's a handy helper tool available. This tool
 simplifies the process of formulating your Makita commands, ensuring
 compatibility and ease of use. It's designed to work with ASReview Makita
@@ -124,11 +124,13 @@ Follow these steps to execute the simulation study:
    Execute the jobs script to run all tasks in the project folder:
 
    #### On Unix-based systems (e.g., macOS, Linux)
+
    ```bash
    sh jobs.sh
    ```
 
    #### On Windows
+
    ```cmd
    jobs.bat
    ```
@@ -173,7 +175,6 @@ with
 asreview makita template basic --job-file my_jobs_file.my_ext
 ```
 
-
 ## Templates
 
 The following table gives an overview of the available templates. See [Getting
@@ -189,30 +190,38 @@ started](#getting-started) for instructions on usage.
 Template name: `basic`
 
 The basic template prepares a script for conducting a simulation study with one
-run using the default model settings, and two randomly chosen priors (one
-relevant and one irrelevant record).
+run using the default [ASReview CLI simulate
+parameters](https://asreview.readthedocs.io/en/stable/lab/simulation_cli.html).
+
+> [!IMPORTANT]
+>
+> The default behavior of ASReview regarding prior knowledge sampling has changed. In ASReview version 1, the default values for `--n-prior-included` and `--n-prior-excluded` were set to 1. However, in version 2 of ASReview, these values are now set to 0 by default. This means that simulations will begin with top-down screening until sufficient prior knowledge is gathered.
+>
+> To revert to the previous behavior, use the following options: `--n-prior-included 1 --n-prior-excluded 1`.
 
 optional arguments:
 
-| Argument                              | Description                                                                 | Default Value                              |
-|---------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------|
-| `-h`, `--help`                        | Show this help message and exit                                             |                                           |
-| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                                  | The current working directory             |
-| `-d`, `--data-folder DATA_FOLDER`     | The dataset source folder                                                   | `Data` folder in working directory        |
-| `-j`, `--job-file JOB_FILE`           | The name of the file with jobs                                              | `jobs.bat` for Windows, otherwise `jobs.sh` |
-| `--prior-seed prior_seed`             | Seed of the priors                                                          | 535                                       |
-| `--model-seed MODEL_SEED`             | Seed of the models                                                          | 165                                       |
-| `--template TEMPLATE`                 | Overwrite template with template file path                                  |                                           |
-| `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
-| `--n-runs N_RUNS`                     | Number of runs                                                              | 1                                         |
-| `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
-| `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                                   |
-| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                                  |
-| `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                                   |
-| `--balancer BALANCE_STRATEGY`         | Balance strategy to use                                                     | `balanced` if `--ai` not set                              |
-| `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
-| `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
+| Argument                                | Description                                                         | Default Value                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `-h`, `--help`                          | Show this help message and exit                                     |                                                                                             |
+| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                          | The current working directory                                                               |
+| `-d`, `--data-folder DATA_FOLDER`       | The dataset source folder                                           | `Data` folder in working directory                                                          |
+| `-j`, `--job-file JOB_FILE`             | The name of the file with jobs                                      | `jobs.bat` for Windows, otherwise `jobs.sh`                                                 |
+| `--prior-seed prior_seed`               | Seed of the priors                                                  | 535                                                                                         |
+| `--model-seed MODEL_SEED`               | Seed of the models                                                  | 165                                                                                         |
+| `--template TEMPLATE`                   | Overwrite template with template file path                          |                                                                                             |
+| `--platform PLATFORM`                   | Platform to run jobs: Windows, Darwin, Linux                        | The system of rendering templates                                                           |
+| `--n-runs N_RUNS`                       | Number of runs                                                      | 1                                                                                           |
+| `--overwrite`                           | Automatically accepts all overwrite requests                        |                                                                                             |
+| `--ai AI`                               | AI(s) to use. Multiple values can be used to simulate multiple AIs. | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html) |
+| `--classifier CLASSIFIER`               | Classifier to use                                                   | `svm` if `--ai` not set                                                                     |
+| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                            | `tfidf` if `--ai` not set                                                                   |
+| `--querier QUERIER`                     | Query strategy to use                                               | `max` if `--ai` not set                                                                     |
+| `--balancer BALANCE_STRATEGY`           | Balance strategy to use                                             | `balanced` if `--ai` not set                                                                |
+| `--n-query n_query`                     | Number of instances per query                                       | 1                                                                                           |
+| `--n-stop n_stop`                       | The number of label actions to simulate                             | Will stop simulating when all relevant records are found                                    |
+| `--n-prior-included N_PRIOR_INCLUDED`   | Sample n prior included records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                                                                |
+| `--n-prior-excluded N_PRIOR_EXCLUDED`   | Sample n prior excluded records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                                                                |
 
 ### ARFI template
 
@@ -226,55 +235,64 @@ job file per dataset.
 
 optional arguments:
 
-| Argument                              | Description                                                                 | Default Value                              |
-|---------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------|
-| `-h`, `--help`                        | Show this help message and exit                                             |                                           |
-| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                                  | The current working directory             |
-| `-d`, `--data-folder DATA_FOLDER`     | The dataset source folder                                                   | `Data` folder in working directory        |
-| `-j`, `--job-file JOB_FILE`           | The name of the file with jobs                                              | `jobs.bat` for Windows, otherwise `jobs.sh` |
-| `--prior-seed prior_seed`             | Seed of the priors                                                          | 535                                       |
-| `--model-seed MODEL_SEED`             | Seed of the models                                                          | 165                                       |
-| `--template TEMPLATE`                 | Overwrite template with template file path                                  |                                           |
-| `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
-| `--n-priors N_PRIORS`                 | Number of priors                                                            | 10                                        |
-| `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
-| `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                   |
-| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                 |
-| `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                   |
-| `--balancer BALANCE_STRATEGY`         | Balance strategy to use                                                     | `balanced` if `--ai` not set              |
-| `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
-| `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
+| Argument                                | Description                                                         | Default Value                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `-h`, `--help`                          | Show this help message and exit                                     |                                                                                             |
+| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                          | The current working directory                                                               |
+| `-d`, `--data-folder DATA_FOLDER`       | The dataset source folder                                           | `Data` folder in working directory                                                          |
+| `-j`, `--job-file JOB_FILE`             | The name of the file with jobs                                      | `jobs.bat` for Windows, otherwise `jobs.sh`                                                 |
+| `--prior-seed prior_seed`               | Seed of the priors                                                  | 535                                                                                         |
+| `--model-seed MODEL_SEED`               | Seed of the models                                                  | 165                                                                                         |
+| `--template TEMPLATE`                   | Overwrite template with template file path                          |                                                                                             |
+| `--platform PLATFORM`                   | Platform to run jobs: Windows, Darwin, Linux                        | The system of rendering templates                                                           |
+| `--n-priors N_PRIORS`                   | Number of priors                                                    | 10                                                                                          |
+| `--overwrite`                           | Automatically accepts all overwrite requests                        |                                                                                             |
+| `--ai AI`                               | AI(s) to use. Multiple values can be used to simulate multiple AIs. | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html) |
+| `--classifier CLASSIFIER`               | Classifier to use                                                   | `svm` if `--ai` not set                                                                     |
+| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                            | `tfidf` if `--ai` not set                                                                   |
+| `--querier QUERIER`                     | Query strategy to use                                               | `max` if `--ai` not set                                                                     |
+| `--balancer BALANCE_STRATEGY`           | Balance strategy to use                                             | `balanced` if `--ai` not set                                                                |
+| `--n-query n_query`                     | Number of instances per query                                       | 1                                                                                           |
+| `--n-stop n_stop`                       | The number of label actions to simulate                             | Will stop simulating when all relevant records are found                                    |
 
 ### Model matrix template
 
 Template name: `modelmatrix` (formerly `multimodel`)
 
-The  model matrix template prepares a simulation study comparing a matrix of
-model components for one dataset and fixes the set of priors (one relevant and
-one irrelevant record; identical across models).
+The model matrix template prepares a simulation study comparing a matrix of
+model components for your dataset(s). All other parameters are the default [ASReview CLI simulate
+parameters](https://asreview.readthedocs.io/en/stable/lab/simulation_cli.html).
+
+
+> [!IMPORTANT]
+>
+> The default behavior of ASReview regarding prior knowledge sampling has changed. In ASReview version 1, the default values for `--n-prior-included` and `--n-prior-excluded` were set to 1. However, in version 2 of ASReview, these values are now set to 0 by default. This means that simulations will begin with top-down screening until sufficient prior knowledge is gathered.
+>
+> To revert to the previous behavior, use the following options: `--n-prior-included 1 --n-prior-excluded 1`.
 
 optional arguments:
 
-| Argument                              | Description                                                                 | Default Value                              |
-|---------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------|
-| `-h`, `--help`                        | Show this help message and exit                                             |                                           |
-| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                                  | The current working directory             |
-| `-d`, `--data-folder DATA_FOLDER`     | The dataset source folder                                                   | `Data` folder in working directory        |
-| `-j`, `--job-file JOB_FILE`           | The name of the file with jobs                                              | `jobs.bat` for Windows, otherwise `jobs.sh` |
-| `--prior-seed prior_seed`             | Seed of the priors                                                          | 535                                       |
-| `--model-seed MODEL_SEED`             | Seed of the models                                                          | 165                                       |
-| `--template TEMPLATE`                 | Overwrite template with template file path                                  |                                           |
-| `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
-| `--n-runs N_RUNS`                     | Number of runs                                                              | 1                                         |
-| `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
-| `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
-| `--classifiers CLASSIFIERS`           | Classifiers to use                                                          | ['nb', 'svm']           |
-| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                                                  | ['tfidf', 'onehot']             |
-| `--queriers QUERIER`                  | Query strategies to use                                                     | ['max']                                   |
-| `--balancers BALANCE_STRATEGY`        | Balance strategies to use                                                   | ['none', 'balanced'] |                                |
-| `--impossible-models IMPOSSIBLE_MODELS` | Model combinations to exclude                                              | ['nb,doc2vec', 'nb,sbert']                |
+| Argument                                 | Description                                  | Default Value                                            |
+| ---------------------------------------- | -------------------------------------------- | -------------------------------------------------------- |
+| `-h`, `--help`                           | Show this help message and exit              |                                                          |
+| `-p`, `--project-folder PROJECT_FOLDER`  | The folder the project will be rendered to   | The current working directory                            |
+| `-d`, `--data-folder DATA_FOLDER`        | The dataset source folder                    | `Data` folder in working directory                       |
+| `-j`, `--job-file JOB_FILE`              | The name of the file with jobs               | `jobs.bat` for Windows, otherwise `jobs.sh`              |
+| `--prior-seed prior_seed`                | Seed of the priors                           | 535                                                      |
+| `--model-seed MODEL_SEED`                | Seed of the models                           | 165                                                      |
+| `--template TEMPLATE`                    | Overwrite template with template file path   |                                                          |
+| `--platform PLATFORM`                    | Platform to run jobs: Windows, Darwin, Linux | The system of rendering templates                        |
+| `--n-runs N_RUNS`                        | Number of runs                               | 1                                                        |
+| `--overwrite`                            | Automatically accepts all overwrite requests |                                                          |
+| `--n-query n_query`                      | Number of instances per query                | 1                                                        |
+| `--n-stop n_stop`                        | The number of label actions to simulate      | Will stop simulating when all relevant records are found |
+| `--n-prior-included N_PRIOR_INCLUDED`    | Sample n prior included records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                            |
+| `--n-prior-excluded N_PRIOR_EXCLUDED`    | Sample n prior excluded records. Only for basic and modelmatrix templates. | 0 (just as in ASReview)                            |
+| `--classifiers CLASSIFIERS`              | Classifiers to use                           | `nb svm`                                          |
+| `--feature-extractors FEATURE_EXTRACTOR` | Feature extractors to use                    | `tfidf onehot`                                    |
+| `--queriers QUERIER`                     | Query strategies to use                      | `max`                                                |
+| `--balancers BALANCE_STRATEGY`           | Balance strategies to use                    | `none balanced`                                   |
+| `--impossible-models IMPOSSIBLE_MODELS`  | Model combinations to exclude                | `nb,doc2vec nb,sbert`                             |
 
 #### Example usage
 
@@ -312,25 +330,25 @@ their simulations.
 
 optional arguments:
 
-| Argument                              | Description                                                                 | Default Value                              |
-|---------------------------------------|-----------------------------------------------------------------------------|-------------------------------------------|
-| `-h`, `--help`                        | Show this help message and exit                                             |                                           |
-| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                                  | The current working directory             |
-| `-d`, `--data-folder DATA_FOLDER`     | The dataset source folder                                                   | `Data` folder in working directory        |
-| `-j`, `--job-file JOB_FILE`           | The name of the file with jobs                                              | `jobs.bat` for Windows, otherwise `jobs.sh` |
-| `--prior-seed prior_seed`             | Seed of the priors                                                          | 535                                       |
-| `--model-seed MODEL_SEED`             | Seed of the models                                                          | 165                                       |
-| `--template TEMPLATE`                 | Overwrite template with template file path                                  |                                           |
-| `--platform PLATFORM`                 | Platform to run jobs: Windows, Darwin, Linux                                | The system of rendering templates         |
-| `--n-runs N_RUNS`                     | Number of runs                                                              | 1                                         |
-| `--overwrite`                         | Automatically accepts all overwrite requests                                |                                           |
-| `--ai AI`                             | AI(s) to use. Multiple values can be used to simulate multiple AIs.                                           | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html)            |
-| `--classifier CLASSIFIER`             | Classifier to use                                                           | `svm` if `--ai` not set                   |
-| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                                    | `tfidf` if `--ai` not set                 |
-| `--querier QUERIER`                   | Query strategy to use                                                       | `max` if `--ai` not set                   |
-| `--balancer BALANCE_STRATEGY`         | Balance strategy to use                                                     | `balanced` if `--ai` not set              |
-| `--n-query n_query`                   | Number of instances per query                                               | 1                                         |
-| `--n-stop n_stop`                     | The number of label actions to simulate                                     | Will stop simulating when all relevant records are found |
+| Argument                                | Description                                                         | Default Value                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `-h`, `--help`                          | Show this help message and exit                                     |                                                                                             |
+| `-p`, `--project-folder PROJECT_FOLDER` | The folder the project will be rendered to                          | The current working directory                                                               |
+| `-d`, `--data-folder DATA_FOLDER`       | The dataset source folder                                           | `Data` folder in working directory                                                          |
+| `-j`, `--job-file JOB_FILE`             | The name of the file with jobs                                      | `jobs.bat` for Windows, otherwise `jobs.sh`                                                 |
+| `--prior-seed prior_seed`               | Seed of the priors                                                  | 535                                                                                         |
+| `--model-seed MODEL_SEED`               | Seed of the models                                                  | 165                                                                                         |
+| `--template TEMPLATE`                   | Overwrite template with template file path                          |                                                                                             |
+| `--platform PLATFORM`                   | Platform to run jobs: Windows, Darwin, Linux                        | The system of rendering templates                                                           |
+| `--n-runs N_RUNS`                       | Number of runs                                                      | 1                                                                                           |
+| `--overwrite`                           | Automatically accepts all overwrite requests                        |                                                                                             |
+| `--ai AI`                               | AI(s) to use. Multiple values can be used to simulate multiple AIs. | [Latest Ultra model of ASReview](https://asreview.readthedocs.io/en/latest/lab/models.html) |
+| `--classifier CLASSIFIER`               | Classifier to use                                                   | `svm` if `--ai` not set                                                                     |
+| `--feature-extractor FEATURE_EXTRACTOR` | Feature extractor to use                                            | `tfidf` if `--ai` not set                                                                   |
+| `--querier QUERIER`                     | Query strategy to use                                               | `max` if `--ai` not set                                                                     |
+| `--balancer BALANCE_STRATEGY`           | Balance strategy to use                                             | `balanced` if `--ai` not set                                                                |
+| `--n-query n_query`                     | Number of instances per query                                       | 1                                                                                           |
+| `--n-stop n_stop`                       | The number of label actions to simulate                             | Will stop simulating when all relevant records are found                                    |
 
 #### Example usage
 
@@ -367,7 +385,7 @@ simulation studies with different needs.
 5. Run the custom template with the command line option `--template
 PATH_TO_MY_TEMPLATE.txt.template`. For the ARFI example, this would be `asreview
 makita template arfi --template PATH_TO_MY_TEMPLATE.txt.template`. Please keep
-in mind that you follow the usual steps for running a template.
+   in mind that you follow the usual steps for running a template.
 6. A `jobs.sh` file should be in the your folder.
 
 Please contribute your templates back to the project by making a Pull Request.
